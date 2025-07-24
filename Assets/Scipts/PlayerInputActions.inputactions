@@ -1,0 +1,106 @@
+{
+  "name": "PlayerInputActions",
+  "maps": [
+    {
+      "name": "Player",
+      "id": "c5e5e5d9-46a4-4d8d-a187-b16252f292fb",
+      "actions": [
+        {
+          "name": "Move",
+          "type": "Value",
+          "id": "73fa0c71-0d7f-49d7-9a6f-9a46939a9f0f",
+          "expectedControlType": "Vector2"
+        },
+        {
+          "name": "Jump",
+          "type": "Button",
+          "id": "f79b4d1e-5184-4b57-a1e0-d5be3c18bc2e",
+          "expectedControlType": "Button"
+        },
+        {
+          "name": "Sprint",
+          "type": "Button",
+          "id": "2c9f96e7-dff7-4d41-bbb5-3acb34c75c03",
+          "expectedControlType": "Button"
+        },
+        {
+          "name": "Slide",
+          "type": "Button",
+          "id": "a964fa60-0c1a-47d3-9213-93d8c21ae35c",
+          "expectedControlType": "Button"
+        },
+        {
+          "name": "Fly",
+          "type": "Button",
+          "id": "b3de02a5-818b-480a-8f8d-4460fe23d3d7",
+          "expectedControlType": "Button"
+        }
+      ],
+      "bindings": [
+        {
+          "name": "WASD",
+          "id": "bd1e087c-bd93-4892-a574-ef5cccb7d8e3",
+          "path": "2DVector",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Move",
+          "isComposite": true
+        },
+        {
+          "name": "up",
+          "id": "dc799ad7-4c84-4a8a-a5e1-d1b91ea5ddf0",
+          "path": "<Keyboard>/w",
+          "action": "Move",
+          "isPartOfComposite": true
+        },
+        {
+          "name": "down",
+          "id": "e0f38421-fd34-46f5-89c5-8121a4bcf60d",
+          "path": "<Keyboard>/s",
+          "action": "Move",
+          "isPartOfComposite": true
+        },
+        {
+          "name": "left",
+          "id": "2d9fc8f7-98d7-4e3d-bc01-1b76c2f63151",
+          "path": "<Keyboard>/a",
+          "action": "Move",
+          "isPartOfComposite": true
+        },
+        {
+          "name": "right",
+          "id": "d300e9ed-4d3d-40d5-b0b4-084780b76a03",
+          "path": "<Keyboard>/d",
+          "action": "Move",
+          "isPartOfComposite": true
+        },
+        {
+          "name": "",
+          "id": "aa9c93db-85f5-4d02-bb79-2c660e6e9db5",
+          "path": "<Keyboard>/space",
+          "action": "Jump"
+        },
+        {
+          "name": "",
+          "id": "7b62a552-41ff-4fc3-b6de-6f893e050542",
+          "path": "<Keyboard>/leftShift",
+          "action": "Sprint"
+        },
+        {
+          "name": "",
+          "id": "e1f5eac3-b149-40a5-a40b-6e3cc26951fa",
+          "path": "<Keyboard>/leftCtrl",
+          "action": "Slide"
+        },
+        {
+          "name": "",
+          "id": "aa7b4c14-7122-4524-8aa3-62f3641cb340",
+          "path": "<Keyboard>/f",
+          "action": "Fly"
+        }
+      ]
+    }
+  ],
+  "controlSchemes": []
+}
