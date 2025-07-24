@@ -24,6 +24,13 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject slideIndicator;
     [SerializeField] private GameObject doubleJumpIndicator;
 
+    [Header("Collectible UI")]
+    [SerializeField] private TextMeshProUGUI collectibleText;
+    [SerializeField] private GameObject collectiblePanel;
+    [SerializeField] private Image collectibleIcon;
+    [SerializeField] private Color collectibleTextColor = Color.white;
+    [SerializeField] private Color lowCollectibleColor = Color.red;
+
     [Header("Crosshair")]
     [SerializeField] private GameObject crosshair;
     [SerializeField] private Image crosshairImage;
@@ -33,6 +40,13 @@ public class UIController : MonoBehaviour
     [Header("Animations")]
     [SerializeField] private float uiAnimationSpeed = 5f;
     [SerializeField] private AnimationCurve energyPulse = AnimationCurve.EaseInOut(0, 1, 1, 1.2f);
+
+    [Header("Level Profile Display")]
+    [SerializeField] private TextMeshProUGUI levelTypeText;
+    [SerializeField] private GameObject levelProfilePanel;
+    [SerializeField] private Color easyLevelColor = Color.green;
+    [SerializeField] private Color mediumLevelColor = Color.yellow;
+    [SerializeField] private Color hardLevelColor = Color.red;
 
     [Header("Debug")]
     [SerializeField] private bool showDebugInfo = false;
@@ -45,6 +59,15 @@ public class UIController : MonoBehaviour
     private bool isGrounded;
     private Coroutine energyAnimationCoroutine;
     private Coroutine pulseCoroutine;
+    
+    // Collectible tracking
+    private int currentCollectibles = 0;
+    private int totalCollectibles = 0;
+    private LevelManager levelManager;
+    
+    // Level Profile tracking
+    private LevelGenerator levelGenerator;
+    private LevelProfile currentProfile;
 
     // UI Update optimization
     private float lastSpeedUpdate;
@@ -105,6 +128,29 @@ public class UIController : MonoBehaviour
 
         if (!flyText)
             Debug.LogWarning("UIController: Fly Text nicht zugewiesen!");
+            
+        // Find LevelManager
+        if (!levelManager)
+        {
+            levelManager = FindFirstObjectByType<LevelManager>();
+            if (!levelManager)
+                Debug.LogWarning("UIController: LevelManager nicht gefunden!");
+        }
+        
+        // Find LevelGenerator
+        if (!levelGenerator)
+        {
+            levelGenerator = FindFirstObjectByType<LevelGenerator>();
+            if (levelGenerator)
+            {
+                currentProfile = levelGenerator.ActiveProfile;
+                UpdateLevelProfileDisplay();
+            }
+        }
+        
+        // Validate collectible UI
+        if (!collectibleText)
+            Debug.LogWarning("UIController: Collectible Text nicht zugewiesen!");
     }
 
     private void SubscribeToEvents()
@@ -114,6 +160,21 @@ public class UIController : MonoBehaviour
         player.OnFlyEnergyChanged += OnFlyEnergyChanged;
         player.OnGroundedChanged += OnGroundedChanged;
         player.OnFlyingChanged += OnFlyingChanged;
+        
+        // Subscribe to LevelManager events
+        if (levelManager)
+        {
+            levelManager.OnCollectibleCountChanged += OnCollectibleCountChanged;
+            levelManager.OnLevelStarted += OnLevelStarted;
+            levelManager.OnLevelCompleted += OnLevelCompleted;
+        }
+        
+        // Subscribe to LevelGenerator events
+        if (levelGenerator)
+        {
+            levelGenerator.OnLevelGenerationStarted += OnLevelGenerationStarted;
+            levelGenerator.OnLevelGenerationCompleted += OnLevelGenerationCompleted;
+        }
     }
 
     private void UnsubscribeFromEvents()
@@ -123,6 +184,21 @@ public class UIController : MonoBehaviour
         player.OnFlyEnergyChanged -= OnFlyEnergyChanged;
         player.OnGroundedChanged -= OnGroundedChanged;
         player.OnFlyingChanged -= OnFlyingChanged;
+        
+        // Unsubscribe from LevelManager events
+        if (levelManager)
+        {
+            levelManager.OnCollectibleCountChanged -= OnCollectibleCountChanged;
+            levelManager.OnLevelStarted -= OnLevelStarted;
+            levelManager.OnLevelCompleted -= OnLevelCompleted;
+        }
+        
+        // Unsubscribe from LevelGenerator events
+        if (levelGenerator)
+        {
+            levelGenerator.OnLevelGenerationStarted -= OnLevelGenerationStarted;
+            levelGenerator.OnLevelGenerationCompleted -= OnLevelGenerationCompleted;
+        }
     }
 
     void Update()
@@ -348,6 +424,113 @@ public class UIController : MonoBehaviour
             debugText.gameObject.SetActive(show);
     }
 
+    // LevelManager Event Handlers
+    private void OnCollectibleCountChanged(int remaining, int total)
+    {
+        currentCollectibles = remaining;
+        totalCollectibles = total;
+        UpdateCollectibleDisplay();
+    }
+
+    private void OnLevelStarted(LevelConfiguration config)
+    {
+        if (collectiblePanel)
+            collectiblePanel.SetActive(true);
+        
+        currentCollectibles = config.collectiblesRemaining;
+        totalCollectibles = config.totalCollectibles;
+        UpdateCollectibleDisplay();
+    }
+
+    private void OnLevelCompleted(LevelConfiguration config)
+    {
+        ShowNotification($"Level {config.levelName} Complete!", 2f);
+        
+        if (collectiblePanel)
+        {
+            StartCoroutine(FadeOutCollectiblePanel());
+        }
+    }
+
+    private void UpdateCollectibleDisplay()
+    {
+        if (!collectibleText) return;
+
+        collectibleText.text = $"Collectibles: {currentCollectibles}";
+        
+        // Color coding based on remaining collectibles
+        if (currentCollectibles <= 1)
+        {
+            collectibleText.color = lowCollectibleColor;
+        }
+        else
+        {
+            collectibleText.color = collectibleTextColor;
+        }
+        
+        // Pulse effect when low
+        if (currentCollectibles <= 2 && currentCollectibles > 0)
+        {
+            StartCoroutine(PulseCollectibleText());
+        }
+    }
+
+    private System.Collections.IEnumerator FadeOutCollectiblePanel()
+    {
+        if (!collectiblePanel) yield break;
+        
+        CanvasGroup canvasGroup = collectiblePanel.GetComponent<CanvasGroup>();
+        if (!canvasGroup)
+        {
+            canvasGroup = collectiblePanel.AddComponent<CanvasGroup>();
+        }
+        
+        float elapsed = 0f;
+        float duration = 1f;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            yield return null;
+        }
+        
+        collectiblePanel.SetActive(false);
+        canvasGroup.alpha = 1f;
+    }
+
+    private System.Collections.IEnumerator PulseCollectibleText()
+    {
+        if (!collectibleText) yield break;
+        
+        Vector3 originalScale = collectibleText.transform.localScale;
+        Vector3 targetScale = originalScale * 1.2f;
+        
+        // Scale up
+        float elapsed = 0f;
+        float duration = 0.3f;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            collectibleText.transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
+            yield return null;
+        }
+        
+        // Scale down
+        elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            collectibleText.transform.localScale = Vector3.Lerp(targetScale, originalScale, t);
+            yield return null;
+        }
+        
+        collectibleText.transform.localScale = originalScale;
+    }
+
     public void ShowNotification(string message, float duration = 2f)
     {
         StartCoroutine(ShowNotificationCoroutine(message, duration));
@@ -358,5 +541,83 @@ public class UIController : MonoBehaviour
         // This could be expanded with a notification UI element
         Debug.Log($"Notification: {message}");
         yield return new WaitForSeconds(duration);
+    }
+    
+    // Level Generator Event Handlers
+    private void OnLevelGenerationStarted(LevelProfile profile)
+    {
+        currentProfile = profile;
+        UpdateLevelProfileDisplay();
+        
+        if (levelTypeText)
+        {
+            levelTypeText.text = "Generiere Level...";
+        }
+    }
+    
+    private void OnLevelGenerationCompleted(LevelProfile profile)
+    {
+        currentProfile = profile;
+        UpdateLevelProfileDisplay();
+        
+        ShowNotification($"Level '{profile.DisplayName}' generiert!", 1.5f);
+    }
+    
+    /// <summary>
+    /// Aktualisiert die Anzeige des aktiven Levelprofils
+    /// </summary>
+    private void UpdateLevelProfileDisplay()
+    {
+        if (!currentProfile || !levelTypeText) return;
+        
+        // Update text and color based on difficulty
+        levelTypeText.text = $"Level: {currentProfile.DisplayName}";
+        
+        // Set color based on difficulty level
+        Color profileColor = GetDifficultyColor(currentProfile.DifficultyLevel);
+        levelTypeText.color = profileColor;
+        
+        // Show/hide profile panel
+        if (levelProfilePanel)
+        {
+            levelProfilePanel.SetActive(true);
+        }
+    }
+    
+    /// <summary>
+    /// Gibt die Farbe basierend auf dem Schwierigkeitsgrad zurück
+    /// </summary>
+    private Color GetDifficultyColor(int difficultyLevel)
+    {
+        switch (difficultyLevel)
+        {
+            case 1:
+                return easyLevelColor;
+            case 2:
+                return mediumLevelColor;
+            case 3:
+            default:
+                return hardLevelColor;
+        }
+    }
+    
+    /// <summary>
+    /// Setzt das aktuelle Levelprofil (für externe Nutzung)
+    /// </summary>
+    public void SetCurrentProfile(LevelProfile profile)
+    {
+        currentProfile = profile;
+        UpdateLevelProfileDisplay();
+    }
+    
+    /// <summary>
+    /// Zeigt/versteckt das Levelprofil-Panel
+    /// </summary>
+    public void ToggleLevelProfileDisplay(bool show)
+    {
+        if (levelProfilePanel)
+        {
+            levelProfilePanel.SetActive(show);
+        }
     }
 }

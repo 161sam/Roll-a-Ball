@@ -327,14 +327,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 284329419}
+  autoFindPlayer: 1
   normalOffset: {x: 0, y: 6, z: -8}
   sprintOffset: {x: 0, y: 7, z: -10}
   slideOffset: {x: 0, y: 4, z: -6}
   flyOffset: {x: 0, y: 10, z: -12}
   followSpeed: 5
   offsetLerpSpeed: 5
+  rotationSpeed: 3
+  smoothRotation: 1
   heightZoomFactor: 0.2
   maxYZoom: 10
+  heightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  enableVelocityOffset: 1
+  velocityOffsetFactor: 2
+  maxVelocityOffset: 5
+  velocityOffsetSmoothing: 2
+  enableCollisionAvoidance: 1
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  collisionBuffer: 0.5
+  collisionCheckRadius: 0.3
+  enableShake: 1
+  landingShakeStrength: 0.2
+  landingShakeDuration: 0.3
+  enableDynamicFOV: 1
+  normalFOV: 60
+  sprintFOV: 70
+  flyFOV: 75
+  fovChangeSpeed: 2
+  enableLookAhead: 1
+  lookAheadDistance: 3
+  lookAheadSmoothing: 5
 --- !u!1 &1372258051
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,11 +623,16 @@ PrefabInstance:
       propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6140363381341295625, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 997f8ddeb00c6c709a3adfd3ad7e226d, type: 3}
     - target: {fileID: 8554796287664602159, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6140363381341295625, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

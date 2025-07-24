@@ -1,38 +1,47 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Bewegung")]
-    [SerializeField] private float moveSpeed = 5f;
+    [Header("Ball Bewegung")]
+    [SerializeField] private float moveForce = 10f;
+    [SerializeField] private float maxSpeed = 8f;
     [SerializeField] private float sprintMultiplier = 1.5f;
-    [SerializeField] private float slideDrag = 0.5f;
-    [SerializeField] private float normalDrag = 1f;
-    [SerializeField] private float airControlMultiplier = 0.6f;
+    [SerializeField] private float airControlMultiplier = 0.5f;
+    [SerializeField] private float ballDrag = 0.98f; // Ball rolling resistance
+
+    [Header("Input Einstellungen")]
+    [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
+    [SerializeField] private KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] private KeyCode flyKey = KeyCode.F;
+    [SerializeField] private KeyCode slideKey = KeyCode.LeftControl;
 
     [Header("Springen")]
-    [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float groundCheckRadius = 0.3f;
-    [SerializeField] private float groundCheckDistance = 0.6f;
+    [SerializeField] private float jumpForce = 8f;
+    [SerializeField] private float groundCheckRadius = 0.6f;
+    [SerializeField] private float groundCheckDistance = 0.1f;
     [SerializeField] private LayerMask groundLayer = 1;
-    [SerializeField] private float coyoteTime = 0.2f; // Grace period for jumping after leaving ground
+    [SerializeField] private float coyoteTime = 0.2f;
 
     [Header("Doppelsprung")]
     [SerializeField] private bool enableDoubleJump = true;
-    [SerializeField] private float doubleJumpForce = 4f; // Separate force for double jump
+    [SerializeField] private float doubleJumpForce = 6f;
 
     [Header("Fliegen")]
-    [SerializeField] private float flyForce = 6f;
-    [SerializeField] private float maxFlyHeight = 20f;
-    [SerializeField] private float flyHorizontalDamping = 0.8f;
+    [SerializeField] private float flyForce = 12f;
+    [SerializeField] private float maxFlyHeight = 25f;
+    [SerializeField] private float flyHorizontalDamping = 0.9f;
 
     [Header("Flugenergie")]
     [SerializeField] private float maxFlyEnergy = 3f;
     [SerializeField] private float flyDepletionRate = 1f;
-    [SerializeField] private float flyRegenRate = 1f;
-    [SerializeField] private float flyRegenDelay = 1f; // Delay before regen starts
+    [SerializeField] private float flyRegenRate = 1.5f;
+    [SerializeField] private float flyRegenDelay = 1f;
+
+    [Header("Kamera Referenz")]
+    [SerializeField] private Transform cameraTransform;
+    [SerializeField] private bool findCameraAutomatically = true;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -45,30 +54,36 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem slideEffect;
     [SerializeField] private TrailRenderer flyTrail;
 
+    [Header("Debug")]
+    [SerializeField] private bool showDebugInfo = false;
+
     // Private fields
     private Rigidbody rb;
-    private Vector2 movementInput;
-    private bool jumpRequested;
-    private bool flyInputActive;
     private bool isGrounded;
     private bool wasGrounded;
     private bool hasDoubleJumped;
     private float coyoteTimeCounter;
     private float flyRegenTimer;
+    private float flyEnergy;
     private Coroutine slideCoroutine;
+    
+    // Input states - LEGACY INPUT SYSTEM
+    private Vector2 movementInput;
+    private bool jumpPressed;
+    private bool flyPressed;
+    private bool sprintPressed;
+    private bool slidePressed;
 
-    // Public properties für bessere Kapselung
+    // Public properties
     public float FlyEnergy => flyEnergy;
     public float MaxFlyEnergy => maxFlyEnergy;
     public bool IsGrounded => isGrounded;
-    public bool IsSprinting { get; private set; }
+    public bool IsSprinting => sprintPressed && isGrounded;
     public bool IsSliding { get; private set; }
     public bool IsFlying { get; private set; }
     public Vector3 Velocity => rb ? rb.linearVelocity : Vector3.zero;
 
-    [HideInInspector] public float flyEnergy;
-
-    // Events für UI und andere Systeme
+    // Events
     public System.Action<float, float> OnFlyEnergyChanged;
     public System.Action<bool> OnGroundedChanged;
     public System.Action<bool> OnFlyingChanged;
@@ -88,10 +103,23 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        // Setup Rigidbody for ball physics
+        rb.mass = 1f;
+        rb.linearDamping = 0.5f;
+        rb.angularDamping = 0.8f;
+
+        // Find camera automatically if needed
+        if (findCameraAutomatically && !cameraTransform)
+        {
+            Camera mainCam = Camera.main;
+            if (mainCam)
+                cameraTransform = mainCam.transform;
+            else
+                cameraTransform = FindFirstObjectByType<Camera>()?.transform;
+        }
+
         if (!audioSource)
             audioSource = GetComponent<AudioSource>();
-
-        rb.linearDamping = normalDrag;
     }
 
     private void InitializeValues()
@@ -108,19 +136,42 @@ public class PlayerController : MonoBehaviour
     {
         if (!rb) return;
 
+        HandleInput();
         UpdateGroundState();
-        HandleJumping();
         UpdateFlightSystem();
         UpdateCoyoteTime();
+        HandleJumping();
+
+        if (showDebugInfo)
+            ShowDebugInfo();
     }
 
     void FixedUpdate()
     {
         if (!rb) return;
 
-        HandleMovement();
+        HandleBallMovement();
         HandleFlight();
-        UpdateDrag();
+        ApplyBallPhysics();
+    }
+
+    private void HandleInput()
+    {
+        // Movement input (WASD / Arrow Keys) - LEGACY INPUT
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        movementInput = new Vector2(horizontal, vertical);
+
+        // Action inputs - LEGACY INPUT
+        jumpPressed = Input.GetKeyDown(jumpKey);
+        flyPressed = Input.GetKey(flyKey);
+        sprintPressed = Input.GetKey(sprintKey);
+        
+        // Slide input handling - LEGACY INPUT
+        if (Input.GetKeyDown(slideKey))
+            StartSlide();
+        else if (Input.GetKeyUp(slideKey))
+            StopSlide();
     }
 
     private void UpdateGroundState()
@@ -146,12 +197,16 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGrounded()
     {
-        Vector3 origin = transform.position + Vector3.down * 0.5f;
-        isGrounded = Physics.SphereCast(origin, groundCheckRadius, Vector3.down, 
-            out RaycastHit hit, groundCheckDistance, groundLayer);
+        // Check if ball is touching ground
+        Vector3 center = transform.position;
+        isGrounded = Physics.CheckSphere(center, groundCheckRadius, groundLayer);
 
-        // Debug visualization
-        Debug.DrawRay(origin, Vector3.down * groundCheckDistance, isGrounded ? Color.green : Color.red);
+        // Alternative raycast method for more precise detection
+        if (!isGrounded)
+        {
+            Vector3 rayStart = center + Vector3.up * 0.1f;
+            isGrounded = Physics.Raycast(rayStart, Vector3.down, groundCheckDistance + 0.1f, groundLayer);
+        }
     }
 
     private void UpdateCoyoteTime()
@@ -164,10 +219,10 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJumping()
     {
-        if (!jumpRequested) return;
+        if (!jumpPressed) return;
 
         bool canJump = coyoteTimeCounter > 0f;
-        bool canDoubleJump = enableDoubleJump && !hasDoubleJumped && !isGrounded;
+        bool canDoubleJump = enableDoubleJump && !hasDoubleJumped && !isGrounded && rb.linearVelocity.y < 1f;
 
         if (canJump)
         {
@@ -182,17 +237,16 @@ public class PlayerController : MonoBehaviour
             hasDoubleJumped = true;
             PlaySound(doubleJumpSound);
         }
-
-        jumpRequested = false;
     }
 
     private void Jump(float force)
     {
-        // Reset Y velocity before jumping for consistent jump height
+        // Reset Y velocity for consistent jumps
         Vector3 velocity = rb.linearVelocity;
         velocity.y = 0f;
         rb.linearVelocity = velocity;
         
+        // Apply jump force
         rb.AddForce(Vector3.up * force, ForceMode.Impulse);
         
         if (jumpEffect)
@@ -203,7 +257,7 @@ public class PlayerController : MonoBehaviour
     {
         bool wasFlying = IsFlying;
 
-        if (flyInputActive && flyEnergy > 0f)
+        if (flyPressed && flyEnergy > 0f)
         {
             IsFlying = true;
             flyEnergy -= flyDepletionRate * Time.deltaTime;
@@ -214,7 +268,7 @@ public class PlayerController : MonoBehaviour
         {
             IsFlying = false;
             
-            // Regeneration mit Delay
+            // Energy regeneration with delay
             if (isGrounded && flyEnergy < maxFlyEnergy)
             {
                 flyRegenTimer += Time.deltaTime;
@@ -226,7 +280,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Events nur bei Änderung auslösen
+        // Events only on change
         if (IsFlying != wasFlying)
         {
             OnFlyingChanged?.Invoke(IsFlying);
@@ -238,20 +292,52 @@ public class PlayerController : MonoBehaviour
         OnFlyEnergyChanged?.Invoke(flyEnergy, maxFlyEnergy);
     }
 
-    private void HandleMovement()
+    private void HandleBallMovement()
     {
-        Vector3 move = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
-        float currentSpeed = moveSpeed;
+        if (movementInput.magnitude < 0.1f) return;
 
-        // Speed modifiers
-        if (IsSprinting && !IsSliding) 
-            currentSpeed *= sprintMultiplier;
+        // Get camera-relative movement direction
+        Vector3 moveDirection = GetCameraRelativeMovement(movementInput);
+        moveDirection.y = 0f; // Keep movement horizontal
+        moveDirection = moveDirection.normalized;
+
+        // Calculate movement force
+        float currentMoveForce = moveForce;
         
-        if (!isGrounded && !IsFlying) 
-            currentSpeed *= airControlMultiplier;
+        // Apply modifiers
+        if (IsSprinting && !IsSliding)
+            currentMoveForce *= sprintMultiplier;
+        
+        if (!isGrounded && !IsFlying)
+            currentMoveForce *= airControlMultiplier;
 
-        // Apply movement force
-        rb.AddForce(move * currentSpeed, ForceMode.Acceleration);
+        // Check if we're at max speed
+        Vector3 horizontalVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        float currentMaxSpeed = maxSpeed * (IsSprinting ? sprintMultiplier : 1f);
+        
+        if (horizontalVelocity.magnitude < currentMaxSpeed)
+        {
+            rb.AddForce(moveDirection * currentMoveForce, ForceMode.Acceleration);
+        }
+    }
+
+    private Vector3 GetCameraRelativeMovement(Vector2 input)
+    {
+        if (!cameraTransform)
+            return new Vector3(input.x, 0, input.y);
+
+        // Get camera forward and right vectors (projected on horizontal plane)
+        Vector3 cameraForward = cameraTransform.forward;
+        Vector3 cameraRight = cameraTransform.right;
+        
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+        
+        cameraForward = cameraForward.normalized;
+        cameraRight = cameraRight.normalized;
+
+        // Calculate movement direction relative to camera
+        return cameraForward * input.y + cameraRight * input.x;
     }
 
     private void HandleFlight()
@@ -264,25 +350,46 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * flyForce, ForceMode.Acceleration);
         }
 
-        // Horizontal damping während des Flugs für bessere Kontrolle
+        // Horizontal damping for better flight control
         Vector3 horizontalVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(-horizontalVelocity * flyHorizontalDamping, ForceMode.Acceleration);
     }
 
-    private void UpdateDrag()
+    private void ApplyBallPhysics()
     {
-        rb.linearDamping = IsSliding ? slideDrag : normalDrag;
+        // Apply ball rolling resistance
+        if (isGrounded && !IsSliding)
+        {
+            Vector3 horizontalVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            rb.linearVelocity = new Vector3(
+                horizontalVelocity.x * ballDrag,
+                rb.linearVelocity.y,
+                horizontalVelocity.z * ballDrag
+            );
+        }
     }
 
     private void PlaySound(AudioClip clip)
     {
         if (audioSource && clip)
             audioSource.PlayOneShot(clip);
+        
+        if (AudioManager.Instance != null && clip)
+        {
+            if (clip == jumpSound)
+                AudioManager.Instance.PlaySoundAtPlayer("Jump");
+            else if (clip == doubleJumpSound)
+                AudioManager.Instance.PlaySoundAtPlayer("DoubleJump");
+            else if (clip == landSound)
+                AudioManager.Instance.PlaySoundAtPlayer("Land");
+        }
     }
 
     // ===== Slide System =====
     private void StartSlide()
     {
+        if (!isGrounded || IsSliding) return;
+        
         if (slideCoroutine != null)
             StopCoroutine(slideCoroutine);
         
@@ -310,54 +417,109 @@ public class PlayerController : MonoBehaviour
         if (slideEffect)
             slideEffect.Play();
 
-        // Slide-Boost am Anfang
-        Vector3 slideDirection = transform.forward;
-        rb.AddForce(slideDirection * moveSpeed * 0.5f, ForceMode.Impulse);
+        // Slide boost in current movement direction
+        Vector3 slideDirection = rb.linearVelocity.normalized;
+        if (slideDirection.magnitude > 0.1f)
+        {
+            slideDirection.y = 0f; // Keep slide horizontal
+            rb.AddForce(slideDirection * moveForce * 0.8f, ForceMode.Impulse);
+        }
 
-        yield return null;
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySoundAtPlayer("Slide");
+
+        yield return new WaitForSeconds(0.5f); // Minimum slide duration
+        
         slideCoroutine = null;
     }
 
-    // ===== Input Actions =====
-    public void OnMove(InputValue value)
+    private void ShowDebugInfo()
     {
-        movementInput = value.Get<Vector2>();
+        Debug.Log($"Ball Status - Grounded: {isGrounded}, Flying: {IsFlying}, Speed: {rb.linearVelocity.magnitude:F2}");
+        Debug.Log($"Input: {movementInput}, Jump: {jumpPressed}, Fly: {flyPressed}");
+        Debug.Log($"Fly Energy: {flyEnergy:F2}/{maxFlyEnergy}");
     }
 
-    public void OnJump(InputValue value)
+    // ===== Public Methods =====
+    public void ResetBall()
     {
-        if (value.isPressed)
-            jumpRequested = true;
+        if (!rb) return;
+        
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        flyEnergy = maxFlyEnergy;
+        hasDoubleJumped = false;
+        IsSliding = false;
+        IsFlying = false;
+        
+        OnFlyEnergyChanged?.Invoke(flyEnergy, maxFlyEnergy);
     }
 
-    public void OnSprint(InputValue value)
+    public void AddForce(Vector3 force, ForceMode mode = ForceMode.Impulse)
     {
-        IsSprinting = value.isPressed;
+        if (rb)
+            rb.AddForce(force, mode);
     }
 
-    public void OnSlide(InputValue value)
+    public void SetPosition(Vector3 position)
     {
-        if (value.isPressed)
-            StartSlide();
-        else
-            StopSlide();
+        transform.position = position;
+        if (rb)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 
-    public void OnFly(InputValue value)
-    {
-        flyInputActive = value.isPressed;
-    }
-
-    // ===== Debug =====
+    // ===== Debug Visualization =====
     void OnDrawGizmosSelected()
     {
         // Ground check visualization
-        Vector3 origin = transform.position + Vector3.down * 0.5f;
         Gizmos.color = isGrounded ? Color.green : Color.red;
-        Gizmos.DrawWireSphere(origin + Vector3.down * groundCheckDistance, groundCheckRadius);
+        Gizmos.DrawWireSphere(transform.position, groundCheckRadius);
         
         // Max fly height
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + Vector3.up * maxFlyHeight, new Vector3(1, 0.1f, 1));
+        Vector3 flyHeightPos = transform.position;
+        flyHeightPos.y = maxFlyHeight;
+        Gizmos.DrawWireCube(flyHeightPos, new Vector3(2, 0.1f, 2));
+        
+        // Movement direction
+        if (Application.isPlaying && movementInput.magnitude > 0.1f)
+        {
+            Gizmos.color = Color.yellow;
+            Vector3 moveDir = GetCameraRelativeMovement(movementInput);
+            Gizmos.DrawRay(transform.position, moveDir * 2f);
+        }
+    }
+
+    // ===== Integration with other systems =====
+    void OnCollisionEnter(Collision collision)
+    {
+        // Handle bouncing effects or special collision behaviors
+        if (collision.gameObject.CompareTag("Bouncy"))
+        {
+            Vector3 bounceForce = collision.contacts[0].normal * -jumpForce * 0.5f;
+            rb.AddForce(bounceForce, ForceMode.Impulse);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        // Handle collectibles, checkpoints, etc.
+        if (other.CompareTag("Collectible"))
+        {
+            // This will be handled by the collectible itself
+            // but we can add ball-specific reactions here
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlaySoundAtPlayer("Collect");
+        }
+    }
+
+    // ===== Event cleanup =====
+    void OnDestroy()
+    {
+        if (slideCoroutine != null)
+            StopCoroutine(slideCoroutine);
     }
 }
