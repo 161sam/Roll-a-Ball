@@ -42,7 +42,7 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: 'img/docusaurus-social-card.jpg',
+  image: 'img/social-card.jpg',
     navbar: {
       title: 'Roll-a-Ball',
       logo: {
@@ -89,7 +89,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} Roll-a-Ball Projekt. Dokumentiert mit Docusaurus.`,
+      copyright: `© ${new Date().getFullYear()} Roll-a-Ball Projekt.`,
     },
     prism: {
       theme: prismThemes.github,
