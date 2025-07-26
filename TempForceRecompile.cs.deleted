@@ -1,0 +1,3 @@
+// Temporary file to force Unity recompilation
+using UnityEngine;
+public class TempForceRecompile : MonoBehaviour { }
