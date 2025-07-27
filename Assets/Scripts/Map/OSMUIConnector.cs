@@ -520,7 +520,7 @@ namespace RollABall.Map
             
             if (mapController)
             {
-                mapController.LoadMapFromCoordinates(lat, lon);
+                mapController.LoadMapFromCoordinates((float)lat, (float)lon);
             }
             else
             {

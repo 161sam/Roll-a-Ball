@@ -15,8 +15,8 @@ namespace RollABall.Editor
         [MenuItem("Roll-a-Ball/🎮 Roll-a-Ball Control Panel", priority = 1)]
         public static void ShowWindow()
         {
-            CleanRollABallMenu window = GetWindow<CleanRollABallMenu>("Roll-a-Ball Tools");
-            window.minSize = new Vector2(320, 500);
+            CleanRollABallMenu window = GetWindow<CleanRollABallMenu>("🎮 Roll-a-Ball Control Panel");
+            window.minSize = new Vector2(450, 650);
             window.Show();
         }
         
@@ -72,6 +72,10 @@ namespace RollABall.Editor
             {
                 OpenScene("Assets/Scenes/GeneratedLevel.unity");
             }
+            if (GUILayout.Button("Level OSM"))
+            {
+                OpenScene("Assets/Scenes/Level_OSM.unity");
+            }
             if (GUILayout.Button("Sample Scene"))
             {
                 OpenScene("Assets/Scenes/SampleScene.unity");
@@ -83,6 +87,21 @@ namespace RollABall.Editor
             // Level Generation Section
             EditorGUILayout.LabelField("🏗️ Level Generation", EditorStyles.boldLabel);
             DrawHorizontalLine();
+            
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("🎲 Generate Easy Level"))
+            {
+                GenerateLevel("Easy");
+            }
+            if (GUILayout.Button("⚙️ Generate Medium Level"))
+            {
+                GenerateLevel("Medium");
+            }
+            if (GUILayout.Button("🔥 Generate Hard Level"))
+            {
+                GenerateLevel("Hard");
+            }
+            EditorGUILayout.EndHorizontal();
             
             if (GUILayout.Button("📋 Create/Update Level Profiles"))
             {
@@ -114,6 +133,49 @@ namespace RollABall.Editor
             if (GUILayout.Button("🧼 Clear Console"))
             {
                 ClearConsole();
+            }
+            
+            GUILayout.Space(10);
+            
+            // Level Testing Section
+            EditorGUILayout.LabelField("🧪 Level Testing", EditorStyles.boldLabel);
+            DrawHorizontalLine();
+            
+            if (GUILayout.Button("🎮 Test Current Level"))
+            {
+                TestCurrentLevel();
+            }
+            
+            if (GUILayout.Button("🎯 Count Collectibles"))
+            {
+                CountCollectiblesInCurrentScene();
+            }
+            
+            if (GUILayout.Button("📋 Validate All Levels"))
+            {
+                ValidateAllLevels();
+            }
+            
+            GUILayout.Space(10);
+            
+            // Asset Management Section
+            EditorGUILayout.LabelField("🎨 Asset Management", EditorStyles.boldLabel);
+            DrawHorizontalLine();
+            
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("🎨 Update Materials"))
+            {
+                UpdateMaterials();
+            }
+            if (GUILayout.Button("🧩 Fix Prefabs"))
+            {
+                FixPrefabReferences();
+            }
+            EditorGUILayout.EndHorizontal();
+            
+            if (GUILayout.Button("🔊 Test Audio System"))
+            {
+                TestAudioSystem();
             }
             
             GUILayout.Space(10);
@@ -153,7 +215,6 @@ namespace RollABall.Editor
             DrawHorizontalLine();
             EditorGUILayout.HelpBox("Use 'Complete Cleanup' to fix all project issues at once.\\nUse 'Fix Current Scene' for scene-specific problems.", MessageType.Info);
             
-            // IMPORTANT: End the scroll view that was started at the beginning of OnGUI
             EditorGUILayout.EndScrollView();
         }
         
@@ -174,6 +235,45 @@ namespace RollABall.Editor
             else
             {
                 EditorUtility.DisplayDialog("Error", $"Scene not found: {scenePath}", "OK");
+            }
+        }
+        
+        private void GenerateLevel(string difficulty)
+        {
+            Debug.Log($"🎲 Generating {difficulty} level...");
+            
+            // Try to find LevelGenerator in current scene
+            LevelGenerator generator = Object.FindAnyObjectByType<LevelGenerator>();
+            if (generator != null)
+            {
+                // Try to find appropriate level profile
+                string profileName = $"{difficulty}Profile";
+                LevelProfile profile = Resources.Load<LevelProfile>($"LevelProfiles/{profileName}");
+                
+                if (profile != null)
+                {
+                    if (Application.isPlaying)
+                    {
+                        generator.GenerateLevel(profile);
+                        Debug.Log($"✅ {difficulty} level generated successfully!");
+                    }
+                    else
+                    {
+                        EditorUtility.DisplayDialog("Info", 
+                            "Level generation requires Play Mode.\\nPress Play and try again.", "OK");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"⚠️ Profile not found: {profileName}");
+                    EditorUtility.DisplayDialog("Error", 
+                        $"Level profile '{profileName}' not found!\\nPlease create Level Profiles first.", "OK");
+                }
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("Error", 
+                    "No LevelGenerator found in current scene!\\nPlease open GeneratedLevel scene first.", "OK");
             }
         }
         
@@ -216,6 +316,129 @@ namespace RollABall.Editor
             else
             {
                 EditorUtility.DisplayDialog("Info", "Level generation requires Play Mode.\\nPress Play and try again.", "OK");
+            }
+        }
+        
+        private void TestCurrentLevel()
+        {
+            if (Application.isPlaying)
+            {
+                Debug.Log("🧪 Already in play mode");
+                EditorUtility.DisplayDialog("Info", "Already in play mode!", "OK");
+                return;
+            }
+
+            EditorApplication.isPlaying = true;
+            Debug.Log("🧪 Testing current level in play mode");
+        }
+        
+        private void CountCollectiblesInCurrentScene()
+        {
+            CollectibleController[] collectibles = Object.FindObjectsByType<CollectibleController>(FindObjectsSortMode.None);
+            int collected = 0;
+            
+            foreach (var c in collectibles)
+            {
+                if (c.IsCollected) collected++;
+            }
+            
+            int remaining = collectibles.Length - collected;
+            
+            string message = $"🎯 Collectibles Report:\\n\\nTotal: {collectibles.Length}\\nCollected: {collected}\\nRemaining: {remaining}";
+            Debug.Log(message);
+            EditorUtility.DisplayDialog("Collectibles Count", message, "OK");
+        }
+        
+        private void ValidateAllLevels()
+        {
+            Debug.Log("📋 Starting level validation...");
+            
+            string[] levelNames = { "Level1", "Level2", "Level3", "GeneratedLevel", "Level_OSM", "MiniGame" };
+            int validLevels = 0;
+            System.Text.StringBuilder report = new System.Text.StringBuilder();
+            report.AppendLine("📋 Level Validation Report:");
+            report.AppendLine("============================");
+            
+            foreach (string levelName in levelNames)
+            {
+                string scenePath = $"Assets/Scenes/{levelName}.unity";
+                if (File.Exists(scenePath))
+                {
+                    validLevels++;
+                    Debug.Log($"✅ {levelName} - Found");
+                    report.AppendLine($"✅ {levelName} - Found");
+                }
+                else
+                {
+                    Debug.LogWarning($"❌ {levelName} - Missing");
+                    report.AppendLine($"❌ {levelName} - Missing");
+                }
+            }
+            
+            report.AppendLine("============================");
+            report.AppendLine($"Result: {validLevels}/{levelNames.Length} levels found");
+            
+            Debug.Log(report.ToString());
+            EditorUtility.DisplayDialog("Level Validation", 
+                $"Validation complete: {validLevels}/{levelNames.Length} levels found\\n\\nCheck Console for details.", "OK");
+        }
+        
+        private void UpdateMaterials()
+        {
+            Debug.Log("🎨 Updating materials...");
+            
+            Renderer[] renderers = Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None);
+            int updated = 0;
+            
+            foreach (var renderer in renderers)
+            {
+                if (renderer.gameObject.name.Contains("Ground"))
+                {
+                    Material steampunkMaterial = Resources.Load<Material>("SteamGroundMaterial");
+                    if (steampunkMaterial)
+                    {
+                        renderer.material = steampunkMaterial;
+                        updated++;
+                    }
+                }
+            }
+            
+            string message = $"🎨 Material Update Complete\\n\\nUpdated {updated} materials";
+            Debug.Log(message);
+            EditorUtility.DisplayDialog("Materials Updated", message, "OK");
+        }
+        
+        private void FixPrefabReferences()
+        {
+            Debug.Log("🧩 Fixing prefab references...");
+            
+            // Check for LevelGenerator and fix its prefab references
+            LevelGenerator generator = Object.FindAnyObjectByType<LevelGenerator>();
+            if (generator != null)
+            {
+                ProjectCleanupAndFix.AssignPrefabReferences(generator);
+                Debug.Log("🧩 Prefab references fixed for LevelGenerator");
+            }
+            
+            EditorUtility.DisplayDialog("Prefabs Fixed", "Prefab reference fix completed!", "OK");
+        }
+        
+        private void TestAudioSystem()
+        {
+            AudioManager audioManager = Object.FindAnyObjectByType<AudioManager>();
+            string message;
+            
+            if (audioManager)
+            {
+                message = "🔊 AudioManager found - System OK";
+                Debug.Log(message);
+                EditorUtility.DisplayDialog("Audio Test", message, "OK");
+            }
+            else
+            {
+                message = "⚠️ No AudioManager found in scene";
+                Debug.LogWarning(message);
+                EditorUtility.DisplayDialog("Audio Test", message, "OK");
             }
         }
         
@@ -385,6 +608,9 @@ namespace RollABall.Editor
         
         [MenuItem("Roll-a-Ball/Scenes/Generated Level", priority = 103)]
         public static void OpenGeneratedLevel() => OpenScene("Assets/Scenes/GeneratedLevel.unity");
+        
+        [MenuItem("Roll-a-Ball/Scenes/Level OSM", priority = 104)]
+        public static void OpenLevelOSM() => OpenScene("Assets/Scenes/Level_OSM.unity");
         
         private static void OpenScene(string scenePath)
         {

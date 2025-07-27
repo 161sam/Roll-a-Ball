@@ -617,7 +617,7 @@ GameObject:
   m_Component:
   - component: {fileID: 538949939}
   - component: {fileID: 538949938}
-  - component: {fileID: 538949937}
+  - component: {fileID: 538949940}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -625,26 +625,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &538949937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538949936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &538949938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,6 +655,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &538949940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538949936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!1001 &636404509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1481,6 +1492,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1833878092868309182, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
   m_PrefabInstance: {fileID: 1496142296}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1496142298 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8554796287664602159, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
+  m_PrefabInstance: {fileID: 1496142296}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1504744994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1739,7 +1755,7 @@ MonoBehaviour:
   autoFindGoalZone: 1
   levelCollectibles: []
   autoFindCollectibles: 1
-  uiController: {fileID: 0}
+  uiController: {fileID: 1851847472}
   debugMode: 0
 --- !u!4 &1717064830
 Transform:
@@ -1960,7 +1976,7 @@ MonoBehaviour:
   wallPrefab: {fileID: 1212140643362234136, guid: 5c482d0efaa7d9b6aae5744c4ff53009, type: 3}
   collectiblePrefab: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   goalZonePrefab: {fileID: 7897462713699335167, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 1496142298}
   levelContainer: {fileID: 0}
   groundContainer: {fileID: 0}
   wallContainer: {fileID: 0}
@@ -1980,7 +1996,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1851847473}
   - component: {fileID: 1851847472}
-  - component: {fileID: 1851847474}
   m_Layer: 0
   m_Name: UIController
   m_TagString: Untagged
@@ -1997,19 +2012,74 @@ MonoBehaviour:
   m_GameObject: {fileID: 1851847471}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65296d9c86b207ae292e94aedda3d489, type: 3}
+  m_Script: {fileID: 11500000, guid: b0726f5f5b3fdc8f5bbd903c383cfd95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  flyBar: {fileID: 0}
-  flyText: {fileID: 0}
-  collectibleText: {fileID: 0}
-  levelTypeText: {fileID: 0}
-  notificationText: {fileID: 0}
-  locationText: {fileID: 0}
   gameUIPanel: {fileID: 0}
-  regenerateMapButton: {fileID: 0}
-  backToMenuButton: {fileID: 0}
+  collectibleCountText: {fileID: 0}
+  scoreText: {fileID: 0}
+  levelNameText: {fileID: 0}
+  timerText: {fileID: 0}
+  flyEnergyBar: {fileID: 0}
+  speedometerPanel: {fileID: 0}
+  speedText: {fileID: 0}
+  mainMenuPanel: {fileID: 0}
+  continueButton: {fileID: 0}
+  newGameButton: {fileID: 0}
+  loadGameButton: {fileID: 0}
+  settingsButton: {fileID: 0}
+  achievementsButton: {fileID: 0}
+  quitButton: {fileID: 0}
+  versionText: {fileID: 0}
+  lastPlayedText: {fileID: 0}
+  pauseMenuPanel: {fileID: 0}
+  resumeButton: {fileID: 0}
+  mainMenuButton: {fileID: 0}
+  pauseSettingsButton: {fileID: 0}
+  restartLevelButton: {fileID: 0}
+  saveLoadPanel: {fileID: 0}
+  saveSlotContainer: {fileID: 0}
+  saveSlotPrefab: {fileID: 0}
+  saveLoadBackButton: {fileID: 0}
+  saveLoadTitleText: {fileID: 0}
+  settingsPanel: {fileID: 0}
+  masterVolumeSlider: {fileID: 0}
+  musicVolumeSlider: {fileID: 0}
+  sfxVolumeSlider: {fileID: 0}
+  qualityDropdown: {fileID: 0}
+  languageDropdown: {fileID: 0}
+  particleEffectsToggle: {fileID: 0}
+  settingsBackButton: {fileID: 0}
+  resetSettingsButton: {fileID: 0}
+  achievementPanel: {fileID: 0}
+  achievementContainer: {fileID: 0}
+  achievementItemPrefab: {fileID: 0}
+  achievementBackButton: {fileID: 0}
+  achievementProgressText: {fileID: 0}
+  achievementFilterDropdown: {fileID: 0}
+  notificationPanel: {fileID: 0}
+  notificationText: {fileID: 0}
+  notificationIcon: {fileID: 0}
+  notificationDuration: 3
+  levelCompletePanel: {fileID: 0}
+  levelCompleteText: {fileID: 0}
+  finalScoreText: {fileID: 0}
+  completionTimeText: {fileID: 0}
+  bonusText: {fileID: 0}
+  nextLevelButton: {fileID: 0}
+  levelSelectButton: {fileID: 0}
+  levelCompleteMainMenuButton: {fileID: 0}
+  statisticsPanel: {fileID: 0}
+  totalPlayTimeText: {fileID: 0}
+  totalCollectiblesText: {fileID: 0}
+  totalJumpsText: {fileID: 0}
+  maxSpeedText: {fileID: 0}
+  maxHeightText: {fileID: 0}
+  statisticsBackButton: {fileID: 0}
+  loadingPanel: {fileID: 0}
+  loadingProgressBar: {fileID: 0}
+  loadingText: {fileID: 0}
+  loadingIcon: {fileID: 0}
 --- !u!4 &1851847473
 Transform:
   m_ObjectHideFlags: 0
@@ -2025,18 +2095,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1851847474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851847471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919c146ad187446c78cdee8d874ea03d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1859081805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2620,17 +2678,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1496142297}
-  autoFindPlayer: 1
   offset: {x: 0, y: 10, z: -15}
   followSpeed: 5
   rotationSpeed: 2
-  lookAtTarget: 1
-  lookOffset: {x: 0, y: 1, z: 0}
-  smoothMovement: 1
-  minDistance: 5
-  maxDistance: 30
-  shakeIntensity: 0
-  shakeDuration: 0
+  autoFindPlayer: 1
+  playerTag: Player
   minHeight: 2
   maxHeight: 50
 --- !u!81 &2120372088

@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 namespace RollABall.Map
 {
     /// <summary>
-    /// Generates Unity GameObjects from OpenStreetMap data
-    /// Applies Steampunk theming and integrates with existing Roll-a-Ball systems
+    /// Enhanced MapGenerator with segment-based road generation
+    /// Generates realistic road networks from OSM data with proper width and materials
     /// </summary>
     public class MapGenerator : MonoBehaviour
     {
@@ -18,22 +19,50 @@ namespace RollABall.Map
         [SerializeField] private GameObject goalZonePrefab;
         [SerializeField] private GameObject playerPrefab;
         
-        [Header("Steampunk Materials")]
-        [SerializeField] private Material roadMaterial;
-        [SerializeField] private Material buildingMaterial;
+        [Header("Road Materials by Type")]
+        [SerializeField] private Material roadMotorway;
+        [SerializeField] private Material roadPrimary;
+        [SerializeField] private Material roadSecondary;
+        [SerializeField] private Material roadResidential;
+        [SerializeField] private Material roadFootway;
+        [SerializeField] private Material roadDefault;
+        
+        [Header("Building Materials by Type")]
+        [SerializeField] private Material residentialMaterial;
+        [SerializeField] private Material industrialMaterial;
+        [SerializeField] private Material commercialMaterial;
+        [SerializeField] private Material officeMaterial;
+        [SerializeField] private Material defaultBuildingMaterial;
+        
+        [Header("Area Materials")]
         [SerializeField] private Material parkMaterial;
         [SerializeField] private Material waterMaterial;
+        [SerializeField] private Material forestMaterial;
+        [SerializeField] private Material grassMaterial;
+        [SerializeField] private Material defaultAreaMaterial;
         
-        [Header("Generation Settings")]
-        [SerializeField] private float roadWidth = 2.0f;
+        [Header("Steampunk Decoration Prefabs")]
+        [SerializeField] private GameObject gearPrefab;
+        [SerializeField] private GameObject steamPipePrefab;
+        [SerializeField] private GameObject chimneySmokeParticles;
+        
+        [Header("Road Settings")]
+        [SerializeField] private float roadHeightOffset = 0.05f; // Height above ground
+        [SerializeField] private bool enableRoadColliders = true;
+        [SerializeField] private bool enableFootwayColliders = false; // Footways typically don't block player
+        
+        [Header("Building Generation Settings")]
         [SerializeField] private float buildingHeightMultiplier = 1.0f;
         [SerializeField] private int collectiblesPerBuilding = 2;
         [SerializeField] private bool enableSteampunkEffects = true;
         [SerializeField] private LayerMask groundLayer = 1;
+        [SerializeField] private float minimumBuildingSize = 2.0f;
+        [SerializeField] private bool enablePolygonalBuildings = true;
         
         [Header("Performance Settings")]
         [SerializeField] private bool useBatching = true;
         [SerializeField] private int maxBuildingsPerFrame = 5;
+        [SerializeField] private int maxRoadSegmentsPerFrame = 10;
         
         // Generation state
         private Transform mapContainer;
@@ -48,12 +77,34 @@ namespace RollABall.Map
         public event System.Action<string> OnGenerationError;
         
         // Collections for batching
-        private List<CombineInstance> roadMeshes = new List<CombineInstance>();
-        private List<CombineInstance> buildingMeshes = new List<CombineInstance>();
+        private Dictionary<string, List<CombineInstance>> roadMeshesByType = new Dictionary<string, List<CombineInstance>>();
+        private Dictionary<string, List<CombineInstance>> buildingMeshesByType = new Dictionary<string, List<CombineInstance>>();
         
         private void Awake()
         {
             CreateMapContainer();
+            InitializeMeshCollections();
+        }
+        
+        /// <summary>
+        /// Initialize collections for mesh batching by type
+        /// </summary>
+        private void InitializeMeshCollections()
+        {
+            roadMeshesByType.Clear();
+            roadMeshesByType["motorway"] = new List<CombineInstance>();
+            roadMeshesByType["primary"] = new List<CombineInstance>();
+            roadMeshesByType["secondary"] = new List<CombineInstance>();
+            roadMeshesByType["residential"] = new List<CombineInstance>();
+            roadMeshesByType["footway"] = new List<CombineInstance>();
+            roadMeshesByType["default"] = new List<CombineInstance>();
+            
+            buildingMeshesByType.Clear();
+            buildingMeshesByType["residential"] = new List<CombineInstance>();
+            buildingMeshesByType["industrial"] = new List<CombineInstance>();
+            buildingMeshesByType["commercial"] = new List<CombineInstance>();
+            buildingMeshesByType["office"] = new List<CombineInstance>();
+            buildingMeshesByType["default"] = new List<CombineInstance>();
         }
         
         /// <summary>
@@ -94,7 +145,7 @@ namespace RollABall.Map
             isGenerating = true;
             OnMapGenerationStarted?.Invoke(currentMapData);
             
-            Debug.Log("[MapGenerator] Starting map generation...");
+            Debug.Log("[MapGenerator] Starting segmented map generation...");
             
             bool hasError = false;
             string errorMessage = "";
@@ -103,6 +154,7 @@ namespace RollABall.Map
             {
                 // Clear existing content
                 ClearExistingMap();
+                InitializeMeshCollections();
             }
             catch (System.Exception e)
             {
@@ -117,11 +169,11 @@ namespace RollABall.Map
                 // Generate ground plane
                 yield return StartCoroutine(GenerateGroundPlane());
                 
-                // Generate roads
-                yield return StartCoroutine(GenerateRoads());
+                // Generate segmented roads
+                yield return StartCoroutine(GenerateSegmentedRoads());
                 
-                // Generate buildings
-                yield return StartCoroutine(GenerateBuildings());
+                // Generate buildings with polygonal meshes
+                yield return StartCoroutine(GeneratePolygonalBuildings());
                 
                 // Generate areas (parks, water, etc.)
                 yield return StartCoroutine(GenerateAreas());
@@ -147,7 +199,7 @@ namespace RollABall.Map
                     yield return StartCoroutine(AddSteampunkAtmosphere());
                 }
                 
-                Debug.Log("[MapGenerator] Map generation completed successfully");
+                Debug.Log("[MapGenerator] Segmented map generation completed successfully");
                 OnMapGenerationCompleted?.Invoke();
             }
             else
@@ -179,34 +231,197 @@ namespace RollABall.Map
         }
         
         /// <summary>
-        /// Generate road geometry from OSM way data
+        /// Generate segmented road geometry from OSM way data
+        /// Processes each road segment individually with proper width and materials
         /// </summary>
-        private IEnumerator GenerateRoads()
+        private IEnumerator GenerateSegmentedRoads()
         {
-            Debug.Log($"[MapGenerator] Generating {currentMapData.roads.Count} roads...");
+            Debug.Log($"[MapGenerator] Generating {currentMapData.roads.Count} roads with segments...");
             
             Transform roadContainer = new GameObject("Roads").transform;
             roadContainer.SetParent(mapContainer);
             
-            for (int i = 0; i < currentMapData.roads.Count; i++)
+            int processedSegments = 0;
+            
+            for (int roadIndex = 0; roadIndex < currentMapData.roads.Count; roadIndex++)
             {
-                OSMWay road = currentMapData.roads[i];
-                GenerateRoadFromWay(road, roadContainer);
+                OSMWay road = currentMapData.roads[roadIndex];
                 
-                // Yield every few roads to prevent frame drops
-                if (i % 3 == 0)
-                    yield return null;
+                // Extract highway type from tags
+                string highwayType = GetHighwayType(road);
+                
+                // Generate segments for this road
+                for (int nodeIndex = 0; nodeIndex < road.nodes.Count - 1; nodeIndex++)
+                {
+                    OSMNode startNode = road.nodes[nodeIndex];
+                    OSMNode endNode = road.nodes[nodeIndex + 1];
+                    
+                    // Create segment mesh
+                    GameObject segment = CreateRoadSegment(startNode, endNode, highwayType, roadIndex, nodeIndex);
+                    if (segment != null)
+                    {
+                        segment.transform.SetParent(roadContainer);
+                    }
+                    
+                    processedSegments++;
+                    
+                    // Yield every few segments to prevent frame drops
+                    if (processedSegments >= maxRoadSegmentsPerFrame)
+                    {
+                        processedSegments = 0;
+                        yield return null;
+                    }
+                }
             }
             
+            Debug.Log($"[MapGenerator] Generated {processedSegments} road segments total");
             yield return null;
         }
         
         /// <summary>
-        /// Generate building geometry from OSM building data
+        /// Create a single road segment between two nodes
         /// </summary>
-        private IEnumerator GenerateBuildings()
+        private GameObject CreateRoadSegment(OSMNode startNode, OSMNode endNode, string highwayType, int roadIndex, int segmentIndex)
         {
-            Debug.Log($"[MapGenerator] Generating {currentMapData.buildings.Count} buildings...");
+            // Convert OSM coordinates to Unity world positions
+            Vector3 startPos = currentMapData.LatLonToWorldPosition(startNode.lat, startNode.lon);
+            Vector3 endPos = currentMapData.LatLonToWorldPosition(endNode.lat, endNode.lon);
+            
+            // Skip segments that are too short (avoid visual noise)
+            float segmentLength = Vector3.Distance(startPos, endPos);
+            if (segmentLength < 0.1f) return null;
+            
+            // Calculate segment properties
+            Vector3 segmentCenter = (startPos + endPos) / 2f;
+            segmentCenter.y = roadHeightOffset; // Place slightly above ground
+            
+            Vector3 direction = (endPos - startPos).normalized;
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            
+            float segmentWidth = GetRoadWidth(highwayType);
+            
+            // Create segment GameObject
+            GameObject segment = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            segment.name = $"road_{roadIndex}_{segmentIndex}_{highwayType}";
+            segment.transform.position = segmentCenter;
+            segment.transform.rotation = rotation;
+            segment.transform.localScale = new Vector3(segmentWidth, 0.1f, segmentLength);
+            
+            // Apply material
+            Material roadMat = GetRoadMaterial(highwayType);
+            if (roadMat != null)
+            {
+                segment.GetComponent<MeshRenderer>().material = roadMat;
+            }
+            
+            // Configure collider
+            ConfigureRoadCollider(segment, highwayType);
+            
+            return segment;
+        }
+        
+        /// <summary>
+        /// Get highway type from OSM way tags
+        /// </summary>
+        private string GetHighwayType(OSMWay road)
+        {
+            if (road.tags.ContainsKey("highway"))
+            {
+                string highway = road.tags["highway"];
+                
+                // Normalize highway types
+                return highway switch
+                {
+                    "motorway" or "trunk" => "motorway",
+                    "primary" or "primary_link" => "primary", 
+                    "secondary" or "secondary_link" => "secondary",
+                    "residential" or "tertiary" or "unclassified" => "residential",
+                    "footway" or "cycleway" or "path" or "pedestrian" => "footway",
+                    _ => "default"
+                };
+            }
+            
+            return "default";
+        }
+        
+        /// <summary>
+        /// Get road width based on highway type
+        /// </summary>
+        private float GetRoadWidth(string highwayType)
+        {
+            return highwayType switch
+            {
+                "motorway" => 5.5f,    // Wide highways
+                "primary" => 4.0f,     // Main roads
+                "secondary" => 3.0f,   // Secondary roads
+                "residential" => 2.0f, // Neighborhood streets
+                "footway" => 1.0f,     // Pedestrian paths
+                _ => 2.0f              // Default width
+            };
+        }
+        
+        /// <summary>
+        /// Get material for road type
+        /// </summary>
+        private Material GetRoadMaterial(string highwayType)
+        {
+            return highwayType switch
+            {
+                "motorway" => roadMotorway ?? roadDefault,
+                "primary" => roadPrimary ?? roadDefault,
+                "secondary" => roadSecondary ?? roadDefault,
+                "residential" => roadResidential ?? roadDefault,
+                "footway" => roadFootway ?? roadDefault,
+                _ => roadDefault
+            };
+        }
+        
+        /// <summary>
+        /// Configure collider for road segment based on type
+        /// </summary>
+        private void ConfigureRoadCollider(GameObject segment, string highwayType)
+        {
+            if (!enableRoadColliders)
+            {
+                // Remove collider completely if disabled
+                var collider = segment.GetComponent<Collider>();
+                if (collider != null)
+                {
+                    if (Application.isPlaying)
+                        Destroy(collider);
+                    else
+                        DestroyImmediate(collider);
+                }
+                return;
+            }
+            
+            // Special handling for footways
+            if (highwayType == "footway" && !enableFootwayColliders)
+            {
+                var collider = segment.GetComponent<Collider>();
+                if (collider != null)
+                {
+                    if (Application.isPlaying)
+                        Destroy(collider);
+                    else
+                        DestroyImmediate(collider);
+                }
+                return;
+            }
+            
+            // Ensure the segment has a BoxCollider (more performance-friendly than MeshCollider for simple shapes)
+            if (segment.GetComponent<BoxCollider>() == null)
+            {
+                segment.AddComponent<BoxCollider>();
+            }
+        }
+        
+        /// <summary>
+        /// Generate polygonal building geometry from OSM building data with proper extrusion
+        /// </summary>
+        private IEnumerator GeneratePolygonalBuildings()
+        {
+            Debug.Log($"[MapGenerator] Generating {currentMapData.buildings.Count} polygonal buildings...");
             
             Transform buildingContainer = new GameObject("Buildings").transform;
             buildingContainer.SetParent(mapContainer);
@@ -215,7 +430,22 @@ namespace RollABall.Map
             for (int i = 0; i < currentMapData.buildings.Count; i++)
             {
                 OSMBuilding building = currentMapData.buildings[i];
-                GenerateBuildingFromData(building, buildingContainer);
+                
+                // Ensure building has calculated height and type
+                building.CalculateHeight();
+                
+                GameObject buildingObject = GenerateExtrudedBuildingMesh(building);
+                if (buildingObject != null)
+                {
+                    buildingObject.transform.SetParent(buildingContainer);
+                    buildingObject.name = $"Building_{building.id}_{building.buildingType}";
+                    
+                    // Add Steampunk elements for appropriate building types
+                    if (enableSteampunkEffects && ShouldAddSteampunkElements(building.buildingType))
+                    {
+                        AddSteampunkElementsToBuilding(buildingObject, building);
+                    }
+                }
                 
                 processed++;
                 if (processed >= maxBuildingsPerFrame)
@@ -310,90 +540,118 @@ namespace RollABall.Map
         }
         
         /// <summary>
-        /// Generate road mesh from OSM way
+        /// Generate extruded building mesh from OSM building footprint
         /// </summary>
-        private void GenerateRoadFromWay(OSMWay road, Transform parent)
+        private GameObject GenerateExtrudedBuildingMesh(OSMBuilding building)
         {
-            if (road.nodes.Count < 2) return;
-            
-            List<Vector3> roadPoints = new List<Vector3>();
-            for (int i = 0; i < road.nodes.Count; i++)
+            if (building.nodes.Count < 4)
             {
-                Vector3 worldPos = currentMapData.LatLonToWorldPosition(road.nodes[i].lat, road.nodes[i].lon);
-                roadPoints.Add(worldPos);
+                Debug.LogWarning($"[MapGenerator] Building {building.id} has insufficient points ({building.nodes.Count}), using fallback");
+                return GenerateFallbackBuildingMesh(building);
             }
             
-            GameObject roadObject = CreateRoadMesh(roadPoints, roadWidth);
-            roadObject.transform.SetParent(parent);
-            roadObject.name = $"Road_{road.id}";
-            
-            // Apply road material
-            if (roadMaterial != null)
-            {
-                roadObject.GetComponent<MeshRenderer>().material = roadMaterial;
-            }
-            
-            // Add collider for physics
-            roadObject.AddComponent<MeshCollider>();
-        }
-        
-        /// <summary>
-        /// Generate building mesh from OSM building data
-        /// </summary>
-        private void GenerateBuildingFromData(OSMBuilding building, Transform parent)
-        {
-            if (building.nodes.Count < 4) return; // Need at least 3 points + closing point
-            
-            List<Vector3> buildingPoints = new List<Vector3>();
-            for (int i = 0; i < building.nodes.Count - 1; i++) // Skip last point (same as first)
+            // Convert OSM nodes to world positions
+            List<Vector3> worldPositions = new List<Vector3>();
+            for (int i = 0; i < building.nodes.Count - 1; i++) // Skip last node (same as first in closed ways)
             {
                 Vector3 worldPos = currentMapData.LatLonToWorldPosition(building.nodes[i].lat, building.nodes[i].lon);
-                buildingPoints.Add(worldPos);
+                worldPositions.Add(worldPos);
             }
             
-            GameObject buildingObject = CreateBuildingMesh(buildingPoints, building.height * buildingHeightMultiplier);
-            buildingObject.transform.SetParent(parent);
-            buildingObject.name = $"Building_{building.id}";
-            
-            // Apply building material
-            if (buildingMaterial != null)
+            if (worldPositions.Count < 3)
             {
-                buildingObject.GetComponent<MeshRenderer>().material = buildingMaterial;
+                return GenerateFallbackBuildingMesh(building);
             }
             
-            // Add collider
-            buildingObject.AddComponent<MeshCollider>();
-            
-            // Add Steampunk elements
-            if (enableSteampunkEffects)
+            try
             {
-                AddSteampunkElementsToBuilding(buildingObject, building.buildingType);
+                if (enablePolygonalBuildings)
+                {
+                    return CreateExtrudedPolygonMesh(worldPositions, building);
+                }
+                else
+                {
+                    return GenerateFallbackBuildingMesh(building);
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"[MapGenerator] Failed to create polygonal mesh for building {building.id}: {e.Message}. Using fallback.");
+                return GenerateFallbackBuildingMesh(building);
             }
         }
         
         /// <summary>
-        /// Generate area mesh (parks, water, etc.)
+        /// Generate polygon-based area mesh from OSM data (parks, water, forests, etc.)
         /// </summary>
         private void GenerateAreaFromData(OSMArea area, Transform parent)
         {
-            if (area.nodes.Count < 4) return;
+            if (area.nodes.Count < 3)
+            {
+                Debug.LogWarning($"[MapGenerator] Area {area.id} has insufficient nodes ({area.nodes.Count}), skipping");
+                return;
+            }
             
+            // Ensure area type is determined
+            if (string.IsNullOrEmpty(area.areaType))
+            {
+                area.DetermineAreaType();
+            }
+            
+            // Convert OSM nodes to world positions
             List<Vector3> areaPoints = new List<Vector3>();
-            for (int i = 0; i < area.nodes.Count - 1; i++)
+            int nodesToProcess = area.IsClosed() ? area.nodes.Count - 1 : area.nodes.Count;
+            
+            for (int i = 0; i < nodesToProcess; i++)
             {
                 Vector3 worldPos = currentMapData.LatLonToWorldPosition(area.nodes[i].lat, area.nodes[i].lon);
                 areaPoints.Add(worldPos);
             }
             
+            // Create triangulated area mesh
             GameObject areaObject = CreateAreaMesh(areaPoints);
+            if (areaObject == null)
+            {
+                Debug.LogWarning($"[MapGenerator] Failed to create area mesh for area {area.id}");
+                return;
+            }
+            
             areaObject.transform.SetParent(parent);
             areaObject.name = $"Area_{area.areaType}_{area.id}";
             
             // Apply appropriate material based on area type
             Material areaMat = GetMaterialForAreaType(area.areaType);
-            if (areaMat != null)
+            MeshRenderer renderer = areaObject.GetComponent<MeshRenderer>();
+            if (renderer != null && areaMat != null)
             {
-                areaObject.GetComponent<MeshRenderer>().material = areaMat;
+                renderer.material = areaMat;
+            }
+            
+            // Add optional collider for water areas (can be used for gameplay mechanics)
+            if (area.areaType == "water" || area.areaType == "river" || area.areaType == "lake")
+            {
+                AddWaterAreaCollider(areaObject);
+            }
+            
+            Debug.Log($"[MapGenerator] Generated area: {area.areaType} with {areaPoints.Count} points");
+        }
+        
+        /// <summary>
+        /// Add optional trigger collider to water areas for gameplay mechanics
+        /// </summary>
+        private void AddWaterAreaCollider(GameObject waterObject)
+        {
+            if (waterObject == null) return;
+            
+            MeshFilter meshFilter = waterObject.GetComponent<MeshFilter>();
+            if (meshFilter != null && meshFilter.sharedMesh != null)
+            {
+                MeshCollider meshCollider = waterObject.AddComponent<MeshCollider>();
+                meshCollider.sharedMesh = meshFilter.sharedMesh;
+                meshCollider.isTrigger = true; // Use as trigger for potential respawn mechanics
+                meshCollider.tag = "Water"; // Tag for identification
+                
+                Debug.Log($"[MapGenerator] Added water collider to {waterObject.name}");
             }
         }
         
@@ -523,72 +781,352 @@ namespace RollABall.Map
             return ground;
         }
         
-        private GameObject CreateRoadMesh(List<Vector3> points, float width)
+        /// <summary>
+        /// Create extruded polygon mesh from building footprint points
+        /// </summary>
+        private GameObject CreateExtrudedPolygonMesh(List<Vector3> footprint, OSMBuilding building)
         {
-            // Simplified road mesh creation
-            GameObject road = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            if (points.Count >= 2)
+            float height = building.height * buildingHeightMultiplier;
+            
+            // Triangulate the footprint for the roof and floor
+            List<int> triangles = TriangulatePolygon(footprint);
+            if (triangles.Count == 0)
             {
-                Vector3 start = points[0];
-                Vector3 end = points[points.Count - 1];
-                Vector3 center = (start + end) / 2f;
-                float length = Vector3.Distance(start, end);
-                
-                road.transform.position = center;
-                road.transform.LookAt(end);
-                road.transform.localScale = new Vector3(width, 0.1f, length);
+                throw new System.Exception("Failed to triangulate building footprint");
             }
-            return road;
-        }
-        
-        private GameObject CreateBuildingMesh(List<Vector3> points, float height)
-        {
-            // Simplified building creation
-            GameObject building = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            if (points.Count > 0)
+            
+            // Create mesh data
+            List<Vector3> vertices = new List<Vector3>();
+            List<int> meshTriangles = new List<int>();
+            List<Vector3> normals = new List<Vector3>();
+            List<Vector2> uvs = new List<Vector2>();
+            
+            // Add floor vertices (y = 0)
+            foreach (Vector3 point in footprint)
             {
-                Vector3 center = Vector3.zero;
-                foreach (Vector3 point in points)
+                vertices.Add(new Vector3(point.x, 0, point.z));
+                normals.Add(Vector3.down);
+                uvs.Add(new Vector2(point.x * 0.1f, point.z * 0.1f));
+            }
+            
+            // Add roof vertices (y = height)
+            foreach (Vector3 point in footprint)
+            {
+                vertices.Add(new Vector3(point.x, height, point.z));
+                normals.Add(Vector3.up);
+                uvs.Add(new Vector2(point.x * 0.1f, point.z * 0.1f));
+            }
+            
+            int roofVertexOffset = footprint.Count;
+            
+            // Add floor triangles (inverted winding for downward facing)
+            for (int i = triangles.Count - 3; i >= 0; i -= 3)
+            {
+                meshTriangles.Add(triangles[i]);
+                meshTriangles.Add(triangles[i + 1]);
+                meshTriangles.Add(triangles[i + 2]);
+            }
+            
+            // Add roof triangles
+            foreach (int triangle in triangles)
+            {
+                meshTriangles.Add(triangle + roofVertexOffset);
+            }
+            
+            // Generate walls
+            for (int i = 0; i < footprint.Count; i++)
+            {
+                int nextIndex = (i + 1) % footprint.Count;
+                
+                // Current wall vertices
+                int wallVertexStart = vertices.Count;
+                
+                // Bottom edge
+                vertices.Add(new Vector3(footprint[i].x, 0, footprint[i].z));
+                vertices.Add(new Vector3(footprint[nextIndex].x, 0, footprint[nextIndex].z));
+                
+                // Top edge
+                vertices.Add(new Vector3(footprint[nextIndex].x, height, footprint[nextIndex].z));
+                vertices.Add(new Vector3(footprint[i].x, height, footprint[i].z));
+                
+                // Calculate wall normal
+                Vector3 wallDirection = footprint[nextIndex] - footprint[i];
+                Vector3 wallNormal = Vector3.Cross(wallDirection, Vector3.up).normalized;
+                
+                // Add normals for wall
+                for (int j = 0; j < 4; j++)
                 {
-                    center += point;
+                    normals.Add(wallNormal);
                 }
-                center /= points.Count;
-                center.y = height / 2f;
                 
-                building.transform.position = center;
-                building.transform.localScale = new Vector3(5f, height, 5f);
+                // Add UVs for wall
+                float wallLength = Vector3.Distance(footprint[i], footprint[nextIndex]);
+                uvs.Add(new Vector2(0, 0));
+                uvs.Add(new Vector2(wallLength * 0.1f, 0));
+                uvs.Add(new Vector2(wallLength * 0.1f, height * 0.1f));
+                uvs.Add(new Vector2(0, height * 0.1f));
+                
+                // Add wall triangles
+                meshTriangles.Add(wallVertexStart);
+                meshTriangles.Add(wallVertexStart + 1);
+                meshTriangles.Add(wallVertexStart + 2);
+                
+                meshTriangles.Add(wallVertexStart);
+                meshTriangles.Add(wallVertexStart + 2);
+                meshTriangles.Add(wallVertexStart + 3);
             }
-            return building;
+            
+            // Create the mesh
+            Mesh buildingMesh = new Mesh();
+            buildingMesh.name = $"Building_{building.id}_Mesh";
+            buildingMesh.vertices = vertices.ToArray();
+            buildingMesh.triangles = meshTriangles.ToArray();
+            buildingMesh.normals = normals.ToArray();
+            buildingMesh.uv = uvs.ToArray();
+            
+            // Create GameObject
+            GameObject buildingObject = new GameObject();
+            MeshFilter meshFilter = buildingObject.AddComponent<MeshFilter>();
+            MeshRenderer meshRenderer = buildingObject.AddComponent<MeshRenderer>();
+            MeshCollider meshCollider = buildingObject.AddComponent<MeshCollider>();
+            
+            meshFilter.mesh = buildingMesh;
+            meshRenderer.material = GetMaterialForBuildingType(building.buildingType);
+            meshCollider.sharedMesh = buildingMesh;
+            
+            // Position building
+            Vector3 buildingCenter = CalculateCentroid(footprint);
+            buildingObject.transform.position = buildingCenter;
+            
+            return buildingObject;
         }
         
+        /// <summary>
+        /// Create polygon-based mesh for OSM areas (parks, water, forests)
+        /// Uses triangulation to create authentic area shapes
+        /// </summary>
         private GameObject CreateAreaMesh(List<Vector3> points)
         {
-            // Simplified area creation
-            GameObject area = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            if (points.Count > 0)
+            if (points.Count < 3)
             {
-                Vector3 center = Vector3.zero;
-                foreach (Vector3 point in points)
-                {
-                    center += point;
-                }
-                center /= points.Count;
-                center.y = 0.1f;
-                
-                area.transform.position = center;
-                area.transform.localScale = Vector3.one * 2f;
+                Debug.LogWarning("[MapGenerator] Cannot create area mesh with less than 3 points");
+                return null;
             }
+            
+            try
+            {
+                return CreateTriangulatedAreaMesh(points);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"[MapGenerator] Failed to create triangulated area mesh: {e.Message}. Using fallback.");
+                return CreateFallbackAreaMesh(points);
+            }
+        }
+        
+        /// <summary>
+        /// Create triangulated area mesh with proper polygon shape
+        /// </summary>
+        private GameObject CreateTriangulatedAreaMesh(List<Vector3> points)
+        {
+            // Convert 3D points to 2D for triangulation (use x,z coordinates)
+            List<Vector2> points2D = new List<Vector2>();
+            foreach (Vector3 point in points)
+            {
+                points2D.Add(new Vector2(point.x, point.z));
+            }
+            
+            // Remove duplicate points
+            points2D = RemoveDuplicatePoints(points2D);
+            if (points2D.Count < 3)
+            {
+                throw new System.Exception("Insufficient unique points after duplicate removal");
+            }
+            
+            // Triangulate polygon
+            List<int> triangles = TriangulatePolygonEarClipping(points2D);
+            if (triangles.Count == 0)
+            {
+                throw new System.Exception("Triangulation failed");
+            }
+            
+            // Create mesh data
+            List<Vector3> vertices = new List<Vector3>();
+            List<Vector3> normals = new List<Vector3>();
+            List<Vector2> uvs = new List<Vector2>();
+            
+            // Calculate UV bounds for proper texture mapping
+            Vector2 uvMin = Vector2.positiveInfinity;
+            Vector2 uvMax = Vector2.negativeInfinity;
+            
+            foreach (Vector2 point in points2D)
+            {
+                uvMin = Vector2.Min(uvMin, point);
+                uvMax = Vector2.Max(uvMax, point);
+            }
+            
+            Vector2 uvSize = uvMax - uvMin;
+            if (uvSize.x < 0.01f) uvSize.x = 1f;
+            if (uvSize.y < 0.01f) uvSize.y = 1f;
+            
+            // Add vertices with slight elevation to avoid z-fighting
+            foreach (Vector2 point in points2D)
+            {
+                vertices.Add(new Vector3(point.x, 0.01f, point.y));
+                normals.Add(Vector3.up);
+                
+                // Map UVs to 0-1 range
+                Vector2 uv = new Vector2(
+                    (point.x - uvMin.x) / uvSize.x,
+                    (point.y - uvMin.y) / uvSize.y
+                );
+                uvs.Add(uv);
+            }
+            
+            // Create mesh
+            Mesh areaMesh = new Mesh();
+            areaMesh.name = "AreaMesh";
+            areaMesh.vertices = vertices.ToArray();
+            areaMesh.triangles = triangles.ToArray();
+            areaMesh.normals = normals.ToArray();
+            areaMesh.uv = uvs.ToArray();
+            areaMesh.RecalculateBounds();
+            
+            // Create GameObject
+            GameObject areaObject = new GameObject("AreaMesh");
+            MeshFilter meshFilter = areaObject.AddComponent<MeshFilter>();
+            MeshRenderer meshRenderer = areaObject.AddComponent<MeshRenderer>();
+            
+            meshFilter.mesh = areaMesh;
+            
+            // Position at polygon centroid
+            Vector3 centroid = CalculateCentroid(points);
+            centroid.y = 0.01f;
+            areaObject.transform.position = centroid;
+            
+            return areaObject;
+        }
+        
+        /// <summary>
+        /// Fallback area mesh using bounding box approximation
+        /// </summary>
+        private GameObject CreateFallbackAreaMesh(List<Vector3> points)
+        {
+            Debug.Log("[MapGenerator] Using fallback area mesh (bounding box approximation)");
+            
+            Vector3 center = CalculateCentroid(points);
+            center.y = 0.01f;
+            
+            // Calculate bounding box
+            Vector3 min = Vector3.positiveInfinity;
+            Vector3 max = Vector3.negativeInfinity;
+            
+            foreach (Vector3 point in points)
+            {
+                min = Vector3.Min(min, point);
+                max = Vector3.Max(max, point);
+            }
+            
+            Vector3 size = max - min;
+            size.y = 0.02f; // Thin plane
+            
+            // Ensure minimum size
+            size.x = Mathf.Max(size.x, 2f);
+            size.z = Mathf.Max(size.z, 2f);
+            
+            GameObject area = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            area.transform.position = center;
+            area.transform.localScale = size;
+            area.name = "AreaMesh_Fallback";
+            
+            // Remove collider for fallback (keep it simple)
+            var collider = area.GetComponent<Collider>();
+            if (collider != null)
+            {
+                if (Application.isPlaying)
+                    Destroy(collider);
+                else
+                    DestroyImmediate(collider);
+            }
+            
             return area;
         }
         
+        /// <summary>
+        /// Remove duplicate points that are too close together
+        /// </summary>
+        private List<Vector2> RemoveDuplicatePoints(List<Vector2> points)
+        {
+            List<Vector2> uniquePoints = new List<Vector2>();
+            const float minDistance = 0.01f;
+            
+            foreach (Vector2 point in points)
+            {
+                bool isDuplicate = false;
+                foreach (Vector2 existing in uniquePoints)
+                {
+                    if (Vector2.Distance(point, existing) < minDistance)
+                    {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+                
+                if (!isDuplicate)
+                {
+                    uniquePoints.Add(point);
+                }
+            }
+            
+            return uniquePoints;
+        }
+        
+        /// <summary>
+        /// Get material for area type with comprehensive type support
+        /// </summary>
         private Material GetMaterialForAreaType(string areaType)
         {
-            return areaType switch
+            if (string.IsNullOrEmpty(areaType))
+                return defaultAreaMaterial;
+                
+            return areaType.ToLower() switch
             {
-                "park" or "grass" => parkMaterial,
-                "water" => waterMaterial,
-                _ => null
+                // Park and recreation areas
+                "park" or "recreation_ground" or "playground" => parkMaterial ?? defaultAreaMaterial,
+                
+                // Water bodies
+                "water" or "river" or "lake" or "pond" or "reservoir" => waterMaterial ?? defaultAreaMaterial,
+                
+                // Forest and natural areas
+                "forest" or "wood" or "scrub" or "heath" => forestMaterial ?? defaultAreaMaterial,
+                
+                // Grass and meadows
+                "grass" or "meadow" or "grassland" => grassMaterial ?? parkMaterial ?? defaultAreaMaterial,
+                
+                // Commercial and residential
+                "residential" => new Color(0.9f, 0.9f, 0.8f, 1f) != Color.white ? 
+                    CreateMaterialFromColor(new Color(0.9f, 0.9f, 0.8f, 1f)) : defaultAreaMaterial,
+                    
+                "commercial" or "retail" => new Color(0.8f, 0.8f, 0.9f, 1f) != Color.white ? 
+                    CreateMaterialFromColor(new Color(0.8f, 0.8f, 0.9f, 1f)) : defaultAreaMaterial,
+                    
+                "industrial" => new Color(0.7f, 0.7f, 0.7f, 1f) != Color.white ? 
+                    CreateMaterialFromColor(new Color(0.7f, 0.7f, 0.7f, 1f)) : defaultAreaMaterial,
+                
+                // Default fallback
+                _ => defaultAreaMaterial
             };
+        }
+        
+        /// <summary>
+        /// Create material from color for dynamic area types
+        /// </summary>
+        private Material CreateMaterialFromColor(Color color)
+        {
+            Material mat = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+            mat.color = color;
+            mat.name = $"AreaMaterial_{color.r}_{color.g}_{color.b}";
+            return mat;
         }
         
         private float CalculateBuildingArea(OSMBuilding building)
@@ -597,17 +1135,382 @@ namespace RollABall.Map
             return building.nodes.Count * 10f; // Rough approximation
         }
         
-        private void AddSteampunkElementsToBuilding(GameObject building, string buildingType)
+        /// <summary>
+        /// Simple ear clipping triangulation for convex polygons
+        /// </summary>
+        private List<int> TriangulatePolygon(List<Vector3> points)
         {
-            // Add steampunk decorations based on building type
-            // This could include gears, pipes, steam emitters, etc.
-            // For now, just add a simple particle effect for some buildings
+            List<int> triangles = new List<int>();
             
-            if (buildingType == "industrial" && Random.value < 0.3f)
+            if (points.Count < 3) return triangles;
+            
+            // Simple fan triangulation from first vertex
+            // This works well for convex polygons and many building shapes
+            for (int i = 1; i < points.Count - 1; i++)
             {
-                // Add steam emitter
-                CreateSteamEmitter(building.transform.position + Vector3.up * 5f);
+                triangles.Add(0);
+                triangles.Add(i);
+                triangles.Add(i + 1);
             }
+            
+            return triangles;
+        }
+        
+        /// <summary>
+        /// Advanced ear clipping triangulation for arbitrary polygons
+        /// Handles both convex and concave polygons robustly
+        /// </summary>
+        private List<int> TriangulatePolygonEarClipping(List<Vector2> points)
+        {
+            List<int> triangles = new List<int>();
+            
+            if (points.Count < 3) 
+            {
+                Debug.LogWarning("[MapGenerator] Cannot triangulate polygon with less than 3 points");
+                return triangles;
+            }
+            
+            if (points.Count == 3)
+            {
+                // Triangle - direct triangulation
+                triangles.AddRange(new int[] { 0, 1, 2 });
+                return triangles;
+            }
+            
+            // Create working list of vertex indices
+            List<int> vertices = new List<int>();
+            for (int i = 0; i < points.Count; i++)
+            {
+                vertices.Add(i);
+            }
+            
+            // Ensure counter-clockwise winding
+            if (IsClockwise(points))
+            {
+                vertices.Reverse();
+            }
+            
+            int maxIterations = points.Count * 2; // Prevent infinite loops
+            int iterations = 0;
+            
+            // Ear clipping main loop
+            while (vertices.Count > 3 && iterations < maxIterations)
+            {
+                bool earFound = false;
+                
+                for (int i = 0; i < vertices.Count; i++)
+                {
+                    int prevIndex = vertices[(i - 1 + vertices.Count) % vertices.Count];
+                    int currIndex = vertices[i];
+                    int nextIndex = vertices[(i + 1) % vertices.Count];
+                    
+                    Vector2 prev = points[prevIndex];
+                    Vector2 curr = points[currIndex];
+                    Vector2 next = points[nextIndex];
+                    
+                    // Check if this forms a valid ear
+                    if (IsConvexVertex(prev, curr, next) && IsValidEar(points, vertices, prevIndex, currIndex, nextIndex))
+                    {
+                        // Add triangle
+                        triangles.Add(prevIndex);
+                        triangles.Add(currIndex);
+                        triangles.Add(nextIndex);
+                        
+                        // Remove the ear vertex
+                        vertices.RemoveAt(i);
+                        earFound = true;
+                        break;
+                    }
+                }
+                
+                if (!earFound)
+                {
+                    Debug.LogWarning("[MapGenerator] Ear clipping failed - no valid ear found. Using fallback triangulation.");
+                    break;
+                }
+                
+                iterations++;
+            }
+            
+            // Add final triangle
+            if (vertices.Count == 3)
+            {
+                triangles.Add(vertices[0]);
+                triangles.Add(vertices[1]);
+                triangles.Add(vertices[2]);
+            }
+            
+            // Fallback to fan triangulation if ear clipping failed
+            if (triangles.Count == 0)
+            {
+                return TriangulatePolygonFan(points);
+            }
+            
+            return triangles;
+        }
+        
+        /// <summary>
+        /// Fallback fan triangulation from center point
+        /// </summary>
+        private List<int> TriangulatePolygonFan(List<Vector2> points)
+        {
+            List<int> triangles = new List<int>();
+            
+            for (int i = 1; i < points.Count - 1; i++)
+            {
+                triangles.Add(0);
+                triangles.Add(i);
+                triangles.Add(i + 1);
+            }
+            
+            return triangles;
+        }
+        
+        /// <summary>
+        /// Check if polygon vertices are in clockwise order
+        /// </summary>
+        private bool IsClockwise(List<Vector2> points)
+        {
+            float area = 0f;
+            for (int i = 0; i < points.Count; i++)
+            {
+                int next = (i + 1) % points.Count;
+                area += (points[next].x - points[i].x) * (points[next].y + points[i].y);
+            }
+            return area > 0f;
+        }
+        
+        /// <summary>
+        /// Check if vertex forms a convex angle
+        /// </summary>
+        private bool IsConvexVertex(Vector2 prev, Vector2 curr, Vector2 next)
+        {
+            return CrossProduct(curr - prev, next - curr) > 0f;
+        }
+        
+        /// <summary>
+        /// Check if triangle is a valid ear (contains no other vertices)
+        /// </summary>
+        private bool IsValidEar(List<Vector2> points, List<int> vertices, int prevIndex, int currIndex, int nextIndex)
+        {
+            Vector2 prev = points[prevIndex];
+            Vector2 curr = points[currIndex];
+            Vector2 next = points[nextIndex];
+            
+            // Check if any other vertex lies inside this triangle
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                int vertexIndex = vertices[i];
+                if (vertexIndex == prevIndex || vertexIndex == currIndex || vertexIndex == nextIndex)
+                    continue;
+                    
+                if (IsPointInTriangle(points[vertexIndex], prev, curr, next))
+                {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        /// <summary>
+        /// Check if point is inside triangle using barycentric coordinates
+        /// </summary>
+        private bool IsPointInTriangle(Vector2 point, Vector2 a, Vector2 b, Vector2 c)
+        {
+            float denominator = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
+            if (Mathf.Abs(denominator) < 0.0001f) return false;
+            
+            float alpha = ((b.y - c.y) * (point.x - c.x) + (c.x - b.x) * (point.y - c.y)) / denominator;
+            float beta = ((c.y - a.y) * (point.x - c.x) + (a.x - c.x) * (point.y - c.y)) / denominator;
+            float gamma = 1f - alpha - beta;
+            
+            return alpha > 0f && beta > 0f && gamma > 0f;
+        }
+        
+        /// <summary>
+        /// Calculate 2D cross product
+        /// </summary>
+        private float CrossProduct(Vector2 a, Vector2 b)
+        {
+            return a.x * b.y - a.y * b.x;
+        }
+        
+        /// <summary>
+        /// Generate fallback building mesh using oriented bounding box
+        /// </summary>
+        private GameObject GenerateFallbackBuildingMesh(OSMBuilding building)
+        {
+            Debug.Log($"[MapGenerator] Using fallback mesh for building {building.id}");
+            
+            if (building.nodes.Count == 0)
+            {
+                return null;
+            }
+            
+            // Calculate building center and bounding box
+            Vector3 center = Vector3.zero;
+            Vector3 min = Vector3.positiveInfinity;
+            Vector3 max = Vector3.negativeInfinity;
+            
+            foreach (OSMNode node in building.nodes)
+            {
+                Vector3 worldPos = currentMapData.LatLonToWorldPosition(node.lat, node.lon);
+                center += worldPos;
+                
+                min = Vector3.Min(min, worldPos);
+                max = Vector3.Max(max, worldPos);
+            }
+            
+            center /= building.nodes.Count;
+            center.y = (building.height * buildingHeightMultiplier) / 2f;
+            
+            // Calculate size ensuring minimum dimensions
+            Vector3 size = max - min;
+            size.x = Mathf.Max(size.x, minimumBuildingSize);
+            size.z = Mathf.Max(size.z, minimumBuildingSize);
+            size.y = building.height * buildingHeightMultiplier;
+            
+            // Create building object
+            GameObject buildingObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            buildingObject.transform.position = center;
+            buildingObject.transform.localScale = size;
+            
+            // Calculate rotation from longest edge if we have enough points
+            if (building.nodes.Count >= 2)
+            {
+                Vector3 firstPos = currentMapData.LatLonToWorldPosition(building.nodes[0].lat, building.nodes[0].lon);
+                Vector3 secondPos = currentMapData.LatLonToWorldPosition(building.nodes[1].lat, building.nodes[1].lon);
+                Vector3 direction = (secondPos - firstPos).normalized;
+                
+                if (direction.magnitude > 0.1f)
+                {
+                    float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+                    buildingObject.transform.rotation = Quaternion.Euler(0, angle, 0);
+                }
+            }
+            
+            // Apply material and ensure collider
+            MeshRenderer renderer = buildingObject.GetComponent<MeshRenderer>();
+            renderer.material = GetMaterialForBuildingType(building.buildingType);
+            
+            // Replace BoxCollider with MeshCollider for consistency
+            BoxCollider boxCollider = buildingObject.GetComponent<BoxCollider>();
+            if (boxCollider != null)
+            {
+                if (Application.isPlaying)
+                    Destroy(boxCollider);
+                else
+                    DestroyImmediate(boxCollider);
+            }
+            
+            MeshCollider meshCollider = buildingObject.AddComponent<MeshCollider>();
+            meshCollider.sharedMesh = buildingObject.GetComponent<MeshFilter>().sharedMesh;
+            
+            return buildingObject;
+        }
+        
+        /// <summary>
+        /// Get material for building type
+        /// </summary>
+        private Material GetMaterialForBuildingType(string buildingType)
+        {
+            return buildingType switch
+            {
+                "residential" => residentialMaterial ?? defaultBuildingMaterial,
+                "industrial" => industrialMaterial ?? defaultBuildingMaterial,
+                "commercial" => commercialMaterial ?? defaultBuildingMaterial,
+                "office" => officeMaterial ?? defaultBuildingMaterial,
+                "skyscraper" => officeMaterial ?? defaultBuildingMaterial,
+                _ => defaultBuildingMaterial
+            };
+        }
+        
+        /// <summary>
+        /// Determine if building type should get Steampunk decorations
+        /// </summary>
+        private bool ShouldAddSteampunkElements(string buildingType)
+        {
+            return buildingType switch
+            {
+                "industrial" => true,
+                "factory" => true,
+                "warehouse" => true,
+                "commercial" => Random.value < 0.3f, // 30% chance for commercial
+                _ => Random.value < 0.1f // 10% chance for others
+            };
+        }
+        
+        /// <summary>
+        /// Add Steampunk decorative elements to building
+        /// </summary>
+        private void AddSteampunkElementsToBuilding(GameObject buildingObject, OSMBuilding building)
+        {
+            Vector3 buildingSize = buildingObject.GetComponent<MeshRenderer>().bounds.size;
+            Vector3 roofCenter = buildingObject.transform.position;
+            roofCenter.y += buildingSize.y / 2f;
+            
+            // Add steam emitter for industrial buildings
+            if (building.buildingType == "industrial" && chimneySmokeParticles != null)
+            {
+                Vector3 chimneyPos = roofCenter + new Vector3(
+                    Random.Range(-buildingSize.x * 0.3f, buildingSize.x * 0.3f),
+                    0.5f,
+                    Random.Range(-buildingSize.z * 0.3f, buildingSize.z * 0.3f)
+                );
+                
+                GameObject steamEmitter = Instantiate(chimneySmokeParticles, chimneyPos, Quaternion.identity);
+                steamEmitter.transform.SetParent(buildingObject.transform);
+                steamEmitter.name = "ChimneySteam";
+            }
+            
+            // Add gear decorations
+            if (gearPrefab != null && Random.value < 0.5f)
+            {
+                int gearCount = Random.Range(1, 4);
+                for (int i = 0; i < gearCount; i++)
+                {
+                    Vector3 gearPos = roofCenter + new Vector3(
+                        Random.Range(-buildingSize.x * 0.4f, buildingSize.x * 0.4f),
+                        Random.Range(-0.2f, 0.5f),
+                        Random.Range(-buildingSize.z * 0.4f, buildingSize.z * 0.4f)
+                    );
+                    
+                    GameObject gear = Instantiate(gearPrefab, gearPos, 
+                        Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)));
+                    gear.transform.SetParent(buildingObject.transform);
+                    gear.transform.localScale = Vector3.one * Random.Range(0.5f, 1.5f);
+                    gear.name = $"SteampunkGear_{i}";
+                }
+            }
+            
+            // Add pipe decorations
+            if (steamPipePrefab != null && Random.value < 0.4f)
+            {
+                Vector3 pipePos = roofCenter + new Vector3(
+                    Random.Range(-buildingSize.x * 0.3f, buildingSize.x * 0.3f),
+                    -buildingSize.y * 0.3f,
+                    buildingSize.z * 0.5f // Along the edge
+                );
+                
+                GameObject pipe = Instantiate(steamPipePrefab, pipePos, 
+                    Quaternion.Euler(0, Random.Range(0, 360), 0));
+                pipe.transform.SetParent(buildingObject.transform);
+                pipe.name = "SteampunkPipe";
+            }
+        }
+        
+        /// <summary>
+        /// Calculate centroid of polygon
+        /// </summary>
+        private Vector3 CalculateCentroid(List<Vector3> points)
+        {
+            Vector3 centroid = Vector3.zero;
+            foreach (Vector3 point in points)
+            {
+                centroid += point;
+            }
+            return centroid / points.Count;
         }
         
         private void CreateSteamEmitter(Vector3 position)
@@ -635,8 +1538,11 @@ namespace RollABall.Map
         private IEnumerator ApplyMeshBatching()
         {
             Debug.Log("[MapGenerator] Applying mesh batching for performance...");
-            // Mesh batching implementation would go here
-            // For now, just yield to maintain the interface
+            
+            // TODO: Implement mesh batching by road type
+            // This would combine multiple road segments of the same type into single meshes
+            // for better performance
+            
             yield return null;
         }
         
@@ -676,8 +1582,7 @@ namespace RollABall.Map
                 }
             }
             
-            roadMeshes.Clear();
-            buildingMeshes.Clear();
+            InitializeMeshCollections();
         }
         
         public Vector3 GetPlayerSpawnPosition()
@@ -693,6 +1598,22 @@ namespace RollABall.Map
         public bool IsGenerating()
         {
             return isGenerating;
+        }
+        
+        /// <summary>
+        /// Get statistics about the current generated map
+        /// </summary>
+        public string GetMapStatistics()
+        {
+            if (currentMapData == null)
+                return "No map data available";
+                
+            return $"Map Statistics:\n" +
+                   $"- Roads: {currentMapData.roads.Count}\n" +
+                   $"- Buildings: {currentMapData.buildings.Count}\n" +
+                   $"- Areas: {currentMapData.areas.Count}\n" +
+                   $"- POIs: {currentMapData.pointsOfInterest.Count}\n" +
+                   $"- Scale: {currentMapData.scaleMultiplier:F2}";
         }
     }
 }

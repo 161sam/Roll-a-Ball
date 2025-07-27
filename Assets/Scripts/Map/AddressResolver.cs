@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json.Linq;
 
 namespace RollABall.Map
 {
@@ -22,10 +23,16 @@ namespace RollABall.Map
         [SerializeField] private float requestTimeout = 10.0f;
         [SerializeField] private string userAgent = "RollABallGame/1.0";
         
+        [Header("Fallback Settings")]
+        [SerializeField] private bool enableFallbackMode = true;
+        [SerializeField] private double fallbackLat = 52.5217; // Berlin - Brandenburger Tor
+        [SerializeField] private double fallbackLon = 13.4132;
+        
         // Events for communication with other systems
         public event Action<GeocodeResult> OnAddressResolved;
         public event Action<OSMMapData> OnMapDataLoaded;
         public event Action<string> OnError;
+        public event Action<string> OnMapLoadErrorEvent;
         
         private Coroutine currentRequest;
         
@@ -113,13 +120,13 @@ namespace RollABall.Map
                     }
                     else
                     {
-                        OnError?.Invoke($"Adresse '{address}' konnte nicht gefunden werden.");
+                        HandleGeocodeError($"Adresse '{address}' konnte nicht gefunden werden.");
                     }
                 }
                 else
                 {
                     Debug.LogError($"[AddressResolver] Geocoding failed: {request.error}");
-                    OnError?.Invoke($"Fehler beim Auflösen der Adresse: {request.error}");
+                    HandleGeocodeError($"Fehler beim Auflösen der Adresse: {request.error}");
                 }
             }
         }
@@ -131,12 +138,15 @@ namespace RollABall.Map
         {
             Debug.Log($"[AddressResolver] Loading map data for {lat}, {lon} with radius {radius}m");
             
-            // Calculate bounding box
+            // Calculate bounding box with proper lat/lon correction
             double radiusInDegrees = radius / 111320.0; // Approximate conversion meters to degrees
-            double minLat = lat - radiusInDegrees;
-            double maxLat = lat + radiusInDegrees;
-            double minLon = lon - radiusInDegrees;
-            double maxLon = lon + radiusInDegrees;
+            double latRadiusInDegrees = radiusInDegrees;
+            double lonRadiusInDegrees = radiusInDegrees / Math.Cos(lat * Math.PI / 180.0); // Correct for latitude
+            
+            double minLat = lat - latRadiusInDegrees;
+            double maxLat = lat + latRadiusInDegrees;
+            double minLon = lon - lonRadiusInDegrees;
+            double maxLon = lon + lonRadiusInDegrees;
             
             // Build Overpass query
             string overpassQuery = BuildOverpassQuery(minLat, maxLat, minLon, maxLon);
@@ -155,18 +165,18 @@ namespace RollABall.Map
                     
                     if (mapData != null && mapData.IsValid())
                     {
-                        Debug.Log($"[AddressResolver] Map data loaded successfully. Roads: {mapData.roads.Count}, Buildings: {mapData.buildings.Count}");
+                        Debug.Log($"[AddressResolver] Map data loaded successfully. Roads: {mapData.roads.Count}, Buildings: {mapData.buildings.Count}, Areas: {mapData.areas.Count}, POIs: {mapData.pointsOfInterest.Count}");
                         OnMapDataLoaded?.Invoke(mapData);
                     }
                     else
                     {
-                        OnError?.Invoke("Keine Kartendaten für diese Region verfügbar.");
+                        HandleMapDataError("Keine Kartendaten für diese Region verfügbar.");
                     }
                 }
                 else
                 {
                     Debug.LogError($"[AddressResolver] Map data request failed: {request.error}");
-                    OnError?.Invoke($"Fehler beim Laden der Kartendaten: {request.error}");
+                    HandleMapDataError($"Fehler beim Laden der Kartendaten: {request.error}");
                 }
             }
         }
@@ -260,30 +270,68 @@ namespace RollABall.Map
         }
         
         /// <summary>
-        /// Parse OSM data response from Overpass API
+        /// Parse OSM data response from Overpass API using Newtonsoft.Json
+        /// This replaces the placeholder implementation with real OSM data processing
         /// </summary>
         private OSMMapData ParseOSMResponse(string json, double minLat, double maxLat, double minLon, double maxLon)
         {
             try
             {
+                Debug.Log($"[AddressResolver] Parsing real OSM response from Overpass API...");
+                
+                // Create map data container
                 OSMMapData mapData = new OSMMapData(minLat, maxLat, minLon, maxLon);
                 
-                // This is a simplified parser. In production, use a proper JSON library like Newtonsoft.Json
-                // For now, we'll create some sample data based on the bounds
+                // Parse JSON using Newtonsoft.Json
+                JObject overpassData = JObject.Parse(json);
+                JArray elements = overpassData["elements"] as JArray;
                 
-                Debug.Log($"[AddressResolver] Parsing OSM response (simplified). Creating sample data for bounds.");
+                if (elements == null || elements.Count == 0)
+                {
+                    Debug.LogWarning("[AddressResolver] No elements found in Overpass response");
+                    return null;
+                }
                 
-                // Create sample roads in a grid pattern
-                CreateSampleRoads(mapData);
+                // Dictionary to store nodes by ID for way processing
+                Dictionary<long, OSMNode> nodesById = new Dictionary<long, OSMNode>();
                 
-                // Create sample buildings
-                CreateSampleBuildings(mapData);
+                Debug.Log($"[AddressResolver] Processing {elements.Count} elements from Overpass API");
                 
-                // Set appropriate scale based on area size
+                // First pass: Process all nodes
+                foreach (JToken element in elements)
+                {
+                    string type = element["type"]?.ToString();
+                    
+                    if (type == "node")
+                    {
+                        ProcessOSMNode(element, nodesById, mapData);
+                    }
+                }
+                
+                // Second pass: Process ways (need nodes to be processed first)
+                foreach (JToken element in elements)
+                {
+                    string type = element["type"]?.ToString();
+                    
+                    if (type == "way")
+                    {
+                        ProcessOSMWay(element, nodesById, mapData);
+                    }
+                    // Note: Relations are not processed in this version but could be added here
+                }
+                
+                // Validate and set appropriate scale based on area size
                 double areaWidth = maxLon - minLon;
-                mapData.scaleMultiplier = (float)(1000.0 / areaWidth); // Scale to reasonable Unity size
+                mapData.scaleMultiplier = (float)(1000.0 / (areaWidth * 111320.0)); // Scale to reasonable Unity size
+                
+                Debug.Log($"[AddressResolver] Successfully parsed OSM data: {mapData.roads.Count} roads, {mapData.buildings.Count} buildings, {mapData.areas.Count} areas, {mapData.pointsOfInterest.Count} POIs");
                 
                 return mapData;
+            }
+            catch (System.Exception jsonEx) when (jsonEx.GetType().Name == "JsonException")
+            {
+                Debug.LogError($"[AddressResolver] JSON parsing error: {jsonEx.Message}");
+                return null;
             }
             catch (Exception e)
             {
@@ -293,68 +341,205 @@ namespace RollABall.Map
         }
         
         /// <summary>
-        /// Create sample road data (placeholder for real OSM parsing)
+        /// Process a single OSM node from JSON data
         /// </summary>
-        private void CreateSampleRoads(OSMMapData mapData)
+        private void ProcessOSMNode(JToken nodeElement, Dictionary<long, OSMNode> nodesById, OSMMapData mapData)
         {
-            double centerLat = (mapData.bounds.minLat + mapData.bounds.maxLat) / 2.0;
-            double centerLon = (mapData.bounds.minLon + mapData.bounds.maxLon) / 2.0;
-            double span = (mapData.bounds.maxLat - mapData.bounds.minLat) / 4.0;
-            
-            // Create main horizontal road
-            OSMWay mainRoad = new OSMWay(1001);
-            mainRoad.tags["highway"] = "primary";
-            mainRoad.nodes.Add(new OSMNode(1, centerLat, mapData.bounds.minLon));
-            mainRoad.nodes.Add(new OSMNode(2, centerLat, mapData.bounds.maxLon));
-            mapData.roads.Add(mainRoad);
-            
-            // Create main vertical road
-            OSMWay crossRoad = new OSMWay(1002);
-            crossRoad.tags["highway"] = "secondary";
-            crossRoad.nodes.Add(new OSMNode(3, mapData.bounds.minLat, centerLon));
-            crossRoad.nodes.Add(new OSMNode(4, mapData.bounds.maxLat, centerLon));
-            mapData.roads.Add(crossRoad);
-            
-            // Create connecting roads
-            for (int i = 0; i < 3; i++)
+            try
             {
-                double roadLat = centerLat + (i - 1) * span;
-                OSMWay road = new OSMWay(1003 + i);
-                road.tags["highway"] = "residential";
-                road.nodes.Add(new OSMNode(5 + i * 2, roadLat, centerLon - span));
-                road.nodes.Add(new OSMNode(6 + i * 2, roadLat, centerLon + span));
-                mapData.roads.Add(road);
+                long id = (long)(nodeElement["id"] ?? 0);
+                double lat = (double)(nodeElement["lat"] ?? 0.0);
+                double lon = (double)(nodeElement["lon"] ?? 0.0);
+                
+                if (id == 0) return;
+                
+                OSMNode node = new OSMNode(id, lat, lon);
+                
+                // Process tags
+                JObject tags = nodeElement["tags"] as JObject;
+                if (tags != null)
+                {
+                    foreach (var tag in tags)
+                    {
+                        node.tags[tag.Key] = tag.Value?.ToString() ?? "";
+                    }
+                    
+                    // Set name if available
+                    if (node.tags.ContainsKey("name"))
+                    {
+                        node.name = node.tags["name"];
+                    }
+                    
+                    // Check if this node is a point of interest
+                    if (node.HasTag("amenity") || node.HasTag("shop"))
+                    {
+                        mapData.pointsOfInterest.Add(node);
+                        Debug.Log($"[AddressResolver] Added POI: {node.name ?? node.GetTag("amenity", node.GetTag("shop", "unknown"))} at {lat}, {lon}");
+                    }
+                }
+                
+                // Store node for way processing
+                nodesById[id] = node;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[AddressResolver] Error processing node: {e.Message}");
             }
         }
         
         /// <summary>
-        /// Create sample building data (placeholder for real OSM parsing)
+        /// Process a single OSM way from JSON data
         /// </summary>
-        private void CreateSampleBuildings(OSMMapData mapData)
+        private void ProcessOSMWay(JToken wayElement, Dictionary<long, OSMNode> nodesById, OSMMapData mapData)
         {
-            double centerLat = (mapData.bounds.minLat + mapData.bounds.maxLat) / 2.0;
-            double centerLon = (mapData.bounds.minLon + mapData.bounds.maxLon) / 2.0;
-            double span = (mapData.bounds.maxLat - mapData.bounds.minLat) / 6.0;
-            
-            string[] buildingTypes = { "residential", "commercial", "office", "industrial" };
-            
-            for (int i = 0; i < 8; i++)
+            try
             {
-                OSMBuilding building = new OSMBuilding(2001 + i);
-                building.tags["building"] = buildingTypes[i % buildingTypes.Length];
+                long id = (long)(wayElement["id"] ?? 0);
+                if (id == 0) return;
                 
-                // Create rectangular building
-                double lat = centerLat + (i % 2 == 0 ? span : -span);
-                double lon = centerLon + ((i / 2) - 1.5) * span;
+                // Get node references
+                JArray nodeRefs = wayElement["nodes"] as JArray;
+                if (nodeRefs == null || nodeRefs.Count < 2) return;
                 
-                building.nodes.Add(new OSMNode(100 + i * 4, lat - span/3, lon - span/3));
-                building.nodes.Add(new OSMNode(101 + i * 4, lat - span/3, lon + span/3));
-                building.nodes.Add(new OSMNode(102 + i * 4, lat + span/3, lon + span/3));
-                building.nodes.Add(new OSMNode(103 + i * 4, lat + span/3, lon - span/3));
-                building.nodes.Add(new OSMNode(100 + i * 4, lat - span/3, lon - span/3)); // Close the shape
+                // Process tags to determine way type
+                JObject tags = wayElement["tags"] as JObject;
+                if (tags == null) return;
                 
+                Dictionary<string, string> wayTags = new Dictionary<string, string>();
+                foreach (var tag in tags)
+                {
+                    wayTags[tag.Key] = tag.Value?.ToString() ?? "";
+                }
+                
+                // Determine way type and create appropriate object
+                if (wayTags.ContainsKey("highway"))
+                {
+                    ProcessRoadWay(id, nodeRefs, wayTags, nodesById, mapData);
+                }
+                else if (wayTags.ContainsKey("building"))
+                {
+                    ProcessBuildingWay(id, nodeRefs, wayTags, nodesById, mapData);
+                }
+                else if (wayTags.ContainsKey("leisure") || wayTags.ContainsKey("natural") || wayTags.ContainsKey("landuse"))
+                {
+                    ProcessAreaWay(id, nodeRefs, wayTags, nodesById, mapData);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[AddressResolver] Error processing way: {e.Message}");
+            }
+        }
+        
+        /// <summary>
+        /// Process a way as a road/highway
+        /// </summary>
+        private void ProcessRoadWay(long id, JArray nodeRefs, Dictionary<string, string> tags, Dictionary<long, OSMNode> nodesById, OSMMapData mapData)
+        {
+            OSMWay road = new OSMWay(id);
+            road.tags = tags;
+            road.wayType = "highway";
+            
+            // Add nodes to the road
+            foreach (var nodeRef in nodeRefs)
+            {
+                long nodeId = (long)nodeRef;
+                if (nodesById.ContainsKey(nodeId))
+                {
+                    road.nodes.Add(nodesById[nodeId]);
+                }
+            }
+            
+            if (road.nodes.Count >= 2)
+            {
+                mapData.roads.Add(road);
+                Debug.Log($"[AddressResolver] Added road: {road.GetTag("highway", "unknown")} with {road.nodes.Count} nodes");
+            }
+        }
+        
+        /// <summary>
+        /// Process a way as a building
+        /// </summary>
+        private void ProcessBuildingWay(long id, JArray nodeRefs, Dictionary<string, string> tags, Dictionary<long, OSMNode> nodesById, OSMMapData mapData)
+        {
+            OSMBuilding building = new OSMBuilding(id);
+            building.tags = tags;
+            
+            // Add nodes to the building
+            foreach (var nodeRef in nodeRefs)
+            {
+                long nodeId = (long)nodeRef;
+                if (nodesById.ContainsKey(nodeId))
+                {
+                    building.nodes.Add(nodesById[nodeId]);
+                }
+            }
+            
+            if (building.nodes.Count >= 3) // Need at least 3 nodes for a building
+            {
                 building.CalculateHeight();
                 mapData.buildings.Add(building);
+                Debug.Log($"[AddressResolver] Added building: {building.buildingType} with height {building.height}m and {building.nodes.Count} nodes");
+            }
+        }
+        
+        /// <summary>
+        /// Process a way as an area (park, water, etc.)
+        /// </summary>
+        private void ProcessAreaWay(long id, JArray nodeRefs, Dictionary<string, string> tags, Dictionary<long, OSMNode> nodesById, OSMMapData mapData)
+        {
+            OSMArea area = new OSMArea(id);
+            area.tags = tags;
+            
+            // Add nodes to the area
+            foreach (var nodeRef in nodeRefs)
+            {
+                long nodeId = (long)nodeRef;
+                if (nodesById.ContainsKey(nodeId))
+                {
+                    area.nodes.Add(nodesById[nodeId]);
+                }
+            }
+            
+            if (area.nodes.Count >= 3) // Need at least 3 nodes for an area
+            {
+                area.DetermineAreaType();
+                mapData.areas.Add(area);
+                Debug.Log($"[AddressResolver] Added area: {area.areaType} with {area.nodes.Count} nodes");
+            }
+        }
+        
+        /// <summary>
+        /// Handle geocode errors with fallback support
+        /// </summary>
+        private void HandleGeocodeError(string errorMessage)
+        {
+            if (enableFallbackMode)
+            {
+                Debug.Log($"[AddressResolver] Geocode error, using fallback location: {errorMessage}");
+                OnError?.Invoke(errorMessage + " Lade Fallback-Karte...");
+                StartCoroutine(LoadMapDataCoroutine(fallbackLat, fallbackLon, searchRadius));
+            }
+            else
+            {
+                OnError?.Invoke(errorMessage);
+            }
+        }
+        
+        /// <summary>
+        /// Handle map data errors with fallback support
+        /// </summary>
+        private void HandleMapDataError(string errorMessage)
+        {
+            if (enableFallbackMode)
+            {
+                Debug.Log($"[AddressResolver] Map data error, using fallback location: {errorMessage}");
+                OnMapLoadErrorEvent?.Invoke(errorMessage + " Lade Fallback-Karte...");
+                StartCoroutine(LoadMapDataCoroutine(fallbackLat, fallbackLon, searchRadius));
+            }
+            else
+            {
+                OnMapLoadErrorEvent?.Invoke(errorMessage);
             }
         }
         

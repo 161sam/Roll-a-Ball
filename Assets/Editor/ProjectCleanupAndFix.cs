@@ -381,5 +381,150 @@ namespace RollABall.Editor
                 report.AppendLine($"  ❌ {folderName}: NOT FOUND at {folderPath}");
             }
         }
+
+        /// <summary>
+        /// Assigns missing prefab references to a LevelGenerator
+        /// </summary>
+        public static void AssignPrefabReferences(LevelGenerator generator)
+        {
+            if (generator == null)
+            {
+                Debug.LogError("LevelGenerator is null! Cannot assign prefab references.");
+                return;
+            }
+
+            Debug.Log("🧩 Assigning prefab references to LevelGenerator...");
+            
+            SerializedObject serializedGenerator = new SerializedObject(generator);
+            bool hasChanges = false;
+
+            // Find and assign Ground Prefab
+            SerializedProperty groundPrefabProp = serializedGenerator.FindProperty("groundPrefab");
+            if (groundPrefabProp != null && groundPrefabProp.objectReferenceValue == null)
+            {
+                GameObject groundPrefab = FindPrefabByName("GroundPrefab", "Ground", "GroundTile");
+                if (groundPrefab != null)
+                {
+                    groundPrefabProp.objectReferenceValue = groundPrefab;
+                    hasChanges = true;
+                    Debug.Log($"✅ Assigned Ground Prefab: {groundPrefab.name}");
+                }
+                else
+                {
+                    Debug.LogWarning("⚠️ Ground Prefab not found! Please assign manually.");
+                }
+            }
+
+            // Find and assign Wall Prefab
+            SerializedProperty wallPrefabProp = serializedGenerator.FindProperty("wallPrefab");
+            if (wallPrefabProp != null && wallPrefabProp.objectReferenceValue == null)
+            {
+                GameObject wallPrefab = FindPrefabByName("WallPrefab", "Wall", "WallTile");
+                if (wallPrefab != null)
+                {
+                    wallPrefabProp.objectReferenceValue = wallPrefab;
+                    hasChanges = true;
+                    Debug.Log($"✅ Assigned Wall Prefab: {wallPrefab.name}");
+                }
+                else
+                {
+                    Debug.LogWarning("⚠️ Wall Prefab not found! Please assign manually.");
+                }
+            }
+
+            // Find and assign Collectible Prefab
+            SerializedProperty collectiblePrefabProp = serializedGenerator.FindProperty("collectiblePrefab");
+            if (collectiblePrefabProp != null && collectiblePrefabProp.objectReferenceValue == null)
+            {
+                GameObject collectiblePrefab = FindPrefabByName("CollectiblePrefab", "Collectible", "PickUp");
+                if (collectiblePrefab != null)
+                {
+                    collectiblePrefabProp.objectReferenceValue = collectiblePrefab;
+                    hasChanges = true;
+                    Debug.Log($"✅ Assigned Collectible Prefab: {collectiblePrefab.name}");
+                }
+                else
+                {
+                    Debug.LogWarning("⚠️ Collectible Prefab not found! Please assign manually.");
+                }
+            }
+
+            // Find and assign Goal Zone Prefab
+            SerializedProperty goalZonePrefabProp = serializedGenerator.FindProperty("goalZonePrefab");
+            if (goalZonePrefabProp != null && goalZonePrefabProp.objectReferenceValue == null)
+            {
+                GameObject goalZonePrefab = FindPrefabByName("GoalZonePrefab", "GoalZone", "Goal", "Finish");
+                if (goalZonePrefab != null)
+                {
+                    goalZonePrefabProp.objectReferenceValue = goalZonePrefab;
+                    hasChanges = true;
+                    Debug.Log($"✅ Assigned Goal Zone Prefab: {goalZonePrefab.name}");
+                }
+                else
+                {
+                    Debug.LogWarning("⚠️ Goal Zone Prefab not found! Please assign manually.");
+                }
+            }
+
+            // Find and assign Player Prefab
+            SerializedProperty playerPrefabProp = serializedGenerator.FindProperty("playerPrefab");
+            if (playerPrefabProp != null && playerPrefabProp.objectReferenceValue == null)
+            {
+                GameObject playerPrefab = FindPrefabByName("PlayerPrefab", "Player", "Ball");
+                if (playerPrefab != null)
+                {
+                    playerPrefabProp.objectReferenceValue = playerPrefab;
+                    hasChanges = true;
+                    Debug.Log($"✅ Assigned Player Prefab: {playerPrefab.name}");
+                }
+                else
+                {
+                    Debug.LogWarning("⚠️ Player Prefab not found! Please assign manually.");
+                }
+            }
+
+            // Apply changes if any were made
+            if (hasChanges)
+            {
+                serializedGenerator.ApplyModifiedProperties();
+                EditorUtility.SetDirty(generator);
+                Debug.Log("🧩 Prefab references assignment completed!");
+            }
+            else
+            {
+                Debug.Log("🧩 All prefab references were already assigned.");
+            }
+        }
+
+        /// <summary>
+        /// Helper method to find a prefab by trying multiple potential names
+        /// </summary>
+        private static GameObject FindPrefabByName(params string[] possibleNames)
+        {
+            foreach (string name in possibleNames)
+            {
+                // Search in Prefabs folder first
+                string[] guids = AssetDatabase.FindAssets($"{name} t:Prefab", new[] { "Assets/Prefabs" });
+                if (guids.Length > 0)
+                {
+                    string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+                    GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                    if (prefab != null)
+                        return prefab;
+                }
+
+                // Search in entire Assets folder if not found in Prefabs
+                guids = AssetDatabase.FindAssets($"{name} t:Prefab");
+                if (guids.Length > 0)
+                {
+                    string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+                    GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                    if (prefab != null)
+                        return prefab;
+                }
+            }
+
+            return null;
+        }
     }
 }

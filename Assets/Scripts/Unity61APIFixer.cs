@@ -79,8 +79,8 @@ public class Unity61APIFixer : EditorWindow
             string content = File.ReadAllText(file);
             
             // Check for deprecated patterns
-            if (content.Contains("FindObjectsOfType<") || 
-                content.Contains("FindObjectOfType<") ||
+            if (content.Contains("FindObjectsByType<") || 
+                content.Contains("FindFirstObjectByType<") ||
                 content.Contains("GameObject.FindObjectsOfType"))
             {
                 string relativePath = file.Replace(Application.dataPath, "Assets");
@@ -123,17 +123,17 @@ public class Unity61APIFixer : EditorWindow
             string content = File.ReadAllText(filePath);
             string originalContent = content;
 
-            // Pattern 1: FindObjectsOfType<T>() → Object.FindObjectsByType<T>(FindObjectsSortMode.None)
+            // Pattern 1: FindObjectsOfType<T>(FindObjectsSortMode.None) → Object.FindObjectsByType<T>(FindObjectsSortMode.None)
             content = Regex.Replace(content, 
                 @"FindObjectsOfType<([^>]+)>\(\)",
                 @"Object.FindObjectsByType<$1>(FindObjectsSortMode.None)");
 
-            // Pattern 2: FindObjectOfType<T>() → Object.FindFirstObjectByType<T>()
+            // Pattern 2: FindFirstObjectByType<T>() → Object.FindFirstObjectByType<T>()
             content = Regex.Replace(content,
                 @"FindObjectOfType<([^>]+)>\(\)",
                 @"Object.FindFirstObjectByType<$1>()");
 
-            // Pattern 3: GameObject.FindObjectsOfType<GameObject>() → Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None)
+            // Pattern 3: GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None) → Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None)
             content = Regex.Replace(content,
                 @"GameObject\.FindObjectsOfType<([^>]+)>\(\)",
                 @"Object.FindObjectsByType<$1>(FindObjectsSortMode.None)");
