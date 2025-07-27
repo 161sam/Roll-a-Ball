@@ -1,0 +1,7 @@
+// Force Unity recompilation by creating temporary script
+using UnityEngine;
+
+public class ForceRecompile : MonoBehaviour 
+{
+    // This file exists temporarily to force Unity recompilation
+}

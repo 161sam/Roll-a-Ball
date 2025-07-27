@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using RollABall.Map;
 
 /// <summary>
 /// Universal Scene Fixture - Automatically fixes common UI and component connection issues
@@ -449,7 +450,7 @@ public class UniversalSceneFixture : MonoBehaviour
                     RollABall.Map.MapStartupController controller = FindFirstObjectByType<RollABall.Map.MapStartupController>();
                     if (controller)
                     {
-                        controller.LoadMapFromCoordinates(51.3387, 12.3799); // Leipzig
+                        controller.LoadMapFromCoordinates(51.3387f, 12.3799f); // Leipzig
                     }
                 });
                 Log($"Connected location button: {button.name}");

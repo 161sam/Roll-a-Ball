@@ -1,0 +1,7 @@
+// Force Unity compilation trigger
+using UnityEngine;
+
+public class CompilationTrigger : MonoBehaviour 
+{
+    // This file exists only to trigger Unity compilation
+}

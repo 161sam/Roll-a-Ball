@@ -1,0 +1,51 @@
+// Unity material configuration for Steampunk Building Materials
+// These materials should be created in the Unity Editor as Material assets
+
+// ResidentialMaterial.mat - Warm brick/stone appearance
+// Properties:
+// - Albedo: RGB(139, 87, 66) - Warm brown brick color
+// - Metallic: 0.1
+// - Smoothness: 0.3
+// - Normal Map: Optional brick texture
+// - Emission: None
+
+// IndustrialMaterial.mat - Dark metallic industrial look  
+// Properties:
+// - Albedo: RGB(60, 60, 65) - Dark gray metal
+// - Metallic: 0.7
+// - Smoothness: 0.4
+// - Normal Map: Optional metal plate texture
+// - Emission: RGB(255, 100, 0) * 0.1 - Subtle orange glow
+
+// CommercialMaterial.mat - Clean modern appearance
+// Properties:
+// - Albedo: RGB(200, 200, 210) - Light gray/white
+// - Metallic: 0.2
+// - Smoothness: 0.6
+// - Normal Map: Optional clean concrete texture
+// - Emission: None
+
+// OfficeMaterial.mat - Glass and steel look
+// Properties:
+// - Albedo: RGB(120, 140, 160) - Cool blue-gray
+// - Metallic: 0.5
+// - Smoothness: 0.8
+// - Normal Map: Optional glass reflection texture
+// - Emission: RGB(100, 150, 255) * 0.05 - Subtle blue glow
+
+// DefaultBuildingMaterial.mat - Generic building appearance
+// Properties:
+// - Albedo: RGB(180, 160, 140) - Neutral beige
+// - Metallic: 0.3
+// - Smoothness: 0.4
+// - Normal Map: Optional generic building texture
+// - Emission: None
+
+/* 
+Instructions for Unity Editor:
+1. Create new Materials in OSMAssets/Materials/ folder
+2. Set each material to Standard shader
+3. Apply the color and property values above
+4. Assign these materials to the corresponding Material slots in MapGenerator component
+5. For Steampunk effect, add subtle emissive properties to industrial buildings
+*/

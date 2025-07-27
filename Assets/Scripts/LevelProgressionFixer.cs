@@ -19,7 +19,9 @@ public class LevelProgressionFixer : MonoBehaviour
         new LevelProgressionData { sceneName = "Level1", nextScene = "Level2", expectedCollectibles = 5 },
         new LevelProgressionData { sceneName = "Level2", nextScene = "Level3", expectedCollectibles = 8 },
         new LevelProgressionData { sceneName = "Level3", nextScene = "GeneratedLevel", expectedCollectibles = 10 },
-        new LevelProgressionData { sceneName = "GeneratedLevel", nextScene = "GeneratedLevel", expectedCollectibles = 12 }
+        new LevelProgressionData { sceneName = "GeneratedLevel", nextScene = "GeneratedLevel", expectedCollectibles = 12 },
+        new LevelProgressionData { sceneName = "Level_OSM", nextScene = "Level_OSM", expectedCollectibles = 10 },
+        new LevelProgressionData { sceneName = "MiniGame", nextScene = "Level1", expectedCollectibles = 5 }
     };
     
     [Header("Manual Controls")]

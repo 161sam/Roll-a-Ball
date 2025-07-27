@@ -49,7 +49,7 @@ public class OSMSceneCompleter : MonoBehaviour
             if (Application.isPlaying)
             {
                 // Automatically start with fallback location for testing
-                var mapController = FindFirstObjectByType<MapStartupController>();
+                var mapController = Object.FindFirstObjectByType<MapStartupController>();
                 if (mapController != null)
                 {
                     mapController.LoadFallbackMap();

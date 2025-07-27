@@ -101,6 +101,12 @@ public class CollectibleDiagnosticTool : MonoBehaviour
         
         foreach (GameObject obj in taggedObjects)
         {
+            // Skip prefabs and tool objects
+            if (obj.name.Contains("Prefab") || obj.name.Contains("Tool") || obj.name.Contains("Manager"))
+            {
+                continue; // Skip prefabs and management objects
+            }
+            
             if (!obj.GetComponent<CollectibleController>())
             {
                 LogWarning($"Object '{obj.name}' has Collectible tag but no CollectibleController!");
@@ -177,8 +183,8 @@ public class CollectibleDiagnosticTool : MonoBehaviour
         // Look for objects with common collectible names
         string[] collectibleNames = { "collectible", "pickup", "item", "coin", "gem", "power", "kronkorken", "sicherheitsnadel" };
         
-        // Exclude these types of objects (tools, managers, UI, etc.)
-        string[] excludedTerms = { "tool", "diagnostic", "manager", "controller", "fixer", "ui", "canvas", "button", "text", "panel", "system", "generator", "helper", "setup" };
+        // Exclude these types of objects (tools, managers, UI, prefabs, etc.)
+        string[] excludedTerms = { "tool", "diagnostic", "manager", "controller", "fixer", "ui", "canvas", "button", "text", "panel", "system", "generator", "helper", "setup", "prefab" };
         
         foreach (string name in collectibleNames)
         {
