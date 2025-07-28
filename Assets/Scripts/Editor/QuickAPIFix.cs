@@ -7,6 +7,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Quick API Fix Runner - Executes the Unity 6.1 API fixes automatically
 /// </summary>
+// TODO-DUPLICATE#2: Funktional identisch mit QuickAPIBatchFixer.cs und ObsoleteAPIBatchFixer.cs. Bitte vereinheitlichen oder entfernen.
 public class QuickAPIFix
 {
     [MenuItem("Roll-a-Ball/🚀 Quick Fix All APIs")]
