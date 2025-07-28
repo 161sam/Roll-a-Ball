@@ -79,6 +79,7 @@ public class LevelProfile : ScriptableObject
     [SerializeField] private bool useTimeBasedSeed = true;
     [SerializeField] private LevelGenerationMode generationMode = LevelGenerationMode.Maze;
     [SerializeField] private float pathComplexity = 0.5f; // 0 = einfache Wege, 1 = komplexe Labyrinthe
+    [SerializeField] private bool useDynamicModeSelection = false;
 
     // Properties für externen Zugriff (Bestehende)
     public string ProfileName => profileName;
@@ -110,6 +111,7 @@ public class LevelProfile : ScriptableObject
     public bool UseTimeBasedSeed => useTimeBasedSeed;
     public LevelGenerationMode GenerationMode => generationMode;
     public float PathComplexity => pathComplexity;
+    public bool UseDynamicModeSelection => useDynamicModeSelection;
 
     // Neue Properties für Steampunk-Features
     public bool EnableRotatingObstacles => enableRotatingObstacles;
@@ -143,6 +145,29 @@ public class LevelProfile : ScriptableObject
             return System.DateTime.Now.GetHashCode();
 
         return Random.Range(int.MinValue, int.MaxValue);
+    }
+
+    // Dynamic generation mode selection
+    public LevelGenerationMode GetAdaptiveGenerationMode(int seed)
+    {
+        if (!useDynamicModeSelection)
+            return generationMode;
+
+        System.Random rnd = new System.Random(seed);
+
+        bool small = levelSize <= 10;
+        bool large = levelSize >= 20;
+
+        if (small)
+            return rnd.NextDouble() < 0.5 ? LevelGenerationMode.Simple : LevelGenerationMode.Maze;
+
+        if (large && difficultyLevel >= 3)
+            return rnd.NextDouble() < 0.5 ? LevelGenerationMode.HybridOrganicPath : LevelGenerationMode.HybridMazeOpen;
+
+        if (difficultyLevel >= 2)
+            return rnd.NextDouble() < 0.5 ? LevelGenerationMode.Maze : LevelGenerationMode.Organic;
+
+        return generationMode;
     }
 
     /// <summary>
@@ -232,7 +257,8 @@ public class LevelProfile : ScriptableObject
             case LevelGenerationMode.Maze: score += 15f; break;
             case LevelGenerationMode.Platforms: score += 20f; break;
             case LevelGenerationMode.Organic: score += 18f; break;
-            case LevelGenerationMode.Hybrid: score += 25f; break;
+            case LevelGenerationMode.HybridMazeOpen: score += 25f; break;
+            case LevelGenerationMode.HybridOrganicPath: score += 28f; break;
         }
         
         return Mathf.Clamp(score, 0f, 100f);
@@ -279,11 +305,12 @@ public class LevelProfile : ScriptableObject
 /// </summary>
 public enum LevelGenerationMode
 {
-    Simple,      // Einfache offene Fläche mit wenigen Hindernissen
-    Maze,        // Labyrinth-ähnliche Struktur
-    Platforms,   // Plattform-basiertes Level
-    Organic,     // Organische, unregelmäßige Strukturen
-    Hybrid       // Mischung verschiedener Modi
+    Simple,            // Einfache offene Fläche mit wenigen Hindernissen
+    Maze,              // Labyrinth-ähnliche Struktur
+    Platforms,         // Plattform-basiertes Level
+    Organic,           // Organische, unregelmäßige Strukturen
+    HybridMazeOpen,    // Hybrid aus Maze mit offenen Bereichen
+    HybridOrganicPath  // Hybrid aus Organic mit garantiertem Pfad
 }
 
 /// <summary>
