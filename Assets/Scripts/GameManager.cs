@@ -171,6 +171,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleInput()
     {
+        // TODO-OPT#10: Consolidate input handling into centralized system
         if (Input.GetKeyDown(pauseKey))
         {
             if (isPaused)
@@ -317,8 +318,8 @@ public class GameManager : MonoBehaviour
         if (player)
         {
             lastPlayerPosition = player.transform.position;
-            
-            // Reset player velocity
+
+            // TODO-OPT#9: Velocity reset duplicated in multiple methods - move to reusable function
             Rigidbody playerRb = player.GetComponent<Rigidbody>();
             if (playerRb)
             {
@@ -386,7 +387,6 @@ public class GameManager : MonoBehaviour
 
         player.transform.position = respawnPosition + Vector3.up * 2f;
         
-        // Reset player velocity
         Rigidbody playerRb = player.GetComponent<Rigidbody>();
         if (playerRb)
         {

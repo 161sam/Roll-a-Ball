@@ -215,6 +215,7 @@ public class LevelProfile : ScriptableObject
     /// </summary>
     public LevelProfile CreateScaledProfile(float difficultyMultiplier)
     {
+        // TODO-OPT#6: Duplicate scaling logic could be generalized for profile parameters
         LevelProfile scaledProfile = Instantiate(this);
         
         scaledProfile.collectibleCount = Mathf.RoundToInt(collectibleCount * difficultyMultiplier);
@@ -305,6 +306,7 @@ public class LevelProfile : ScriptableObject
 
     void OnValidate()
     {
+        // TODO-OPT#5: Many individual Clamp calls - consolidate with helper to reduce redundancy
         // Clamp values in editor
         levelSize = Mathf.Max(5, levelSize);
         collectibleCount = Mathf.Max(1, collectibleCount);

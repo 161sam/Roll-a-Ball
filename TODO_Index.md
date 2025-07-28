@@ -1,0 +1,14 @@
+### \ud83d\udccc TODO-Index f\u00fcr Codeoptimierung
+
+| ID | Datei | Ort (Zeile/Funktion) | Beschreibung |
+| --- | --- | --- | --- |
+| TODO-OPT#1 | Assets/Scripts/Generators/LevelGenerator.cs | CreateGroundTile(), Zeile 1350 | Redundante Materialauswahl mit CreateWallTile |
+| TODO-OPT#2 | Assets/Scripts/Generators/LevelGenerator.cs | InstantiateLevelObjects(), Zeile 1309 | Wiederholte Prefab-Existenzpr\u00fcfung |
+| TODO-OPT#3 | Assets/Scripts/Generators/LevelGenerator.cs | SetupPlayerSpawn(), Zeile 1651 | Duplizierter Velocity-Reset |
+| TODO-OPT#4 | Assets/Scripts/Generators/LevelGenerator.cs | Start(), Zeile 90 | Mehrfache Coroutine-Aufrufe konsolidieren |
+| TODO-OPT#5 | Assets/Scripts/Generators/LevelProfile.cs | OnValidate(), Zeile 309 | Mehrfaches Clampen zusammenfassen |
+| TODO-OPT#6 | Assets/Scripts/Generators/LevelProfile.cs | CreateScaledProfile(), Zeile 218 | Skalierungslogik vereinheitlichen |
+| TODO-OPT#7 | Assets/Scripts/LevelManager.cs | SubscribeToCollectibleEvents(), Zeile 212 | Event-Registrierung auslagern |
+| TODO-OPT#8 | Assets/Scripts/LevelManager.cs | DetermineNextScene(), Zeile 384 | Szenenreihenfolge konfigurierbar machen |
+| TODO-OPT#9 | Assets/Scripts/GameManager.cs | ResetGame(), Zeile 322 | Velocity-Reset in Hilfsmethode verlagern |
+| TODO-OPT#10 | Assets/Scripts/GameManager.cs | HandleInput(), Zeile 174 | Zentrale Eingabeverwaltung einrichten |

@@ -87,6 +87,7 @@ public class LevelGenerator : MonoBehaviour
     {
         if (generateOnStart)
         {
+            // TODO-OPT#4: Multiple calls start the same coroutine - wrap in StartGeneration()
             StartCoroutine(GenerateLevelCoroutine());
         }
     }
@@ -1305,6 +1306,7 @@ public class LevelGenerator : MonoBehaviour
         // Dynamic platform bridge generation
         foreach (Vector2Int tile in movingPlatformTiles)
         {
+            // TODO-OPT#2: Repeated prefab checks - wrap in utility GetRandomPrefab()
             if (activeProfile.MovingPlatformPrefabs != null && activeProfile.MovingPlatformPrefabs.Length > 0)
             {
                 GameObject prefab = activeProfile.MovingPlatformPrefabs[random.Next(activeProfile.MovingPlatformPrefabs.Length)];
@@ -1344,7 +1346,9 @@ public class LevelGenerator : MonoBehaviour
     private void CreateGroundTile(Vector3 position, int gx, int gz)
     {
         GameObject ground = PrefabPooler.Get(groundPrefab, position, Quaternion.identity, groundContainer); // Object Pooling enabled for large levels
-        
+
+        // TODO-OPT#1: Redundant material selection with CreateWallTile - extract helper method
+
         // Apply materials if available
         if (activeProfile.GroundMaterials != null && activeProfile.GroundMaterials.Length > 0)
         {
@@ -1644,7 +1648,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 existingPlayer.transform.position = spawnWorldPos;
                 
-                // Reset player velocity if it has a Rigidbody
+                // TODO-OPT#3: Player velocity reset duplicated in GameManager - centralize into utility
                 Rigidbody rb = existingPlayer.GetComponent<Rigidbody>();
                 if (rb)
                 {
