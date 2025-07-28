@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// Final API Cleanup - Fix remaining Object.FindObjectOfType calls
 /// </summary>
+// TODO-DUPLICATE#2: Funktional identisch mit QuickAPIFix.cs. Bitte vereinheitlichen oder entfernen.
 public class FinalAPICleanup
 {
     [MenuItem("Roll-a-Ball/🎯 Final API Cleanup")]

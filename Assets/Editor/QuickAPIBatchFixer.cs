@@ -9,6 +9,7 @@ namespace RollABall.Editor
     /// Simple batch fixer for deprecated Unity API calls
     /// Focuses on the most common warnings in Unity 6.1
     /// </summary>
+    // TODO-DUPLICATE#2: Funktional identisch mit ObsoleteAPIBatchFixer.cs und QuickAPIFix.cs. Bitte vereinheitlichen oder entfernen.
     public class QuickAPIBatchFixer : EditorWindow
     {
         [MenuItem("Roll-a-Ball/Fix Tools/Quick API Batch Fix")]

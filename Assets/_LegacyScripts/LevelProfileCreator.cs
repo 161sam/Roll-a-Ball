@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 // TODO-REMOVE#2: Obsolete setup script – no longer needed and may corrupt current data
+// TODO-DUPLICATE#1: Funktional identisch mit LevelSetupHelper.cs. Bitte vereinheitlichen oder entfernen.
 
 /// <summary>
 /// Utility-Klasse zum Erstellen der Standard-LevelProfile Assets
