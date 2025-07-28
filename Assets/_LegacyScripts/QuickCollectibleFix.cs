@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
+// TODO-REMOVE#5: Obsolete setup script – no longer needed and may corrupt current data
 /// <summary>
 /// Quick runtime script to fix all Collectibles in current scene
 /// </summary>

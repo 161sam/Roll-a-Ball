@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using System.IO;
 #endif
+// TODO-REMOVE#1: Obsolete setup script – no longer needed and may corrupt current data
 
 /// <summary>
 /// Helper-Klasse zum automatischen Setup des prozeduralen Levelgenerierungssystems
