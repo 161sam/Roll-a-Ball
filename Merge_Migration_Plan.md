@@ -36,3 +36,4 @@ Beide Scripte führen ähnliche Reparaturen von Collectibles durch. In `Collecti
 **Migration:**
 * Methoden aus `QuickCollectibleFix` in `CollectibleFixer` als `FixCurrentScene()` übernehmen
 * Referenzen zu `QuickCollectibleFix` löschen und Menüeinträge anpassen
+
