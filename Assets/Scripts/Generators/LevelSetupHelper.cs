@@ -141,6 +141,9 @@ public class LevelSetupHelper
         
         // Verwende Reflection für private Felder
         var fields = typeof(LevelProfile).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+        // TODO-OPT#18: Many SetField calls below could be driven by a dictionary
+        // to avoid repeating nearly identical reflection assignments
         
         SetField(profile, "profileName", $"{fileName} Profile", fields);
         SetField(profile, "displayName", displayName, fields);
