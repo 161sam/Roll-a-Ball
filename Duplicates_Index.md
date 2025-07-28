@@ -9,3 +9,4 @@
 | DUPLICATE#5 | Asset `.asset` | Assets/Resources/LevelProfiles/MediumProfile.asset | Assets/ScriptableObjects/MediumProfile.asset | nur eines behalten |
 | DUPLICATE#6 | Asset `.asset` | Assets/Resources/LevelProfiles/HardProfile.asset | Assets/ScriptableObjects/HardProfile.asset | nur eines behalten |
 | DUPLICATE#7 | Script | Assets/_LegacyScripts/QuickCollectibleFix.cs | Assets/Editor/CollectibleFixer.cs | zusammenführen |
+
