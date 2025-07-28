@@ -319,9 +319,14 @@ public class LevelGenerator : MonoBehaviour
 
         usedGenerationMode = activeProfile.GetAdaptiveGenerationMode(seed);
 
+        activeProfile.AdjustDensitiesForMode();
+
         if (showGenerationDebug)
         {
             Debug.Log($"Generating level with seed: {seed} using mode {usedGenerationMode}");
+            Debug.Log($"Densities - Obstacles: {activeProfile.ObstacleDensity}, " +
+                      $"Rotating: {activeProfile.RotatingObstacleDensity}, Steam: {activeProfile.SteamEmitterDensity}, " +
+                      $"Gates: {activeProfile.InteractiveGateDensity}");
         }
 
         // Setup containers

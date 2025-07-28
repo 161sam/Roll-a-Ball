@@ -226,8 +226,34 @@ public class LevelProfile : ScriptableObject
         scaledProfile.rotatingObstacleDensity = Mathf.Clamp01(rotatingObstacleDensity * difficultyMultiplier);
         scaledProfile.movingPlatformDensity = Mathf.Clamp01(movingPlatformDensity * difficultyMultiplier);
         scaledProfile.steamEmitterDensity = Mathf.Clamp01(steamEmitterDensity * difficultyMultiplier);
-        
+
         return scaledProfile;
+    }
+
+    // Automatically adjust densities based on generation mode
+    public void AdjustDensitiesForMode()
+    {
+        switch (generationMode)
+        {
+            case LevelGenerationMode.Maze:
+                obstacleDensity = 0.25f + 0.05f * difficultyLevel;
+                rotatingObstacleDensity = 0.08f;
+                break;
+            case LevelGenerationMode.Organic:
+                obstacleDensity = 0.45f;
+                steamEmitterDensity = 0.12f;
+                rotatingObstacleDensity = 0.03f;
+                break;
+            case LevelGenerationMode.HybridMazeOpen:
+                obstacleDensity = 0.3f;
+                rotatingObstacleDensity = 0.06f;
+                interactiveGateDensity = 0.04f;
+                break;
+            case LevelGenerationMode.HybridOrganicPath:
+                obstacleDensity = 0.4f;
+                steamEmitterDensity = 0.08f;
+                break;
+        }
     }
 
     /// <summary>
