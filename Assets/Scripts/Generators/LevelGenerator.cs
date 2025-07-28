@@ -647,17 +647,89 @@ public class LevelGenerator : MonoBehaviour
         int targetCount = activeProfile.CollectibleCount;
         int minDistance = activeProfile.MinCollectibleDistance;
 
-        List<Vector2Int> availablePositions = new List<Vector2Int>(walkableTiles);
+        int size = activeProfile.LevelSize;
+        int half = size / 2;
+
+        // Potential positions excluding the guaranteed main path
+        HashSet<Vector2Int> mainPathSet = new HashSet<Vector2Int>(mainPath);
+        List<Vector2Int> deadEnds = FindDeadEnds();
+        List<Vector2Int> otherTiles = new List<Vector2Int>();
+
+        foreach (Vector2Int tile in walkableTiles)
+        {
+            if (mainPathSet.Contains(tile))
+                continue;
+
+            if (!deadEnds.Contains(tile))
+                otherTiles.Add(tile);
+        }
+
+        // Prioritize dead ends for placement
+        List<Vector2Int> allCandidates = new List<Vector2Int>(deadEnds);
+        allCandidates.AddRange(otherTiles);
+
+        // Split candidates into 4 zones for even distribution
+        List<Vector2Int>[] zonePools = new List<Vector2Int>[4];
+        for (int i = 0; i < 4; i++)
+            zonePools[i] = new List<Vector2Int>();
+
+        foreach (Vector2Int pos in allCandidates)
+        {
+            int zone = 0;
+            if (pos.x >= half) zone += 1;
+            if (pos.y >= half) zone += 2;
+            zonePools[zone].Add(pos);
+        }
+
         int attempts = 0;
         const int maxAttempts = 1000;
 
+        // Try to place at least one collectible per zone if possible
+        for (int z = 0; z < 4 && collectiblePositions.Count < targetCount; z++)
+        {
+            List<Vector2Int> pool = zonePools[z];
+            while (pool.Count > 0 && collectiblePositions.Count < targetCount && attempts < maxAttempts)
+            {
+                attempts++;
+                int index = random.Next(pool.Count);
+                Vector2Int candidate = pool[index];
+                pool.RemoveAt(index);
+
+                bool valid = true;
+                foreach (Vector2Int existing in collectiblePositions)
+                {
+                    if (Vector2Int.Distance(candidate, existing) < minDistance)
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+
+                if (valid)
+                {
+                    collectiblePositions.Add(candidate);
+                    levelGrid[candidate.x, candidate.y] = 2; // Mark collectible
+                    break; // only one per zone in first pass
+                }
+
+                if (attempts % 50 == 0)
+                    yield return null;
+            }
+        }
+
+        // Combine remaining positions from all zones
+        List<Vector2Int> availablePositions = new List<Vector2Int>();
+        foreach (var pool in zonePools)
+            availablePositions.AddRange(pool);
+
+        // Fill remaining collectibles
         while (collectiblePositions.Count < targetCount && attempts < maxAttempts && availablePositions.Count > 0)
         {
             attempts++;
             int index = random.Next(availablePositions.Count);
             Vector2Int candidate = availablePositions[index];
+            availablePositions.RemoveAt(index);
 
-            // Check distance to existing collectibles
             bool validPosition = true;
             foreach (Vector2Int existing in collectiblePositions)
             {
@@ -671,12 +743,9 @@ public class LevelGenerator : MonoBehaviour
             if (validPosition)
             {
                 collectiblePositions.Add(candidate);
-                levelGrid[candidate.x, candidate.y] = 2; // Mark as collectible position
+                levelGrid[candidate.x, candidate.y] = 2;
             }
 
-            availablePositions.RemoveAt(index);
-
-            // Yield periodically
             if (attempts % 50 == 0)
                 yield return null;
         }
@@ -685,6 +754,35 @@ public class LevelGenerator : MonoBehaviour
         {
             Debug.Log($"Placed {collectiblePositions.Count}/{targetCount} collectibles in {attempts} attempts");
         }
+    }
+
+    // Collectible placement based on dead ends and distribution zones
+    private List<Vector2Int> FindDeadEnds()
+    {
+        List<Vector2Int> deadEnds = new List<Vector2Int>();
+        int size = activeProfile.LevelSize;
+
+        foreach (Vector2Int tile in walkableTiles)
+        {
+            if (mainPath.Contains(tile))
+                continue;
+
+            int neighbors = 0;
+            Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+            foreach (Vector2Int d in dirs)
+            {
+                Vector2Int n = tile + d;
+                if (n.x >= 0 && n.x < size && n.y >= 0 && n.y < size)
+                {
+                    if (levelGrid[n.x, n.y] == 0)
+                        neighbors++;
+                }
+            }
+            if (neighbors == 1)
+                deadEnds.Add(tile);
+        }
+
+        return deadEnds;
     }
 
     private IEnumerator PlaceGoalZone()
