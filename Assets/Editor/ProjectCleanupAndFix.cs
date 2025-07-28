@@ -97,11 +97,12 @@ namespace RollABall.Editor
             string folderPath = "Assets/Resources/LevelProfiles";
             
             // Ensure directories exist
+            // TODO-OPT#25: Folder checks repeated across methods - add EnsureFolderExists helper
             if (!AssetDatabase.IsValidFolder("Assets/Resources"))
             {
                 AssetDatabase.CreateFolder("Assets", "Resources");
             }
-            
+
             if (!AssetDatabase.IsValidFolder(folderPath))
             {
                 AssetDatabase.CreateFolder("Assets/Resources", "LevelProfiles");

@@ -64,6 +64,8 @@ public class OSMSceneCompleter : MonoBehaviour
 
     private void SetupUIComponents()
     {
+        // TODO-OPT#24: Many Setup* methods below repeat AddComponent and property assignments
+        //              for UI elements. Extract generic builders to reduce duplication.
         Log("Setting up UI components...");
 
         var canvas = FindUICanvas();
