@@ -91,6 +91,7 @@ public class AutoSceneSetup : MonoBehaviour
         int addedComponents = 0;
         
         // Add MasterFixTool
+        // TODO-OPT#15: Reuse helper AddIfMissing<T>() for component creation
         if (deployMasterFixTool && !FindFirstObjectByType<MasterFixTool>())
         {
             GameObject masterGO = new GameObject("MasterFixTool");

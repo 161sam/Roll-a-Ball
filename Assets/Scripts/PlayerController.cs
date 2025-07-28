@@ -157,6 +157,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInput()
     {
+        // TODO-OPT#16: Input handling duplicated across components - centralize via InputManager
         // Movement input (WASD / Arrow Keys) - LEGACY INPUT
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");

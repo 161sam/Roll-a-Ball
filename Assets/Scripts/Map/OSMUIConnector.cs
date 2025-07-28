@@ -106,6 +106,7 @@ namespace RollABall.Map
 
         private void SetupMapController()
         {
+            // TODO-OPT#12: Reused find-or-create logic for controllers - extract utility method
             mapController = FindFirstObjectByType<MapStartupController>();
             if (!mapController)
             {

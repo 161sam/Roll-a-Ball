@@ -12,3 +12,10 @@
 | TODO-OPT#8 | Assets/Scripts/LevelManager.cs | DetermineNextScene(), Zeile 384 | Szenenreihenfolge konfigurierbar machen |
 | TODO-OPT#9 | Assets/Scripts/GameManager.cs | ResetGame(), Zeile 322 | Velocity-Reset in Hilfsmethode verlagern |
 | TODO-OPT#10 | Assets/Scripts/GameManager.cs | HandleInput(), Zeile 174 | Zentrale Eingabeverwaltung einrichten |
+| TODO-OPT#11 | Assets/Scripts/EmergencySceneBuilder.cs | BuildMinimalGeneratedLevel(), Zeile 105 | Wiederholte Szenen-Setup-Schritte zusammenfassen |
+| TODO-OPT#12 | Assets/Scripts/Map/OSMUIConnector.cs | SetupMapController(), Zeile 109 | Find-or-Create Muster zentralisieren |
+| TODO-OPT#13 | Assets/Scripts/SceneConsolidationEngine.cs | RepairLevel1(), Zeile 251 | GetOrCreate-Helfer für Manager nutzen |
+| TODO-OPT#14 | Assets/Scripts/AutoSceneRepair.cs | Zeile 171 | EnsureComponent<T>()-Methode einführen |
+| TODO-OPT#15 | Assets/Scripts/AutoSceneSetup.cs | Zeile 94 | AddIfMissing<T>() für Komponenten verwenden |
+| TODO-OPT#16 | Assets/Scripts/PlayerController.cs | HandleInput(), Zeile 160 | Zentrale Inputverwaltung nutzen |
+| TODO-OPT#17 | Assets/Scripts/UIController.cs | ShowMainMenu(), Zeile 288 | Show/Hide-Methoden vereinheitlichen |
