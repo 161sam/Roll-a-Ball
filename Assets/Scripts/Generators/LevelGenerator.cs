@@ -35,6 +35,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private bool showWalkableArea = false;
     [SerializeField] private Color walkableColor = Color.green;
     [SerializeField] private Color blockedColor = Color.red;
+    [SerializeField] private Color mainPathColor = Color.cyan;
 
     // Private generation data
     private System.Random random;
@@ -42,6 +43,7 @@ public class LevelGenerator : MonoBehaviour
     private Vector3 levelCenter;
     private List<Vector2Int> walkableTiles;
     private List<Vector2Int> collectiblePositions;
+    private List<Vector2Int> mainPath;
     private Vector2Int playerSpawnPosition;
     private Vector2Int goalPosition;
     private bool isGenerating = false;
@@ -292,6 +294,7 @@ public class LevelGenerator : MonoBehaviour
         levelGrid = new int[size, size];
         walkableTiles = new List<Vector2Int>();
         collectiblePositions = new List<Vector2Int>();
+        mainPath = new List<Vector2Int>();
 
         // Calculate level center
         levelCenter = new Vector3(
@@ -415,14 +418,53 @@ public class LevelGenerator : MonoBehaviour
     {
         int size = activeProfile.LevelSize;
 
-        // Place random obstacles
+        // Ensure path from spawn to goal
+        Vector2Int start = new Vector2Int(1, 1);
+        Vector2Int end = new Vector2Int(size - 2, size - 2);
+        mainPath.Clear();
+        HashSet<Vector2Int> pathSet = new HashSet<Vector2Int>();
+        foreach (Vector2Int p in GetLine(start, end))
+        {
+            mainPath.Add(p);
+            pathSet.Add(p);
+            levelGrid[p.x, p.y] = 0;
+        }
+
+        if (showGenerationDebug)
+        {
+            Debug.Log($"Generated main path with {mainPath.Count} tiles");
+        }
+
+        // Place random obstacles while keeping the main path clear
         for (int x = 1; x < size - 1; x++)
         {
             for (int z = 1; z < size - 1; z++)
             {
+                Vector2Int pos = new Vector2Int(x, z);
+
+                // Prevent walls on main path
+                if (pathSet.Contains(pos))
+                    continue;
+
                 if (random.NextDouble() < obstacleDensity)
                 {
-                    levelGrid[x, z] = 1; // Wall
+                    bool adjacentWall = false;
+                    for (int dx = -1; dx <= 1 && !adjacentWall; dx++)
+                    {
+                        for (int dz = -1; dz <= 1 && !adjacentWall; dz++)
+                        {
+                            if (dx == 0 && dz == 0) continue;
+                            int nx = x + dx;
+                            int nz = z + dz;
+                            if (nx < 1 || nx >= size - 1 || nz < 1 || nz >= size - 1)
+                                continue;
+                            if (levelGrid[nx, nz] == 1)
+                                adjacentWall = true;
+                        }
+                    }
+
+                    if (!adjacentWall)
+                        levelGrid[x, z] = 1; // Wall
                 }
             }
         }
@@ -550,6 +592,36 @@ public class LevelGenerator : MonoBehaviour
         }
 
         return neighbors;
+    }
+
+    private IEnumerable<Vector2Int> GetLine(Vector2Int start, Vector2Int end)
+    {
+        int x0 = start.x;
+        int y0 = start.y;
+        int x1 = end.x;
+        int y1 = end.y;
+        int dx = Mathf.Abs(x1 - x0);
+        int dy = -Mathf.Abs(y1 - y0);
+        int sx = x0 < x1 ? 1 : -1;
+        int sy = y0 < y1 ? 1 : -1;
+        int err = dx + dy;
+
+        while (true)
+        {
+            yield return new Vector2Int(x0, y0);
+            if (x0 == x1 && y0 == y1) break;
+            int e2 = 2 * err;
+            if (e2 >= dy)
+            {
+                err += dy;
+                x0 += sx;
+            }
+            if (e2 <= dx)
+            {
+                err += dx;
+                y0 += sy;
+            }
+        }
     }
 
     private void CollectWalkableTiles()
@@ -896,7 +968,7 @@ public class LevelGenerator : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        if (!showWalkableArea || levelGrid == null) return;
+        if ((!showWalkableArea && !showGenerationDebug) || levelGrid == null) return;
 
         int size = activeProfile ? activeProfile.LevelSize : 10;
         float tileSize = activeProfile ? activeProfile.TileSize : 2f;
@@ -939,6 +1011,17 @@ public class LevelGenerator : MonoBehaviour
             );
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(spawnPos, 0.5f);
+        }
+
+        // Visualize main path
+        if (showGenerationDebug && mainPath != null)
+        {
+            Gizmos.color = mainPathColor;
+            foreach (Vector2Int p in mainPath)
+            {
+                Vector3 pos = new Vector3(p.x * tileSize, 0.1f, p.y * tileSize);
+                Gizmos.DrawCube(pos, Vector3.one * tileSize * 0.3f);
+            }
         }
     }
 
