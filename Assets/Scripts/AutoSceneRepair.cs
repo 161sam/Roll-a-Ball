@@ -167,7 +167,8 @@ public class AutoSceneRepair : EditorWindow
             LogMessage("   ✅ GameManager erstellt");
         }
 
-        // 3. LevelManager prüfen/erstellen  
+        // 3. LevelManager prüfen/erstellen
+        // TODO-OPT#14: Create common EnsureComponent<T>() to avoid repetition
         if (FindFirstObjectByType<LevelManager>() == null)
         {
             GameObject lmGO = new GameObject("LevelManager");
