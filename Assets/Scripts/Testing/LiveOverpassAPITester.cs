@@ -34,35 +34,36 @@ namespace RollABall.Testing
         
         private IEnumerator PerformLiveAPITest()
         {
+            Debug.Log($"📍 Testing coordinates: {testLat:F6}, {testLon:F6} with radius {testRadius}m");
+            
+            // Step 1: Validate coordinates using our improved validator
+            if (!CoordinateValidator.IsValidCoordinate(testLat, testLon))
+            {
+                Debug.LogError("❌ Input coordinates are invalid!");
+                lastTestSuccessful = false;
+                yield break;
+            }
+            
+            // Step 2: Calculate safe bounding box
+            OSMBounds bounds = null;
             try
             {
-                Debug.Log($"📍 Testing coordinates: {testLat:F6}, {testLon:F6} with radius {testRadius}m");
-                
-                // Step 1: Validate coordinates using our improved validator
-                if (!CoordinateValidator.IsValidCoordinate(testLat, testLon))
-                {
-                    Debug.LogError("❌ Input coordinates are invalid!");
-                    yield break;
-                }
-                
-                // Step 2: Calculate safe bounding box
-                var bounds = CoordinateValidator.CalculateSafeBoundingBox(testLat, testLon, testRadius);
-                
+                bounds = CoordinateValidator.CalculateSafeBoundingBox(testLat, testLon, testRadius);
                 Debug.Log($"✅ BoundingBox calculated: [{bounds.minLat:F6}, {bounds.minLon:F6}, {bounds.maxLat:F6}, {bounds.maxLon:F6}]");
-                
-                // Step 3: Build Overpass query
-                string query = BuildTestQuery(bounds);
-                Debug.Log($"📝 Query generated ({query.Length} characters)");
-                
-                // Step 4: Execute API call
-                yield return StartCoroutine(ExecuteOverpassQuery(query));
-                
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"❌ Exception during API test: {e.Message}");
+                Debug.LogError($"❌ Exception during bounding box calculation: {e.Message}");
                 lastTestSuccessful = false;
+                yield break;
             }
+            
+            // Step 3: Build Overpass query
+            string query = BuildTestQuery(bounds);
+            Debug.Log($"📝 Query generated ({query.Length} characters)");
+            
+            // Step 4: Execute API call (cannot be in try-catch due to yield return)
+            yield return StartCoroutine(ExecuteOverpassQuery(query));
         }
         
         private string BuildTestQuery(OSMBounds bounds)
@@ -184,13 +185,15 @@ out geom;";
             
             int successful = 0;
             
+            // Store original coordinates
+            double originalLat = testLat;
+            double originalLon = testLon;
+            
             foreach (var (name, lat, lon) in locations)
             {
                 Debug.Log($"📍 Testing {name}...");
                 
-                // Temporarily set test coordinates
-                double originalLat = testLat;
-                double originalLon = testLon;
+                // Set test coordinates for this location
                 testLat = lat;
                 testLon = lon;
                 
@@ -207,13 +210,13 @@ out geom;";
                     Debug.LogError($"❌ {name}: FAILED");
                 }
                 
-                // Restore original coordinates
-                testLat = originalLat;
-                testLon = originalLon;
-                
                 // Wait between requests to be polite to the API
                 yield return new WaitForSeconds(2.0f);
             }
+            
+            // Restore original coordinates
+            testLat = originalLat;
+            testLon = originalLon;
             
             Debug.Log($"🎯 FINAL RESULTS: {successful}/{locations.Length} locations tested successfully");
         }
