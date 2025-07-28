@@ -19,3 +19,9 @@
 | TODO-OPT#15 | Assets/Scripts/AutoSceneSetup.cs | Zeile 94 | AddIfMissing<T>() für Komponenten verwenden |
 | TODO-OPT#16 | Assets/Scripts/PlayerController.cs | HandleInput(), Zeile 160 | Zentrale Inputverwaltung nutzen |
 | TODO-OPT#17 | Assets/Scripts/UIController.cs | ShowMainMenu(), Zeile 288 | Show/Hide-Methoden vereinheitlichen |
+| TODO-OPT#18 | Assets/Scripts/Generators/LevelSetupHelper.cs | CreateLevelProfile(), Zeile 144 | Reflection-Assignments via Dictionary bündeln |
+| TODO-OPT#19 | Assets/Scripts/Generators/LevelProfileCreator.cs | CreateEasyProfile(), Zeile 34 | Mehrfaches SetPrivateField vereinheitlichen |
+| TODO-OPT#20 | Assets/Scripts/PlayerController.cs | ResetBall(), Zeile 448 | Velocity-Zurücksetzung in Hilfsmethode bündeln |
+| TODO-OPT#21 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 499 | Platzierungslogik für Collectibles/Goal vereinheitlichen |
+| TODO-OPT#22 | Assets/Scripts/Map/MapGenerator_Original.cs | PlaceGoalZone(), Zeile 305 | Gemeinsame Platzierungsfunktion nutzen |
+| TODO-OPT#23 | Assets/Scripts/Map/MapStartupController.cs | InitializeUI(), Zeile 52 | Find-or-create Logik mit OSMUIConnector teilen |

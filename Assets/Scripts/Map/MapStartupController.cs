@@ -49,6 +49,7 @@ namespace RollABall.Map
     private void InitializeUI()
     {
         // Auto-find UI components if not assigned
+        // TODO-OPT#23: Similar find-or-create patterns exist in OSMUIConnector - refactor into shared Utility
         if (!addressInputField)
             addressInputField = Object.FindFirstObjectByType<TMP_InputField>();
         

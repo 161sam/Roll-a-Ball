@@ -445,7 +445,8 @@ public class PlayerController : MonoBehaviour
     public void ResetBall()
     {
         if (!rb) return;
-        
+
+        // TODO-OPT#20: Velocity zeroing duplicated here and in SetPosition - create helper ResetRigidbodyVelocity(rb)
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         flyEnergy = maxFlyEnergy;
@@ -467,6 +468,7 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
         if (rb)
         {
+            // TODO-OPT#20: Use shared velocity reset helper
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
