@@ -21,7 +21,7 @@ namespace RollABall.Environment
             if (activated) return;
             if (other.CompareTag("Player"))
             {
-                connectedGate?.TriggerOpen();
+                connectedGate?.TriggerOpen(true);
                 activated = true;
             }
         }
