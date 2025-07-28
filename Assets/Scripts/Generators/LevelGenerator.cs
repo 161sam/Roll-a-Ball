@@ -130,7 +130,18 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
 
-        activeProfile = profile;
+        float modifier = 1f;
+        if (GameManager.Instance)
+            modifier = GameManager.Instance.CalculateDifficultyModifier();
+
+        activeProfile = profile.CreateScaledProfile(modifier);
+
+        if (showGenerationDebug)
+        {
+            Debug.Log($"Difficulty modifier: {modifier:F2}");
+            Debug.Log($"Scaled size: {activeProfile.LevelSize}, obstacles: {activeProfile.ObstacleDensity}, collectibles: {activeProfile.CollectibleCount}");
+        }
+
         StartCoroutine(GenerateLevelCoroutine());
     }
 
