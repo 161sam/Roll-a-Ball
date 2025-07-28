@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO-REMOVE#6: Obsolete setup script – no longer needed and may corrupt current data
 /// <summary>
 /// Complete Scene Setup - Erstellt eine vollständige Roll-a-Ball Szene
 /// Kann sowohl zur Laufzeit als auch im Editor verwendet werden

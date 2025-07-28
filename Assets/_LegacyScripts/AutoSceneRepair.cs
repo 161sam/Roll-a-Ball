@@ -5,6 +5,7 @@ using UnityEditor.SceneManagement;
 using System.Collections.Generic;
 using System.IO;
 
+// TODO-REMOVE#4: Obsolete setup script – no longer needed and may corrupt current data
 /// <summary>
 /// Automated Scene Repair Tool - Systematische Reparatur aller Roll-a-Ball Szenen
 /// Führt die in der Analyse identifizierten Korrekturen automatisch durch
