@@ -57,8 +57,10 @@ public class LevelGenerator : MonoBehaviour
     private int[,] caSeedGrid;                                          // Debug: CA seed grid
     private Vector2Int caStartCell;                                     // Debug: floodfill start
     private List<Vector2Int> caMainArea;                                // Debug: main walkable area
+    private List<RectInt> openRooms;                                    // Hybrid rooms
     private Vector2Int playerSpawnPosition;
     private Vector2Int goalPosition;
+    private LevelGenerationMode usedGenerationMode;                      // Dynamic mode record
     private bool isGenerating = false;
 
     private Material[] sectorGroundMaterials;   // Sector-based material assignment
@@ -184,6 +186,8 @@ public class LevelGenerator : MonoBehaviour
         caSeedGrid = null;
         caMainArea?.Clear();
         caStartCell = Vector2Int.zero;
+        openRooms?.Clear();
+        usedGenerationMode = activeProfile ? activeProfile.GenerationMode : LevelGenerationMode.Simple;
     }
 
     #endregion
@@ -313,9 +317,11 @@ public class LevelGenerator : MonoBehaviour
         int seed = activeProfile.GetActualSeed();
         random = new System.Random(seed);
 
+        usedGenerationMode = activeProfile.GetAdaptiveGenerationMode(seed);
+
         if (showGenerationDebug)
         {
-            Debug.Log($"Generating level with seed: {seed}");
+            Debug.Log($"Generating level with seed: {seed} using mode {usedGenerationMode}");
         }
 
         // Setup containers
@@ -333,6 +339,7 @@ public class LevelGenerator : MonoBehaviour
         rotatingObstaclePlatforms = new List<Vector2Int>();
         steamEmitterPositions = new List<Vector3>();
         interactiveGatePairs = new List<(Vector3 switchPos, Vector3 gatePos)>();
+        openRooms = new List<RectInt>();
 
         // Sector-based material assignment
         useSectorMaterials = activeProfile.LevelSize >= 16;
@@ -430,7 +437,7 @@ public class LevelGenerator : MonoBehaviour
         int size = activeProfile.LevelSize;
         float obstacleDensity = activeProfile.ObstacleDensity;
 
-        switch (activeProfile.GenerationMode)
+        switch (usedGenerationMode)
         {
             case LevelGenerationMode.Simple:
                 yield return StartCoroutine(GenerateSimpleLayout(obstacleDensity));
@@ -443,6 +450,12 @@ public class LevelGenerator : MonoBehaviour
                 break;
             case LevelGenerationMode.Organic:
                 yield return StartCoroutine(GenerateOrganicLayout());
+                break;
+            case LevelGenerationMode.HybridMazeOpen: // HybridMazeOpen mode
+                yield return StartCoroutine(GenerateHybridMazeOpenLayout());
+                break;
+            case LevelGenerationMode.HybridOrganicPath: // HybridOrganicPath mode
+                yield return StartCoroutine(GenerateHybridOrganicPathLayout());
                 break;
             default:
                 yield return StartCoroutine(GenerateSimpleLayout(obstacleDensity));
@@ -991,6 +1004,58 @@ public class LevelGenerator : MonoBehaviour
         return path;
     }
 
+    // HybridMazeOpen mode
+    private IEnumerator GenerateHybridMazeOpenLayout()
+    {
+        int size = activeProfile.LevelSize;
+
+        yield return StartCoroutine(GenerateMazeLayout());
+
+        Vector2Int start = new Vector2Int(1, 1);
+        Vector2Int end = new Vector2Int(size - 2, size - 2);
+        mainPath = FindPath(start, end);
+        if (mainPath == null || mainPath.Count == 0)
+            mainPath = CarveDirectPath(start, end);
+        else
+            foreach (Vector2Int p in mainPath)
+                levelGrid[p.x, p.y] = 0;
+
+        openRooms.Clear();
+        int roomCount = random.Next(2, 5);
+        for (int r = 0; r < roomCount; r++)
+        {
+            int w = random.Next(3, 6);
+            int h = random.Next(3, 6);
+            int rx = random.Next(1, size - w - 1);
+            int rz = random.Next(1, size - h - 1);
+            RectInt room = new RectInt(rx, rz, w, h);
+            bool intersects = mainPath.Any(p => room.Contains(p));
+            if (intersects)
+            {
+                r--;
+                continue;
+            }
+            openRooms.Add(room);
+            for (int x = room.xMin; x < room.xMax; x++)
+                for (int z = room.yMin; z < room.yMax; z++)
+                    if (x >= 1 && x < size - 1 && z >= 1 && z < size - 1)
+                        levelGrid[x, z] = 0;
+            yield return null;
+        }
+    }
+
+    // HybridOrganicPath mode
+    private IEnumerator GenerateHybridOrganicPathLayout()
+    {
+        int size = activeProfile.LevelSize;
+        yield return StartCoroutine(GenerateOrganicLayout());
+
+        Vector2Int start = new Vector2Int(1, 1);
+        Vector2Int end = new Vector2Int(size - 2, size - 2);
+        mainPath = CarveDirectPath(start, end);
+        yield return null;
+    }
+
     private void CollectWalkableTiles()
     {
         walkableTiles.Clear();
@@ -1390,7 +1455,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         // Steam emitter integration for atmosphere
-        if (activeProfile.GenerationMode == LevelGenerationMode.Platforms &&
+        if (usedGenerationMode == LevelGenerationMode.Platforms &&
             activeProfile.EnableSteamEmitters &&
             activeProfile.SteamEmitterPrefabs != null &&
             activeProfile.SteamEmitterPrefabs.Length > 0)
@@ -1725,8 +1790,20 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
+        // Room visualization for HybridMazeOpen
+        if (showGenerationDebug && openRooms != null && usedGenerationMode == LevelGenerationMode.HybridMazeOpen)
+        {
+            Gizmos.color = Color.yellow;
+            foreach (RectInt room in openRooms)
+            {
+                Vector3 center = new Vector3((room.x + room.width / 2f) * tileSize, 0.05f, (room.y + room.height / 2f) * tileSize);
+                Vector3 sizeVec = new Vector3(room.width * tileSize, 0.1f, room.height * tileSize);
+                Gizmos.DrawWireCube(center, sizeVec);
+            }
+        }
+
         // Organic mode debug visuals
-        if (showGenerationDebug && activeProfile && activeProfile.GenerationMode == LevelGenerationMode.Organic)
+        if (showGenerationDebug && activeProfile && usedGenerationMode == LevelGenerationMode.Organic)
         {
             if (caSeedGrid != null)
             {
