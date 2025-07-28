@@ -38,6 +38,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Color blockedColor = Color.red;
     [SerializeField] private Color mainPathColor = Color.cyan;
     [SerializeField] private Color platformCenterColor = Color.magenta;
+    [SerializeField] private Color caSeedColor = Color.gray;
+    [SerializeField] private Color caStartColor = Color.blue;
 
     // Private generation data
     private System.Random random;
@@ -52,6 +54,9 @@ public class LevelGenerator : MonoBehaviour
     private List<Vector2Int> rotatingObstaclePlatforms;                 // Platforms with obstacles
     private List<Vector3> steamEmitterPositions;                        // Steam emitter placement
     private List<(Vector3 switchPos, Vector3 gatePos)> interactiveGatePairs; // GateTrigger connection
+    private int[,] caSeedGrid;                                          // Debug: CA seed grid
+    private Vector2Int caStartCell;                                     // Debug: floodfill start
+    private List<Vector2Int> caMainArea;                                // Debug: main walkable area
     private Vector2Int playerSpawnPosition;
     private Vector2Int goalPosition;
     private bool isGenerating = false;
@@ -176,6 +181,9 @@ public class LevelGenerator : MonoBehaviour
         rotatingObstaclePlatforms?.Clear();
         steamEmitterPositions?.Clear();
         interactiveGatePairs?.Clear();
+        caSeedGrid = null;
+        caMainArea?.Clear();
+        caStartCell = Vector2Int.zero;
     }
 
     #endregion
@@ -432,6 +440,9 @@ public class LevelGenerator : MonoBehaviour
                 break;
             case LevelGenerationMode.Platforms:
                 yield return StartCoroutine(GeneratePlatformLayout());
+                break;
+            case LevelGenerationMode.Organic:
+                yield return StartCoroutine(GenerateOrganicLayout());
                 break;
             default:
                 yield return StartCoroutine(GenerateSimpleLayout(obstacleDensity));
@@ -718,6 +729,83 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    // Organic layout using Cellular Automata
+    private IEnumerator GenerateOrganicLayout()
+    {
+        int size = activeProfile.LevelSize;
+        float obstacleDensity = activeProfile.ObstacleDensity;
+
+        caSeedGrid = new int[size, size];
+
+        // Initial random fill
+        for (int x = 1; x < size - 1; x++)
+        {
+            for (int z = 1; z < size - 1; z++)
+            {
+                int val = random.NextDouble() < obstacleDensity ? 1 : 0;
+                levelGrid[x, z] = val;
+                caSeedGrid[x, z] = val;
+            }
+        }
+
+        int[,] temp = new int[size, size];
+        int iterations = random.Next(4, 7);
+
+        for (int i = 0; i < iterations; i++)
+        {
+            for (int x = 1; x < size - 1; x++)
+            {
+                for (int z = 1; z < size - 1; z++)
+                {
+                    int walls = CountWallNeighbors(x, z);
+                    if (walls >= 5)
+                        temp[x, z] = 1;
+                    else if (walls <= 3)
+                        temp[x, z] = 0;
+                    else
+                        temp[x, z] = levelGrid[x, z];
+                }
+            }
+
+            for (int x = 1; x < size - 1; x++)
+                for (int z = 1; z < size - 1; z++)
+                    levelGrid[x, z] = temp[x, z];
+
+            yield return null;
+        }
+
+        // Flood fill to keep largest area
+        caStartCell = FindNearestWalkable(new Vector2Int(size / 2, size / 2));
+        HashSet<Vector2Int> connected = FloodFill(caStartCell);
+        caMainArea = new List<Vector2Int>(connected);
+
+        for (int x = 1; x < size - 1; x++)
+        {
+            for (int z = 1; z < size - 1; z++)
+            {
+                Vector2Int p = new Vector2Int(x, z);
+                if (levelGrid[x, z] == 0 && !connected.Contains(p))
+                    levelGrid[x, z] = 1;
+            }
+        }
+
+        Vector2Int start = new Vector2Int(1, 1);
+        Vector2Int end = new Vector2Int(size - 2, size - 2);
+
+        mainPath = FindPath(start, end);
+        if (mainPath == null || mainPath.Count == 0)
+        {
+            mainPath = CarveDirectPath(start, end);
+        }
+        else
+        {
+            foreach (Vector2Int p in mainPath)
+                levelGrid[p.x, p.y] = 0;
+        }
+
+        yield return null;
+    }
+
     private List<Vector2Int> GetUnvisitedNeighbors(Vector2Int pos, int size)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
@@ -766,6 +854,141 @@ public class LevelGenerator : MonoBehaviour
                 y0 += sy;
             }
         }
+    }
+
+    // Count wall neighbors for CA
+    private int CountWallNeighbors(int x, int z)
+    {
+        int count = 0;
+        for (int dx = -1; dx <= 1; dx++)
+        {
+            for (int dz = -1; dz <= 1; dz++)
+            {
+                if (dx == 0 && dz == 0) continue;
+                int nx = x + dx;
+                int nz = z + dz;
+                if (nx < 0 || nx >= activeProfile.LevelSize || nz < 0 || nz >= activeProfile.LevelSize || levelGrid[nx, nz] == 1)
+                    count++;
+            }
+        }
+        return count;
+    }
+
+    private Vector2Int FindNearestWalkable(Vector2Int start)
+    {
+        int size = activeProfile.LevelSize;
+        if (levelGrid[start.x, start.y] == 0) return start;
+        int max = size * size;
+        for (int r = 1; r < size; r++)
+        {
+            for (int x = Mathf.Max(1, start.x - r); x <= Mathf.Min(size - 2, start.x + r); x++)
+            {
+                for (int z = Mathf.Max(1, start.y - r); z <= Mathf.Min(size - 2, start.y + r); z++)
+                {
+                    if (levelGrid[x, z] == 0)
+                        return new Vector2Int(x, z);
+                }
+            }
+        }
+        return start;
+    }
+
+    private HashSet<Vector2Int> FloodFill(Vector2Int start)
+    {
+        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
+        Queue<Vector2Int> q = new Queue<Vector2Int>();
+        q.Enqueue(start);
+        visited.Add(start);
+
+        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+        while (q.Count > 0)
+        {
+            Vector2Int cur = q.Dequeue();
+            foreach (Vector2Int d in dirs)
+            {
+                Vector2Int n = cur + d;
+                if (n.x >= 1 && n.x < activeProfile.LevelSize - 1 && n.y >= 1 && n.y < activeProfile.LevelSize - 1)
+                {
+                    if (levelGrid[n.x, n.y] == 0 && !visited.Contains(n))
+                    {
+                        visited.Add(n);
+                        q.Enqueue(n);
+                    }
+                }
+            }
+        }
+        return visited;
+    }
+
+    private List<Vector2Int> FindPath(Vector2Int start, Vector2Int goal)
+    {
+        Dictionary<Vector2Int, Vector2Int> cameFrom = new Dictionary<Vector2Int, Vector2Int>();
+        Queue<Vector2Int> q = new Queue<Vector2Int>();
+        q.Enqueue(start);
+        cameFrom[start] = start;
+
+        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+        while (q.Count > 0)
+        {
+            Vector2Int cur = q.Dequeue();
+            if (cur == goal)
+                break;
+
+            foreach (Vector2Int d in dirs)
+            {
+                Vector2Int n = cur + d;
+                if (n.x >= 1 && n.x < activeProfile.LevelSize - 1 && n.y >= 1 && n.y < activeProfile.LevelSize - 1)
+                {
+                    if (levelGrid[n.x, n.y] != 1 && !cameFrom.ContainsKey(n))
+                    {
+                        cameFrom[n] = cur;
+                        q.Enqueue(n);
+                    }
+                }
+            }
+        }
+
+        if (!cameFrom.ContainsKey(goal))
+            return null;
+
+        List<Vector2Int> path = new List<Vector2Int>();
+        Vector2Int step = goal;
+        while (step != start)
+        {
+            path.Add(step);
+            step = cameFrom[step];
+        }
+        path.Add(start);
+        path.Reverse();
+        return path;
+    }
+
+    private List<Vector2Int> CarveDirectPath(Vector2Int start, Vector2Int end)
+    {
+        List<Vector2Int> path = new List<Vector2Int>();
+        Vector2Int current = start;
+        path.Add(current);
+        levelGrid[current.x, current.y] = 0;
+
+        while (current != end)
+        {
+            bool moveX = random.Next(2) == 0;
+            if (moveX && current.x != end.x || current.y == end.y)
+            {
+                current = new Vector2Int(current.x + Math.Sign(end.x - current.x), current.y);
+            }
+            else if (current.y != end.y)
+            {
+                current = new Vector2Int(current.x, current.y + Math.Sign(end.y - current.y));
+            }
+
+            if (levelGrid[current.x, current.y] == 1)
+                levelGrid[current.x, current.y] = 0;
+            path.Add(current);
+        }
+        return path;
     }
 
     private void CollectWalkableTiles()
@@ -1500,6 +1723,30 @@ public class LevelGenerator : MonoBehaviour
             {
                 Gizmos.DrawSphere(pos, tileSize * 0.2f);
             }
+        }
+
+        // Organic mode debug visuals
+        if (showGenerationDebug && activeProfile && activeProfile.GenerationMode == LevelGenerationMode.Organic)
+        {
+            if (caSeedGrid != null)
+            {
+                Gizmos.color = caSeedColor;
+                for (int x = 1; x < size - 1; x++)
+                {
+                    for (int z = 1; z < size - 1; z++)
+                    {
+                        if (caSeedGrid[x, z] == 0)
+                        {
+                            Vector3 pos = new Vector3(x * tileSize, 0.05f, z * tileSize);
+                            Gizmos.DrawWireCube(pos, Vector3.one * tileSize * 0.8f);
+                        }
+                    }
+                }
+            }
+
+            Gizmos.color = caStartColor;
+            Vector3 startPos = new Vector3(caStartCell.x * tileSize, 0.3f, caStartCell.y * tileSize);
+            Gizmos.DrawSphere(startPos, tileSize * 0.25f);
         }
 
         // Interactive gate connections
