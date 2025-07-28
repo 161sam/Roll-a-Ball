@@ -1186,6 +1186,33 @@ public class LevelGenerator : MonoBehaviour
         int pairCount = Mathf.Max(1, Mathf.RoundToInt(walkableTiles.Count * activeProfile.InteractiveGateDensity));
         float tileSize = activeProfile.TileSize;
 
+        // Place a gate near the goal that opens after collecting all items
+        if (walkableTiles.Count > 0)
+        {
+            Vector2Int goalGateTile = goalPosition;
+            List<Vector2Int> nearGoal = new List<Vector2Int>();
+            foreach (Vector2Int pos in walkableTiles)
+            {
+                if (Vector2Int.Distance(pos, goalPosition) <= 2)
+                    nearGoal.Add(pos);
+            }
+            if (nearGoal.Count > 0)
+                goalGateTile = nearGoal[random.Next(nearGoal.Count)];
+
+            Vector3 gatePos = new Vector3(goalGateTile.x * tileSize, 0, goalGateTile.y * tileSize);
+            GameObject gatePrefab = activeProfile.InteractiveGatePrefabs[random.Next(activeProfile.InteractiveGatePrefabs.Length)];
+            GameObject gateObj = Instantiate(gatePrefab, gatePos, Quaternion.identity, levelContainer);
+            var gateCtrl = gateObj.GetComponent<RollABall.Environment.GateController>();
+            if (!gateCtrl)
+                gateCtrl = gateObj.AddComponent<RollABall.Environment.GateController>();
+
+            gateCtrl.RequiresAllCollectibles = true; // Gate requires all collectibles to be opened
+            gateCtrl.RequiresSwitchTrigger = false;
+
+            if (showGenerationDebug)
+                Debug.Log($"Placed goal gate at {gatePos}");
+        }
+
         for (int i = 0; i < pairCount; i++)
         {
             if (walkableTiles.Count < 2)
