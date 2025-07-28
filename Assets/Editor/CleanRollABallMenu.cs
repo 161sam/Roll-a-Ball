@@ -8,6 +8,7 @@ namespace RollABall.Editor
     /// Sauberes und aktuelles Roll-a-Ball Editor Menu
     /// Entfernt alle obsoleten Funktionen und bietet nur noch relevante Tools
     /// </summary>
+    // TODO-DUPLICATE#3: Funktional identisch mit RollABallMenuIntegration.cs und RollABallControlPanelRestorer.cs. Bitte vereinheitlichen oder entfernen.
     public class CleanRollABallMenu : EditorWindow
     {
         private Vector2 scrollPosition;
