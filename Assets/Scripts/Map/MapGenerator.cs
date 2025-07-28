@@ -495,9 +495,11 @@ namespace RollABall.Map
             
             Transform collectibleContainer = new GameObject("Collectibles").transform;
             collectibleContainer.SetParent(mapContainer);
-            
+
             List<Vector3> collectiblePositions = GenerateCollectiblePositions();
-            
+
+            // TODO-OPT#21: Object instantiation loop mirrors PlaceGoalZone - move to generic PlaceObjects()
+
             for (int i = 0; i < collectiblePositions.Count; i++)
             {
                 GameObject collectible = Instantiate(collectiblePrefab, collectiblePositions[i], Quaternion.identity);

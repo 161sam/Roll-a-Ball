@@ -31,6 +31,8 @@ public class LevelProfileCreator : MonoBehaviour
         LevelProfile easy = ScriptableObject.CreateInstance<LevelProfile>();
         
         // Set private fields via reflection (since they're private)
+        // TODO-OPT#19: The long list of SetPrivateField calls repeats for each profile
+        // consider a configuration struct or dictionary-driven assignment
         SetPrivateField(easy, "profileName", "Easy Profile");
         SetPrivateField(easy, "displayName", "Einfach");
         SetPrivateField(easy, "difficultyLevel", 1);
