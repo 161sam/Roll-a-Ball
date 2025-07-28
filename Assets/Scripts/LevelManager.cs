@@ -75,8 +75,9 @@ public class LevelManager : MonoBehaviour
     public bool IsLevelCompleted => levelCompleted;
     public int CollectiblesRemaining => levelConfig.collectiblesRemaining;
     public int TotalCollectibles => levelConfig.totalCollectibles;
-    public float TimeRemaining => levelConfig.hasTimeLimit ? 
+    public float TimeRemaining => levelConfig.hasTimeLimit ?
         Mathf.Max(0, levelConfig.timeLimit - (Time.time - levelStartTime)) : float.MaxValue;
+    public float LevelElapsedTime => Time.time - levelStartTime;
 
     void Awake()
     {
@@ -283,6 +284,7 @@ public class LevelManager : MonoBehaviour
         // Game over logic
         if (GameManager.Instance)
         {
+            GameManager.Instance.RegisterPlayerDeath();
             GameManager.Instance.GameOver();
         }
     }
@@ -302,7 +304,9 @@ public class LevelManager : MonoBehaviour
         // Update GameManager statistics
         if (GameManager.Instance)
         {
-            // Add completion bonus to statistics if available
+            int collected = levelConfig.totalCollectibles - levelConfig.collectiblesRemaining;
+            float target = levelConfig.hasTimeLimit ? levelConfig.timeLimit : 0f;
+            GameManager.Instance.RecordLevelPerformance(LevelElapsedTime, collected, levelConfig.totalCollectibles, target);
         }
 
         // Start transition to next level
