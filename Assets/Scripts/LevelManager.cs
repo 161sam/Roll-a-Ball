@@ -209,6 +209,8 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCollectibles == null) return;
 
+        // TODO-OPT#7: Duplicate subscribe/unsubscribe loops - unify via helper method
+
         foreach (CollectibleController collectible in levelCollectibles)
         {
             if (collectible != null)
@@ -379,6 +381,7 @@ public class LevelManager : MonoBehaviour
 
     private string DetermineNextScene(string currentScene)
     {
+        // TODO-OPT#8: Hardcoded scene names - replace with configurable progression table
         // Simple level progression logic
         if (currentScene == "Level1" || currentScene == "Level_1")
             return "Level2";
