@@ -50,6 +50,7 @@ public class LevelGenerator : MonoBehaviour
     private List<(Vector2Int from, Vector2Int to)> platformConnections; // Dynamic bridges
     private List<Vector2Int> movingPlatformTiles;                       // Bridge spawn points
     private List<Vector2Int> rotatingObstaclePlatforms;                 // Platforms with obstacles
+    private List<Vector3> steamEmitterPositions;                        // Steam emitter placement
     private Vector2Int playerSpawnPosition;
     private Vector2Int goalPosition;
     private bool isGenerating = false;
@@ -168,6 +169,7 @@ public class LevelGenerator : MonoBehaviour
         platformConnections?.Clear();
         movingPlatformTiles?.Clear();
         rotatingObstaclePlatforms?.Clear();
+        steamEmitterPositions?.Clear();
     }
 
     #endregion
@@ -308,6 +310,7 @@ public class LevelGenerator : MonoBehaviour
         platformConnections = new List<(Vector2Int from, Vector2Int to)>();
         movingPlatformTiles = new List<Vector2Int>();
         rotatingObstaclePlatforms = new List<Vector2Int>();
+        steamEmitterPositions = new List<Vector3>();
 
         // Calculate level center
         levelCenter = new Vector3(
@@ -1107,6 +1110,52 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
+        // Steam emitter integration for atmosphere
+        if (activeProfile.GenerationMode == LevelGenerationMode.Platforms &&
+            activeProfile.EnableSteamEmitters &&
+            activeProfile.SteamEmitterPrefabs != null &&
+            activeProfile.SteamEmitterPrefabs.Length > 0)
+        {
+            float density = Mathf.Clamp01(activeProfile.SteamEmitterDensity);
+            steamEmitterPositions.Clear();
+
+            foreach (Vector2Int center in platformCenters)
+            {
+                if (random.NextDouble() <= density)
+                {
+                    GameObject prefab = activeProfile.SteamEmitterPrefabs[random.Next(activeProfile.SteamEmitterPrefabs.Length)];
+                    if (prefab)
+                    {
+                        Vector3 pos = new Vector3(
+                            center.x * activeProfile.TileSize,
+                            activeProfile.CollectibleSpawnHeight + 0.5f,
+                            center.y * activeProfile.TileSize);
+
+                        GameObject emitter = Instantiate(prefab, pos, Quaternion.identity, effectsContainer);
+                        steamEmitterPositions.Add(pos);
+
+                        // Apply steam settings if a compatible controller exists
+                        if (activeProfile.SteamSettings != null)
+                        {
+                            emitter.SendMessage("ApplyProfile", activeProfile.SteamSettings, SendMessageOptions.DontRequireReceiver);
+
+                            if (activeProfile.SteamSettings.SteamSounds != null && activeProfile.SteamSettings.SteamSounds.Length > 0)
+                            {
+                                AudioClip steamClip = activeProfile.SteamSettings.SteamSounds[random.Next(activeProfile.SteamSettings.SteamSounds.Length)];
+                                emitter.SendMessage("SetSteamSound", steamClip, SendMessageOptions.DontRequireReceiver);
+                            }
+
+                            if (activeProfile.SteamSettings.MechanicalSounds != null && activeProfile.SteamSettings.MechanicalSounds.Length > 0)
+                            {
+                                AudioClip mechClip = activeProfile.SteamSettings.MechanicalSounds[random.Next(activeProfile.SteamSettings.MechanicalSounds.Length)];
+                                emitter.SendMessage("SetMechanicalSound", mechClip, SendMessageOptions.DontRequireReceiver);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         yield return null;
     }
 
@@ -1294,6 +1343,16 @@ public class LevelGenerator : MonoBehaviour
             {
                 Vector3 pos = new Vector3(c.x * tileSize, 1f, c.y * tileSize);
                 Gizmos.DrawCube(pos, Vector3.one * tileSize * 0.3f);
+            }
+        }
+
+        // Steam emitter integration for atmosphere
+        if (showGenerationDebug && steamEmitterPositions != null)
+        {
+            Gizmos.color = Color.white;
+            foreach (Vector3 pos in steamEmitterPositions)
+            {
+                Gizmos.DrawSphere(pos, tileSize * 0.2f);
             }
         }
     }
