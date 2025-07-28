@@ -102,6 +102,7 @@ public class EmergencySceneBuilder : MonoBehaviour
         }
     }
 
+    // TODO-OPT#11: BuildMinimalX methods duplicate setup steps - refactor into shared BuildMinimalScene()
     private void BuildMinimalGeneratedLevel()
     {
         Log("Building minimal GeneratedLevel...");

@@ -285,6 +285,7 @@ public class UIController : MonoBehaviour
     
     #region Main Menu
     
+    // TODO-OPT#17: Multiple Show*/Hide* methods mirror ChangeUIState - consider unified interface
     public void ShowMainMenu()
     {
         ChangeUIState(UIState.MainMenu);
