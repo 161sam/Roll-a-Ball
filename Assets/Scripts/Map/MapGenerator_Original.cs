@@ -301,8 +301,9 @@ namespace RollABall.Map
             }
             
             Debug.Log("[MapGenerator] Placing goal zone...");
-            
+
             Vector3 goalPosition = FindOptimalGoalPosition();
+            // TODO-OPT#22: Shares logic with MapGenerator.PlaceGoalZone - consolidate into shared helper
             GameObject goalZone = Instantiate(goalZonePrefab, goalPosition, Quaternion.identity);
             goalZone.transform.SetParent(mapContainer);
             goalZone.name = "GoalZone";
