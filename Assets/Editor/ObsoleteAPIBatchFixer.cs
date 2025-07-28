@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace RollABall.Editor
 {
+    // TODO-DUPLICATE#2: Funktional identisch mit QuickAPIBatchFixer.cs und QuickAPIFix.cs. Bitte vereinheitlichen oder entfernen.
     public class ObsoleteAPIBatchFixer
     {
         [MenuItem("Roll-a-Ball/⚡ Batch Fix Obsolete APIs", priority = 5)]
