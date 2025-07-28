@@ -56,6 +56,10 @@ public class LevelGenerator : MonoBehaviour
     private Vector2Int goalPosition;
     private bool isGenerating = false;
 
+    private Material[] sectorGroundMaterials;   // Sector-based material assignment
+    private Material[] sectorWallMaterials;     // Sector-based material assignment
+    private bool useSectorMaterials = false;    // Sector-based material assignment
+
     // Generation statistics
     private int generationAttempts = 0;
     private float lastGenerationTime = 0f;
@@ -322,6 +326,23 @@ public class LevelGenerator : MonoBehaviour
         steamEmitterPositions = new List<Vector3>();
         interactiveGatePairs = new List<(Vector3 switchPos, Vector3 gatePos)>();
 
+        // Sector-based material assignment
+        useSectorMaterials = activeProfile.LevelSize >= 16;
+        if (useSectorMaterials)
+        {
+            sectorGroundMaterials = new Material[4];
+            sectorWallMaterials = new Material[4];
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (activeProfile.GroundMaterials != null && activeProfile.GroundMaterials.Length > 0)
+                    sectorGroundMaterials[i] = activeProfile.GroundMaterials[random.Next(activeProfile.GroundMaterials.Length)];
+
+                if (activeProfile.WallMaterials != null && activeProfile.WallMaterials.Length > 0)
+                    sectorWallMaterials[i] = activeProfile.WallMaterials[random.Next(activeProfile.WallMaterials.Length)];
+            }
+        }
+
         // Calculate level center
         levelCenter = new Vector3(
             (size - 1) * activeProfile.TileSize * 0.5f,
@@ -365,10 +386,7 @@ public class LevelGenerator : MonoBehaviour
         for (int i = container.childCount - 1; i >= 0; i--)
         {
             var child = container.GetChild(i).gameObject;
-            if (Application.isEditor)
-                DestroyImmediate(child); // FIX: Ensure immediate cleanup in Editor
-            else
-                Destroy(child);
+            PrefabPooler.Release(child); // Object Pooling enabled for large levels
         }
     }
 
@@ -953,15 +971,15 @@ public class LevelGenerator : MonoBehaviour
                 switch (levelGrid[x, z])
                 {
                     case 0: // Walkable ground
-                        CreateGroundTile(worldPos);
+                        CreateGroundTile(worldPos, x, z); // Object Pooling enabled for large levels
                         break;
 
                     case 1: // Wall
-                        CreateWallTile(worldPos);
+                        CreateWallTile(worldPos, x, z); // Object Pooling enabled for large levels
                         break;
 
                     case 2: // Collectible
-                        CreateGroundTile(worldPos);
+                        CreateGroundTile(worldPos, x, z); // Object Pooling enabled for large levels
                         CreateCollectible(worldPos + Vector3.up * activeProfile.CollectibleSpawnHeight);
                         break;
 
@@ -1019,14 +1037,23 @@ public class LevelGenerator : MonoBehaviour
     #region Object Creation
     // TODO: prepare object pooling for level prefabs (ground, walls, collectibles, goal zone)
 
-    private void CreateGroundTile(Vector3 position)
+    private void CreateGroundTile(Vector3 position, int gx, int gz)
     {
-        GameObject ground = Instantiate(groundPrefab, position, Quaternion.identity, groundContainer);
+        GameObject ground = PrefabPooler.Get(groundPrefab, position, Quaternion.identity, groundContainer); // Object Pooling enabled for large levels
         
         // Apply materials if available
         if (activeProfile.GroundMaterials != null && activeProfile.GroundMaterials.Length > 0)
         {
-            Material material = activeProfile.GroundMaterials[random.Next(activeProfile.GroundMaterials.Length)];
+            Material material = null;
+            if (useSectorMaterials)
+            {
+                int sector = GetSector(gx, gz);
+                material = sectorGroundMaterials[sector]; // Sector-based material assignment
+            }
+            else
+            {
+                material = activeProfile.GroundMaterials[random.Next(activeProfile.GroundMaterials.Length)];
+            }
             if (material)
             {
                 Renderer renderer = ground.GetComponent<Renderer>();
@@ -1046,14 +1073,23 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    private void CreateWallTile(Vector3 position)
+    private void CreateWallTile(Vector3 position, int gx, int gz)
     {
-        GameObject wall = Instantiate(wallPrefab, position, Quaternion.identity, wallContainer);
+        GameObject wall = PrefabPooler.Get(wallPrefab, position, Quaternion.identity, wallContainer); // Object Pooling enabled for large levels
         
         // Apply materials if available
         if (activeProfile.WallMaterials != null && activeProfile.WallMaterials.Length > 0)
         {
-            Material material = activeProfile.WallMaterials[random.Next(activeProfile.WallMaterials.Length)];
+            Material material = null;
+            if (useSectorMaterials)
+            {
+                int sector = GetSector(gx, gz);
+                material = sectorWallMaterials[sector]; // Sector-based material assignment
+            }
+            else
+            {
+                material = activeProfile.WallMaterials[random.Next(activeProfile.WallMaterials.Length)];
+            }
             if (material)
             {
                 Renderer renderer = wall.GetComponent<Renderer>();
@@ -1065,7 +1101,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void CreateCollectible(Vector3 position)
     {
-        GameObject collectible = Instantiate(collectiblePrefab, position, Quaternion.identity, collectibleContainer);
+        GameObject collectible = PrefabPooler.Get(collectiblePrefab, position, Quaternion.identity, collectibleContainer); // Object Pooling enabled for large levels
         
         // Configure collectible if it has a CollectibleController
         CollectibleController controller = collectible.GetComponent<CollectibleController>();
@@ -1078,7 +1114,7 @@ public class LevelGenerator : MonoBehaviour
     private void CreateGoalZone(Vector3 position)
     {
         // NOTE: goalZonePrefab should include a slightly raised base to avoid Z-fighting
-        GameObject goalZone = Instantiate(goalZonePrefab, position, Quaternion.identity, levelContainer);
+        GameObject goalZone = PrefabPooler.Get(goalZonePrefab, position, Quaternion.identity, levelContainer); // Object Pooling enabled for large levels
         
         // Apply goal zone material if available
         if (activeProfile.GoalZoneMaterial)
@@ -1087,6 +1123,16 @@ public class LevelGenerator : MonoBehaviour
             if (renderer)
                 renderer.material = activeProfile.GoalZoneMaterial;
         }
+    }
+
+    private int GetSector(int x, int z)
+    {
+        int half = activeProfile.LevelSize / 2;
+        bool right = x >= half;
+        bool top = z >= half;
+        if (top)
+            return right ? 3 : 2;
+        return right ? 1 : 0;
     }
 
     #endregion
@@ -1141,7 +1187,7 @@ public class LevelGenerator : MonoBehaviour
                             activeProfile.CollectibleSpawnHeight + 0.5f,
                             center.y * activeProfile.TileSize);
 
-                        GameObject emitter = Instantiate(prefab, pos, Quaternion.identity, effectsContainer);
+                        GameObject emitter = PrefabPooler.Get(prefab, pos, Quaternion.identity, effectsContainer); // Object Pooling enabled for large levels
                         steamEmitterPositions.Add(pos);
 
                         // Apply steam settings if a compatible controller exists
