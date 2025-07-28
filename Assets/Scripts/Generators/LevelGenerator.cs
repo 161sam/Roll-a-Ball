@@ -240,6 +240,12 @@ public class LevelGenerator : MonoBehaviour
                 }
                 
                 OnLevelGenerationCompleted?.Invoke(activeProfile);
+
+                if (showGenerationDebug)
+                {
+                    int count = FindObjectsOfType<RollABall.VFX.SteamEmitterController>().Count(e => e.HasMovementInfluence);
+                    Debug.Log($"Steam emitters affecting player: {count}");
+                }
             }
             catch (System.Exception e)
             {
@@ -1137,18 +1143,22 @@ public class LevelGenerator : MonoBehaviour
                         // Apply steam settings if a compatible controller exists
                         if (activeProfile.SteamSettings != null)
                         {
-                            emitter.SendMessage("ApplyProfile", activeProfile.SteamSettings, SendMessageOptions.DontRequireReceiver);
-
-                            if (activeProfile.SteamSettings.SteamSounds != null && activeProfile.SteamSettings.SteamSounds.Length > 0)
+                            var controller = emitter.GetComponent<RollABall.VFX.SteamEmitterController>();
+                            if (controller)
                             {
-                                AudioClip steamClip = activeProfile.SteamSettings.SteamSounds[random.Next(activeProfile.SteamSettings.SteamSounds.Length)];
-                                emitter.SendMessage("SetSteamSound", steamClip, SendMessageOptions.DontRequireReceiver);
-                            }
+                                controller.Init(activeProfile.SteamSettings);
 
-                            if (activeProfile.SteamSettings.MechanicalSounds != null && activeProfile.SteamSettings.MechanicalSounds.Length > 0)
-                            {
-                                AudioClip mechClip = activeProfile.SteamSettings.MechanicalSounds[random.Next(activeProfile.SteamSettings.MechanicalSounds.Length)];
-                                emitter.SendMessage("SetMechanicalSound", mechClip, SendMessageOptions.DontRequireReceiver);
+                                if (activeProfile.SteamSettings.SteamSounds != null && activeProfile.SteamSettings.SteamSounds.Length > 0)
+                                {
+                                    AudioClip steamClip = activeProfile.SteamSettings.SteamSounds[random.Next(activeProfile.SteamSettings.SteamSounds.Length)];
+                                    controller.SetSteamSound(steamClip);
+                                }
+
+                                if (activeProfile.SteamSettings.MechanicalSounds != null && activeProfile.SteamSettings.MechanicalSounds.Length > 0)
+                                {
+                                    AudioClip mechClip = activeProfile.SteamSettings.MechanicalSounds[random.Next(activeProfile.SteamSettings.MechanicalSounds.Length)];
+                                    controller.SetMechanicalSound(mechClip);
+                                }
                             }
                         }
                     }
