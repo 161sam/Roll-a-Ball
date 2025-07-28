@@ -36,6 +36,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Color walkableColor = Color.green;
     [SerializeField] private Color blockedColor = Color.red;
     [SerializeField] private Color mainPathColor = Color.cyan;
+    [SerializeField] private Color platformCenterColor = Color.magenta;
 
     // Private generation data
     private System.Random random;
@@ -44,6 +45,7 @@ public class LevelGenerator : MonoBehaviour
     private List<Vector2Int> walkableTiles;
     private List<Vector2Int> collectiblePositions;
     private List<Vector2Int> mainPath;
+    private List<Vector2Int> platformCenters;
     private Vector2Int playerSpawnPosition;
     private Vector2Int goalPosition;
     private bool isGenerating = false;
@@ -295,6 +297,7 @@ public class LevelGenerator : MonoBehaviour
         walkableTiles = new List<Vector2Int>();
         collectiblePositions = new List<Vector2Int>();
         mainPath = new List<Vector2Int>();
+        platformCenters = new List<Vector2Int>();
 
         // Calculate level center
         levelCenter = new Vector3(
@@ -542,23 +545,84 @@ public class LevelGenerator : MonoBehaviour
     private IEnumerator GeneratePlatformLayout()
     {
         int size = activeProfile.LevelSize;
-
-        // Create platform islands
-        int platformCount = Mathf.RoundToInt(size * 0.3f);
-        
-        for (int i = 0; i < platformCount; i++)
+        // Start with all interior cells blocked
+        for (int x = 1; x < size - 1; x++)
         {
-            int centerX = random.Next(2, size - 2);
-            int centerZ = random.Next(2, size - 2);
-            int platformSize = random.Next(2, 4);
+            for (int z = 1; z < size - 1; z++)
+            {
+                levelGrid[x, z] = 1; // Wall
+            }
+        }
 
-            // Create platform
+        mainPath.Clear();
+        platformCenters.Clear();
+
+        Vector2Int start = new Vector2Int(1, 1);
+        Vector2Int end = new Vector2Int(size - 2, size - 2);
+
+        // Build connecting path of platform centers
+        Vector2Int current = start;
+        platformCenters.Add(current);
+
+        while (Mathf.Abs(current.x - end.x) > 3 || Mathf.Abs(current.y - end.y) > 3)
+        {
+            int stepX = Mathf.Clamp(end.x - current.x, -2, 2);
+            int stepZ = Mathf.Clamp(end.y - current.y, -2, 2);
+
+            // Randomize within jump distance
+            stepX += random.Next(-1, 2);
+            stepZ += random.Next(-1, 2);
+
+            stepX = Mathf.Clamp(stepX, -3, 3);
+            stepZ = Mathf.Clamp(stepZ, -3, 3);
+
+            // Ensure Manhattan distance <= 3
+            if (Mathf.Abs(stepX) + Mathf.Abs(stepZ) > 3)
+            {
+                if (Mathf.Abs(stepX) > Mathf.Abs(stepZ))
+                    stepX = stepX > 0 ? 3 - Mathf.Abs(stepZ) : -(3 - Mathf.Abs(stepZ));
+                else
+                    stepZ = stepZ > 0 ? 3 - Mathf.Abs(stepX) : -(3 - Mathf.Abs(stepX));
+            }
+
+            Vector2Int next = new Vector2Int(
+                Mathf.Clamp(current.x + stepX, 1, size - 2),
+                Mathf.Clamp(current.y + stepZ, 1, size - 2));
+
+            if (next == current)
+                break;
+
+            platformCenters.Add(next);
+
+            // Ensure platform path connectivity
+            foreach (Vector2Int p in GetLine(current, next))
+            {
+                mainPath.Add(p);
+                levelGrid[p.x, p.y] = 0;
+            }
+
+            current = next;
+
+            yield return null;
+        }
+
+        platformCenters.Add(end);
+        foreach (Vector2Int p in GetLine(current, end))
+        {
+            mainPath.Add(p);
+            levelGrid[p.x, p.y] = 0;
+        }
+
+        // Create platform islands at each center
+        foreach (Vector2Int center in platformCenters)
+        {
+            int platformSize = random.Next(2, 4);
             for (int dx = -platformSize; dx <= platformSize; dx++)
             {
                 for (int dz = -platformSize; dz <= platformSize; dz++)
                 {
-                    int x = centerX + dx;
-                    int z = centerZ + dz;
+                    int x = center.x + dx;
+                    int z = center.y + dz;
 
                     if (x >= 1 && x < size - 1 && z >= 1 && z < size - 1)
                     {
@@ -1119,6 +1183,17 @@ public class LevelGenerator : MonoBehaviour
             {
                 Vector3 pos = new Vector3(p.x * tileSize, 0.1f, p.y * tileSize);
                 Gizmos.DrawCube(pos, Vector3.one * tileSize * 0.3f);
+            }
+        }
+
+        // Visualize platform centers
+        if (showGenerationDebug && platformCenters != null)
+        {
+            Gizmos.color = platformCenterColor;
+            foreach (Vector2Int c in platformCenters)
+            {
+                Vector3 pos = new Vector3(c.x * tileSize, 0.2f, c.y * tileSize);
+                Gizmos.DrawSphere(pos, tileSize * 0.4f);
             }
         }
     }
