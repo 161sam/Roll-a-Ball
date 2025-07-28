@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// Control Panel API Fix - Fix remaining FindObjectOfType calls in RollABallControlPanel
 /// </summary>
+// TODO-DUPLICATE#2: Funktional identisch mit QuickAPIFix.cs. Bitte vereinheitlichen oder entfernen.
 public class ControlPanelAPIFix
 {
     [MenuItem("Roll-a-Ball/🔧 Fix Control Panel APIs")]

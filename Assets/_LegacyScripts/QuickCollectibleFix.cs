@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 
 // TODO-REMOVE#5: Obsolete setup script – no longer needed and may corrupt current data
+// TODO-DUPLICATE#7: Funktional identisch mit Assets/Editor/CollectibleFixer.cs. Bitte vereinheitlichen oder entfernen.
 /// <summary>
 /// Quick runtime script to fix all Collectibles in current scene
 /// </summary>
