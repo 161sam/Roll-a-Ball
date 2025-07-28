@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
+// TODO-REMOVE#3: Obsolete setup script – no longer needed and may corrupt current data
 
 /// <summary>
 /// Automatic Scene Setup System - Deploys fix tools to all scenes automatically
