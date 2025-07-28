@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using System;
 
 /// <summary>
 /// Hauptklasse für die prozedurale Levelgenerierung
@@ -46,6 +47,9 @@ public class LevelGenerator : MonoBehaviour
     private List<Vector2Int> collectiblePositions;
     private List<Vector2Int> mainPath;
     private List<Vector2Int> platformCenters;
+    private List<(Vector2Int from, Vector2Int to)> platformConnections; // Dynamic bridges
+    private List<Vector2Int> movingPlatformTiles;                       // Bridge spawn points
+    private List<Vector2Int> rotatingObstaclePlatforms;                 // Platforms with obstacles
     private Vector2Int playerSpawnPosition;
     private Vector2Int goalPosition;
     private bool isGenerating = false;
@@ -161,6 +165,9 @@ public class LevelGenerator : MonoBehaviour
         levelGrid = null;
         walkableTiles?.Clear();
         collectiblePositions?.Clear();
+        platformConnections?.Clear();
+        movingPlatformTiles?.Clear();
+        rotatingObstaclePlatforms?.Clear();
     }
 
     #endregion
@@ -298,6 +305,9 @@ public class LevelGenerator : MonoBehaviour
         collectiblePositions = new List<Vector2Int>();
         mainPath = new List<Vector2Int>();
         platformCenters = new List<Vector2Int>();
+        platformConnections = new List<(Vector2Int from, Vector2Int to)>();
+        movingPlatformTiles = new List<Vector2Int>();
+        rotatingObstaclePlatforms = new List<Vector2Int>();
 
         // Calculate level center
         levelCenter = new Vector3(
@@ -636,6 +646,45 @@ public class LevelGenerator : MonoBehaviour
 
             yield return null;
         }
+
+        // Dynamic platform bridge generation
+        platformConnections.Clear();
+        movingPlatformTiles.Clear();
+        for (int i = 0; i < platformCenters.Count; i++)
+        {
+            for (int j = i + 1; j < platformCenters.Count; j++)
+            {
+                float dist = Vector2Int.Distance(platformCenters[i], platformCenters[j]);
+                if (dist > 2f && dist < 6f)
+                {
+                    platformConnections.Add((platformCenters[i], platformCenters[j]));
+
+                    List<Vector2Int> line = GetLine(platformCenters[i], platformCenters[j]).ToList();
+                    for (int l = 0; l < line.Count; l++)
+                    {
+                        Vector2Int p = line[l];
+                        if (levelGrid[p.x, p.y] == 1)
+                            levelGrid[p.x, p.y] = 0;
+
+                        if (activeProfile.EnableMovingPlatforms && l % 2 == 0 && p != platformCenters[i] && p != platformCenters[j])
+                            movingPlatformTiles.Add(p);
+                    }
+                }
+            }
+        }
+
+        // Rotating obstacle placement
+        rotatingObstaclePlatforms.Clear();
+        if (activeProfile.EnableRotatingObstacles)
+        {
+            int obstacleCount = Mathf.Max(1, Mathf.RoundToInt(platformCenters.Count * 0.1f));
+            for (int i = 0; i < obstacleCount; i++)
+            {
+                Vector2Int c = platformCenters[random.Next(platformCenters.Count)];
+                if (!rotatingObstaclePlatforms.Contains(c))
+                    rotatingObstaclePlatforms.Add(c);
+            }
+        }
     }
 
     private List<Vector2Int> GetUnvisitedNeighbors(Vector2Int pos, int size)
@@ -918,6 +967,34 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
+        // Dynamic platform bridge generation
+        foreach (Vector2Int tile in movingPlatformTiles)
+        {
+            if (activeProfile.MovingPlatformPrefabs != null && activeProfile.MovingPlatformPrefabs.Length > 0)
+            {
+                GameObject prefab = activeProfile.MovingPlatformPrefabs[random.Next(activeProfile.MovingPlatformPrefabs.Length)];
+                if (prefab)
+                {
+                    Vector3 pos = new Vector3(tile.x * tileSize, activeProfile.CollectibleSpawnHeight, tile.y * tileSize);
+                    Instantiate(prefab, pos, Quaternion.identity, levelContainer);
+                }
+            }
+        }
+
+        // Rotating obstacle placement
+        foreach (Vector2Int center in rotatingObstaclePlatforms)
+        {
+            if (activeProfile.RotatingObstaclePrefabs != null && activeProfile.RotatingObstaclePrefabs.Length > 0)
+            {
+                GameObject prefab = activeProfile.RotatingObstaclePrefabs[random.Next(activeProfile.RotatingObstaclePrefabs.Length)];
+                if (prefab)
+                {
+                    Vector3 pos = new Vector3(center.x * tileSize, activeProfile.CollectibleSpawnHeight, center.y * tileSize);
+                    Instantiate(prefab, pos, Quaternion.identity, levelContainer);
+                }
+            }
+        }
+
         if (showGenerationDebug)
         {
             Debug.Log($"Instantiated {objectsCreated} level objects");
@@ -1194,6 +1271,29 @@ public class LevelGenerator : MonoBehaviour
             {
                 Vector3 pos = new Vector3(c.x * tileSize, 0.2f, c.y * tileSize);
                 Gizmos.DrawSphere(pos, tileSize * 0.4f);
+            }
+        }
+
+        // Visualize dynamic bridges
+        if (showGenerationDebug && platformConnections != null)
+        {
+            Gizmos.color = Color.yellow;
+            foreach (var conn in platformConnections)
+            {
+                Vector3 from = new Vector3(conn.from.x * tileSize, 0.5f, conn.from.y * tileSize);
+                Vector3 to = new Vector3(conn.to.x * tileSize, 0.5f, conn.to.y * tileSize);
+                Gizmos.DrawLine(from, to);
+            }
+        }
+
+        // Mark platforms with rotating obstacles
+        if (showGenerationDebug && rotatingObstaclePlatforms != null)
+        {
+            Gizmos.color = Color.red;
+            foreach (Vector2Int c in rotatingObstaclePlatforms)
+            {
+                Vector3 pos = new Vector3(c.x * tileSize, 1f, c.y * tileSize);
+                Gizmos.DrawCube(pos, Vector3.one * tileSize * 0.3f);
             }
         }
     }
