@@ -2,6 +2,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+// TODO-REMOVE#2: Obsolete setup script – no longer needed and may corrupt current data
 
 /// <summary>
 /// Utility-Klasse zum Erstellen der Standard-LevelProfile Assets

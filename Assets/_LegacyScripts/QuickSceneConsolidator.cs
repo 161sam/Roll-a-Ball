@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
+// TODO-REMOVE#7: Obsolete setup script – no longer needed and may corrupt current data
 /// <summary>
 /// Quick Scene Consolidation Executor - Easy access to Scene Consolidation Engine
 /// Place this script on any GameObject and run from Inspector or menu
