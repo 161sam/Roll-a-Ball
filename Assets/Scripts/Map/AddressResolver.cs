@@ -28,6 +28,11 @@ namespace RollABall.Map
         [SerializeField] private double fallbackLat = 52.5217; // Berlin - Brandenburger Tor
         [SerializeField] private double fallbackLon = 13.4132;
         
+        [Header("Debug Settings")]
+        [SerializeField] private bool useSimpleQuery = false; // Use full query for production
+        [SerializeField] private bool useHardcodedCoordinates = false; // Use real coordinates for production
+        [SerializeField] private bool enableBoundingBoxValidation = true; // Extra validation
+        
         // Events for communication with other systems
         public event Action<GeocodeResult> OnAddressResolved;
         public event Action<OSMMapData> OnMapDataLoaded;
@@ -132,35 +137,136 @@ namespace RollABall.Map
         }
         
         /// <summary>
-        /// Load OSM map data for given coordinates
+        /// Load OSM map data for given coordinates with robust coordinate validation
         /// </summary>
         private IEnumerator LoadMapDataCoroutine(double lat, double lon, float radius)
         {
+            Debug.Log($"[AddressResolver] === NEW REQUEST STARTING ===");
             Debug.Log($"[AddressResolver] Loading map data for {lat}, {lon} with radius {radius}m");
+            Debug.Log($"[AddressResolver] useHardcodedCoordinates: {useHardcodedCoordinates}");
+            Debug.Log($"[AddressResolver] useSimpleQuery: {useSimpleQuery}");
             
-            // Calculate bounding box with proper lat/lon correction
-            double radiusInDegrees = radius / 111320.0; // Approximate conversion meters to degrees
-            double latRadiusInDegrees = radiusInDegrees;
-            double lonRadiusInDegrees = radiusInDegrees / Math.Cos(lat * Math.PI / 180.0); // Correct for latitude
+            // TESTING: Use completely hardcoded coordinates if enabled
+            if (useHardcodedCoordinates)
+            {
+                Debug.Log("[AddressResolver] Using HARDCODED coordinates for testing");
+                // Leipzig city center with very small, safe bounding box
+                double hardMinLat = 51.330;
+                double hardMaxLat = 51.340;
+                double hardMinLon = 12.370;
+                double hardMaxLon = 12.380;
+                
+                Debug.Log($"[AddressResolver] HARDCODED bounding box: {hardMinLat},{hardMinLon},{hardMaxLat},{hardMaxLon}");
+                
+                // Build query with hardcoded safe coordinates
+                string hardcodedQuery = BuildHardcodedTestQuery(hardMinLat, hardMaxLat, hardMinLon, hardMaxLon);
+                yield return StartCoroutine(ExecuteOverpassQuery(hardcodedQuery, hardMinLat, hardMaxLat, hardMinLon, hardMaxLon));
+                yield break;
+            }
             
-            double minLat = lat - latRadiusInDegrees;
-            double maxLat = lat + latRadiusInDegrees;
-            double minLon = lon - lonRadiusInDegrees;
-            double maxLon = lon + lonRadiusInDegrees;
+            // Validate coordinates and calculate bounding box (outside of coroutine context)
+            OSMBounds validatedBounds = ValidateAndCalculateBounds(lat, lon, radius);
             
-            // Build Overpass query
-            string overpassQuery = BuildOverpassQuery(minLat, maxLat, minLon, maxLon);
+            if (validatedBounds == null)
+            {
+                // Error already handled in ValidateAndCalculateBounds
+                yield break;
+            }
             
-            using (UnityWebRequest request = UnityWebRequest.Post(overpassBaseUrl, overpassQuery, "application/x-www-form-urlencoded"))
+            Debug.Log($"[AddressResolver] Validated bounding box: lat[{validatedBounds.minLat:F6}, {validatedBounds.maxLat:F6}], lon[{validatedBounds.minLon:F6}, {validatedBounds.maxLon:F6}]");
+            
+            // Build query with validated coordinates
+            string query = useSimpleQuery ? 
+                BuildSimpleOverpassQuery(validatedBounds.minLat, validatedBounds.maxLat, validatedBounds.minLon, validatedBounds.maxLon) : 
+                BuildOverpassQuery(validatedBounds.minLat, validatedBounds.maxLat, validatedBounds.minLon, validatedBounds.maxLon);
+            
+            yield return StartCoroutine(ExecuteOverpassQuery(query, validatedBounds.minLat, validatedBounds.maxLat, validatedBounds.minLon, validatedBounds.maxLon));
+        }
+        
+        /// <summary>
+        /// Validates coordinates and calculates safe bounding box (non-coroutine method)
+        /// </summary>
+        private OSMBounds ValidateAndCalculateBounds(double lat, double lon, float radius)
+        {
+            try
+            {
+                // Check if bounding box validation is enabled
+                if (!enableBoundingBoxValidation)
+                {
+                    Debug.LogWarning("[AddressResolver] BoundingBox validation is DISABLED - using basic calculation");
+                    // Use simple calculation without validation (legacy mode)
+                    return CalculateBasicBounds(lat, lon, radius);
+                }
+                
+                // Validate and clamp input coordinates using new validator
+                if (!CoordinateValidator.IsValidCoordinate(lat, lon))
+                {
+                    Debug.LogError($"[AddressResolver] Invalid input coordinates: lat={lat}, lon={lon}");
+                    HandleMapDataError("Ungültige Koordinaten.");
+                    return null;
+                }
+                
+                // Use the robust coordinate validator to calculate safe bounding box
+                OSMBounds bounds = CoordinateValidator.CalculateSafeBoundingBox(lat, lon, radius);
+                
+                // Final validation of the calculated bounding box
+                if (!CoordinateValidator.ValidateBoundingBox(bounds))
+                {
+                    Debug.LogError($"[AddressResolver] Bounding box validation failed after calculation");
+                    HandleMapDataError("Konnte keine gültige Bounding Box berechnen.");
+                    return null;
+                }
+                
+                return bounds;
+            }
+            catch (ArgumentException ex)
+            {
+                Debug.LogError($"[AddressResolver] Coordinate validation error: {ex.Message}");
+                HandleMapDataError($"Koordinaten-Fehler: {ex.Message}");
+                return null;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Debug.LogError($"[AddressResolver] Bounding box calculation error: {ex.Message}");
+                HandleMapDataError($"Bounding Box Fehler: {ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[AddressResolver] Unexpected error in coordinate processing: {ex.Message}");
+                HandleMapDataError($"Unerwarteter Fehler bei Koordinaten-Verarbeitung: {ex.Message}");
+                return null;
+            }
+        }
+        
+        /// <summary>
+        /// Execute the Overpass API query
+        /// </summary>
+        private IEnumerator ExecuteOverpassQuery(string overpassQuery, double minLat, double maxLat, double minLon, double maxLon)
+        {
+            Debug.Log($"[AddressResolver] Executing Overpass query");
+            Debug.Log($"[AddressResolver] Query:\n{overpassQuery}");
+            
+            // Use proper form data format for Overpass API
+            WWWForm form = new WWWForm();
+            form.AddField("data", overpassQuery);
+            
+            using (UnityWebRequest request = UnityWebRequest.Post(overpassBaseUrl, form))
             {
                 request.SetRequestHeader("User-Agent", userAgent);
-                request.timeout = (int)(requestTimeout * 2); // Map data requests may take longer
+                request.timeout = (int)(requestTimeout * 2);
                 
                 yield return request.SendWebRequest();
                 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
                     string response = request.downloadHandler.text;
+                    Debug.Log($"[AddressResolver] SUCCESS! Received response of {response.Length} characters");
+                    
+                    // Log a snippet of the response for debugging
+                    string responseSnippet = response.Length > 200 ? response.Substring(0, 200) + "..." : response;
+                    Debug.Log($"[AddressResolver] Response snippet: {responseSnippet}");
+                    
                     OSMMapData mapData = ParseOSMResponse(response, minLat, maxLat, minLon, maxLon);
                     
                     if (mapData != null && mapData.IsValid())
@@ -170,15 +276,59 @@ namespace RollABall.Map
                     }
                     else
                     {
-                        HandleMapDataError("Keine Kartendaten für diese Region verfügbar.");
+                        Debug.LogWarning("[AddressResolver] No valid map data found, creating fallback data");
+                        mapData = CreateFallbackMapData(minLat, maxLat, minLon, maxLon);
+                        OnMapDataLoaded?.Invoke(mapData);
                     }
                 }
                 else
                 {
                     Debug.LogError($"[AddressResolver] Map data request failed: {request.error}");
+                    Debug.LogError($"[AddressResolver] Response Code: {request.responseCode}");
+                    
+                    // Log the COMPLETE error response for debugging
+                    if (!string.IsNullOrEmpty(request.downloadHandler.text))
+                    {
+                        string fullErrorResponse = request.downloadHandler.text;
+                        Debug.LogError($"[AddressResolver] FULL ERROR RESPONSE:\n{fullErrorResponse}");
+                        
+                        // Try to extract the actual error message from XML
+                        if (fullErrorResponse.Contains("<p>") && fullErrorResponse.Contains("</p>"))
+                        {
+                            int startIdx = fullErrorResponse.IndexOf("<p>") + 3;
+                            int endIdx = fullErrorResponse.IndexOf("</p>", startIdx);
+                            if (endIdx > startIdx)
+                            {
+                                string errorMsg = fullErrorResponse.Substring(startIdx, endIdx - startIdx);
+                                Debug.LogError($"[AddressResolver] Extracted error: {errorMsg}");
+                            }
+                        }
+                    }
+                    
                     HandleMapDataError($"Fehler beim Laden der Kartendaten: {request.error}");
                 }
             }
+        }
+        
+        /// <summary>
+        /// Build a hardcoded test query with known-good coordinates
+        /// </summary>
+        private string BuildHardcodedTestQuery(double minLat, double maxLat, double minLon, double maxLon)
+        {
+            StringBuilder query = new StringBuilder();
+            query.AppendLine("[out:json][timeout:25];");
+            query.AppendLine("(");
+            
+            // Use exactly these coordinates: Leipzig city center, very small area
+            string bbox = $"{minLat:F3},{minLon:F3},{maxLat:F3},{maxLon:F3}";
+            
+            // Just get buildings in this tiny area
+            query.AppendLine($"  way[building]({bbox});");
+            
+            query.AppendLine(");");
+            query.AppendLine("out geom;");
+            
+            return query.ToString();
         }
         
         /// <summary>
@@ -188,59 +338,64 @@ namespace RollABall.Map
         {
             try
             {
-                // Simple JSON parsing for geocoding result
-                // In a production environment, you might want to use a proper JSON library
-                if (json.StartsWith("[") && json.Length > 10)
+                if (string.IsNullOrEmpty(json) || json == "[]")
                 {
-                    // Remove array brackets and get first result
-                    json = json.Substring(1, json.Length - 2);
-                    
-                    GeocodeResult result = new GeocodeResult();
-                    
-                    // Extract display name
-                    int displayStart = json.IndexOf("\"display_name\":\"") + 16;
-                    int displayEnd = json.IndexOf("\",", displayStart);
-                    if (displayStart > 15 && displayEnd > displayStart)
-                    {
-                        result.displayName = json.Substring(displayStart, displayEnd - displayStart);
-                    }
-                    
-                    // Extract latitude
-                    int latStart = json.IndexOf("\"lat\":\"") + 7;
-                    int latEnd = json.IndexOf("\"", latStart);
-                    if (latStart > 6 && latEnd > latStart)
-                    {
-                        double.TryParse(json.Substring(latStart, latEnd - latStart), out result.lat);
-                    }
-                    
-                    // Extract longitude
-                    int lonStart = json.IndexOf("\"lon\":\"") + 7;
-                    int lonEnd = json.IndexOf("\"", lonStart);
-                    if (lonStart > 6 && lonEnd > lonStart)
-                    {
-                        double.TryParse(json.Substring(lonStart, lonEnd - lonStart), out result.lon);
-                    }
-                    
-                    // Create bounding box
-                    double radius = searchRadius / 111320.0;
-                    result.boundingBox = new OSMBounds(
-                        result.lat - radius, result.lat + radius,
-                        result.lon - radius, result.lon + radius
-                    );
-                    
-                    return result;
+                    return null;
                 }
+                
+                // Use Newtonsoft.Json for better parsing
+                JArray results = JArray.Parse(json);
+                if (results.Count == 0)
+                {
+                    return null;
+                }
+                
+                JObject firstResult = results[0] as JObject;
+                GeocodeResult result = new GeocodeResult();
+                
+                result.displayName = firstResult["display_name"]?.ToString() ?? "";
+                result.lat = (double)(firstResult["lat"] ?? 0.0);
+                result.lon = (double)(firstResult["lon"] ?? 0.0);
+                
+                // Create bounding box
+                double radius = searchRadius / 111320.0;
+                result.boundingBox = new OSMBounds(
+                    result.lat - radius, result.lat + radius,
+                    result.lon - radius, result.lon + radius
+                );
+                
+                return result;
             }
             catch (Exception e)
             {
                 Debug.LogError($"[AddressResolver] Error parsing geocode response: {e.Message}");
+                return null;
             }
-            
-            return null;
         }
         
         /// <summary>
-        /// Build Overpass QL query for map data
+        /// Build a simple Overpass QL query for testing
+        /// </summary>
+        private string BuildSimpleOverpassQuery(double minLat, double maxLat, double minLon, double maxLon)
+        {
+            StringBuilder query = new StringBuilder();
+            query.AppendLine("[out:json][timeout:25];");
+            query.AppendLine("(");
+            
+            // Format: (minLat,minLon,maxLat,maxLon) 
+            string bbox = $"{minLat:F6},{minLon:F6},{maxLat:F6},{maxLon:F6}";
+            
+            // Just get a few buildings for testing
+            query.AppendLine($"  way[building]({bbox});");
+            
+            query.AppendLine(");");
+            query.AppendLine("out geom;");
+            
+            return query.ToString();
+        }
+        
+        /// <summary>
+        /// Build improved Overpass QL query for map data with proper syntax
         /// </summary>
         private string BuildOverpassQuery(double minLat, double maxLat, double minLon, double maxLon)
         {
@@ -248,25 +403,77 @@ namespace RollABall.Map
             query.AppendLine("[out:json][timeout:25];");
             query.AppendLine("(");
             
-            // Roads/highways
-            query.AppendLine($"  way[\"highway\"]({minLat},{minLon},{maxLat},{maxLon});");
+            // Format: (minLat,minLon,maxLat,maxLon)
+            string bbox = $"{minLat:F6},{minLon:F6},{maxLat:F6},{maxLon:F6}";
+            
+            // Major roads and highways only to avoid too much data - FIXED REGEX
+            query.AppendLine($"  way[highway~\"^(motorway|trunk|primary|secondary|tertiary|residential|pedestrian|footway)$\"]({bbox});");
             
             // Buildings
-            query.AppendLine($"  way[\"building\"]({minLat},{minLon},{maxLat},{maxLon});");
+            query.AppendLine($"  way[building]({bbox});");
             
-            // Areas (parks, water, etc.)
-            query.AppendLine($"  way[\"leisure\"]({minLat},{minLon},{maxLat},{maxLon});");
-            query.AppendLine($"  way[\"natural\"]({minLat},{minLon},{maxLat},{maxLon});");
-            query.AppendLine($"  way[\"landuse\"]({minLat},{minLon},{maxLat},{maxLon});");
+            // Areas (parks, water, etc.) - limit to major ones - FIXED REGEX
+            query.AppendLine($"  way[leisure~\"^(park|playground|sports_centre)$\"]({bbox});");
+            query.AppendLine($"  way[natural~\"^(water|forest|grass)$\"]({bbox});");
+            query.AppendLine($"  way[landuse~\"^(residential|commercial|industrial)$\"]({bbox});");
             
-            // Points of interest
-            query.AppendLine($"  node[\"amenity\"]({minLat},{minLon},{maxLat},{maxLon});");
-            query.AppendLine($"  node[\"shop\"]({minLat},{minLon},{maxLat},{maxLon});");
+            // Important POIs only - FIXED REGEX
+            query.AppendLine($"  node[amenity~\"^(restaurant|cafe|school|hospital|bank|fuel|parking)$\"]({bbox});");
             
             query.AppendLine(");");
             query.AppendLine("out geom;");
             
             return query.ToString();
+        }
+        
+        /// <summary>
+        /// Create fallback map data when OSM data is not available
+        /// </summary>
+        private OSMMapData CreateFallbackMapData(double minLat, double maxLat, double minLon, double maxLon)
+        {
+            Debug.Log("[AddressResolver] Creating fallback map data");
+            
+            OSMMapData mapData = new OSMMapData(minLat, maxLat, minLon, maxLon);
+            
+            double centerLat = (minLat + maxLat) / 2.0;
+            double centerLon = (minLon + maxLon) / 2.0;
+            
+            // Create a simple fallback road network
+            for (int i = 0; i < 3; i++)
+            {
+                OSMWay road = new OSMWay(i + 1);
+                road.wayType = "highway";
+                road.tags["highway"] = "residential";
+                
+                double latOffset = (maxLat - minLat) * 0.3 * (i - 1);
+                
+                road.nodes.Add(new OSMNode(i * 10 + 1, centerLat + latOffset, minLon + (maxLon - minLon) * 0.1));
+                road.nodes.Add(new OSMNode(i * 10 + 2, centerLat + latOffset, maxLon - (maxLon - minLon) * 0.1));
+                
+                mapData.roads.Add(road);
+            }
+            
+            // Create some fallback buildings
+            for (int i = 0; i < 5; i++)
+            {
+                OSMBuilding building = new OSMBuilding(i + 100);
+                building.buildingType = "residential";
+                building.height = 3.0f + i;
+                
+                double buildingLat = centerLat + ((i - 2) * 0.0005);
+                double buildingLon = centerLon + ((i % 2 == 0 ? 1 : -1) * 0.0003);
+                
+                // Create a simple rectangular building
+                building.nodes.Add(new OSMNode(i * 10 + 100, buildingLat - 0.0001, buildingLon - 0.0001));
+                building.nodes.Add(new OSMNode(i * 10 + 101, buildingLat + 0.0001, buildingLon - 0.0001));
+                building.nodes.Add(new OSMNode(i * 10 + 102, buildingLat + 0.0001, buildingLon + 0.0001));
+                building.nodes.Add(new OSMNode(i * 10 + 103, buildingLat - 0.0001, buildingLon + 0.0001));
+                building.nodes.Add(new OSMNode(i * 10 + 100, buildingLat - 0.0001, buildingLon + 0.0001)); // Close the way
+                
+                mapData.buildings.Add(building);
+            }
+            
+            return mapData;
         }
         
         /// <summary>
@@ -328,7 +535,7 @@ namespace RollABall.Map
                 
                 return mapData;
             }
-            catch (System.Exception jsonEx) when (jsonEx.GetType().Name == "JsonException")
+            catch (Newtonsoft.Json.JsonException jsonEx)
             {
                 Debug.LogError($"[AddressResolver] JSON parsing error: {jsonEx.Message}");
                 return null;
@@ -541,6 +748,63 @@ namespace RollABall.Map
             {
                 OnMapLoadErrorEvent?.Invoke(errorMessage);
             }
+        }
+        
+        /// <summary>
+        /// Calculate basic bounding box without advanced validation (legacy mode)
+        /// </summary>
+        private OSMBounds CalculateBasicBounds(double lat, double lon, float radius)
+        {
+            double radiusInDegrees = radius / 111320.0;
+            double latRadiusInDegrees = radiusInDegrees;
+            double lonRadiusInDegrees = radiusInDegrees / Math.Cos(lat * Math.PI / 180.0);
+            
+            double minLat = lat - latRadiusInDegrees;
+            double maxLat = lat + latRadiusInDegrees;
+            double minLon = lon - lonRadiusInDegrees;
+            double maxLon = lon + lonRadiusInDegrees;
+            
+            return new OSMBounds(minLat, maxLat, minLon, maxLon);
+        }
+        
+        /// <summary>
+        /// Validate bounding box coordinates
+        /// </summary>
+        private bool ValidateBoundingBox(double minLat, double maxLat, double minLon, double maxLon, double centerLat, double centerLon)
+        {
+            // Check if coordinates are within valid ranges
+            if (minLat < -90.0 || maxLat > 90.0 || minLon < -180.0 || maxLon > 180.0)
+            {
+                Debug.LogError($"[AddressResolver] Coordinates out of valid range: lat[{minLat:F6}, {maxLat:F6}], lon[{minLon:F6}, {maxLon:F6}]");
+                return false;
+            }
+            
+            // Check if bounding box makes sense
+            if (minLat >= maxLat || minLon >= maxLon)
+            {
+                Debug.LogError($"[AddressResolver] Invalid bounding box dimensions");
+                return false;
+            }
+            
+            // Check if center point is within bounding box
+            if (centerLat < minLat || centerLat > maxLat || centerLon < minLon || centerLon > maxLon)
+            {
+                Debug.LogError($"[AddressResolver] Center point outside bounding box");
+                return false;
+            }
+            
+            // Check if bounding box is reasonable size (not too large)
+            double latSpan = maxLat - minLat;
+            double lonSpan = maxLon - minLon;
+            
+            if (latSpan > 10.0 || lonSpan > 10.0) // 10 degrees = ~1100km
+            {
+                Debug.LogWarning($"[AddressResolver] Very large bounding box: {latSpan:F3}° lat, {lonSpan:F3}° lon");
+                // Don't fail, just warn
+            }
+            
+            Debug.Log($"[AddressResolver] Bounding box validation passed");
+            return true;
         }
         
         /// <summary>
