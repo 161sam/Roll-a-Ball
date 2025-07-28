@@ -51,6 +51,7 @@ public class LevelGenerator : MonoBehaviour
     private List<Vector2Int> movingPlatformTiles;                       // Bridge spawn points
     private List<Vector2Int> rotatingObstaclePlatforms;                 // Platforms with obstacles
     private List<Vector3> steamEmitterPositions;                        // Steam emitter placement
+    private List<(Vector3 switchPos, Vector3 gatePos)> interactiveGatePairs; // GateTrigger connection
     private Vector2Int playerSpawnPosition;
     private Vector2Int goalPosition;
     private bool isGenerating = false;
@@ -170,6 +171,7 @@ public class LevelGenerator : MonoBehaviour
         movingPlatformTiles?.Clear();
         rotatingObstaclePlatforms?.Clear();
         steamEmitterPositions?.Clear();
+        interactiveGatePairs?.Clear();
     }
 
     #endregion
@@ -223,6 +225,7 @@ public class LevelGenerator : MonoBehaviour
             yield return StartCoroutine(PlaceGoalZone());
             yield return StartCoroutine(InstantiateLevelObjects());
             yield return StartCoroutine(ApplyMaterialsAndEffects());
+            yield return StartCoroutine(PlaceInteractiveElements());
         }
 
         // Post-processing ohne yield
@@ -317,6 +320,7 @@ public class LevelGenerator : MonoBehaviour
         movingPlatformTiles = new List<Vector2Int>();
         rotatingObstaclePlatforms = new List<Vector2Int>();
         steamEmitterPositions = new List<Vector3>();
+        interactiveGatePairs = new List<(Vector3 switchPos, Vector3 gatePos)>();
 
         // Calculate level center
         levelCenter = new Vector3(
@@ -1169,6 +1173,65 @@ public class LevelGenerator : MonoBehaviour
         yield return null;
     }
 
+    // Place interactive gates and switches
+    private IEnumerator PlaceInteractiveElements()
+    {
+        if (!activeProfile.EnableInteractiveGates ||
+            activeProfile.InteractiveGatePrefabs == null ||
+            activeProfile.InteractiveGatePrefabs.Length == 0)
+        {
+            yield break;
+        }
+
+        int pairCount = Mathf.Max(1, Mathf.RoundToInt(walkableTiles.Count * activeProfile.InteractiveGateDensity));
+        float tileSize = activeProfile.TileSize;
+
+        for (int i = 0; i < pairCount; i++)
+        {
+            if (walkableTiles.Count < 2)
+                break;
+
+            Vector2Int switchTile = walkableTiles[random.Next(walkableTiles.Count)];
+            Vector2Int gateTile = walkableTiles[random.Next(walkableTiles.Count)];
+
+            int attempts = 0;
+            int minDist = Mathf.Max(2, activeProfile.LevelSize / 3);
+            while (Vector2Int.Distance(switchTile, gateTile) < minDist && attempts < 20)
+            {
+                gateTile = walkableTiles[random.Next(walkableTiles.Count)];
+                attempts++;
+            }
+
+            Vector3 gatePos = new Vector3(gateTile.x * tileSize, 0, gateTile.y * tileSize);
+            GameObject gatePrefab = activeProfile.InteractiveGatePrefabs[random.Next(activeProfile.InteractiveGatePrefabs.Length)];
+            GameObject gateObj = Instantiate(gatePrefab, gatePos, Quaternion.identity, levelContainer);
+            var gateCtrl = gateObj.GetComponent<RollABall.Environment.GateController>();
+            if (!gateCtrl)
+                gateCtrl = gateObj.AddComponent<RollABall.Environment.GateController>();
+
+            Vector3 switchPos = new Vector3(switchTile.x * tileSize, 0, switchTile.y * tileSize);
+            GameObject switchObj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            switchObj.transform.SetParent(levelContainer);
+            switchObj.transform.position = switchPos;
+            switchObj.transform.localScale = Vector3.one * (tileSize * 0.3f);
+            Collider c = switchObj.GetComponent<Collider>();
+            if (c is CapsuleCollider capsule)
+                capsule.isTrigger = true;
+            else if (c)
+                c.isTrigger = true;
+
+            var trigger = switchObj.AddComponent<RollABall.Environment.SwitchTrigger>();
+            trigger.SetGate(gateCtrl);
+
+            interactiveGatePairs.Add((switchPos, gatePos));
+
+            if (i % 5 == 0)
+                yield return null;
+        }
+
+        yield return null;
+    }
+
     private void SetupPlayerSpawn()
     {
         // Find a safe spawn position
@@ -1363,6 +1426,17 @@ public class LevelGenerator : MonoBehaviour
             foreach (Vector3 pos in steamEmitterPositions)
             {
                 Gizmos.DrawSphere(pos, tileSize * 0.2f);
+            }
+        }
+
+        // Interactive gate connections
+        if (showGenerationDebug && interactiveGatePairs != null)
+        {
+            Gizmos.color = Color.yellow;
+            foreach (var pair in interactiveGatePairs)
+            {
+                Gizmos.DrawLine(pair.switchPos + Vector3.up * 0.1f, pair.gatePos + Vector3.up * 0.1f);
+                Gizmos.DrawSphere(pair.switchPos + Vector3.up * 0.2f, tileSize * 0.15f);
             }
         }
     }
