@@ -29,3 +29,11 @@ Nur die Assets im Ordner `Assets/ScriptableObjects/` verwenden. Die Kopien in `R
 **Migration:**
 * Alle `Resources.Load<LevelProfile>`-Aufrufe auf direkte Referenzen oder Addressables umstellen
 * Assets in `Resources/LevelProfiles` löschen, danach Verweise prüfen
+
+#### DUPLICATE#7 – `QuickCollectibleFix.cs` & `CollectibleFixer.cs`
+**Empfehlung:**
+Beide Scripte führen ähnliche Reparaturen von Collectibles durch. In `CollectibleFixer` bündeln und `QuickCollectibleFix` entfernen.
+**Migration:**
+* Methoden aus `QuickCollectibleFix` in `CollectibleFixer` als `FixCurrentScene()` übernehmen
+* Referenzen zu `QuickCollectibleFix` löschen und Menüeinträge anpassen
+
