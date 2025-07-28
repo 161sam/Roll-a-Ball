@@ -124,7 +124,15 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
 
+        // FIX: Delay before regeneration to ensure containers clear completely
+        StartCoroutine(DelayedRegenerate());
+    }
+
+    private IEnumerator DelayedRegenerate()
+    {
         ClearLevel();
+        // Short delay to allow Destroy operations to complete
+        yield return null; // FIX: Delay before regeneration
         GenerateLevel();
     }
 
@@ -327,10 +335,11 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = container.childCount - 1; i >= 0; i--)
         {
-            if (Application.isPlaying)
-                Destroy(container.GetChild(i).gameObject);
+            var child = container.GetChild(i).gameObject;
+            if (Application.isEditor)
+                DestroyImmediate(child); // FIX: Ensure immediate cleanup in Editor
             else
-                DestroyImmediate(container.GetChild(i).gameObject);
+                Destroy(child);
         }
     }
 
@@ -661,8 +670,9 @@ public class LevelGenerator : MonoBehaviour
                         break;
 
                     case 3: // Goal zone
-                        CreateGroundTile(worldPos);
-                        CreateGoalZone(worldPos);
+                        // FIX: Avoid ground flackering on goal tile
+                        // Only spawn the goal zone slightly above the ground
+                        CreateGoalZone(worldPos + Vector3.up * 0.05f);
                         break;
                 }
 
@@ -683,6 +693,7 @@ public class LevelGenerator : MonoBehaviour
     #endregion
 
     #region Object Creation
+    // TODO: prepare object pooling for level prefabs (ground, walls, collectibles, goal zone)
 
     private void CreateGroundTile(Vector3 position)
     {
@@ -742,6 +753,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void CreateGoalZone(Vector3 position)
     {
+        // NOTE: goalZonePrefab should include a slightly raised base to avoid Z-fighting
         GameObject goalZone = Instantiate(goalZonePrefab, position, Quaternion.identity, levelContainer);
         
         // Apply goal zone material if available
