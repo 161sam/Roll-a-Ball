@@ -310,7 +310,7 @@ public class UIController : MonoBehaviour
             }
             else
             {
-                lastPlayedText.text = "New Game";
+                lastPlayedText.text = "New Game"; // TODO: Localize UI strings via a localization system
             }
         }
     }
@@ -816,7 +816,9 @@ public class UIController : MonoBehaviour
     {
         notificationText.text = message;
         notificationPanel.SetActive(true);
-        
+
+        // TODO: Use a pooled notification panel for better performance
+
         yield return new WaitForSeconds(duration);
         
         notificationPanel.SetActive(false);

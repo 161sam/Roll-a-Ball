@@ -31,14 +31,14 @@ namespace RollABall.Map
         [Header("Endless Mode")]
         [SerializeField] private string[] endlessModeAddresses = {
             "Leipzig, Germany",
-            "Berlin, Germany", 
+            "Berlin, Germany",
             "Munich, Germany",
             "Hamburg, Germany",
             "Dresden, Germany",
             "Cologne, Germany",
             "Frankfurt, Germany",
             "Stuttgart, Germany"
-        };
+        }; // TODO: Load endless mode addresses from external file
         
         [Header("Fallback System")]
         [SerializeField] private GameObject fallbackLevelPrefab;
