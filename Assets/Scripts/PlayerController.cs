@@ -525,5 +525,6 @@ public class PlayerController : MonoBehaviour
     {
         if (slideCoroutine != null)
             StopCoroutine(slideCoroutine);
+        // TODO: Unsubscribe from external events to avoid dangling delegates
     }
 }
