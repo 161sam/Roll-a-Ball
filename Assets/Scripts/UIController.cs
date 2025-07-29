@@ -979,7 +979,9 @@ public class UIController : MonoBehaviour
         else
             ChangeUIState(UIState.MainMenu);
     }
-    
+
+    // TODO: Implement OnDestroy to unsubscribe from all registered events
+
     #endregion
 }
 
