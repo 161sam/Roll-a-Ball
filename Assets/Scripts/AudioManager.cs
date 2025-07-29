@@ -356,6 +356,7 @@ public class AudioManager : MonoBehaviour
         }
 
         Debug.LogWarning("AudioManager: No available audio sources!");
+        // TODO: Expand pool size dynamically when all sources are in use
         return null;
     }
 
