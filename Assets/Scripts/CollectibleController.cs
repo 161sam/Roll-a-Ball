@@ -248,6 +248,7 @@ public class CollectibleController : MonoBehaviour
 
         float originalIntensity = itemLight.intensity;
         itemLight.intensity = originalIntensity * 3f;
+        // TODO: Expose flash intensity and duration as serialized fields
 
         yield return new WaitForSeconds(0.1f);
 
@@ -354,6 +355,8 @@ public class CollectibleController : MonoBehaviour
                 renderer.material.color = color;
             }
         }
+
+        // TODO: Return collectible to object pool instead of keeping in scene
     }
 
     // Debug

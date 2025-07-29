@@ -81,6 +81,7 @@ public class SaveSystem : MonoBehaviour
     [Header("Encryption")]
     [SerializeField] private bool encryptSaveFiles = true;
     [SerializeField] private string encryptionKey = "RollABallGame2025";
+    // TODO: Move encryption key to external configuration for better security
     
     [Header("Debug")]
     [SerializeField] private bool enableDebugLogging = true;

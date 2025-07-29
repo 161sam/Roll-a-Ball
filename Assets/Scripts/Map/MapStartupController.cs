@@ -241,6 +241,7 @@ namespace RollABall.Map
                 // Use real AddressResolver
                 if (addressResolver != null)
                 {
+                    // TODO: Execute address resolution asynchronously to keep UI responsive
                     addressResolver.ResolveAddressAndLoadMap(address);
                 }
                 else

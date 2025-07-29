@@ -200,6 +200,7 @@ public class ProgressionManager : MonoBehaviour
     private void CreateDefaultLevels()
     {
         allLevels.Clear();
+        // TODO: Load level configurations from external data instead of hardcoding
         
         // Tutorial Level
         var tutorial = new LevelInfo

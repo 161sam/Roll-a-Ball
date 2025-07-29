@@ -329,6 +329,7 @@ public class AchievementSystem : MonoBehaviour
     private void OnLevelCompleted(LevelConfiguration levelConfig)
     {
         string levelName = levelConfig.levelName;
+        // TODO: Replace string-based level checks with a lookup table or enum for robustness
         
         // Level-specific achievements
         if (levelName.Contains("Level1") || levelName.Contains("Level_1"))
@@ -554,6 +555,7 @@ public class AchievementSystem : MonoBehaviour
         if (notification)
         {
             Destroy(notification);
+            // TODO: Reuse notification objects instead of instantiating each time
         }
         
         isShowingNotification = false;
