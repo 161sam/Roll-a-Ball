@@ -705,7 +705,7 @@ namespace RollABall.Map
                             Random.Range(-5f, 5f),
                             1f, // Above ground
                             Random.Range(-5f, 5f)
-                        );
+                        ); // TODO: Expose offset range as serialized fields
                         
                         positions.Add(buildingPos + offset);
                     }
@@ -733,6 +733,7 @@ namespace RollABall.Map
         private Vector3 FindOptimalGoalPosition()
         {
             // Place goal at the center of the largest building or at map center
+            // TODO: Consider using pathfinding analysis to choose a challenging location
             Vector3 goalPos = currentMapData.GetWorldCenter();
             
             if (currentMapData.buildings.Count > 0)

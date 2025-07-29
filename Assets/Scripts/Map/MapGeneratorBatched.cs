@@ -111,6 +111,7 @@ namespace RollABall.Map
         {
             // Road collections by material type
             roadMeshesByMaterial.Clear();
+            // TODO: Replace string keys with enum to avoid typos
             roadMeshesByMaterial["motorway"] = new List<CombineInstance>();
             roadMeshesByMaterial["primary"] = new List<CombineInstance>();
             roadMeshesByMaterial["secondary"] = new List<CombineInstance>();

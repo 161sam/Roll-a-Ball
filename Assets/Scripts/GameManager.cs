@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] private bool debugMode = false;
     [SerializeField] private float gameTimeScale = 1f;
-    [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
+    [SerializeField] private KeyCode pauseKey = KeyCode.Escape; // TODO: Expose pauseKey in settings menu
     [SerializeField] private KeyCode restartKey = KeyCode.R;
 
     [Header("Player Reference")]
@@ -403,7 +403,7 @@ public class GameManager : MonoBehaviour
         while (currentState == GameState.Playing)
         {
             UpdateStatistics();
-            yield return new WaitForSeconds(0.1f); // Update 10 times per second
+            yield return new WaitForSeconds(0.1f); // TODO: Expose update interval in inspector
         }
     }
 
