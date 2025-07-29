@@ -1580,14 +1580,15 @@ namespace RollABall.Map
         private IEnumerator AddSteampunkAtmosphere()
         {
             Debug.Log("[MapGenerator] Adding Steampunk atmosphere...");
-            
+
             // Add ambient lighting adjustments
             RenderSettings.ambientLight = new Color(0.4f, 0.35f, 0.25f);
             RenderSettings.fogColor = new Color(0.5f, 0.4f, 0.3f);
             RenderSettings.fog = true;
             RenderSettings.fogStartDistance = 20f;
             RenderSettings.fogEndDistance = 80f;
-            
+            // TODO: Expose fog parameters via LevelProfile or ScriptableObject
+
             yield return null;
         }
         

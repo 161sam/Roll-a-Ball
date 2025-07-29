@@ -119,6 +119,7 @@ namespace RollABall.Environment
             
             gameManager = FindFirstObjectByType<GameManager>();
             levelManager = FindFirstObjectByType<LevelManager>();
+            // TODO: Cache manager references via serialized fields to avoid runtime lookup
             
             // Kollider setup
             gateCollider = gateModel?.GetComponent<Collider>();
@@ -660,5 +661,7 @@ namespace RollABall.Environment
             timerInterval = Mathf.Max(1f, timerInterval);
             bounceForce = Mathf.Max(0f, bounceForce);
         }
+
+        // TODO: Implement OnDestroy() to stop coroutines and unregister events
     }
 }

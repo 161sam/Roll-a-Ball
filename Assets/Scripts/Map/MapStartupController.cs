@@ -507,6 +507,7 @@ namespace RollABall.Map
                 );
                 wall.transform.localScale = new Vector3(2, 2, 2);
             }
+            // TODO: Convert fallback level creation to reusable prefab-based setup
         }
         
         private void PlaceCollectiblesOnMap()

@@ -1458,6 +1458,7 @@ public class LevelGenerator : MonoBehaviour
                                     steamEmitterPositions.Add(pos);
 
                                     // TODO: Apply steam settings if available
+                                    // TODO: Store emitters for pooling instead of destroying on regeneration
                                 }
                             }
                         }
