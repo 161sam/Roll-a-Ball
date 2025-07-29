@@ -544,6 +544,7 @@ public class AchievementSystem : MonoBehaviour
         GameObject notification = Instantiate(achievementNotificationPrefab, notificationParent);
         
         // Configure notification (this would depend on your notification prefab structure)
+        // TODO: Implement AchievementNotificationUI to display icon and text
         // notification.GetComponent<AchievementNotificationUI>().Setup(achievement);
         
         // Wait for notification duration
@@ -605,6 +606,8 @@ public class AchievementSystem : MonoBehaviour
     private void SaveAchievementProgress()
     {
         if (SaveSystem.Instance?.CurrentSave == null) return;
+
+        // TODO: Implement cross-device cloud sync of achievements
         
         var save = SaveSystem.Instance.CurrentSave;
         save.achievementProgress.Clear();
