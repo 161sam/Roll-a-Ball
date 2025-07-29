@@ -445,8 +445,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!rb) return;
         
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        PhysicsUtils.ResetMotion(rb);
         flyEnergy = maxFlyEnergy;
         hasDoubleJumped = false;
         IsSliding = false;
@@ -466,8 +465,7 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
         if (rb)
         {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            PhysicsUtils.ResetMotion(rb);
         }
     }
 
