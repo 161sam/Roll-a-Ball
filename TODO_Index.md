@@ -35,4 +35,25 @@
 | TODO-OPT#31 | Assets/Scripts/Map/MapStartupController.cs | GetCoordsFromAddress(), Zeile 403 | Geocoding-Service integrieren |
 | TODO-OPT#32 | Assets/Scripts/Map/MapGeneratorBatched.cs | CreateSeparateColliders(), Zeile 548 | Collider-Pooling zur GC-Reduktion |
 | TODO-OPT#33 | Assets/Scripts/SaveSystem.cs | SaveEncrypted()/SaveUnencrypted(), Zeile 360/348 | Async File IO verwenden |
+| TODO-OPT#34 | Assets/Scripts/AchievementSystem.cs | OnLevelCompleted(), Zeile 332 | Levelnamen nicht per String vergleichen |
+| TODO-OPT#35 | Assets/Scripts/AchievementSystem.cs | DisplayNotificationCoroutine(), Zeile 558 | Notification-Objekte poolen |
+| TODO-OPT#36 | Assets/Scripts/AudioManager.cs | GetAvailableSource(), Zeile 359 | Pool dynamisch vergrößern |
+| TODO-OPT#37 | Assets/Scripts/EmergencySceneBuilder.cs | BuildAllMinimalScenes(), Zeile 87 | Ursprüngliche Szene wiederherstellen |
+| TODO-OPT#38 | Assets/Scripts/CollectibleController.cs | FlashLight(), Zeile 251 | Blitz-Parameter als Felder exposen |
+| TODO-OPT#39 | Assets/Scripts/CollectibleController.cs | ResetCollectible(), Zeile 359 | Collectible in Pool zurücklegen |
+| TODO-OPT#40 | Assets/Scripts/SaveSystem.cs | encryptionKey, Zeile 84 | Schlüssel aus externer Konfiguration laden |
+| TODO-OPT#41 | Assets/Scripts/Map/MapStartupController.cs | LoadMapFromAddress(), Zeile 244 | Adressauflösung asynchron ausführen |
+| TODO-OPT#42 | Assets/Scripts/ProgressionManager.cs | CreateDefaultLevels(), Zeile 203 | Leveldaten extern speichern |
+| TODO-OPT#43 | Assets/Scripts/AchievementSystem.cs | CreateDefaultAchievements(), Zeile 186 | Achievements aus externer Konfiguration laden |
+| TODO-OPT#44 | Assets/Scripts/AchievementSystem.cs | SubscribeToGameEvents(), Zeile 295 | PlayerController-Referenz cachen |
+| TODO-OPT#45 | Assets/Scripts/AchievementSystem.cs | OnDestroy(), Zeile 720 | Von GameEvents abmelden |
+| TODO-OPT#46 | Assets/Scripts/GameManager.cs | pauseKey, Zeile 32 | Pause-Taste im Einstellungsmenü konfigurierbar machen |
+| TODO-OPT#47 | Assets/Scripts/GameManager.cs | TrackStatistics(), Zeile 406 | Update-Intervall einstellbar machen |
+| TODO-OPT#48 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 708 | Offsetbereich als Felder exposen |
+| TODO-OPT#49 | Assets/Scripts/Map/MapGenerator.cs | FindOptimalGoalPosition(), Zeile 736 | Pfadfindung zur Zielplatzierung nutzen |
+| TODO-OPT#50 | Assets/Scripts/Map/MapStartupController.cs | endlessModeAddresses, Zeile 41 | Adressliste extern speichern |
+| TODO-OPT#51 | Assets/Scripts/Map/AddressResolver.cs | ResolveAddressCoroutine(), Zeile 105 | Geocode-Cache implementieren |
+| TODO-OPT#52 | Assets/Scripts/UIController.cs | UpdateMainMenuUI(), Zeile 313 | UI-Texte lokalisieren |
+| TODO-OPT#53 | Assets/Scripts/UIController.cs | ShowNotificationCoroutine(), Zeile 820 | Notification-Pool verwenden |
+| TODO-OPT#54 | Assets/Scripts/Map/MapGeneratorBatched.cs | InitializeBatchingCollections(), Zeile 114 | String-Keys durch Enum ersetzen |
 

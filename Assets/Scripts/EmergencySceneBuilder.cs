@@ -81,9 +81,10 @@ public class EmergencySceneBuilder : MonoBehaviour
     public void BuildAllMinimalScenes()
     {
         Log("Building all minimal scenes...");
-        
+
         // Backup current scene
         string currentScene = SceneManager.GetActiveScene().name;
+        // TODO: Restore the originally active scene after building completes
 
         try
         {
