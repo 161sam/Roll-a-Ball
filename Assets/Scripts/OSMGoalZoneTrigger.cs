@@ -38,6 +38,7 @@ public class OSMGoalZoneTrigger : MonoBehaviour
         if (levelManager == null)
         {
             Debug.LogWarning("[OSMGoalZone] No LevelManager found in scene!");
+            // TODO: Disable goal zone or load fallback scene when manager is missing
         }
         
         // Ensure we have a trigger collider
