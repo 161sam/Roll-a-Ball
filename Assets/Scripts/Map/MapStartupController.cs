@@ -118,6 +118,7 @@ namespace RollABall.Map
             LogDebug("Initializing UI components...");
             
             // Auto-find UI components if not assigned
+            // TODO: Avoid expensive FindFirstObject calls by exposing references in the scene
             if (!addressInputField)
                 addressInputField = FindFirstObjectByType<TMP_InputField>();
             

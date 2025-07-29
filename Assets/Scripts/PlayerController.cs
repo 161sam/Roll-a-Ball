@@ -431,6 +431,7 @@ public class PlayerController : MonoBehaviour
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySoundAtPlayer("Slide");
 
+        // TODO: Expose slide duration as configurable field instead of magic number
         yield return new WaitForSeconds(0.5f); // Minimum slide duration
         
         slideCoroutine = null;
