@@ -194,6 +194,7 @@ public class UIController : MonoBehaviour
         if (statisticsBackButton) statisticsBackButton.onClick.AddListener(HideStatisticsPanel);
         
         // Subscribe to system events
+        // TODO: Unsubscribe in OnDestroy to avoid memory leaks
         if (SaveSystem.Instance)
         {
             SaveSystem.Instance.OnSaveLoaded += OnSaveLoaded;

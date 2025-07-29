@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     private Coroutine slideCoroutine;
     
     // Input states - LEGACY INPUT SYSTEM
+    // TODO: Replace with new Input System integration
     private Vector2 movementInput;
     private bool jumpPressed;
     private bool flyPressed;
@@ -158,6 +159,7 @@ public class PlayerController : MonoBehaviour
     private void HandleInput()
     {
         // Movement input (WASD / Arrow Keys) - LEGACY INPUT
+        // TODO: Use InputAction bindings from a centralized input manager
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         movementInput = new Vector2(horizontal, vertical);
@@ -168,6 +170,7 @@ public class PlayerController : MonoBehaviour
         sprintPressed = Input.GetKey(sprintKey);
         
         // Slide input handling - LEGACY INPUT
+        // TODO: Integrate slide action into input manager
         if (Input.GetKeyDown(slideKey))
             StartSlide();
         else if (Input.GetKeyUp(slideKey))
