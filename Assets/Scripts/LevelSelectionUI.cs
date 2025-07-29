@@ -463,6 +463,7 @@ public class LevelSelectionUI : MonoBehaviour
         // Update preview image
         if (levelPreviewImage && level.levelIcon)
         {
+            // TODO: Cache sprites and load asynchronously for large levels
             levelPreviewImage.sprite = level.levelIcon;
         }
     }

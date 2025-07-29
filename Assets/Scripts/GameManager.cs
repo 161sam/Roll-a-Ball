@@ -311,11 +311,7 @@ public class GameManager : MonoBehaviour
             
             // Reset player velocity
             Rigidbody playerRb = player.GetComponent<Rigidbody>();
-            if (playerRb)
-            {
-                playerRb.linearVelocity = Vector3.zero;
-                playerRb.angularVelocity = Vector3.zero;
-            }
+            PhysicsUtils.ResetMotion(playerRb);
         }
         
         // Reset UI if available
@@ -377,13 +373,9 @@ public class GameManager : MonoBehaviour
 
         player.transform.position = respawnPosition + Vector3.up * 2f;
         
-        // Reset player velocity
+        // Reset player velocity via helper
         Rigidbody playerRb = player.GetComponent<Rigidbody>();
-        if (playerRb)
-        {
-            playerRb.linearVelocity = Vector3.zero;
-            playerRb.angularVelocity = Vector3.zero;
-        }
+        PhysicsUtils.ResetMotion(playerRb);
 
         // Re-enable player
         player.enabled = true;
