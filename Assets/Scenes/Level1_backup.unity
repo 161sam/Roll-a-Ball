@@ -313,6 +313,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -516,6 +520,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -624,6 +632,10 @@ PrefabInstance:
     - target: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1308,6 +1320,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1546,6 +1562,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1767,19 +1787,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1927667030}
-  autoFindPlayer: 1
   offset: {x: 0, y: 10, z: -15}
   followSpeed: 5
   rotationSpeed: 2
-  lookAtTarget: 1
-  lookOffset: {x: 0, y: 1, z: 0}
-  smoothMovement: 1
-  minDistance: 5
-  maxDistance: 30
-  shakeIntensity: 0
-  shakeDuration: 0
+  autoFindPlayer: 1
+  playerTag: Player
   minHeight: 2
   maxHeight: 50
+  logTargetSearch: 1
 --- !u!81 &2120372088
 AudioListener:
   m_ObjectHideFlags: 0

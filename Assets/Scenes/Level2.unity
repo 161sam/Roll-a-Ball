@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -275,6 +279,10 @@ PrefabInstance:
     - target: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -455,6 +463,10 @@ PrefabInstance:
     - target: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -707,6 +719,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -859,6 +875,10 @@ PrefabInstance:
     - target: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1150,6 +1170,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1236,7 +1260,7 @@ MonoBehaviour:
   gameTimeScale: 1
   pauseKey: 27
   restartKey: 114
-  player: {fileID: 0}
+  player: {fileID: 1173654900}
   autoFindPlayer: 1
   uiController: {fileID: 966336628}
   pauseMenu: {fileID: 0}
@@ -1464,7 +1488,7 @@ GameObject:
   - component: {fileID: 1108243256}
   m_Layer: 0
   m_Name: GoalZone
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1767,6 +1791,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1833878092868309182, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
   m_PrefabInstance: {fileID: 1173654898}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1173654900 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 197925649543415101, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
+  m_PrefabInstance: {fileID: 1173654898}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974af19694509e8319c399a75587b6b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1176524798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2210,11 +2245,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6223543142066110098, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
   m_PrefabInstance: {fileID: 1514921659}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1514921661 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7897462713699335167, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
-  m_PrefabInstance: {fileID: 1514921659}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1532159255
 GameObject:
   m_ObjectHideFlags: 0
@@ -2403,6 +2433,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2505,16 +2539,16 @@ MonoBehaviour:
     levelIndex: 2
     nextSceneName: Level3
     totalCollectibles: 8
-    collectiblesRemaining: 5
+    collectiblesRemaining: 8
     difficultyMultiplier: 1.5
-    hasTimeLimit: 0
+    hasTimeLimit: 1
     timeLimit: 120
     themeName: Steampunk
     themeColor: {r: 0, g: 1, b: 1, a: 1}
   transitionDuration: 1
   showLevelComplete: 1
-  levelCompleteDisplayTime: 2
-  goalZone: {fileID: 1514921661}
+  levelCompleteDisplayTime: 8
+  goalZone: {fileID: 0}
   autoFindGoalZone: 1
   levelCollectibles: []
   autoFindCollectibles: 1
@@ -2571,6 +2605,10 @@ PrefabInstance:
     - target: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2736,9 +2774,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1742414280}
+  - component: {fileID: 1742414281}
   m_Layer: 0
   m_Name: Collectible
-  m_TagString: Untagged
+  m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2766,6 +2805,41 @@ Transform:
   - {fileID: 659123493}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1742414281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742414279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1764880525
 GameObject:
   m_ObjectHideFlags: 0
@@ -3039,6 +3113,7 @@ MonoBehaviour:
   playerTag: Player
   minHeight: 2
   maxHeight: 50
+  logTargetSearch: 1
 --- !u!81 &2120372088
 AudioListener:
   m_ObjectHideFlags: 0

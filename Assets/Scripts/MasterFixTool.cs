@@ -32,10 +32,9 @@ public class MasterFixTool : MonoBehaviour
     [SerializeField] private List<string> remainingIssues = new List<string>();
 
     // Component references
-    private UniversalSceneFixture sceneFixture;
+    private GeneratedLevelFixer generatedLevelFixer;
     private CollectibleDiagnosticTool collectibleTool;
     private LevelProgressionFixer progressionFixer;
-    private RollABall.Map.OSMUIConnector osmConnector;
 
     private void Start()
     {
@@ -91,24 +90,24 @@ public class MasterFixTool : MonoBehaviour
         ShowProgress("Fix-Tools bereit", 0.1f);
         yield return new WaitForSeconds(0.5f);
         
-        // Step 2: Run universal scene fixes
-        if (fixUIProblems)
+        // Step 2: Run Generated Level fixes
+        if (fixUIProblems && IsGeneratedLevel(sceneName))
         {
-            ShowProgress("Repariere UI-Verbindungen...", 0.2f);
-            yield return StartCoroutine(RunUniversalSceneFix());
+            ShowProgress("Repariere Generated Level...", 0.3f);
+            yield return StartCoroutine(RunGeneratedLevelFix());
         }
         
         // Step 3: Fix collectible problems
         if (fixCollectibleProblems)
         {
-            ShowProgress("Repariere Collectibles...", 0.4f);
+            ShowProgress("Repariere Collectibles...", 0.5f);
             yield return StartCoroutine(RunCollectibleFix());
         }
         
         // Step 4: Fix level progression
         if (fixLevelProgression)
         {
-            ShowProgress("Repariere Level-Übergänge...", 0.6f);
+            ShowProgress("Repariere Level-Übergänge...", 0.7f);
             yield return StartCoroutine(RunProgressionFix());
         }
         
@@ -137,13 +136,13 @@ public class MasterFixTool : MonoBehaviour
     {
         Log("Initializing fix tools...");
         
-        // Universal Scene Fixture
-        sceneFixture = FindFirstObjectByType<UniversalSceneFixture>();
-        if (!sceneFixture)
+        // Generated Level Fixer
+        generatedLevelFixer = FindFirstObjectByType<GeneratedLevelFixer>();
+        if (!generatedLevelFixer && IsGeneratedLevel(SceneManager.GetActiveScene().name))
         {
-            GameObject fixtureGO = new GameObject("UniversalSceneFixture");
-            sceneFixture = fixtureGO.AddComponent<UniversalSceneFixture>();
-            AddFixedIssue("Created UniversalSceneFixture");
+            GameObject fixtureGO = new GameObject("GeneratedLevelFixer");
+            generatedLevelFixer = fixtureGO.AddComponent<GeneratedLevelFixer>();
+            AddFixedIssue("Created GeneratedLevelFixer");
         }
         
         // Collectible Diagnostic Tool
@@ -164,19 +163,6 @@ public class MasterFixTool : MonoBehaviour
             AddFixedIssue("Created LevelProgressionFixer");
         }
         
-        // OSM UI Connector (only for OSM scenes)
-        string sceneName = SceneManager.GetActiveScene().name;
-        if (IsOSMScene(sceneName))
-        {
-            osmConnector = FindFirstObjectByType<RollABall.Map.OSMUIConnector>();
-            if (!osmConnector)
-            {
-                GameObject osmGO = new GameObject("OSMUIConnector");
-                osmConnector = osmGO.AddComponent<RollABall.Map.OSMUIConnector>();
-                AddFixedIssue("Created OSMUIConnector");
-            }
-        }
-        
         Log("Fix tools initialization completed");
     }
 
@@ -184,19 +170,18 @@ public class MasterFixTool : MonoBehaviour
 
     #region Individual Fix Processes
 
-    private IEnumerator RunUniversalSceneFix()
+    private IEnumerator RunGeneratedLevelFix()
     {
-        Log("Running universal scene fixes...");
+        Log("Running generated level fixes...");
         
-        if (sceneFixture)
+        if (generatedLevelFixer)
         {
-            sceneFixture.FixCurrentScene();
-            AddFixedIssue("Universal scene components fixed");
-            yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(generatedLevelFixer.FixGeneratedLevelAsync());
+            AddFixedIssue("Generated level components fixed");
         }
         else
         {
-            AddRemainingIssue("UniversalSceneFixture not available");
+            AddRemainingIssue("GeneratedLevelFixer not available");
         }
     }
 
@@ -248,15 +233,17 @@ public class MasterFixTool : MonoBehaviour
     {
         Log("Running OSM-specific fixes...");
         
-        if (osmConnector)
+        // Use OSMSceneAutoSetup if available for OSM fixes
+        OSMSceneAutoSetup osmSetup = FindFirstObjectByType<OSMSceneAutoSetup>();
+        if (osmSetup)
         {
-            osmConnector.ConnectUIElements();
-            AddFixedIssue("OSM UI elements connected");
+            osmSetup.SetupOSMScene();
+            AddFixedIssue("OSM scene auto-setup completed");
             yield return new WaitForSeconds(0.5f);
         }
         else
         {
-            AddRemainingIssue("OSMUIConnector not available");
+            AddRemainingIssue("OSMSceneAutoSetup not available");
         }
     }
 
@@ -390,9 +377,8 @@ public class MasterFixTool : MonoBehaviour
     {
         bool hasInputField = FindFirstObjectByType<TMPro.TMP_InputField>() != null;
         bool hasButtons = FindObjectsByType<UnityEngine.UI.Button>(FindObjectsSortMode.None).Length > 0;
-        bool hasMapController = FindFirstObjectByType<RollABall.Map.MapStartupController>() != null;
         
-        if (hasInputField && hasButtons && hasMapController)
+        if (hasInputField && hasButtons)
         {
             AddFixedIssue("OSM UI properly connected");
         }
@@ -400,7 +386,6 @@ public class MasterFixTool : MonoBehaviour
         {
             if (!hasInputField) AddRemainingIssue("Missing address input field");
             if (!hasButtons) AddRemainingIssue("Missing UI buttons");
-            if (!hasMapController) AddRemainingIssue("Missing MapStartupController");
         }
     }
 
@@ -450,10 +435,14 @@ public class MasterFixTool : MonoBehaviour
         // Scene-specific checks
         if (IsOSMScene(sceneName))
         {
-            bool hasMapController = FindFirstObjectByType<RollABall.Map.MapStartupController>() != null;
             bool hasInputField = FindFirstObjectByType<TMPro.TMP_InputField>() != null;
-            Log($"MapController: {(hasMapController ? "✓" : "✗")}");
             Log($"InputField: {(hasInputField ? "✓" : "✗")}");
+        }
+        
+        if (IsGeneratedLevel(sceneName))
+        {
+            bool hasLevelGenerator = FindFirstObjectByType<LevelGenerator>() != null;
+            Log($"LevelGenerator: {(hasLevelGenerator ? "✓" : "✗")}");
         }
         
         Log("=== END DIAGNOSTIC ===");
@@ -466,6 +455,11 @@ public class MasterFixTool : MonoBehaviour
     private bool IsOSMScene(string sceneName)
     {
         return sceneName.ToLower().Contains("osm") || sceneName.ToLower().Contains("map");
+    }
+
+    private bool IsGeneratedLevel(string sceneName)
+    {
+        return sceneName.ToLower().Contains("generated");
     }
 
     private void AddFixedIssue(string issue)
@@ -580,8 +574,8 @@ public class MasterFixTool : MonoBehaviour
     {
         switch (problemType.ToLower())
         {
-            case "ui":
-                StartCoroutine(RunUniversalSceneFix());
+            case "generated":
+                StartCoroutine(RunGeneratedLevelFix());
                 break;
             case "collectibles":
                 StartCoroutine(RunCollectibleFix());

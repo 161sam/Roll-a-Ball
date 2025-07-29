@@ -198,9 +198,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 92568890}
+  - component: {fileID: 92568891}
   m_Layer: 0
   m_Name: Collectible
-  m_TagString: Untagged
+  m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,6 +226,41 @@ Transform:
   - {fileID: 405430383}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &92568891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92568889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &93226910
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +348,10 @@ PrefabInstance:
     - target: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -495,6 +535,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -603,6 +647,10 @@ PrefabInstance:
     - target: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -793,6 +841,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408491886}
   m_CullTransparentMesh: 1
+--- !u!1 &507155279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 507155281}
+  - component: {fileID: 507155280}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &507155280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507155279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4fa031e5a44056a6abb71755c2d7ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugMode: 0
+  gameTimeScale: 1
+  pauseKey: 27
+  restartKey: 114
+  player: {fileID: 189742116}
+  autoFindPlayer: 1
+  uiController: {fileID: 1717064829}
+  pauseMenu: {fileID: 0}
+  gameOverScreen: {fileID: 0}
+  mainMenuScene: MainMenu
+  gameScene: Game
+  sceneTransitionDelay: 1
+  trackStatistics: 1
+  gameStats:
+    totalPlayTime: 0
+    totalJumps: 0
+    totalDoubleJumps: 0
+    totalDistanceTraveled: 0
+    totalFlightTime: 0
+    maxHeight: 0
+    maxSpeed: 0
+  checkpoints: []
+  checkpointRadius: 2
+  checkpointLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  fallDeathHeight: -50
+  enableRespawn: 1
+  respawnDelay: 2
+--- !u!4 &507155281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507155279}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &538949936
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,7 +1009,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &546853489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,143 +1152,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &868670898
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 868670899}
-  - component: {fileID: 868670900}
-  - component: {fileID: 868670902}
-  - component: {fileID: 868670901}
-  m_Layer: 0
-  m_Name: LevelManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &868670899
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868670898}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &868670900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868670898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d35aa3163d2542deb91e902cf34126f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelConfig:
-    levelName: Level 1 - Tutorial
-    levelIndex: 1
-    nextSceneName: Level2
-    totalCollectibles: 5
-    collectiblesRemaining: 5
-    difficultyMultiplier: 1
-    hasTimeLimit: 0
-    timeLimit: 120
-    themeName: Steampunk
-    themeColor: {r: 0, g: 1, b: 1, a: 1}
-  transitionDuration: 1
-  showLevelComplete: 1
-  levelCompleteDisplayTime: 2
-  goalZone: {fileID: 1657251978}
-  autoFindGoalZone: 1
-  levelCollectibles: []
-  autoFindCollectibles: 0
-  uiController: {fileID: 1717064829}
-  debugMode: 0
---- !u!114 &868670901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868670898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4fa031e5a44056a6abb71755c2d7ed4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugMode: 0
-  gameTimeScale: 1
-  pauseKey: 27
-  restartKey: 114
-  player: {fileID: 189742116}
-  autoFindPlayer: 1
-  uiController: {fileID: 1717064829}
-  pauseMenu: {fileID: 0}
-  gameOverScreen: {fileID: 0}
-  mainMenuScene: MainMenu
-  gameScene: Game
-  sceneTransitionDelay: 1
-  trackStatistics: 1
-  gameStats:
-    totalPlayTime: 0
-    totalJumps: 0
-    totalDoubleJumps: 0
-    totalDistanceTraveled: 0
-    totalFlightTime: 0
-    maxHeight: 0
-    maxSpeed: 0
-  checkpoints: []
-  checkpointRadius: 2
-  checkpointLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  fallDeathHeight: -50
-  enableRespawn: 1
-  respawnDelay: 2
---- !u!114 &868670902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 868670898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 645079cb535337cb5ac75e0be25fbe34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeProfile: {fileID: 11400000, guid: a3ececc4edee6b74fb44f79c0edda84c, type: 2}
-  generateOnStart: 1
-  allowRegeneration: 1
-  regenerateKey: 114
-  groundPrefab: {fileID: 366523301430978328, guid: 05a79bd032d67af908c58f1d5b0ec008, type: 3}
-  wallPrefab: {fileID: 1212140643362234136, guid: 5c482d0efaa7d9b6aae5744c4ff53009, type: 3}
-  collectiblePrefab: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
-  goalZonePrefab: {fileID: 7897462713699335167, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
-  playerPrefab: {fileID: 8554796287664602159, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
-  levelContainer: {fileID: 0}
-  groundContainer: {fileID: 0}
-  wallContainer: {fileID: 0}
-  collectibleContainer: {fileID: 0}
-  effectsContainer: {fileID: 0}
-  showGenerationDebug: 0
-  showWalkableArea: 0
-  walkableColor: {r: 0, g: 1, b: 0, a: 1}
-  blockedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1129245978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,6 +1345,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1542,11 +1530,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6223543142066110098, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
   m_PrefabInstance: {fileID: 1657251976}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1657251978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7897462713699335167, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
-  m_PrefabInstance: {fileID: 1657251976}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1717064828
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,7 +1655,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1764880526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1696,6 +1679,70 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764880525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1878956427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1878956429}
+  - component: {fileID: 1878956428}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1878956428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878956427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d35aa3163d2542deb91e902cf34126f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelConfig:
+    levelName: Level 1 - Tutorial
+    levelIndex: 1
+    nextSceneName: Level2
+    totalCollectibles: 3
+    collectiblesRemaining: 3
+    difficultyMultiplier: 1
+    hasTimeLimit: 0
+    timeLimit: 120
+    themeName: Steampunk
+    themeColor: {r: 0, g: 1, b: 1, a: 1}
+  transitionDuration: 1
+  showLevelComplete: 1
+  levelCompleteDisplayTime: 2
+  goalZone: {fileID: 93226910}
+  autoFindGoalZone: 1
+  levelCollectibles: []
+  autoFindCollectibles: 1
+  uiController: {fileID: 1717064829}
+  debugMode: 0
+--- !u!4 &1878956429
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878956427}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -1760,6 +1807,10 @@ PrefabInstance:
     - target: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2070,7 +2121,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 189742115}
   - {fileID: 2120372090}
-  - {fileID: 868670899}
   - {fileID: 92568890}
   - {fileID: 93226911}
   - {fileID: 1129245979}
@@ -2080,3 +2130,5 @@ SceneRoots:
   - {fileID: 1764880527}
   - {fileID: 1717064830}
   - {fileID: 538949939}
+  - {fileID: 507155281}
+  - {fileID: 1878956429}

@@ -68,14 +68,6 @@ public class GameManager : MonoBehaviour
     private int currentCheckpointIndex = 0;
     private bool isPaused = false;
     private Coroutine statisticsCoroutine;
-    private int deathCount = 0; // Track player deaths per level
-
-    // Last level performance data
-    private float lastLevelTime = 0f;
-    private float lastTargetTime = 0f;
-    private int lastCollected = 0;
-    private int lastTotalCollectibles = 0;
-    private int lastDeaths = 0;
 
     // Events
     public System.Action<GameState, GameState> OnGameStateChanged;
@@ -171,7 +163,6 @@ public class GameManager : MonoBehaviour
 
     private void HandleInput()
     {
-        // TODO-OPT#10: Consolidate input handling into centralized system
         if (Input.GetKeyDown(pauseKey))
         {
             if (isPaused)
@@ -192,7 +183,6 @@ public class GameManager : MonoBehaviour
 
         if (player.transform.position.y < fallDeathHeight)
         {
-            RegisterPlayerDeath();
             if (enableRespawn)
                 StartCoroutine(RespawnPlayer());
             else
@@ -318,8 +308,8 @@ public class GameManager : MonoBehaviour
         if (player)
         {
             lastPlayerPosition = player.transform.position;
-
-            // TODO-OPT#9: Velocity reset duplicated in multiple methods - move to reusable function
+            
+            // Reset player velocity
             Rigidbody playerRb = player.GetComponent<Rigidbody>();
             if (playerRb)
             {
@@ -387,6 +377,7 @@ public class GameManager : MonoBehaviour
 
         player.transform.position = respawnPosition + Vector3.up * 2f;
         
+        // Reset player velocity
         Rigidbody playerRb = player.GetComponent<Rigidbody>();
         if (playerRb)
         {
@@ -562,49 +553,8 @@ public class GameManager : MonoBehaviour
     {
         if (checkpoints == null || checkpoints.Length == 0 || currentCheckpointIndex >= checkpoints.Length)
             return Vector3.zero;
-
+        
         return checkpoints[currentCheckpointIndex].position;
-    }
-
-    /// <summary>
-    /// Record a player death for difficulty calculation
-    /// </summary>
-    public void RegisterPlayerDeath()
-    {
-        deathCount++;
-    }
-
-    /// <summary>
-    /// Store performance data from the completed level
-    /// </summary>
-    public void RecordLevelPerformance(float completionTime, int collected, int total, float targetTime)
-    {
-        lastLevelTime = completionTime;
-        lastTargetTime = targetTime;
-        lastCollected = collected;
-        lastTotalCollectibles = total;
-        lastDeaths = deathCount;
-        deathCount = 0;
-    }
-
-    /// <summary>
-    /// Adaptive difficulty based on player performance
-    /// </summary>
-    public float CalculateDifficultyModifier()
-    {
-        // Adaptive difficulty based on player performance
-        float timeFactor = 1f;
-        if (lastTargetTime > 0f)
-        {
-            float ratio = lastLevelTime / lastTargetTime;
-            timeFactor = Mathf.Clamp01(1f / Mathf.Max(ratio, 0.01f));
-        }
-
-        float collectibleFactor = lastTotalCollectibles > 0 ? (float)lastCollected / lastTotalCollectibles : 1f;
-        float deathFactor = Mathf.Clamp01(1f - (lastDeaths / 5f));
-
-        float average = (timeFactor + collectibleFactor + deathFactor) / 3f;
-        return Mathf.Lerp(0.8f, 1.2f, average);
     }
 
     // ===== Debug =====

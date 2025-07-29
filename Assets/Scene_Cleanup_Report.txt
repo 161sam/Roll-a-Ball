@@ -1,0 +1,10 @@
+🧹 Scene Generator Cleanup - Ergebnisse:
+
+📁 GeneratedLevel_backup:
+⚠️ Unbekannter Szenentyp - manuelle Überprüfung empfohlen
+
+📁 Level1_backup:
+⚠️ Unbekannter Szenentyp - manuelle Überprüfung empfohlen
+
+📁 Level3_backup:
+⚠️ Unbekannter Szenentyp - manuelle Überprüfung empfohlen

@@ -2,441 +2,856 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using RollABall.Map;
 
 namespace RollABall.Map
 {
     /// <summary>
+    /// Enhanced MapStartupController that integrates with real OSM data
     /// Handles OpenStreetMap integration and startup for Level_OSM scene
     /// Provides address input, map data loading, and fallback mechanisms
+    /// Combines real OSM integration with simulation/testing capabilities
     /// </summary>
     [AddComponentMenu("Roll-a-Ball/Map/Map Startup Controller")]
     public class MapStartupController : MonoBehaviour
-{
-    [Header("UI References")]
-    [SerializeField] private TMP_InputField addressInputField;
-    [SerializeField] private Button loadMapButton;
-    [SerializeField] private TextMeshProUGUI statusText;
-    [SerializeField] private GameObject loadingPanel;
-    
-    [Header("Map Settings")]
-    [SerializeField] private string defaultAddress = "Leipzig, Germany";
-    [SerializeField] private int maxRetries = 3;
-    
-    [Header("Fallback")]
-    [SerializeField] private GameObject fallbackLevelPrefab;
-    [SerializeField] private bool useLeipzigFallback = true;
-    
-    // Leipzig coordinates (fallback)
-    private readonly Vector2 leipzigCoords = new Vector2(51.3387f, 12.3799f);
-    
-    private bool isLoading = false;
-    private int currentRetries = 0;
-    
-    public System.Action<bool> OnMapLoadCompleted; // success
-    public System.Action<string> OnStatusUpdate; // status message
-    
-    private void Start()
     {
-        InitializeUI();
+        [Header("UI References")]
+        [SerializeField] private TMP_InputField addressInputField;
+        [SerializeField] private Button loadMapButton;
+        [SerializeField] private Button useCurrentLocationButton;
+        [SerializeField] private Button regenerateMapButton;
+        [SerializeField] private TextMeshProUGUI statusText;
+        [SerializeField] private GameObject loadingPanel;
         
-        // Set default address
-        if (addressInputField)
-            addressInputField.text = defaultAddress;
+        [Header("Map Settings")]
+        [SerializeField] private string defaultAddress = "Leipzig, Germany";
+        [SerializeField] private int maxRetries = 3;
+        [SerializeField] private float searchRadius = 500f;
         
-        UpdateStatus("Ready to load map. Enter address and click Load Map.");
-    }
-    
-    private void InitializeUI()
-    {
-        // Auto-find UI components if not assigned
-        // TODO-OPT#23: Similar find-or-create patterns exist in OSMUIConnector - refactor into shared Utility
-        if (!addressInputField)
-            addressInputField = Object.FindFirstObjectByType<TMP_InputField>();
+        [Header("Endless Mode")]
+        [SerializeField] private string[] endlessModeAddresses = {
+            "Leipzig, Germany",
+            "Berlin, Germany", 
+            "Munich, Germany",
+            "Hamburg, Germany",
+            "Dresden, Germany",
+            "Cologne, Germany",
+            "Frankfurt, Germany",
+            "Stuttgart, Germany"
+        };
         
-        if (!loadMapButton)
-            loadMapButton = Object.FindFirstObjectByType<Button>();
+        [Header("Fallback System")]
+        [SerializeField] private GameObject fallbackLevelPrefab;
+        [SerializeField] private bool useLeipzigFallback = true;
+        [SerializeField] private bool enableSimulationMode = false; // For testing without real OSM
         
-        if (!statusText)
-            statusText = Object.FindFirstObjectByType<TextMeshProUGUI>();
+        [Header("Debug")]
+        [SerializeField] private bool enableDebugLogging = true;
         
-        // Setup button listener
-        if (loadMapButton)
+        // Leipzig coordinates (fallback)
+        private readonly Vector2 leipzigCoords = new Vector2(51.3387f, 12.3799f);
+        
+        // Component references
+        private AddressResolver addressResolver;
+        private MapGenerator mapGenerator;
+        private GameManager gameManager;
+        private LevelManager levelManager;
+        
+        // State
+        private bool isLoading = false;
+        private int currentRetries = 0;
+        private string currentAddress = "";
+        
+        // Events
+        public System.Action<bool> OnMapLoadCompleted; // success
+        public System.Action<string> OnStatusUpdate; // status message
+        
+        private void Awake()
         {
-            loadMapButton.onClick.RemoveAllListeners();
-            loadMapButton.onClick.AddListener(LoadMapFromInput);
-        }
-        
-        // Setup input field listener
-        if (addressInputField)
-        {
-            addressInputField.onEndEdit.RemoveAllListeners();
-            addressInputField.onEndEdit.AddListener(OnAddressInputEnd);
-        }
-    }
-    
-    public void LoadMapFromInput()
-    {
-        if (isLoading) return;
-        
-        string address = addressInputField ? addressInputField.text.Trim() : defaultAddress;
-        
-        if (string.IsNullOrEmpty(address))
-        {
-            UpdateStatus("⚠️ Please enter a valid address.");
-            return;
-        }
-        
-        StartCoroutine(LoadMapCoroutine(address));
-    }
-    
-    private void OnAddressInputEnd(string address)
-    {
-        // Auto-load on Enter key
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            LoadMapFromInput();
-        }
-    }
-    
-    private IEnumerator LoadMapCoroutine(string address)
-    {
-        isLoading = true;
-        currentRetries = 0;
-        
-        SetLoadingState(true);
-        UpdateStatus($"🌍 Loading map for: {address}");
-        
-        // Simulate OSM API call (placeholder for real implementation)
-        yield return StartCoroutine(SimulateOSMApiCall(address));
-        
-        SetLoadingState(false);
-        isLoading = false;
-    }
-    
-    private IEnumerator SimulateOSMApiCall(string address)
-    {
-        // Simulate network delay
-        float delay = Random.Range(1f, 3f);
-        yield return new WaitForSeconds(delay);
-        
-        // Simulate success/failure (80% success rate for demo)
-        bool success = Random.Range(0f, 1f) < 0.8f || useLeipzigFallback;
-        
-        if (success)
-        {
-            UpdateStatus($"✅ Map loaded successfully: {address}");
-            yield return StartCoroutine(GenerateMapFromAddress(address));
-            OnMapLoadCompleted?.Invoke(true);
-        }
-        else
-        {
-            currentRetries++;
-            if (currentRetries <= maxRetries)
+            // Get component references
+            addressResolver = GetComponent<AddressResolver>();
+            mapGenerator = GetComponent<MapGenerator>();
+            gameManager = FindFirstObjectByType<GameManager>();
+            levelManager = FindFirstObjectByType<LevelManager>();
+            
+            // Check for real OSM components
+            if (addressResolver == null && !enableSimulationMode)
             {
-                UpdateStatus($"⚠️ Failed to load map. Retry {currentRetries}/{maxRetries}...");
-                yield return new WaitForSeconds(1f);
-                yield return StartCoroutine(SimulateOSMApiCall(address));
+                LogDebug("WARNING: AddressResolver component not found! Enabling simulation mode as fallback.");
+                enableSimulationMode = true;
+            }
+            
+            if (mapGenerator == null && !enableSimulationMode)
+            {
+                LogDebug("WARNING: MapGenerator component not found! Enabling simulation mode as fallback.");
+                enableSimulationMode = true;
+            }
+        }
+        
+        private void Start()
+        {
+            InitializeUI();
+            
+            // Only setup OSM event subscriptions if real components exist
+            if (!enableSimulationMode)
+            {
+                SetupEventSubscriptions();
+            }
+            
+            // Check if we're in auto-generate mode (endless mode)
+            if (PlayerPrefs.GetInt("AutoGenerateOSMMode", 0) == 1)
+            {
+                StartAutoGenerateMode();
             }
             else
             {
-                UpdateStatus("❌ Failed to load map. Using fallback level.");
-                yield return StartCoroutine(LoadFallbackLevel());
-                OnMapLoadCompleted?.Invoke(false);
+                // Normal manual mode
+                if (addressInputField)
+                    addressInputField.text = defaultAddress;
+                
+                UpdateStatus("Ready to load map. Enter address and click Load Map.");
             }
         }
-    }
-    
-    private IEnumerator GenerateMapFromAddress(string address)
-    {
-        UpdateStatus("🔧 Generating level from map data...");
         
-        // For Leipzig or as fallback, use specific coordinates
-        Vector2 coords = address.ToLower().Contains("leipzig") ? leipzigCoords : GetCoordsFromAddress(address);
-        
-        // Generate a simple level based on coordinates
-        yield return StartCoroutine(CreateLevelFromCoordinates(coords));
-        
-        UpdateStatus($"🎯 Level ready! Explore {address}");
-        
-        // Hide UI after successful generation
-        yield return new WaitForSeconds(2f);
-        HideMapUI();
-    }
-    
-    private Vector2 GetCoordsFromAddress(string address)
-    {
-        // Placeholder: In real implementation, this would use Nominatim or similar geocoding API
-        // For now, return Leipzig coordinates as fallback
-        return leipzigCoords;
-    }
-    
-    private IEnumerator CreateLevelFromCoordinates(Vector2 coordinates)
-    {
-        UpdateStatus("🏗️ Building terrain...");
-        yield return new WaitForSeconds(0.5f);
-        
-        // Create a simple grid-based level inspired by coordinates
-        CreateSimpleMapLevel(coordinates);
-        
-        UpdateStatus("📍 Placing collectibles...");
-        yield return new WaitForSeconds(0.5f);
-        
-        // Place collectibles
-        PlaceCollectiblesOnMap();
-        
-        UpdateStatus("🎮 Setting up player...");
-        yield return new WaitForSeconds(0.3f);
-        
-        // Setup player start position
-        SetupPlayerStart();
-    }
-    
-    private void CreateSimpleMapLevel(Vector2 coords)
-    {
-        // Create a simple interpretation of map data
-        // Use coordinate values to influence level generation
-        int levelSize = Mathf.Clamp(8 + (int)(coords.x % 10), 8, 16);
-        
-        LevelGenerator generator = Object.FindFirstObjectByType<LevelGenerator>();
-        if (generator != null)
+        private void InitializeUI()
         {
-            // Use coordinates to create a unique seed
-            int seed = (int)(coords.x * 1000 + coords.y * 1000);
+            LogDebug("Initializing UI components...");
             
-            // Try to set generation parameters
-            try
-            {
-                var seedMethod = generator.GetType().GetMethod("SetGenerationSeed");
-                if (seedMethod != null)
-                {
-                    seedMethod.Invoke(generator, new object[] { seed });
-                }
+            // Auto-find UI components if not assigned
+            if (!addressInputField)
+                addressInputField = FindFirstObjectByType<TMP_InputField>();
+            
+            if (!loadMapButton)
+                loadMapButton = FindFirstObjectByType<Button>();
                 
-                var generateMethod = generator.GetType().GetMethod("GenerateLevel");
-                if (generateMethod != null)
+            if (!statusText)
+            {
+                TextMeshProUGUI[] textComponents = FindObjectsByType<TextMeshProUGUI>(FindObjectsSortMode.None);
+                foreach (var text in textComponents)
                 {
-                    generateMethod.Invoke(generator, new object[] { null });
+                    if (text.name.Contains("Loading") || text.name.Contains("Status"))
+                    {
+                        statusText = text;
+                        break;
+                    }
                 }
             }
-            catch (System.Exception e)
+            
+            if (!loadingPanel)
+                loadingPanel = GameObject.Find("LoadingPanel");
+            
+            // Setup button listeners
+            if (loadMapButton)
             {
-                Debug.LogWarning($"Could not use LevelGenerator: {e.Message}");
+                loadMapButton.onClick.RemoveAllListeners();
+                loadMapButton.onClick.AddListener(LoadMapFromInput);
+                LogDebug("LoadMapButton listener added");
+            }
+            
+            if (useCurrentLocationButton)
+            {
+                useCurrentLocationButton.onClick.RemoveAllListeners();
+                useCurrentLocationButton.onClick.AddListener(UseCurrentLocation);
+                LogDebug("UseCurrentLocationButton listener added");
+            }
+            
+            if (regenerateMapButton)
+            {
+                regenerateMapButton.onClick.RemoveAllListeners();
+                regenerateMapButton.onClick.AddListener(RegenerateCurrentMap);
+                LogDebug("RegenerateMapButton listener added");
+            }
+            
+            // Setup input field listener
+            if (addressInputField)
+            {
+                addressInputField.onEndEdit.RemoveAllListeners();
+                addressInputField.onEndEdit.AddListener(OnAddressInputEnd);
+                LogDebug("AddressInputField listener added");
+            }
+            
+            LogDebug("UI initialization completed");
+        }
+        
+        private void SetupEventSubscriptions()
+        {
+            LogDebug("Setting up event subscriptions...");
+            
+            if (addressResolver != null)
+            {
+                // Subscribe to AddressResolver events
+                addressResolver.OnMapDataLoaded += OnMapDataLoaded;
+                addressResolver.OnError += OnAddressResolverError;
+                addressResolver.OnMapLoadErrorEvent += OnMapLoadError;
+                LogDebug("AddressResolver events subscribed");
+            }
+            
+            if (mapGenerator != null)
+            {
+                // Subscribe to MapGenerator events
+                mapGenerator.OnMapGenerationStarted += OnMapGenerationStarted;
+                mapGenerator.OnMapGenerationCompleted += OnMapGenerationCompleted;
+                mapGenerator.OnGenerationError += OnMapGenerationError;
+                LogDebug("MapGenerator events subscribed");
+            }
+        }
+        
+        public void LoadMapFromInput()
+        {
+            if (isLoading)
+            {
+                LogDebug("Already loading, ignoring request");
+                return;
+            }
+            
+            string address = addressInputField ? addressInputField.text.Trim() : defaultAddress;
+            
+            if (string.IsNullOrEmpty(address))
+            {
+                UpdateStatus("⚠️ Please enter a valid address.");
+                return;
+            }
+            
+            LoadMapFromAddress(address);
+        }
+        
+        public void LoadMapFromAddress(string address)
+        {
+            if (isLoading)
+            {
+                LogDebug("Already loading, ignoring request");
+                return;
+            }
+            
+            currentAddress = address;
+            currentRetries = 0;
+            
+            LogDebug($"Loading map for address: {address}");
+            UpdateStatus($"🌍 Loading map for: {address}");
+            SetLoadingState(true);
+            
+            // Use real OSM system or simulation based on mode
+            if (enableSimulationMode)
+            {
+                StartCoroutine(LoadMapCoroutineSimulation(address));
+            }
+            else
+            {
+                // Use real AddressResolver
+                if (addressResolver != null)
+                {
+                    addressResolver.ResolveAddressAndLoadMap(address);
+                }
+                else
+                {
+                    LogDebug("ERROR: AddressResolver not available! Falling back to simulation.");
+                    StartCoroutine(LoadMapCoroutineSimulation(address));
+                }
+            }
+        }
+        
+        public void LoadMapFromCoordinates(float latitude, float longitude)
+        {
+            if (isLoading)
+            {
+                LogDebug("Already loading, ignoring request");
+                return;
+            }
+            
+            LogDebug($"Loading map for coordinates: {latitude}, {longitude}");
+            UpdateStatus($"🌍 Loading map for coordinates: {latitude:F4}, {longitude:F4}");
+            SetLoadingState(true);
+            
+            // Use real OSM system or simulation based on mode
+            if (enableSimulationMode)
+            {
+                Vector2 coords = new Vector2(latitude, longitude);
+                StartCoroutine(CreateLevelFromCoordinates(coords));
+            }
+            else
+            {
+                // Use real AddressResolver
+                if (addressResolver != null)
+                {
+                    addressResolver.LoadMapFromCoordinates(latitude, longitude, searchRadius);
+                }
+                else
+                {
+                    LogDebug("ERROR: AddressResolver not available! Falling back to simulation.");
+                    Vector2 coords = new Vector2(latitude, longitude);
+                    StartCoroutine(CreateLevelFromCoordinates(coords));
+                }
+            }
+        }
+        
+        // Overload for backward compatibility
+        public void LoadMapFromCoordinates(Vector2 coordinates)
+        {
+            LoadMapFromCoordinates(coordinates.x, coordinates.y);
+        }
+        
+        public void UseCurrentLocation()
+        {
+            LogDebug("Using current location (fallback to Leipzig for now)");
+            // TODO: Implement real GPS location when needed
+            // For now, use Leipzig as demo location
+            LoadMapFromCoordinates(51.3387f, 12.3799f);
+        }
+        
+        public void RegenerateCurrentMap()
+        {
+            if (string.IsNullOrEmpty(currentAddress))
+            {
+                LogDebug("No current address to regenerate");
+                UpdateStatus("⚠️ No map to regenerate. Load a map first.");
+                return;
+            }
+            
+            LogDebug($"Regenerating map for: {currentAddress}");
+            UpdateStatus($"🔄 Regenerating map for: {currentAddress}");
+            
+            LoadMapFromAddress(currentAddress);
+        }
+        
+        private void OnAddressInputEnd(string address)
+        {
+            // Auto-load on Enter key
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                LoadMapFromInput();
+            }
+        }
+        
+        // SIMULATION MODE METHODS (From Remote)
+        private IEnumerator LoadMapCoroutineSimulation(string address)
+        {
+            LogDebug($"Using simulation mode for address: {address}");
+            
+            isLoading = true;
+            currentRetries = 0;
+            
+            SetLoadingState(true);
+            UpdateStatus($"🎮 [SIMULATION] Loading map for: {address}");
+            
+            // Simulate OSM API call
+            yield return StartCoroutine(SimulateOSMApiCall(address));
+            
+            SetLoadingState(false);
+            isLoading = false;
+        }
+        
+        private IEnumerator SimulateOSMApiCall(string address)
+        {
+            // Simulate network delay
+            float delay = Random.Range(1f, 3f);
+            yield return new WaitForSeconds(delay);
+            
+            // Simulate success/failure (80% success rate for demo)
+            bool success = Random.Range(0f, 1f) < 0.8f || useLeipzigFallback;
+            
+            if (success)
+            {
+                UpdateStatus($"✅ [SIMULATION] Map loaded successfully: {address}");
+                yield return StartCoroutine(GenerateMapFromAddress(address));
+                OnMapLoadCompleted?.Invoke(true);
+            }
+            else
+            {
+                currentRetries++;
+                if (currentRetries <= maxRetries)
+                {
+                    UpdateStatus($"⚠️ [SIMULATION] Failed to load map. Retry {currentRetries}/{maxRetries}...");
+                    yield return new WaitForSeconds(1f);
+                    yield return StartCoroutine(SimulateOSMApiCall(address));
+                }
+                else
+                {
+                    UpdateStatus("❌ [SIMULATION] Failed to load map. Using fallback level.");
+                    yield return StartCoroutine(LoadFallbackLevel());
+                    OnMapLoadCompleted?.Invoke(false);
+                }
+            }
+        }
+        
+        private IEnumerator GenerateMapFromAddress(string address)
+        {
+            UpdateStatus("🔧 Generating level from map data...");
+            
+            // For Leipzig or as fallback, use specific coordinates
+            Vector2 coords = address.ToLower().Contains("leipzig") ? leipzigCoords : GetCoordsFromAddress(address);
+            
+            // Generate a simple level based on coordinates
+            yield return StartCoroutine(CreateLevelFromCoordinates(coords));
+            
+            UpdateStatus($"🎯 Level ready! Explore {address}");
+            
+            // Hide UI after successful generation
+            yield return new WaitForSeconds(2f);
+            HideMapUI();
+            
+            // Start the game
+            if (gameManager != null)
+            {
+                gameManager.StartGame();
+            }
+        }
+        
+        private Vector2 GetCoordsFromAddress(string address)
+        {
+            // Placeholder: In real implementation, this would use Nominatim or similar geocoding API
+            // For now, return Leipzig coordinates as fallback
+            return leipzigCoords;
+        }
+        
+        private IEnumerator CreateLevelFromCoordinates(Vector2 coordinates)
+        {
+            UpdateStatus("🏗️ Building terrain...");
+            yield return new WaitForSeconds(0.5f);
+            
+            // Create a simple grid-based level inspired by coordinates
+            CreateSimpleMapLevel(coordinates);
+            
+            UpdateStatus("📍 Placing collectibles...");
+            yield return new WaitForSeconds(0.5f);
+            
+            // Place collectibles
+            PlaceCollectiblesOnMap();
+            
+            UpdateStatus("🎮 Setting up player...");
+            yield return new WaitForSeconds(0.3f);
+            
+            // Setup player start position
+            SetupPlayerStart();
+            
+            UpdateStatus("🎯 Level ready! Start exploring!");
+            SetLoadingState(false);
+            
+            // Hide UI after successful generation
+            yield return new WaitForSeconds(2f);
+            HideMapUI();
+        }
+        
+        private void CreateSimpleMapLevel(Vector2 coords)
+        {
+            // Create a simple interpretation of map data
+            // Use coordinate values to influence level generation
+            int levelSize = Mathf.Clamp(8 + (int)(coords.x % 10), 8, 16);
+            
+            LevelGenerator generator = FindFirstObjectByType<LevelGenerator>();
+            if (generator != null)
+            {
+                // Use coordinates to create a unique seed
+                int seed = (int)(coords.x * 1000 + coords.y * 1000);
+                
+                // Try to set generation parameters
+                try
+                {
+                    var seedMethod = generator.GetType().GetMethod("SetGenerationSeed");
+                    if (seedMethod != null)
+                    {
+                        seedMethod.Invoke(generator, new object[] { seed });
+                    }
+                    
+                    var generateMethod = generator.GetType().GetMethod("GenerateLevel");
+                    if (generateMethod != null)
+                    {
+                        generateMethod.Invoke(generator, new object[] { null });
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    LogDebug($"Could not use LevelGenerator: {e.Message}");
+                    CreateFallbackLevel();
+                }
+            }
+            else
+            {
                 CreateFallbackLevel();
             }
         }
-        else
-        {
-            CreateFallbackLevel();
-        }
-    }
-    
-    private void CreateFallbackLevel()
-    {
-        // Create a simple manual level if no generator is available
-        if (fallbackLevelPrefab)
-        {
-            Instantiate(fallbackLevelPrefab);
-        }
-        else
-        {
-            // Create minimal level manually
-            CreateMinimalLevel();
-        }
-    }
-    
-    private void CreateMinimalLevel()
-    {
-        // Create ground plane
-        GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        ground.name = "OSM_Ground";
-        ground.transform.localScale = Vector3.one * 2;
         
-        // Create some walls
-        for (int i = 0; i < 4; i++)
+        private void CreateFallbackLevel()
         {
-            GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            wall.name = $"OSM_Wall_{i}";
-            wall.transform.position = new Vector3(
-                Mathf.Cos(i * Mathf.PI * 0.5f) * 8,
-                1,
-                Mathf.Sin(i * Mathf.PI * 0.5f) * 8
-            );
-            wall.transform.localScale = new Vector3(2, 2, 2);
-        }
-    }
-    
-    private void PlaceCollectiblesOnMap()
-    {
-        // Place collectibles randomly on the generated level
-        GameObject collectiblePrefab = Resources.Load<GameObject>("CollectiblePrefab");
-        if (collectiblePrefab)
-        {
-            for (int i = 0; i < 5; i++)
+            // Create a simple manual level if no generator is available
+            if (fallbackLevelPrefab)
             {
-                Vector3 position = new Vector3(
-                    Random.Range(-8f, 8f),
-                    2f,
-                    Random.Range(-8f, 8f)
+                Instantiate(fallbackLevelPrefab);
+            }
+            else
+            {
+                // Create minimal level manually
+                CreateMinimalLevel();
+            }
+        }
+        
+        private void CreateMinimalLevel()
+        {
+            // Create ground plane
+            GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            ground.name = "OSM_Ground";
+            ground.transform.localScale = Vector3.one * 2;
+            
+            // Create some walls
+            for (int i = 0; i < 4; i++)
+            {
+                GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                wall.name = $"OSM_Wall_{i}";
+                wall.transform.position = new Vector3(
+                    Mathf.Cos(i * Mathf.PI * 0.5f) * 8,
+                    1,
+                    Mathf.Sin(i * Mathf.PI * 0.5f) * 8
                 );
+                wall.transform.localScale = new Vector3(2, 2, 2);
+            }
+        }
+        
+        private void PlaceCollectiblesOnMap()
+        {
+            // Place collectibles randomly on the generated level
+            GameObject collectiblePrefab = Resources.Load<GameObject>("CollectiblePrefab");
+            if (collectiblePrefab)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Vector3 position = new Vector3(
+                        Random.Range(-8f, 8f),
+                        2f,
+                        Random.Range(-8f, 8f)
+                    );
+                    
+                    Instantiate(collectiblePrefab, position, Quaternion.identity);
+                }
+            }
+        }
+        
+        private void SetupPlayerStart()
+        {
+            PlayerController player = FindFirstObjectByType<PlayerController>();
+            if (player)
+            {
+                player.transform.position = new Vector3(0, 2, 0);
+            }
+        }
+        
+        private IEnumerator LoadFallbackLevel()
+        {
+            UpdateStatus("🔄 Loading fallback level...");
+            
+            if (useLeipzigFallback)
+            {
+                yield return StartCoroutine(GenerateMapFromAddress("Leipzig, Germany"));
+            }
+            else if (fallbackLevelPrefab)
+            {
+                Instantiate(fallbackLevelPrefab);
+                UpdateStatus("📦 Fallback level loaded.");
+            }
+            else
+            {
+                CreateMinimalLevel();
+                UpdateStatus("⚡ Minimal level created.");
+            }
+        }
+        
+        // REAL OSM EVENT HANDLERS (From Local)
+        private void OnMapDataLoaded(OSMMapData mapData)
+        {
+            LogDebug($"Map data loaded successfully. Roads: {mapData.roads.Count}, Buildings: {mapData.buildings.Count}");
+            UpdateStatus("🔧 Generating level from map data...");
+            
+            // The mapGenerator should automatically receive this via its own event subscription
+            // But we can also trigger it manually if needed
+            if (mapGenerator != null)
+            {
+                mapGenerator.GenerateMap(mapData);
+            }
+            else
+            {
+                LogDebug("ERROR: MapGenerator not available!");
+                UpdateStatus("❌ System error: MapGenerator not found");
+                SetLoadingState(false);
+            }
+        }
+        
+        private void OnAddressResolverError(string error)
+        {
+            LogDebug($"AddressResolver error: {error}");
+            UpdateStatus($"❌ {error}");
+            
+            currentRetries++;
+            if (currentRetries <= maxRetries)
+            {
+                LogDebug($"Retrying... ({currentRetries}/{maxRetries})");
+                StartCoroutine(RetryAfterDelay(1f));
+            }
+            else
+            {
+                LogDebug("Max retries reached, falling back to simulation mode");
+                enableSimulationMode = true;
+                LoadMapFromAddress(currentAddress);
+            }
+        }
+        
+        private void OnMapLoadError(string error)
+        {
+            LogDebug($"Map load error: {error}");
+            UpdateStatus($"⚠️ {error}");
+        }
+        
+        // Event handlers for MapGenerator
+        private void OnMapGenerationStarted(OSMMapData mapData)
+        {
+            LogDebug("Map generation started");
+            UpdateStatus("🏗️ Building terrain and placing objects...");
+        }
+        
+        private void OnMapGenerationCompleted()
+        {
+            LogDebug("Map generation completed successfully!");
+            UpdateStatus("🎯 Level ready! Start exploring!");
+            
+            SetLoadingState(false);
+            
+            // Hide UI after successful generation
+            StartCoroutine(HideUIAfterDelay(2f));
+            
+            // Start the game
+            if (gameManager != null)
+            {
+                gameManager.StartGame();
+            }
+            
+            OnMapLoadCompleted?.Invoke(true);
+        }
+        
+        private void OnMapGenerationError(string error)
+        {
+            LogDebug($"Map generation error: {error}");
+            UpdateStatus($"❌ Generation failed: {error}");
+            
+            // Fallback to simulation mode on error
+            LogDebug("Falling back to simulation mode due to generation error");
+            enableSimulationMode = true;
+            LoadMapFromAddress(currentAddress);
+        }
+        
+        private IEnumerator RetryAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            
+            if (!string.IsNullOrEmpty(currentAddress))
+            {
+                UpdateStatus($"🔄 Retrying {currentAddress}... ({currentRetries}/{maxRetries})");
                 
-                Instantiate(collectiblePrefab, position, Quaternion.identity);
+                if (addressResolver != null && !enableSimulationMode)
+                {
+                    addressResolver.ResolveAddressAndLoadMap(currentAddress);
+                }
+                else
+                {
+                    StartCoroutine(LoadMapCoroutineSimulation(currentAddress));
+                }
+            }
+        }
+        
+        private IEnumerator HideUIAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            HideMapUI();
+        }
+        
+        private void SetLoadingState(bool loading)
+        {
+            isLoading = loading;
+            
+            if (loadingPanel)
+                loadingPanel.SetActive(loading);
+            
+            if (loadMapButton)
+                loadMapButton.interactable = !loading;
+            
+            if (addressInputField)
+                addressInputField.interactable = !loading;
+            
+            if (useCurrentLocationButton)
+                useCurrentLocationButton.interactable = !loading;
+            
+            if (regenerateMapButton)
+                regenerateMapButton.interactable = !loading;
+        }
+        
+        private void UpdateStatus(string message)
+        {
+            if (statusText)
+                statusText.text = message;
+            
+            LogDebug($"Status: {message}");
+            OnStatusUpdate?.Invoke(message);
+        }
+        
+        private void HideMapUI()
+        {
+            // Hide the input UI after successful map generation
+            GameObject inputPanel = GameObject.Find("AddressInputPanel");
+            if (inputPanel)
+            {
+                inputPanel.SetActive(false);
+                LogDebug("Hidden AddressInputPanel");
+            }
+            
+            // Also try the canvas approach (from remote)
+            Canvas canvas = GetComponentInParent<Canvas>();
+            if (canvas && inputPanel == null)
+            {
+                canvas.gameObject.SetActive(false);
+                LogDebug("Hidden entire Canvas");
+            }
+            
+            // Keep game UI visible
+            GameObject gameUIPanel = GameObject.Find("GameUIPanel");
+            if (gameUIPanel)
+            {
+                gameUIPanel.SetActive(true);
+                LogDebug("Ensured GameUIPanel is visible");
+            }
+        }
+        
+        private void ShowMapUI()
+        {
+            // Show the input UI
+            GameObject inputPanel = GameObject.Find("AddressInputPanel");
+            if (inputPanel)
+            {
+                inputPanel.SetActive(true);
+                LogDebug("Shown AddressInputPanel");
+            }
+            
+            // Also try the canvas approach
+            Canvas canvas = GetComponentInParent<Canvas>();
+            if (canvas && !canvas.gameObject.activeInHierarchy)
+            {
+                canvas.gameObject.SetActive(true);
+                LogDebug("Shown Canvas");
+            }
+        }
+        
+        /// <summary>
+        /// Start automatic generation mode for endless OSM levels
+        /// </summary>
+        private void StartAutoGenerateMode()
+        {
+            LogDebug("Starting auto-generate mode for endless levels");
+            
+            // Hide UI components for automatic mode
+            HideMapUI();
+            
+            // Get location index from PlayerPrefs
+            int locationIndex = PlayerPrefs.GetInt("OSMLocationIndex", 0);
+            
+            // Cycle through available addresses
+            if (endlessModeAddresses.Length == 0)
+            {
+                LogDebug("No endless mode addresses configured. Using default.");
+                LoadMapFromAddress(defaultAddress);
+                return;
+            }
+            
+            // Use modulo to cycle through addresses infinitely
+            string selectedAddress = endlessModeAddresses[locationIndex % endlessModeAddresses.Length];
+            
+            UpdateStatus($"🔄 Endless Mode Level {locationIndex + 1}: Loading {selectedAddress}...");
+            
+            // Auto-load the map
+            LoadMapFromAddress(selectedAddress);
+            
+            // Increment for next time
+            PlayerPrefs.SetInt("OSMLocationIndex", locationIndex + 1);
+        }
+        
+        // Public methods for external control
+        public void LoadLeipzigMap()
+        {
+            LoadMapFromAddress("Leipzig, Germany");
+        }
+        
+        public void LoadRandomMap()
+        {
+            string[] sampleAddresses = {
+                "Berlin, Germany",
+                "Munich, Germany", 
+                "Hamburg, Germany",
+                "Dresden, Germany",
+                "Leipzig, Germany"
+            };
+            
+            string randomAddress = sampleAddresses[Random.Range(0, sampleAddresses.Length)];
+            LoadMapFromAddress(randomAddress);
+        }
+        
+        public void ResetToDefault()
+        {
+            if (addressInputField)
+                addressInputField.text = defaultAddress;
+            UpdateStatus("Ready to load map. Enter address and click Load Map.");
+            ShowMapUI();
+        }
+        
+        public void ResetController()
+        {
+            // Reset the controller to default state
+            isLoading = false;
+            currentRetries = 0;
+            currentAddress = "";
+            
+            // Reset UI
+            if (addressInputField)
+                addressInputField.text = defaultAddress;
+                
+            SetLoadingState(false);
+            UpdateStatus("🔄 Controller reset. Ready to load map.");
+            
+            // Show UI if hidden
+            ShowMapUI();
+        }
+        
+        // Additional methods expected by other scripts (from remote)
+        public void LoadFallbackMap()
+        {
+            if (useLeipzigFallback)
+            {
+                LoadLeipzigMap();
+            }
+            else
+            {
+                StartCoroutine(LoadFallbackLevel());
+            }
+        }
+        
+        private void LogDebug(string message)
+        {
+            if (enableDebugLogging)
+            {
+                string modeIndicator = enableSimulationMode ? "[SIMULATION]" : "[REAL OSM]";
+                Debug.Log($"[MapStartupController] {modeIndicator} {message}");
+            }
+        }
+        
+        // Clean up event subscriptions
+        private void OnDestroy()
+        {
+            if (addressResolver != null)
+            {
+                addressResolver.OnMapDataLoaded -= OnMapDataLoaded;
+                addressResolver.OnError -= OnAddressResolverError;
+                addressResolver.OnMapLoadErrorEvent -= OnMapLoadError;
+            }
+            
+            if (mapGenerator != null)
+            {
+                mapGenerator.OnMapGenerationStarted -= OnMapGenerationStarted;
+                mapGenerator.OnMapGenerationCompleted -= OnMapGenerationCompleted;
+                mapGenerator.OnGenerationError -= OnMapGenerationError;
             }
         }
     }
-    
-    private void SetupPlayerStart()
-    {
-        PlayerController player = Object.FindFirstObjectByType<PlayerController>();
-        if (player)
-        {
-            player.transform.position = new Vector3(0, 2, 0);
-        }
-    }
-    
-    private IEnumerator LoadFallbackLevel()
-    {
-        UpdateStatus("🔄 Loading fallback level...");
-        
-        if (useLeipzigFallback)
-        {
-            yield return StartCoroutine(GenerateMapFromAddress("Leipzig, Germany"));
-        }
-        else if (fallbackLevelPrefab)
-        {
-            Instantiate(fallbackLevelPrefab);
-            UpdateStatus("📦 Fallback level loaded.");
-        }
-        else
-        {
-            CreateMinimalLevel();
-            UpdateStatus("⚡ Minimal level created.");
-        }
-    }
-    
-    private void SetLoadingState(bool loading)
-    {
-        if (loadingPanel)
-            loadingPanel.SetActive(loading);
-        
-        if (loadMapButton)
-            loadMapButton.interactable = !loading;
-        
-        if (addressInputField)
-            addressInputField.interactable = !loading;
-    }
-    
-    private void UpdateStatus(string message)
-    {
-        if (statusText)
-            statusText.text = message;
-        
-        Debug.Log($"[MapStartup] {message}");
-        OnStatusUpdate?.Invoke(message);
-    }
-    
-    private void HideMapUI()
-    {
-        // Hide the input UI after successful map generation
-        Canvas canvas = GetComponentInParent<Canvas>();
-        if (canvas)
-        {
-            canvas.gameObject.SetActive(false);
-        }
-    }
-    
-    // Public methods for external control
-    public void LoadLeipzigMap()
-    {
-        if (addressInputField)
-            addressInputField.text = "Leipzig, Germany";
-        LoadMapFromInput();
-    }
-    
-    public void LoadRandomMap()
-    {
-        string[] sampleAddresses = {
-            "Berlin, Germany",
-            "Munich, Germany", 
-            "Hamburg, Germany",
-            "Dresden, Germany",
-            "Leipzig, Germany"
-        };
-        
-        string randomAddress = sampleAddresses[Random.Range(0, sampleAddresses.Length)];
-        if (addressInputField)
-            addressInputField.text = randomAddress;
-        LoadMapFromInput();
-    }
-    
-    public void ResetToDefault()
-    {
-        if (addressInputField)
-            addressInputField.text = defaultAddress;
-        UpdateStatus("Ready to load map. Enter address and click Load Map.");
-    }
-    
-    // Additional methods expected by other scripts
-    public void LoadFallbackMap()
-    {
-        if (useLeipzigFallback)
-        {
-            LoadLeipzigMap();
-        }
-        else
-        {
-            StartCoroutine(LoadFallbackLevel());
-        }
-    }
-    
-    public void LoadMapFromAddress(string address)
-    {
-        if (addressInputField)
-            addressInputField.text = address;
-        LoadMapFromInput();
-    }
-    
-    public void LoadMapFromCoordinates(Vector2 coordinates)
-    {
-        StartCoroutine(CreateLevelFromCoordinates(coordinates));
-    }
-    
-    // Overload for LoadMapFromCoordinates with two parameters (lat, lon)
-    public void LoadMapFromCoordinates(float latitude, float longitude)
-    {
-        Vector2 coordinates = new Vector2(latitude, longitude);
-        LoadMapFromCoordinates(coordinates);
-    }
-    
-    public void RegenerateCurrentMap()
-    {
-        // Regenerate the current map with same settings
-        string currentAddress = addressInputField ? addressInputField.text : defaultAddress;
-        if (string.IsNullOrEmpty(currentAddress))
-            currentAddress = defaultAddress;
-            
-        UpdateStatus("🔄 Regenerating current map...");
-        StartCoroutine(LoadMapCoroutine(currentAddress));
-    }
-    
-    public void ResetController()
-    {
-        // Reset the controller to default state
-        isLoading = false;
-        currentRetries = 0;
-        
-        // Reset UI
-        if (addressInputField)
-            addressInputField.text = defaultAddress;
-            
-        SetLoadingState(false);
-        UpdateStatus("🔄 Controller reset. Ready to load map.");
-        
-        // Show UI if hidden
-        Canvas canvas = GetComponentInParent<Canvas>();
-        if (canvas && !canvas.gameObject.activeInHierarchy)
-        {
-            canvas.gameObject.SetActive(true);
-        }
-    }
-}
 }

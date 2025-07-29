@@ -248,7 +248,6 @@ public class SceneConsolidationEngine : MonoBehaviour
         LogRepair("🎮 Repairing Level1 - Tutorial Level");
         
         // Fix Level1-specific issues
-        // TODO-OPT#13: Repeated FindFirstObjectByType calls - create generic GetOrCreate<T>() helper
         var levelManager = FindFirstObjectByType<LevelManager>();
         if (levelManager != null)
         {

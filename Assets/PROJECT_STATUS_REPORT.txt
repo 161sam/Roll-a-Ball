@@ -1,5 +1,5 @@
 === ROLL-A-BALL PROJECT STATUS REPORT ===
-Generated: 26.07.2025 19:25:14
+Generated: 27.07.2025 19:30:59
 
 SCRIPT STATUS:
   ✓ LevelProfile.cs: Assets/Scripts/Generators/LevelProfile.cs
@@ -11,10 +11,15 @@ SCRIPTABLEOBJECT STATUS:
   ❌ Data: NOT FOUND at Assets/Data
 
 SCENE STATUS:
+  ✓ current: Assets/Scenes/current.unity
   ✓ GeneratedLevel: Assets/Scenes/GeneratedLevel.unity
+  ✓ GeneratedLevel_backup: Assets/Scenes/GeneratedLevel_backup.unity
   ✓ Level1: Assets/Scenes/Level1.unity
+  ✓ Level1_backup: Assets/Scenes/Level1_backup.unity
   ✓ Level2: Assets/Scenes/Level2.unity
+  ✓ Level2_backup: Assets/Scenes/Level2_backup.unity
   ✓ Level3: Assets/Scenes/Level3.unity
+  ✓ Level3_backup: Assets/Scenes/Level3_backup.unity
   ✓ Level_OSM: Assets/Scenes/Level_OSM.unity
-  ✓ Level_OSM_CORRUPT_BACKUP: Assets/Scenes/Level_OSM_CORRUPT_BACKUP.unity
+  ✓ Level_OSM_backup: Assets/Scenes/Level_OSM_backup.unity
   ✓ MiniGame: Assets/Scenes/MiniGame.unity

@@ -495,11 +495,9 @@ namespace RollABall.Map
             
             Transform collectibleContainer = new GameObject("Collectibles").transform;
             collectibleContainer.SetParent(mapContainer);
-
+            
             List<Vector3> collectiblePositions = GenerateCollectiblePositions();
-
-            // TODO-OPT#21: Object instantiation loop mirrors PlaceGoalZone - move to generic PlaceObjects()
-
+            
             for (int i = 0; i < collectiblePositions.Count; i++)
             {
                 GameObject collectible = Instantiate(collectiblePrefab, collectiblePositions[i], Quaternion.identity);
@@ -510,11 +508,29 @@ namespace RollABall.Map
                     yield return null;
             }
             
-            // Update UI if LevelManager exists
+            // Add collectibles to LevelManager for proper tracking
             LevelManager levelManager = FindFirstObjectByType<LevelManager>();
             if (levelManager != null)
             {
-                levelManager.UpdateCollectibleCount();
+                // Get all created collectibles and add them to LevelManager
+                CollectibleController[] collectibles = collectibleContainer.GetComponentsInChildren<CollectibleController>();
+                foreach (CollectibleController collectible in collectibles)
+                {
+                    if (collectible != null)
+                    {
+                        // Set proper tag for goal zone detection
+                        collectible.gameObject.tag = "Collectible";
+                        
+                        // Add to LevelManager for event tracking
+                        levelManager.AddCollectible(collectible);
+                    }
+                }
+                
+                Debug.Log($"[MapGenerator] Added {collectibles.Length} collectibles to LevelManager");
+            }
+            else
+            {
+                Debug.LogWarning("[MapGenerator] No LevelManager found in scene. Collectibles won't be tracked properly.");
             }
             
             yield return null;
@@ -537,6 +553,16 @@ namespace RollABall.Map
             GameObject goalZone = Instantiate(goalZonePrefab, goalPosition, Quaternion.identity);
             goalZone.transform.SetParent(mapContainer);
             goalZone.name = "GoalZone";
+            goalZone.tag = "Finish"; // Set proper tag for LevelManager detection
+            
+            // Add OSM Goal Zone Trigger for automatic level completion
+            OSMGoalZoneTrigger trigger = goalZone.GetComponent<OSMGoalZoneTrigger>();
+            if (trigger == null)
+            {
+                trigger = goalZone.AddComponent<OSMGoalZoneTrigger>();
+            }
+            
+            Debug.Log("[MapGenerator] Goal zone configured with trigger");
             
             yield return null;
         }

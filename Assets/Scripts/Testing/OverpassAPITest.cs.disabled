@@ -1,0 +1,178 @@
+using UnityEngine;
+using RollABall.Map;
+
+namespace RollABall.Testing
+{
+    public class OverpassAPITest : MonoBehaviour
+    {
+        [Header("Test Configuration")]
+        [SerializeField] private bool runTestsOnStart = true;
+        [SerializeField] private bool enableDetailedLogging = true;
+        
+        void Start()
+        {
+            if (runTestsOnStart)
+            {
+                RunAllTests();
+            }
+        }
+        
+        [ContextMenu("Run All Coordinate Tests")]
+        public void RunAllTests()
+        {
+            Debug.Log("=== STARTING OVERPASS API COORDINATE TESTS ===");
+            
+            TestNormalCoordinates();
+            TestNearPoles();
+            TestNearDateline();
+            TestInvalidCoordinates();
+            TestLargeRadius();
+            
+            Debug.Log("=== COORDINATE TESTS COMPLETED ===");
+        }
+        
+        void TestNormalCoordinates()
+        {
+            Debug.Log("--- Testing Normal Coordinates ---");
+            
+            TestCoordinate("Leipzig", 51.3387, 12.3779, 500.0f, true);
+            TestCoordinate("New York", 40.7128, -74.0060, 500.0f, true);
+            TestCoordinate("Sydney", -33.8688, 151.2093, 500.0f, true);
+            TestCoordinate("Tokyo", 35.6762, 139.6503, 500.0f, true);
+        }
+        
+        void TestNearPoles()
+        {
+            Debug.Log("--- Testing Near Poles ---");
+            
+            TestCoordinate("Near North Pole", 89.5, 0.0, 500.0f, true);
+            TestCoordinate("Near South Pole", -89.5, 0.0, 500.0f, true);
+            TestCoordinate("Very close to North Pole", 89.99, 0.0, 500.0f, true);
+        }
+        
+        void TestNearDateline()
+        {
+            Debug.Log("--- Testing Near Dateline ---");
+            
+            TestCoordinate("Near dateline east", 0.0, 179.5, 500.0f, true);
+            TestCoordinate("Near dateline west", 0.0, -179.5, 500.0f, true);
+            TestCoordinate("Very close to dateline", 0.0, 179.99, 500.0f, true);
+        }
+        
+        void TestInvalidCoordinates()
+        {
+            Debug.Log("--- Testing Invalid Coordinates ---");
+            
+            TestCoordinate("Invalid lat high", 95.0, 0.0, 500.0f, false);
+            TestCoordinate("Invalid lat low", -95.0, 0.0, 500.0f, false);
+            TestCoordinate("Invalid lon high", 0.0, 185.0, 500.0f, false);
+            TestCoordinate("Invalid lon low", 0.0, -185.0, 500.0f, false);
+        }
+        
+        void TestLargeRadius()
+        {
+            Debug.Log("--- Testing Large Radius ---");
+            
+            TestCoordinate("Large radius 10km", 51.3387, 12.3779, 10000.0f, true);
+            TestCoordinate("Extreme radius 50km", 51.3387, 12.3779, 50000.0f, true);
+            TestCoordinate("Massive radius 100km", 51.3387, 12.3779, 100000.0f, true);
+        }
+        
+        void TestCoordinate(string testName, double lat, double lon, float radius, bool shouldSucceed)
+        {
+            try
+            {
+                if (enableDetailedLogging)
+                {
+                    Debug.Log($"[Test] {testName}: lat={lat:F6}, lon={lon:F6}, radius={radius}m");
+                }
+                
+                bool isValid = CoordinateValidator.IsValidCoordinate(lat, lon);
+                
+                if (shouldSucceed && !isValid)
+                {
+                    Debug.LogError($"[Test FAILED] {testName}: Expected valid coordinates but validation failed");
+                    return;
+                }
+                else if (!shouldSucceed && isValid)
+                {
+                    Debug.LogWarning($"[Test WARNING] {testName}: Expected invalid coordinates but validation passed");
+                }
+                
+                if (isValid)
+                {
+                    OSMBounds bounds = CoordinateValidator.CalculateSafeBoundingBox(lat, lon, radius);
+                    
+                    if (bounds == null)
+                    {
+                        Debug.LogError($"[Test FAILED] {testName}: Bounding box calculation returned null");
+                        return;
+                    }
+                    
+                    bool boundsValid = CoordinateValidator.ValidateBoundingBox(bounds);
+                    
+                    if (!boundsValid)
+                    {
+                        Debug.LogError($"[Test FAILED] {testName}: Bounding box validation failed");
+                        return;
+                    }
+                    
+                    if (enableDetailedLogging)
+                    {
+                        Debug.Log($"[Test SUCCESS] {testName}: bounds lat[{bounds.minLat:F6}, {bounds.maxLat:F6}], lon[{bounds.minLon:F6}, {bounds.maxLon:F6}]");
+                    }
+                }
+                
+                Debug.Log($"[Test SUCCESS] {testName}: OK");
+            }
+            catch (System.Exception ex)
+            {
+                if (shouldSucceed)
+                {
+                    Debug.LogError($"[Test FAILED] {testName}: Exception thrown: {ex.Message}");
+                }
+                else
+                {
+                    Debug.Log($"[Test SUCCESS] {testName}: Expected exception caught: {ex.Message}");
+                }
+            }
+        }
+        
+        [ContextMenu("Test AddressResolver Settings")]
+        public void TestAddressResolverSettings()
+        {
+            AddressResolver resolver = FindFirstObjectByType<AddressResolver>();
+            if (resolver == null)
+            {
+                Debug.LogError("[Test] No AddressResolver found in scene");
+                return;
+            }
+            
+            Debug.Log("=== TESTING ADDRESSRESOLVER CONFIGURATION ===");
+            Debug.Log("=== ADDRESSRESOLVER CONFIGURATION TEST COMPLETE ===");
+        }
+        
+        [ContextMenu("Test Leipzig Address Loading")]
+        public void TestLeipzigAddressLoading()
+        {
+            AddressResolver resolver = FindFirstObjectByType<AddressResolver>();
+            if (resolver == null)
+            {
+                Debug.LogError("[Test] No AddressResolver found in scene");
+                return;
+            }
+            
+            Debug.Log("[Test] Starting Leipzig address loading test...");
+            
+            resolver.OnMapDataLoaded += (mapData) => {
+                Debug.Log($"[Test SUCCESS] Map data loaded: {mapData.roads.Count} roads, {mapData.buildings.Count} buildings");
+            };
+            
+            resolver.OnError += (error) => {
+                Debug.LogError($"[Test ERROR] Address resolution failed: {error}");
+            };
+            
+            resolver.ResolveAddressAndLoadMap("Leipzig, Germany");
+        }
+    }
+}

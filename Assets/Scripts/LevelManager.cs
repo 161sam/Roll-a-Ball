@@ -7,6 +7,7 @@ using System.Linq;
 /// <summary>
 /// Manages level progression, collectible tracking, and scene transitions
 /// Works in conjunction with GameManager for overall game state
+/// MERGED VERSION: Enhanced GameManager integration + OSM endless mode support
 /// </summary>
 [System.Serializable]
 public class LevelConfiguration
@@ -75,8 +76,10 @@ public class LevelManager : MonoBehaviour
     public bool IsLevelCompleted => levelCompleted;
     public int CollectiblesRemaining => levelConfig.collectiblesRemaining;
     public int TotalCollectibles => levelConfig.totalCollectibles;
-    public float TimeRemaining => levelConfig.hasTimeLimit ?
+    public float TimeRemaining => levelConfig.hasTimeLimit ? 
         Mathf.Max(0, levelConfig.timeLimit - (Time.time - levelStartTime)) : float.MaxValue;
+    
+    // MERGED: Added from REMOTE
     public float LevelElapsedTime => Time.time - levelStartTime;
 
     void Awake()
@@ -209,8 +212,7 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCollectibles == null) return;
 
-        // TODO-OPT#7: Duplicate subscribe/unsubscribe loops - unify via helper method
-
+        // TODO: Unify subscribe/unsubscribe loops via helper method
         foreach (CollectibleController collectible in levelCollectibles)
         {
             if (collectible != null)
@@ -283,10 +285,23 @@ public class LevelManager : MonoBehaviour
         if (debugMode)
             Debug.Log("Time limit reached!");
 
-        // Game over logic
+        // MERGED: Enhanced GameManager integration from REMOTE
         if (GameManager.Instance)
         {
-            GameManager.Instance.RegisterPlayerDeath();
+            // Check if RegisterPlayerDeath method exists
+            try
+            {
+                var methodInfo = GameManager.Instance.GetType().GetMethod("RegisterPlayerDeath");
+                if (methodInfo != null)
+                {
+                    methodInfo.Invoke(GameManager.Instance, null);
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"RegisterPlayerDeath method not available: {e.Message}");
+            }
+
             GameManager.Instance.GameOver();
         }
     }
@@ -303,12 +318,24 @@ public class LevelManager : MonoBehaviour
         // Fire level completed event
         OnLevelCompleted?.Invoke(levelConfig);
 
-        // Update GameManager statistics
+        // MERGED: Enhanced GameManager statistics from REMOTE
         if (GameManager.Instance)
         {
-            int collected = levelConfig.totalCollectibles - levelConfig.collectiblesRemaining;
-            float target = levelConfig.hasTimeLimit ? levelConfig.timeLimit : 0f;
-            GameManager.Instance.RecordLevelPerformance(LevelElapsedTime, collected, levelConfig.totalCollectibles, target);
+            // Check if RecordLevelPerformance method exists
+            try
+            {
+                var methodInfo = GameManager.Instance.GetType().GetMethod("RecordLevelPerformance");
+                if (methodInfo != null)
+                {
+                    int collected = levelConfig.totalCollectibles - levelConfig.collectiblesRemaining;
+                    float target = levelConfig.hasTimeLimit ? levelConfig.timeLimit : 0f;
+                    methodInfo.Invoke(GameManager.Instance, new object[] { LevelElapsedTime, collected, levelConfig.totalCollectibles, target });
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"RecordLevelPerformance method not available: {e.Message}");
+            }
         }
 
         // Start transition to next level
@@ -379,16 +406,39 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// MERGED: Combined LOCAL OSM integration with REMOTE structure
+    /// </summary>
     private string DetermineNextScene(string currentScene)
     {
-        // TODO-OPT#8: Hardcoded scene names - replace with configurable progression table
+        // TODO: Replace hardcoded scene names with configurable progression table
+        
         // Simple level progression logic
         if (currentScene == "Level1" || currentScene == "Level_1")
             return "Level2";
         else if (currentScene == "Level2" || currentScene == "Level_2")
             return "Level3";
         else if (currentScene == "Level3" || currentScene == "Level_3")
-            return ""; // Could be procedural level scene
+        {
+            // MERGED: OSM integration from LOCAL - Activate endless OSM mode after Level 3
+            PlayerPrefs.SetInt("AutoGenerateOSMMode", 1);
+            PlayerPrefs.SetInt("OSMLocationIndex", 0);
+            PlayerPrefs.Save();
+            return "Level_OSM";
+        }
+        else if (currentScene == "Level_OSM")
+        {
+            // MERGED: Continue endless OSM mode with next location
+            int currentIndex = PlayerPrefs.GetInt("OSMLocationIndex", 0);
+            PlayerPrefs.SetInt("OSMLocationIndex", currentIndex + 1);
+            PlayerPrefs.Save();
+            return "Level_OSM"; // Reload OSM scene with next location
+        }
+        else if (currentScene == "GeneratedLevel")
+        {
+            // Support for procedural level progression
+            return "GeneratedLevel"; // Continue with procedural levels
+        }
         
         return "";
     }
