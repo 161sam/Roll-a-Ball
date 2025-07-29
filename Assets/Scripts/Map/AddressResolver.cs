@@ -97,10 +97,12 @@ namespace RollABall.Map
         private IEnumerator ResolveAddressCoroutine(string address)
         {
             Debug.Log($"[AddressResolver] Resolving address: {address}");
-            
+
             // Build Nominatim search URL
             string encodedAddress = UnityWebRequest.EscapeURL(address);
             string geocodeUrl = $"{nominatimBaseUrl}/search?q={encodedAddress}&format=json&limit=1&addressdetails=1&extratags=1";
+
+            // TODO: Cache geocode responses to minimize network requests
             
             using (UnityWebRequest request = UnityWebRequest.Get(geocodeUrl))
             {

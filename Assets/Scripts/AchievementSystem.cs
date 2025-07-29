@@ -183,6 +183,7 @@ public class AchievementSystem : MonoBehaviour
     
     private void CreateDefaultAchievements()
     {
+        // TODO: Load achievement definitions from external config or ScriptableObject
         allAchievements.Clear();
         
         // General Achievements
@@ -291,7 +292,7 @@ public class AchievementSystem : MonoBehaviour
         }
         
         // Subscribe to player events
-        PlayerController player = FindFirstObjectByType<PlayerController>();
+        PlayerController player = FindFirstObjectByType<PlayerController>(); // TODO: Cache reference to avoid repeated searches
         if (player)
         {
             player.OnGroundedChanged += OnPlayerGrounded;
@@ -716,5 +717,6 @@ public class AchievementSystem : MonoBehaviour
     {
         // Save progress before destruction
         SaveAchievementProgress();
+        // TODO: Unsubscribe from game events to prevent memory leaks
     }
 }
