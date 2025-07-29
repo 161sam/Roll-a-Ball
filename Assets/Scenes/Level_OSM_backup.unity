@@ -696,7 +696,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278190080
   m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -800,6 +800,12 @@ MonoBehaviour:
   searchRadius: 500
   requestTimeout: 10
   userAgent: RollABallGame/1.0
+  enableFallbackMode: 1
+  fallbackLat: 52.5217
+  fallbackLon: 13.4132
+  useSimpleQuery: 0
+  useHardcodedCoordinates: 0
+  enableBoundingBoxValidation: 1
 --- !u!4 &751166860
 Transform:
   m_ObjectHideFlags: 0
@@ -1373,26 +1379,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5fd02cf7ea765c1191f7fc4136db631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addressResolver: {fileID: 0}
-  mapGenerator: {fileID: 0}
-  gameManager: {fileID: 0}
-  uiController: {fileID: 0}
-  addressInputPanel: {fileID: 0}
   addressInputField: {fileID: 0}
   loadMapButton: {fileID: 0}
   useCurrentLocationButton: {fileID: 0}
+  regenerateMapButton: {fileID: 0}
+  statusText: {fileID: 0}
   loadingPanel: {fileID: 0}
-  loadingText: {fileID: 0}
-  loadingProgressBar: {fileID: 0}
-  enableFallbackMode: 1
-  fallbackLat: 52.5217
-  fallbackLon: 13.4132
-  suggestedAddresses:
-  - Leipzig, Markt
-  - Berlin, Brandenburger Tor
-  - "M\xFCnchen, Marienplatz"
-  - Hamburg, Speicherstadt
-  - "K\xF6ln, Dom"
+  defaultAddress: Leipzig, Germany
+  maxRetries: 3
+  searchRadius: 500
+  endlessModeAddresses:
+  - Leipzig, Germany
+  - Berlin, Germany
+  - Munich, Germany
+  - Hamburg, Germany
+  - Dresden, Germany
+  - Cologne, Germany
+  - Frankfurt, Germany
+  - Stuttgart, Germany
+  enableDebugLogging: 1
 --- !u!4 &1293061194
 Transform:
   m_ObjectHideFlags: 0
@@ -1443,19 +1448,39 @@ MonoBehaviour:
   collectiblePrefab: {fileID: 0}
   goalZonePrefab: {fileID: 0}
   playerPrefab: {fileID: 0}
-  roadMaterial: {fileID: 0}
-  buildingMaterial: {fileID: 0}
+  roadMotorway: {fileID: 0}
+  roadPrimary: {fileID: 0}
+  roadSecondary: {fileID: 0}
+  roadResidential: {fileID: 0}
+  roadFootway: {fileID: 0}
+  roadDefault: {fileID: 0}
+  residentialMaterial: {fileID: 0}
+  industrialMaterial: {fileID: 0}
+  commercialMaterial: {fileID: 0}
+  officeMaterial: {fileID: 0}
+  defaultBuildingMaterial: {fileID: 0}
   parkMaterial: {fileID: 0}
   waterMaterial: {fileID: 0}
-  roadWidth: 2
+  forestMaterial: {fileID: 0}
+  grassMaterial: {fileID: 0}
+  defaultAreaMaterial: {fileID: 0}
+  gearPrefab: {fileID: 0}
+  steamPipePrefab: {fileID: 0}
+  chimneySmokeParticles: {fileID: 0}
+  roadHeightOffset: 0.05
+  enableRoadColliders: 1
+  enableFootwayColliders: 0
   buildingHeightMultiplier: 1
   collectiblesPerBuilding: 2
   enableSteampunkEffects: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+  minimumBuildingSize: 2
+  enablePolygonalBuildings: 1
   useBatching: 1
   maxBuildingsPerFrame: 5
+  maxRoadSegmentsPerFrame: 10
 --- !u!4 &1314939508
 Transform:
   m_ObjectHideFlags: 0
@@ -2260,19 +2285,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  autoFindPlayer: 1
   offset: {x: 0, y: 10, z: -15}
   followSpeed: 5
   rotationSpeed: 2
-  lookAtTarget: 1
-  lookOffset: {x: 0, y: 1, z: 0}
-  smoothMovement: 1
-  minDistance: 5
-  maxDistance: 30
-  shakeIntensity: 0
-  shakeDuration: 0
+  autoFindPlayer: 1
+  playerTag: Player
   minHeight: 2
   maxHeight: 50
+  logTargetSearch: 1
 --- !u!81 &2119801890
 AudioListener:
   m_ObjectHideFlags: 0

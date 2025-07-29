@@ -1,3 +1,10 @@
+# Presets
+PRESETS/*
+
+# Developer Scripts
+dev_scripts/
+_merge_backup/
+
 # Unity-spezifische Dateien
 [Ll]ibrary/
 [Tt]emp/
@@ -72,6 +79,11 @@ Desktop.ini
 *.tmp
 *.bak
 *~
+*.cs.deleted
+
+# Unity PRESETS
+Assets/PRESETS
+Assets/PRESETS.meta
 
 # Steampunk Roll-a-Ball spezifisch
 Assets/StreamingAssets/

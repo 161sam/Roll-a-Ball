@@ -1,2 +1,36 @@
 fileFormatVersion: 2
 guid: 9d1dd361114a6b555815b7a83157b640
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - roadPrefab: {instanceID: 0}
+  - buildingPrefab: {instanceID: 0}
+  - areaPrefab: {instanceID: 0}
+  - collectiblePrefab: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  - goalZonePrefab: {fileID: 7897462713699335167, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
+  - playerPrefab: {fileID: 7963736951585476877, guid: 45ef084dc624dcdf0b08ad52e8c34b92, type: 3}
+  - roadMotorway: {instanceID: 0}
+  - roadPrimary: {instanceID: 0}
+  - roadSecondary: {instanceID: 0}
+  - roadResidential: {instanceID: 0}
+  - roadFootway: {instanceID: 0}
+  - roadDefault: {instanceID: 0}
+  - residentialMaterial: {instanceID: 0}
+  - industrialMaterial: {fileID: 2100000, guid: 9d94301077be57007978237a9b3f4ca8, type: 2}
+  - commercialMaterial: {fileID: 2100000, guid: abae30f0b7bf2767ebc03caf139e72e2, type: 2}
+  - officeMaterial: {fileID: 2100000, guid: 1f5a9a5b059c4b9c2b5baebaec94700b, type: 2}
+  - defaultBuildingMaterial: {fileID: 2100000, guid: fe0765ff6ae1a7d2691fc3f0351e9cc6, type: 2}
+  - parkMaterial: {fileID: 2100000, guid: 2cf8bcb24925fbf90a9d7ab98827043d, type: 2}
+  - waterMaterial: {fileID: 2100000, guid: c0469fa0117670326a30f50468033506, type: 2}
+  - forestMaterial: {instanceID: 0}
+  - grassMaterial: {fileID: 2100000, guid: 700158700e4398340be1a92aa014ec3a, type: 2}
+  - defaultAreaMaterial: {instanceID: 0}
+  - gearPrefab: {fileID: 5191641052108453737, guid: f1e354de9339d69b9822d5fe795813c2, type: 3}
+  - steamPipePrefab: {fileID: 204152376438273682, guid: 9f370bc3d0f7557eb94e697ff7604b9a, type: 3}
+  - chimneySmokeParticles: {fileID: 6977259782711295693, guid: d6504bef7b0277e34a108f8b00fb234b, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

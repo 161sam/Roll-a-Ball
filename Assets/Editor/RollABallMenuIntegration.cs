@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 /// Unity Editor Menu Integration for Roll-a-Ball Fix Tools
 /// Provides easy access to all repair functions via Unity menu
 /// </summary>
-// TODO-DUPLICATE#3: Funktional identisch mit CleanRollABallMenu.cs und RollABallControlPanelRestorer.cs. Bitte vereinheitlichen oder entfernen.
 public class RollABallMenuIntegration : EditorWindow
 {
     private Vector2 scrollPosition;

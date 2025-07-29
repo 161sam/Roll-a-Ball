@@ -6,7 +6,6 @@ using System.IO;
 
 namespace RollABall.Editor
 {
-    // TODO-DUPLICATE#3: Funktional identisch mit CleanRollABallMenu.cs und RollABallMenuIntegration.cs. Bitte vereinheitlichen oder entfernen.
     public class RollABallControlPanelRestorer : EditorWindow
     {
         private Vector2 scrollPosition;

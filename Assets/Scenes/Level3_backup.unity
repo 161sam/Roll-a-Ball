@@ -171,16 +171,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 82958053}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &82958051 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 82958050}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &82958052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 82958050}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &82958053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82958052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &88520226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -659,16 +706,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 636404512}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &636404510 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 636404509}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &636404511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 636404509}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &636404512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636404511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &848418782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -721,16 +815,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 848418785}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &848418783 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 848418782}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &848418784 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 848418782}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &848418785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848418784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1208728555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -783,16 +924,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1208728558}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &1208728556 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 1208728555}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1208728557 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 1208728555}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1208728558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208728557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1260366143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -845,16 +1033,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1260366146}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &1260366144 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 1260366143}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1260366145 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 1260366143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1260366146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260366145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1270618182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -907,16 +1142,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1270618185}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &1270618183 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 1270618182}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1270618184 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 1270618182}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1270618185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270618184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1276813527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,16 +1423,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1296304529}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &1296304527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 1296304526}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1296304528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 1296304526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1296304529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296304528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1346038657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,6 +1732,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8554796287664602159, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1465,16 +1798,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1504744997}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &1504744995 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 1504744994}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1504744996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 1504744994}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1504744997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504744996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1585260089
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1676,16 +2056,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1815488162}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &1815488160 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 1815488159}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1815488161 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 1815488159}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1815488162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815488161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1816709725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1905,16 +2332,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1859081808}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &1859081806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 1859081805}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1859081807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 1859081805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1859081808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859081807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1866135756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2033,16 +2507,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1909922018}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &1909922016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 1909922015}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1909922017 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 1909922015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1909922018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909922017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2020423727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2235,16 +2756,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2065405636}
   m_SourcePrefab: {fileID: 100100000, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
 --- !u!4 &2065405634 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 2065405633}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2065405635 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  m_PrefabInstance: {fileID: 2065405633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2065405636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065405635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleData:
+    itemName: Collectible
+    itemType: standard
+    pointValue: 1
+    isCollected: 0
+    rotateObject: 1
+    rotationSpeed: 90
+    enablePulseEffect: 1
+    pulseIntensity: 0.1
+    pulseSpeed: 2
+    collectSound: {fileID: 0}
+    soundVolume: 1
+  renderers: []
+  collectEffect: {fileID: 0}
+  itemLight: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  autoSetupCollider: 1
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCollectedWithData:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2068996436
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2379,19 +2947,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1496142297}
-  autoFindPlayer: 1
   offset: {x: 0, y: 10, z: -15}
   followSpeed: 5
   rotationSpeed: 2
-  lookAtTarget: 1
-  lookOffset: {x: 0, y: 1, z: 0}
-  smoothMovement: 1
-  minDistance: 5
-  maxDistance: 30
-  shakeIntensity: 0
-  shakeDuration: 0
+  autoFindPlayer: 1
+  playerTag: Player
   minHeight: 2
   maxHeight: 50
+  logTargetSearch: 1
 --- !u!81 &2120372088
 AudioListener:
   m_ObjectHideFlags: 0

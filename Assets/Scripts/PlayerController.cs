@@ -157,7 +157,6 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInput()
     {
-        // TODO-OPT#16: Input handling duplicated across components - centralize via InputManager
         // Movement input (WASD / Arrow Keys) - LEGACY INPUT
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -445,8 +444,7 @@ public class PlayerController : MonoBehaviour
     public void ResetBall()
     {
         if (!rb) return;
-
-        // TODO-OPT#20: Velocity zeroing duplicated here and in SetPosition - create helper ResetRigidbodyVelocity(rb)
+        
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         flyEnergy = maxFlyEnergy;
@@ -468,7 +466,6 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
         if (rb)
         {
-            // TODO-OPT#20: Use shared velocity reset helper
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }

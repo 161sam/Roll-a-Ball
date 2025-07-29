@@ -530,7 +530,7 @@ namespace RollABall.Editor
             
             Debug.Log("🎯 Testing fallback location (Leipzig, Markt)");
             // Trigger fallback location loading
-            mapController.LoadFallbackMap();
+            mapController.LoadLeipzigMap(); // Fixed: was LoadFallbackMap()
         }
         
         private void TestNominatimAPI()

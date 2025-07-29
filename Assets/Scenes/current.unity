@@ -1603,6 +1603,9 @@ MonoBehaviour:
   enableFallbackMode: 1
   fallbackLat: 52.5217
   fallbackLon: 13.4132
+  useSimpleQuery: 0
+  useHardcodedCoordinates: 0
+  enableBoundingBoxValidation: 1
 --- !u!4 &751166860
 Transform:
   m_ObjectHideFlags: 0
@@ -2207,6 +2210,10 @@ PrefabInstance:
     - target: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433723627022814060, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7750,12 +7757,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   addressInputField: {fileID: 1150583344}
   loadMapButton: {fileID: 140337182}
+  useCurrentLocationButton: {fileID: 0}
+  regenerateMapButton: {fileID: 0}
   statusText: {fileID: 0}
   loadingPanel: {fileID: 506144756}
   defaultAddress: Leipzig, Germany
   maxRetries: 3
-  fallbackLevelPrefab: {fileID: 0}
-  useLeipzigFallback: 1
+  searchRadius: 500
+  endlessModeAddresses:
+  - Leipzig, Germany
+  - Berlin, Germany
+  - Munich, Germany
+  - Hamburg, Germany
+  - Dresden, Germany
+  - Cologne, Germany
+  - Frankfurt, Germany
+  - Stuttgart, Germany
+  enableDebugLogging: 1
 --- !u!4 &1293061194
 Transform:
   m_ObjectHideFlags: 0
@@ -7819,6 +7837,9 @@ MonoBehaviour:
   defaultBuildingMaterial: {fileID: 0}
   parkMaterial: {fileID: 0}
   waterMaterial: {fileID: 0}
+  forestMaterial: {fileID: 0}
+  grassMaterial: {fileID: 0}
+  defaultAreaMaterial: {fileID: 0}
   gearPrefab: {fileID: 0}
   steamPipePrefab: {fileID: 0}
   chimneySmokeParticles: {fileID: 0}

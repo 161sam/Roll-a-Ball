@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a407cdca606537e9eb77f8a0bc4e4c71, type: 3}
   m_Name: MediumProfile
   m_EditorClassIdentifier: 
-  profileName: MediumProfile Profile
+  profileName: Medium Profile
   displayName: Mittel
   difficultyLevel: 2
   themeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -24,7 +24,7 @@ MonoBehaviour:
   collectibleSpawnHeight: 0.5
   obstacleDensity: 0.25
   enableMovingObstacles: 0
-  movingObstacleChance: 0
+  movingObstacleChance: 0.05
   enableRotatingObstacles: 1
   rotatingObstacleDensity: 0.08
   enableMovingPlatforms: 1

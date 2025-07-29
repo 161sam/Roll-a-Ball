@@ -1,8 +1,8 @@
 # 🎱 Roll-a-Ball: Steampunk Collector
 
-Ein Open-Source 3D-Spiel entwickelt in Unity 6.1 mit prozedural generierten Leveln, steampunk-inspiriertem Design und wachsendem Schwierigkeitsgrad. Der Spieler steuert eine Kugel durch atmosphärische Steampunk-Welten, sammelt Fundstücke ein und meistert komplexe Level.
+Ein Open-Source 3D-Spiel entwickelt in Unity 6.0 mit prozedural generierten Leveln, steampunk-inspiriertem Design und wachsendem Schwierigkeitsgrad. Der Spieler steuert eine Kugel durch atmosphärische Steampunk-Welten, sammelt Fundstücke ein und meistert komplexe Level.
 
-![Unity Version](https://img.shields.io/badge/Unity-6.1%2B-000000?logo=unity)
+![Unity Version](https://img.shields.io/badge/Unity-6.0%2B-000000?logo=unity)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)
 
@@ -41,7 +41,7 @@ Ein Open-Source 3D-Spiel entwickelt in Unity 6.1 mit prozedural generierten Leve
 git clone https://github.com/161sam/Roll-a-Ball.git
 cd Roll-a-Ball
 
-# Unity 6.1 öffnen und Projekt laden
+# Unity 6.0 öffnen und Projekt laden
 # Szene "GeneratedLevel" → Play ▶️
 ```
 
@@ -306,7 +306,7 @@ public float CalculateDifficultyScore()
 | 16x16 (Hard) | 60-90 | 0.7-1.5s | ~40 MB |
 
 ### **Systemanforderungen**
-- **Minimum**: Unity 6.1, 4GB RAM, DirectX 11
+- **Minimum**: Unity 6.0, 4GB RAM, DirectX 11
 - **Empfohlen**: 8GB RAM, dedizierte GPU
 - **Plattformen**: Windows, Linux, macOS, Android
 
@@ -373,7 +373,7 @@ Beiträge sind willkommen!
 ## 👥 **Team & Credits**
 
 **Lead Developer**: [161sam](https://github.com/161sam)  
-**Engine**: Unity 6.1  
+**Engine**: Unity 6.0  
 **Development Timeline**: 2024-2025  
 **Current Status**: Phase 3 Complete - Steampunk Features Fully Implemented
 
@@ -401,7 +401,7 @@ Beiträge sind willkommen!
 - **✅ 3 Level mit steigender Schwierigkeit**: Funktional + prozedural erweitert
 - **✅ Steampunk-Thema**: Umfassend umgesetzt mit 4 neuen Komponenten
 - **✅ Prozedurale Generierung**: Erweitert über ursprüngliche Anforderungen hinaus
-- **✅ Unity 6.1 Kompatibilität**: Vollständig getestet und optimiert
+- **✅ Unity 6.0 Kompatibilität**: Vollständig getestet und optimiert
 - **✅ Vollständige Dokumentation**: README, Code-Kommentare, API-Docs
 
 ### **🚀 Zusätzlich Implementiert** (Über Anforderungen hinaus)
@@ -416,7 +416,7 @@ Beiträge sind willkommen!
 
 <p align="center">
   <strong>🎱 Roll into the Steampunk Adventure! ⚙️</strong><br>
-  <em>Phase 3 Complete - Built with ❤️ in Unity 6.1</em><br><br>
+  <em>Phase 3 Complete - Built with ❤️ in Unity 6.0</em><br><br>
   <img src="https://img.shields.io/badge/Status-Phase%203%20Complete-brightgreen" alt="Status">
   <img src="https://img.shields.io/badge/Steampunk%20Features-4%20Components-orange" alt="Features">
   <img src="https://img.shields.io/badge/Ready%20For-Phase%204%20OSM-blue" alt="Next Phase">
