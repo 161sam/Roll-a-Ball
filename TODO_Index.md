@@ -27,4 +27,12 @@
 | TODO-OPT#23 | Assets/Scripts/Map/MapStartupController.cs | InitializeUI(), Zeile 52 | Find-or-create Logik mit OSMUIConnector teilen |
 | TODO-OPT#24 | Assets/Scripts/Map/OSMSceneCompleter.cs | SetupUIComponents(), Zeile 67 | UI-Setup-Methoden mit generischen Buildern vereinheitlichen |
 | TODO-OPT#25 | Assets/Editor/ProjectCleanupAndFix.cs | CreateProperLevelProfiles(), Zeile 100 | Wiederholte Folder-Checks in Hilfsmethode auslagern |
+| TODO-OPT#26 | Assets/Scripts/LevelManager.cs | OnDestroy(), Zeile 116 | Events vor Zerstörung abmelden |
+| TODO-OPT#27 | Assets/Scripts/Map/MapGenerator.cs | CreateSteamEmitter(), Zeile 1565 | SteamEmitter-Pooling einführen |
+| TODO-OPT#28 | Assets/Scripts/PlayerController.cs | CheckGrounded(), Zeile 206 | LayerMask-Abfrage cachen oder CharacterController nutzen |
+| TODO-OPT#29 | Assets/Scripts/PlayerController.cs | SlideRoutine(), Zeile 427 | Slide-Impulse konfigurierbar machen |
+| TODO-OPT#30 | Assets/Scripts/OSMGoalZoneTrigger.cs | SetupGoalZone(), Zeile 40 | Fallback bei fehlendem LevelManager einbauen |
+| TODO-OPT#31 | Assets/Scripts/Map/MapStartupController.cs | GetCoordsFromAddress(), Zeile 403 | Geocoding-Service integrieren |
+| TODO-OPT#32 | Assets/Scripts/Map/MapGeneratorBatched.cs | CreateSeparateColliders(), Zeile 548 | Collider-Pooling zur GC-Reduktion |
+| TODO-OPT#33 | Assets/Scripts/SaveSystem.cs | SaveEncrypted()/SaveUnencrypted(), Zeile 360/348 | Async File IO verwenden |
 

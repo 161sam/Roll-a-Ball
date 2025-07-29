@@ -545,7 +545,9 @@ namespace RollABall.Map
         private IEnumerator CreateSeparateColliders()
         {
             Debug.Log("[MapGeneratorBatched] Creating separate colliders...");
-            
+
+            // TODO: Reuse collider objects via pooling to reduce GC pressure
+
             int colliderCount = 0;
             
             // Create road colliders
