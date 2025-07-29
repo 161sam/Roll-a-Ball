@@ -198,7 +198,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 92568890}
-  - component: {fileID: 92568891}
   m_Layer: 0
   m_Name: Collectible
   m_TagString: Collectible
@@ -226,41 +225,6 @@ Transform:
   - {fileID: 405430383}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &92568891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 92568889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collectibleData:
-    itemName: Collectible
-    itemType: standard
-    pointValue: 1
-    isCollected: 0
-    rotateObject: 1
-    rotationSpeed: 90
-    enablePulseEffect: 1
-    pulseIntensity: 0.1
-    pulseSpeed: 2
-    collectSound: {fileID: 0}
-    soundVolume: 1
-  renderers: []
-  collectEffect: {fileID: 0}
-  itemLight: {fileID: 0}
-  triggerCollider: {fileID: 0}
-  autoSetupCollider: 1
-  OnCollected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCollectedWithData:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &93226910
 GameObject:
   m_ObjectHideFlags: 0
