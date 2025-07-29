@@ -118,6 +118,7 @@ namespace RollABall.Map
             LogDebug("Initializing UI components...");
             
             // Auto-find UI components if not assigned
+            // TODO: Avoid expensive FindFirstObject calls by exposing references in the scene
             if (!addressInputField)
                 addressInputField = FindFirstObjectByType<TMP_InputField>();
             
@@ -400,6 +401,7 @@ namespace RollABall.Map
         private Vector2 GetCoordsFromAddress(string address)
         {
             // Placeholder: In real implementation, this would use Nominatim or similar geocoding API
+            // TODO: Replace with proper geocoding service
             // For now, return Leipzig coordinates as fallback
             return leipzigCoords;
         }

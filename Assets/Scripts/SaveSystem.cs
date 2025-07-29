@@ -346,6 +346,7 @@ public class SaveSystem : MonoBehaviour
     {
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(filePath, json);
+        // TODO: Use async file IO to prevent frame spikes on save
     }
     
     private SaveData LoadUnencrypted(string filePath)
@@ -359,6 +360,7 @@ public class SaveSystem : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
         string encrypted = EncryptString(json, encryptionKey);
         File.WriteAllText(filePath, encrypted);
+        // TODO: Use async file IO to prevent frame spikes on save
     }
     
     private SaveData LoadEncrypted(string filePath)

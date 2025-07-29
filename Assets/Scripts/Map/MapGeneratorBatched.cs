@@ -59,6 +59,7 @@ namespace RollABall.Map
         
         [Header("Building Generation Settings")]
         [SerializeField] private float buildingHeightMultiplier = 1.0f;
+        // TODO: Support per-building height variation based on OSM tags
         [SerializeField] private int collectiblesPerBuilding = 2;
         [SerializeField] private bool enableSteampunkEffects = true;
         [SerializeField] private LayerMask groundLayer = 1;
@@ -465,6 +466,7 @@ namespace RollABall.Map
         private IEnumerator ApplyMeshBatching()
         {
             Debug.Log("[MapGeneratorBatched] Applying mesh batching...");
+            // TODO: Consider performing batching in a job to avoid frame hitches
             
             // Batch roads by material
             yield return StartCoroutine(BatchMeshesByMaterial(roadMeshesByMaterial, batchedRoadsContainer, GetRoadMaterial, "AllRoads"));
@@ -543,7 +545,9 @@ namespace RollABall.Map
         private IEnumerator CreateSeparateColliders()
         {
             Debug.Log("[MapGeneratorBatched] Creating separate colliders...");
-            
+
+            // TODO: Reuse collider objects via pooling to reduce GC pressure
+
             int colliderCount = 0;
             
             // Create road colliders

@@ -106,6 +106,7 @@ namespace RollABall.Map
 
         private void SetupMapController()
         {
+            // TODO: Cache controller references instead of recreating them
             mapController = FindFirstObjectByType<MapStartupController>();
             if (!mapController)
             {
@@ -416,6 +417,7 @@ namespace RollABall.Map
         private void CreateQuickAccessButtons()
         {
             Log("Creating quick access buttons...");
+            // TODO: Use prefabs for quick buttons instead of runtime geometry
             
             Canvas canvas = FindFirstObjectByType<Canvas>();
             if (!canvas || defaultAddresses.Length == 0) return;
