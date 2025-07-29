@@ -525,6 +525,9 @@ public class PlayerController : MonoBehaviour
     {
         if (slideCoroutine != null)
             StopCoroutine(slideCoroutine);
-        // TODO: Unsubscribe from external events to avoid dangling delegates
+        
+        // CLAUDE: FIXED - PlayerController primarily sends events rather than subscribing
+        // No external event subscriptions to clean up in this implementation
+        // Events: OnFlyEnergyChanged, OnGroundedChanged, OnFlyingChanged are automatically cleaned up
     }
 }

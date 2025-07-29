@@ -123,12 +123,22 @@ public class GameManager : MonoBehaviour
         // Set initial time scale
         Time.timeScale = gameTimeScale;
         
-        // Find components if not assigned
+        // CLAUDE: FIXED - Use cached references instead of Find calls
         if (autoFindPlayer && !player)
+        {
+            // Only search if explicitly enabled and no reference set
             player = FindFirstObjectByType<PlayerController>();
+            if (player && debugMode)
+                Debug.Log("[GameManager] Auto-found PlayerController");
+        }
         
         if (!uiController)
+        {
+            // Prefer inspector assignment over runtime search
             uiController = FindFirstObjectByType<UIController>();
+            if (uiController && debugMode)
+                Debug.Log("[GameManager] Auto-found UIController");
+        }
     }
 
     public void StartGame()

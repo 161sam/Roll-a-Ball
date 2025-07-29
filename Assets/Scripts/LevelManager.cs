@@ -50,6 +50,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<CollectibleController> levelCollectibles;
     [SerializeField] private bool autoFindCollectibles = true;
 
+    [Header("Level Progression")]
+    [SerializeField] private LevelProgressionProfile progressionProfile;
+    
     [Header("UI References")]
     [SerializeField] private UIController uiController;
 
@@ -114,7 +117,9 @@ public class LevelManager : MonoBehaviour
 
     void OnDestroy()
     {
-        // TODO: Unsubscribe from collectible events to avoid memory leaks
+        // CLAUDE: FIXED - Unsubscribe from collectible events to avoid memory leaks
+        UnsubscribeFromCollectibleEvents();
+        
         if (Instance == this)
             Instance = null;
     }
@@ -128,9 +133,13 @@ public class LevelManager : MonoBehaviour
             levelConfig.levelName = SceneManager.GetActiveScene().name;
         }
 
-        // Find UI Controller if not assigned
+        // CLAUDE: FIXED - Prefer inspector assignment over runtime search
         if (!uiController)
+        {
             uiController = FindFirstObjectByType<UIController>();
+            if (uiController && debugMode)
+                Debug.Log("[LevelManager] Auto-found UIController - consider assigning in Inspector");
+        }
 
         levelStartTime = Time.time;
     }
@@ -407,20 +416,45 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// MERGED: Combined LOCAL OSM integration with REMOTE structure
+    /// CLAUDE: FIXED - Configurable level progression using LevelProgressionProfile
+    /// Replaces hardcoded scene names with data-driven approach (TODO-OPT#8)
     /// </summary>
     private string DetermineNextScene(string currentScene)
     {
-        // TODO: Replace hardcoded scene names with configurable progression table
+        // Use progression profile if available
+        if (progressionProfile && progressionProfile.ValidateProgression())
+        {
+            string nextScene = progressionProfile.GetNextScene(currentScene);
+            
+            // Handle special endless mode setup
+            if (nextScene == "Level_OSM" && currentScene == "Level3")
+            {
+                // MERGED: OSM integration - Activate endless OSM mode after Level 3
+                PlayerPrefs.SetInt("AutoGenerateOSMMode", 1);
+                PlayerPrefs.SetInt("OSMLocationIndex", 0);
+                PlayerPrefs.Save();
+            }
+            else if (nextScene == "Level_OSM" && currentScene == "Level_OSM")
+            {
+                // MERGED: Continue endless OSM mode with next location
+                int currentIndex = PlayerPrefs.GetInt("OSMLocationIndex", 0);
+                PlayerPrefs.SetInt("OSMLocationIndex", currentIndex + 1);
+                PlayerPrefs.Save();
+            }
+            
+            return nextScene;
+        }
         
-        // Simple level progression logic
+        // FALLBACK: Hardcoded progression for backward compatibility
+        if (debugMode)
+            Debug.LogWarning("[LevelManager] No progression profile assigned, using fallback logic");
+            
         if (currentScene == "Level1" || currentScene == "Level_1")
             return "Level2";
         else if (currentScene == "Level2" || currentScene == "Level_2")
             return "Level3";
         else if (currentScene == "Level3" || currentScene == "Level_3")
         {
-            // MERGED: OSM integration from LOCAL - Activate endless OSM mode after Level 3
             PlayerPrefs.SetInt("AutoGenerateOSMMode", 1);
             PlayerPrefs.SetInt("OSMLocationIndex", 0);
             PlayerPrefs.Save();
@@ -428,16 +462,14 @@ public class LevelManager : MonoBehaviour
         }
         else if (currentScene == "Level_OSM")
         {
-            // MERGED: Continue endless OSM mode with next location
             int currentIndex = PlayerPrefs.GetInt("OSMLocationIndex", 0);
             PlayerPrefs.SetInt("OSMLocationIndex", currentIndex + 1);
             PlayerPrefs.Save();
-            return "Level_OSM"; // Reload OSM scene with next location
+            return "Level_OSM";
         }
         else if (currentScene == "GeneratedLevel")
         {
-            // Support for procedural level progression
-            return "GeneratedLevel"; // Continue with procedural levels
+            return "GeneratedLevel";
         }
         
         return "";

@@ -980,7 +980,44 @@ public class UIController : MonoBehaviour
             ChangeUIState(UIState.MainMenu);
     }
 
-    // TODO: Implement OnDestroy to unsubscribe from all registered events
+    // CLAUDE: FIXED - Event cleanup to prevent memory leaks (TODO-OPT#63)
+    void OnDestroy()
+    {
+        // Stop notification coroutine if running
+        if (notificationCoroutine != null)
+        {
+            StopCoroutine(notificationCoroutine);
+            notificationCoroutine = null;
+        }
+        
+        // Unsubscribe from system events
+        if (SaveSystem.Instance)
+        {
+            SaveSystem.Instance.OnSaveLoaded -= OnSaveLoaded;
+            SaveSystem.Instance.OnSaveCompleted -= OnSaveCompleted;
+        }
+        
+        if (AchievementSystem.Instance)
+        {
+            AchievementSystem.Instance.OnAchievementUnlocked -= OnAchievementUnlocked;
+        }
+        
+        if (GameManager.Instance)
+        {
+            GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+            GameManager.Instance.OnStatisticsUpdated -= OnStatisticsUpdated;
+        }
+        
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.OnLevelCompleted -= OnLevelCompleted;
+            LevelManager.Instance.OnCollectibleCountChanged -= OnCollectibleCountChanged;
+        }
+        
+        // Clear UI item collections
+        saveSlotItems?.Clear();
+        achievementItems?.Clear();
+    }
 
     #endregion
 }
