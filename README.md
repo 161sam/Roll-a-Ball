@@ -8,7 +8,7 @@ Ein Open-Source 3D-Spiel entwickelt in Unity 6.0 mit prozedural generierten Leve
 
 ---
 
-## ✨ **Phase 3 - Steampunk-Erweiterungen KOMPLETT**
+## ✨ **Phase 3 - Steampunk-Erweiterungen STATUS: in Arbeit**
 
 ### 🆕 **Neue Steampunk-Features**
 - ✅ **Bewegliche Plattformen** (`MovingPlatform.cs`) - 4 Bewegungstypen mit Physik-Integration
@@ -273,7 +273,7 @@ public float CalculateDifficultyScore()
 
 ## 🚀 **Roadmap**
 
-### **✅ Phase 3 - Steampunk-Erweiterungen** (KOMPLETT)
+### **✅ Phase 3 - Steampunk-Erweiterungen** (STATUS: in Arbeit)
 - [x] Bewegliche Plattformen mit 4 Bewegungstypen
 - [x] Rotierende Hindernisse mit Physik-Interaktion
 - [x] Steam-Emitter System mit 6 Atmosphären-Typen
@@ -281,7 +281,7 @@ public float CalculateDifficultyScore()
 - [x] Erweiterte Level-Profile mit 15+ neuen Parametern
 - [x] Modulare Code-Architektur und Namespace-Organisation
 
-### **🔄 Phase 4 - OpenStreetMap-Integration** (Geplant)
+### **🔄 Phase 4 - OpenStreetMap-Integration** (STATUS: in Arbeit)
 - [ ] Reale Kartendaten als Level-Basis
 - [ ] Adress-basierte Level-Generierung  
 - [ ] Geografische Collectible-Platzierung
