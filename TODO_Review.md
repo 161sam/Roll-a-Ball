@@ -3,4 +3,4 @@ The following tasks from `TODO_Index.md` were not implemented due to missing fil
 
 - **TODO-OPT#2**: No obvious repeated prefab checks found; requires deeper refactor.
 - **TODO-OPT#8**: DetermineNextScene() uses hardcoded scene names. Implementing a configurable progression table would require additional data structures and is beyond current scope.
-- **TODO-OPT#10 - TODO-OPT#25**: Corresponding files or broader architecture changes are absent or complex. These items remain open for future work.
+- **TODO-OPT#10 - TODO-OPT#33**: Corresponding files or broader architecture changes are absent or complex. These items remain open for future work.

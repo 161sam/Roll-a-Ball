@@ -401,6 +401,7 @@ namespace RollABall.Map
         private Vector2 GetCoordsFromAddress(string address)
         {
             // Placeholder: In real implementation, this would use Nominatim or similar geocoding API
+            // TODO: Replace with proper geocoding service
             // For now, return Leipzig coordinates as fallback
             return leipzigCoords;
         }

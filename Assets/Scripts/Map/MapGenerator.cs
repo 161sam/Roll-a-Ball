@@ -1559,8 +1559,10 @@ namespace RollABall.Map
             var shape = particles.shape;
             shape.shapeType = ParticleSystemShapeType.Circle;
             shape.radius = 0.5f;
-            
+
             steamEmitter.transform.SetParent(mapContainer);
+
+            // TODO: Pool steam emitters to reduce allocations during regeneration
         }
         
         private IEnumerator ApplyMeshBatching()
