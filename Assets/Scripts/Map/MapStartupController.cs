@@ -266,6 +266,7 @@ namespace RollABall.Map
             if (enableSimulationMode)
             {
                 Vector2 coords = new Vector2(latitude, longitude);
+                // TODO: Cache generated maps to avoid repeated downloads
                 StartCoroutine(CreateLevelFromCoordinates(coords));
             }
             else

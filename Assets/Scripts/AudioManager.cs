@@ -93,6 +93,8 @@ public class AudioManager : MonoBehaviour
         availableSources = new Queue<AudioSource>();
         allSources = new List<AudioSource>();
 
+        // TODO: Preload sources asynchronously to reduce startup hiccups
+
         // Create main music source if not assigned
         if (!musicSource)
         {
