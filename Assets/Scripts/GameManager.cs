@@ -161,6 +161,7 @@ public class GameManager : MonoBehaviour
         player.OnFlyingChanged -= OnPlayerFlying;
     }
 
+    // TODO: Delegate input handling to a centralized InputManager for easier rebinding
     private void HandleInput()
     {
         if (Input.GetKeyDown(pauseKey))
@@ -171,6 +172,7 @@ public class GameManager : MonoBehaviour
                 PauseGame();
         }
 
+        // TODO: Expose restartKey in settings menu for player customization
         if (Input.GetKeyDown(restartKey) && (debugMode || currentState == GameState.GameOver))
         {
             RestartGame();
