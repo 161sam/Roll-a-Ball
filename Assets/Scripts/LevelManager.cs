@@ -114,6 +114,7 @@ public class LevelManager : MonoBehaviour
 
     void OnDestroy()
     {
+        // TODO: Unsubscribe from collectible events to avoid memory leaks
         if (Instance == this)
             Instance = null;
     }

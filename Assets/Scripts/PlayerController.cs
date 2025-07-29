@@ -203,6 +203,7 @@ public class PlayerController : MonoBehaviour
         // Check if ball is touching ground
         Vector3 center = transform.position;
         isGrounded = Physics.CheckSphere(center, groundCheckRadius, groundLayer);
+        // TODO: Cache layer mask query or use CharacterController for complex terrain
 
         // Alternative raycast method for more precise detection
         if (!isGrounded)
@@ -426,6 +427,7 @@ public class PlayerController : MonoBehaviour
         {
             slideDirection.y = 0f; // Keep slide horizontal
             rb.AddForce(slideDirection * moveForce * 0.8f, ForceMode.Impulse);
+            // TODO: Make slide impulse strength configurable
         }
 
         if (AudioManager.Instance != null)
