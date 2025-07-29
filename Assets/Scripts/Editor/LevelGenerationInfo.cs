@@ -2,6 +2,7 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using RollABall.Editor;
 #endif
 
 /// <summary>
@@ -70,13 +71,23 @@ public class LevelGenerationInfo
             "Abbrechen"))
         {
             // Schritt 1: Bereinige alle Szenen
-            SceneGeneratorCleaner.CleanAllScenes();
+            RollABall.Editor.ProjectCleanupAndFix.CompleteProjectCleanupAndFix();
             
             // Kurze Pause für Unity
             System.Threading.Thread.Sleep(500);
             
             // Schritt 2: Validiere aktuelle Szene
-            SceneGeneratorCleaner.ValidateCurrentLevelSetup();
+            UniversalSceneFixture fixture = Object.FindFirstObjectByType<UniversalSceneFixture>();
+            if (fixture == null)
+            {
+                GameObject fixtureGO = new GameObject("TempUniversalSceneFixture");
+                fixture = fixtureGO.AddComponent<UniversalSceneFixture>();
+            }
+            fixture.FixCurrentScene();
+            if (fixture.gameObject.name == "TempUniversalSceneFixture")
+            {
+                Object.DestroyImmediate(fixture.gameObject);
+            }
             
             // Schritt 3: Erfolgsmeldung
             EditorUtility.DisplayDialog(

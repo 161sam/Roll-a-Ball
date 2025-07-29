@@ -626,7 +626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &200102793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,7 +636,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 200102792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49503879836e5a55a988275bcf5d83eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 24dc9162df853ba5790bbc2abf3f139c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   autoFixOnStart: 1
@@ -792,7 +792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &339608151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -802,13 +802,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 339608150}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08c811373c76fb4b8b11ea6e14be021, type: 3}
+  m_Script: {fileID: 11500000, guid: ee0937edc10a8327daef47bab47a7540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoFixOnStart: 1
-  debugMode: 1
-  createMissingComponents: 1
-  runFixNow: 0
 --- !u!4 &339608152
 Transform:
   m_ObjectHideFlags: 0

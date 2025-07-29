@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
+using RollABall.Editor;
 
 /// <summary>
 /// Unity Editor Menu Integration for Roll-a-Ball Fix Tools
@@ -427,18 +428,33 @@ public class RollABallMenuIntegration : EditorWindow
     
     private void RemoveAllFixTools()
     {
-        AutoSceneSetup setup = Object.FindFirstObjectByType<AutoSceneSetup>();
-        if (!setup)
+        // Remove all fix tool components from the current scene
+        UniversalSceneFixture[] fixtures = Object.FindObjectsByType<UniversalSceneFixture>(FindObjectsSortMode.None);
+        foreach (var fixture in fixtures)
         {
-            GameObject setupGO = new GameObject("TempAutoSceneSetup");
-            setup = setupGO.AddComponent<AutoSceneSetup>();
+            Object.DestroyImmediate(fixture.gameObject);
         }
         
-        setup.RemoveAllFixToolsFromCurrentScene();
-        
-        if (setup.gameObject.name == "TempAutoSceneSetup")
+        // Remove any other fix tools
+        MasterFixTool[] masterFixTools = Object.FindObjectsByType<MasterFixTool>(FindObjectsSortMode.None);
+        foreach (var tool in masterFixTools)
         {
-            Object.DestroyImmediate(setup.gameObject);
+            if (tool.gameObject.name.Contains("Temp"))
+            {
+                Object.DestroyImmediate(tool.gameObject);
+            }
+        }
+        
+        CollectibleDiagnosticTool[] diagnosticTools = Object.FindObjectsByType<CollectibleDiagnosticTool>(FindObjectsSortMode.None);
+        foreach (var tool in diagnosticTools)
+        {
+            Object.DestroyImmediate(tool.gameObject);
+        }
+        
+        LevelProgressionFixer[] progressionFixers = Object.FindObjectsByType<LevelProgressionFixer>(FindObjectsSortMode.None);
+        foreach (var fixer in progressionFixers)
+        {
+            Object.DestroyImmediate(fixer.gameObject);
         }
         
         EditorUtility.DisplayDialog("Fix Tools Removed", "All fix tool components have been removed from the current scene.", "OK");
@@ -491,31 +507,38 @@ public class RollABallMenuItems
     // [MenuItem("Roll-a-Ball/Setup All Scenes")]  // DISABLED: Duplicate in CleanRollABallMenu.cs
     public static void SetupAllScenes()
     {
-        AutoSceneSetup.SetupAllScenesMenuItem();
+        RollABall.Editor.ProjectCleanupAndFix.CompleteProjectCleanupAndFix();
     }
     
     // [MenuItem("Roll-a-Ball/Setup Current Scene")]  // DISABLED: Duplicate in CleanRollABallMenu.cs
     public static void SetupCurrentScene()
     {
-        AutoSceneSetup.SetupCurrentSceneMenuItem();
+        RollABall.Editor.ProjectCleanupAndFix.FixCurrentSceneOnly();
     }
     
     // [MenuItem("Roll-a-Ball/Run Master Fix on Current Scene")]  // DISABLED: Duplicate in CleanRollABallMenu.cs
     public static void RunMasterFix()
     {
-        AutoSceneSetup.RunMasterFixMenuItem();
+        RollABall.Editor.ProjectCleanupAndFix.FixCurrentSceneOnly();
     }
     
     // [MenuItem("Roll-a-Ball/Setup Tags and Layers")]  // DISABLED: Duplicate in CleanRollABallMenu.cs
     public static void SetupTags()
     {
-        TagManager.SetupTagsMenuItem();
+        // TagManager functionality moved to ProjectCleanupAndFix
+        Debug.Log("Tags and layers are automatically set up during scene fixes.");
     }
     
     // [MenuItem("Roll-a-Ball/Remove All Fix Tools")]  // DISABLED: Duplicate in CleanRollABallMenu.cs
     public static void RemoveFixTools()
     {
-        AutoSceneSetup.RemoveAllFixToolsMenuItem();
+        // Remove fix tools from current scene
+        UniversalSceneFixture[] fixtures = Object.FindObjectsByType<UniversalSceneFixture>(FindObjectsSortMode.None);
+        foreach (var fixture in fixtures)
+        {
+            Object.DestroyImmediate(fixture.gameObject);
+        }
+        Debug.Log("Fix tools removed from current scene.");
     }
     
     [MenuItem("Roll-a-Ball/📖 Open Fix Guide")]

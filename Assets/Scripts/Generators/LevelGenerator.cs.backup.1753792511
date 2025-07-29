@@ -55,7 +55,7 @@ public class LevelGenerator : MonoBehaviour
     private List<Vector2Int> rotatingObstaclePlatforms;                 // Platforms with obstacles
     private List<Vector3> steamEmitterPositions;                        // Steam emitter placement
     private List<(Vector3 switchPos, Vector3 gatePos)> interactiveGatePairs; // GateTrigger connection
-    private int[,] caSeedGrid;                                          // Debug: CA seed grid (used for debugging cellular automata)
+    private int[,] caSeedGrid;                                          // Debug: CA seed grid
     private Vector2Int caStartCell;                                     // Debug: floodfill start
     private List<Vector2Int> caMainArea;                                // Debug: main walkable area
     private List<RectInt> openRooms;                                    // Hybrid rooms
@@ -263,7 +263,6 @@ public class LevelGenerator : MonoBehaviour
     /// <summary>
     /// Hauptroutine für die Levelgenerierung
     /// MERGED: Enhanced with additional steps from REMOTE
-    /// FIX: Restructured to avoid yield inside try-catch blocks
     /// </summary>
     private IEnumerator GenerateLevelCoroutine()
     {
@@ -279,7 +278,7 @@ public class LevelGenerator : MonoBehaviour
             yield break;
         }
 
-        // Event für Start der Generierung (ohne yield)
+        // Event für Start der Generierung
         try
         {
             OnLevelGenerationStarted?.Invoke(activeProfile);
@@ -289,7 +288,7 @@ public class LevelGenerator : MonoBehaviour
             Debug.LogError($"Error in OnLevelGenerationStarted event: {e.Message}");
         }
 
-        // Initialisierung (ohne yield)
+        // Initialisierung
         try
         {
             InitializeGeneration();
@@ -310,8 +309,15 @@ public class LevelGenerator : MonoBehaviour
             yield return StartCoroutine(InstantiateLevelObjects());
             yield return StartCoroutine(ApplyMaterialsAndEffects());
             
-            // MERGED: Additional step from REMOTE (moved outside try-catch)
-            yield return StartCoroutine(PlaceInteractiveElements());
+            // MERGED: Additional step from REMOTE
+            try
+            {
+                yield return StartCoroutine(PlaceInteractiveElements());
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"Interactive elements placement failed: {e.Message}");
+            }
         }
 
         // Post-processing ohne yield
@@ -331,12 +337,11 @@ public class LevelGenerator : MonoBehaviour
                 OnLevelGenerationCompleted?.Invoke(activeProfile);
 
                 // MERGED: Additional debug from REMOTE
-                // FIX: Replace FindObjectsOfType with FindObjectsByType
                 if (showGenerationDebug)
                 {
                     try
                     {
-                        var steamEmitters = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).Where(mb => mb.GetType().Name.Contains("SteamEmitterController"));
+                        var steamEmitters = FindObjectsOfType<MonoBehaviour>().Where(mb => mb.GetType().Name.Contains("SteamEmitterController"));
                         Debug.Log($"Steam emitters placed: {steamEmitters.Count()}");
                     }
                     catch (Exception e)
@@ -451,11 +456,6 @@ public class LevelGenerator : MonoBehaviour
         steamEmitterPositions = new List<Vector3>();
         interactiveGatePairs = new List<(Vector3 switchPos, Vector3 gatePos)>();
         openRooms = new List<RectInt>();
-
-        // FIX: Initialize caSeedGrid for debugging purposes
-        caSeedGrid = new int[size, size];
-        caMainArea = new List<Vector2Int>();
-        caStartCell = Vector2Int.zero;
 
         // MERGED: Sector-based material assignment from REMOTE
         useSectorMaterials = activeProfile.LevelSize >= 16;
@@ -1735,31 +1735,6 @@ public class LevelGenerator : MonoBehaviour
                 {
                     Gizmos.DrawLine(pair.switchPos + Vector3.up * 0.1f, pair.gatePos + Vector3.up * 0.1f);
                     Gizmos.DrawSphere(pair.switchPos + Vector3.up * 0.2f, tileSize * 0.15f);
-                }
-            }
-
-            // Debug: Visualize CA seed grid if enabled
-            if (caSeedGrid != null && showGenerationDebug)
-            {
-                Gizmos.color = caSeedColor;
-                for (int x = 0; x < size; x++)
-                {
-                    for (int z = 0; z < size; z++)
-                    {
-                        if (caSeedGrid[x, z] == 1)
-                        {
-                            Vector3 pos = new Vector3(x * tileSize, -0.1f, z * tileSize);
-                            Gizmos.DrawWireCube(pos, Vector3.one * tileSize * 0.2f);
-                        }
-                    }
-                }
-
-                // Debug: CA start cell
-                if (caStartCell != Vector2Int.zero)
-                {
-                    Vector3 startPos = new Vector3(caStartCell.x * tileSize, -0.2f, caStartCell.y * tileSize);
-                    Gizmos.color = caStartColor;
-                    Gizmos.DrawSphere(startPos, tileSize * 0.3f);
                 }
             }
         }
