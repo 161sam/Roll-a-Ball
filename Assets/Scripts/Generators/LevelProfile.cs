@@ -193,14 +193,14 @@ public class LevelProfile : ScriptableObject
         LevelProfile scaledProfile = Instantiate(this);
         
         scaledProfile.collectibleCount = Mathf.RoundToInt(collectibleCount * difficultyMultiplier);
-        scaledProfile.obstacleDensity = Mathf.Clamp01(obstacleDensity * difficultyMultiplier);
+        scaledProfile.obstacleDensity = Scale01(obstacleDensity, difficultyMultiplier);
         scaledProfile.levelSize = Mathf.RoundToInt(levelSize * Mathf.Sqrt(difficultyMultiplier));
-        scaledProfile.pathComplexity = Mathf.Clamp01(pathComplexity * difficultyMultiplier);
-        
+        scaledProfile.pathComplexity = Scale01(pathComplexity, difficultyMultiplier);
+
         // Steampunk-Features skalieren
-        scaledProfile.rotatingObstacleDensity = Mathf.Clamp01(rotatingObstacleDensity * difficultyMultiplier);
-        scaledProfile.movingPlatformDensity = Mathf.Clamp01(movingPlatformDensity * difficultyMultiplier);
-        scaledProfile.steamEmitterDensity = Mathf.Clamp01(steamEmitterDensity * difficultyMultiplier);
+        scaledProfile.rotatingObstacleDensity = Scale01(rotatingObstacleDensity, difficultyMultiplier);
+        scaledProfile.movingPlatformDensity = Scale01(movingPlatformDensity, difficultyMultiplier);
+        scaledProfile.steamEmitterDensity = Scale01(steamEmitterDensity, difficultyMultiplier);
         
         return scaledProfile;
     }
@@ -257,20 +257,30 @@ public class LevelProfile : ScriptableObject
         levelSize = Mathf.Max(5, levelSize);
         collectibleCount = Mathf.Max(1, collectibleCount);
         minCollectibleDistance = Mathf.Max(1, minCollectibleDistance);
-        obstacleDensity = Mathf.Clamp01(obstacleDensity);
-        frictionVariance = Mathf.Clamp01(frictionVariance);
-        slipperyTileChance = Mathf.Clamp01(slipperyTileChance);
-        movingObstacleChance = Mathf.Clamp01(movingObstacleChance);
-        pathComplexity = Mathf.Clamp01(pathComplexity);
+        Clamp01(ref obstacleDensity);
+        Clamp01(ref frictionVariance);
+        Clamp01(ref slipperyTileChance);
+        Clamp01(ref movingObstacleChance);
+        Clamp01(ref pathComplexity);
         minWalkableArea = Mathf.Clamp(minWalkableArea, 30, 95);
         spawnSafeRadius = Mathf.Max(1f, spawnSafeRadius);
-        
+
         // Steampunk-Features clampen
-        rotatingObstacleDensity = Mathf.Clamp01(rotatingObstacleDensity);
-        movingPlatformDensity = Mathf.Clamp01(movingPlatformDensity);
-        steamEmitterDensity = Mathf.Clamp01(steamEmitterDensity);
-        interactiveGateDensity = Mathf.Clamp01(interactiveGateDensity);
+        Clamp01(ref rotatingObstacleDensity);
+        Clamp01(ref movingPlatformDensity);
+        Clamp01(ref steamEmitterDensity);
+        Clamp01(ref interactiveGateDensity);
         ambientLightIntensity = Mathf.Max(0f, ambientLightIntensity);
+    }
+
+    private void Clamp01(ref float value)
+    {
+        value = Mathf.Clamp01(value);
+    }
+
+    private float Scale01(float value, float multiplier)
+    {
+        return Mathf.Clamp01(value * multiplier);
     }
 }
 

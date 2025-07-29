@@ -210,19 +210,15 @@ public class LevelManager : MonoBehaviour
 
     private void SubscribeToCollectibleEvents()
     {
-        if (levelCollectibles == null) return;
-
-        // TODO: Unify subscribe/unsubscribe loops via helper method
-        foreach (CollectibleController collectible in levelCollectibles)
-        {
-            if (collectible != null)
-            {
-                collectible.OnCollectiblePickedUp += OnCollectibleCollected;
-            }
-        }
+        ToggleCollectibleEvents(true);
     }
 
     private void UnsubscribeFromCollectibleEvents()
+    {
+        ToggleCollectibleEvents(false);
+    }
+
+    private void ToggleCollectibleEvents(bool subscribe)
     {
         if (levelCollectibles == null) return;
 
@@ -230,7 +226,10 @@ public class LevelManager : MonoBehaviour
         {
             if (collectible != null)
             {
-                collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
+                if (subscribe)
+                    collectible.OnCollectiblePickedUp += OnCollectibleCollected;
+                else
+                    collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
             }
         }
     }

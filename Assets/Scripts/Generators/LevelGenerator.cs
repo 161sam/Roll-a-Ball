@@ -108,7 +108,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 Debug.Log($"[LevelGenerator] Starte prozedurale Generierung in '{UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}'");
             }
-            StartCoroutine(GenerateLevelCoroutine());
+            GenerateLevel();
         }
     }
 
@@ -1281,26 +1281,7 @@ public class LevelGenerator : MonoBehaviour
         GameObject ground = CreateOrPoolObject(groundPrefab, position, Quaternion.identity, groundContainer);
         
         // MERGED: Sector-based or random material assignment
-        if (activeProfile.GroundMaterials != null && activeProfile.GroundMaterials.Length > 0)
-        {
-            Material material = null;
-            if (useSectorMaterials)
-            {
-                int sector = GetSector(gx, gz);
-                material = sectorGroundMaterials[sector];
-            }
-            else
-            {
-                material = activeProfile.GroundMaterials[random.Next(activeProfile.GroundMaterials.Length)];
-            }
-            
-            if (material)
-            {
-                Renderer renderer = ground.GetComponent<Renderer>();
-                if (renderer)
-                    renderer.material = material;
-            }
-        }
+        ApplyTileMaterial(ground, activeProfile.GroundMaterials, sectorGroundMaterials, gx, gz);
 
         // Apply slippery physics if enabled
         if (activeProfile.EnableSlipperyTiles && random.NextDouble() < activeProfile.SlipperyTileChance)
@@ -1318,26 +1299,7 @@ public class LevelGenerator : MonoBehaviour
         GameObject wall = CreateOrPoolObject(wallPrefab, position, Quaternion.identity, wallContainer);
         
         // MERGED: Sector-based or random material assignment
-        if (activeProfile.WallMaterials != null && activeProfile.WallMaterials.Length > 0)
-        {
-            Material material = null;
-            if (useSectorMaterials)
-            {
-                int sector = GetSector(gx, gz);
-                material = sectorWallMaterials[sector];
-            }
-            else
-            {
-                material = activeProfile.WallMaterials[random.Next(activeProfile.WallMaterials.Length)];
-            }
-            
-            if (material)
-            {
-                Renderer renderer = wall.GetComponent<Renderer>();
-                if (renderer)
-                    renderer.material = material;
-            }
-        }
+        ApplyTileMaterial(wall, activeProfile.WallMaterials, sectorWallMaterials, gx, gz);
     }
 
     private void CreateCollectible(Vector3 position)
@@ -1408,6 +1370,22 @@ public class LevelGenerator : MonoBehaviour
         if (top)
             return right ? 3 : 2;
         return right ? 1 : 0;
+    }
+
+    private void ApplyTileMaterial(GameObject obj, Material[] materials, Material[] sectorMaterials, int gx, int gz)
+    {
+        if (materials == null || materials.Length == 0) return;
+
+        Material material = useSectorMaterials
+            ? sectorMaterials[GetSector(gx, gz)]
+            : materials[random.Next(materials.Length)];
+
+        if (material)
+        {
+            Renderer renderer = obj.GetComponent<Renderer>();
+            if (renderer)
+                renderer.material = material;
+        }
     }
 
     #endregion
@@ -1561,11 +1539,7 @@ public class LevelGenerator : MonoBehaviour
                 
                 // Reset player velocity if it has a Rigidbody
                 Rigidbody rb = existingPlayer.GetComponent<Rigidbody>();
-                if (rb)
-                {
-                    rb.linearVelocity = Vector3.zero;
-                    rb.angularVelocity = Vector3.zero;
-                }
+                PhysicsUtils.ResetMotion(rb);
             }
             else
             {
