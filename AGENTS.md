@@ -153,7 +153,7 @@ MVP-Testszene mit PlayerController, KameraFollow und Physik erstellt
 Projektstruktur mit /Assets/Scenes, /Assets/Scripts, /Assets/Prefabs definiert
 
 
-🔹 Phase 2: 3-Level-Struktur mit Steampunk-Thema ✅ (abgeschlossen)
+🔹 Phase 2: 3-Level-Struktur mit Steampunk-Thema (in Umsetzung)
 
 🧩 Level1–3 mit zunehmender Schwierigkeit
 

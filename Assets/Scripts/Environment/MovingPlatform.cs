@@ -238,6 +238,7 @@ namespace RollABall.Environment
         /// </summary>
         private float BounceEaseOut(float t)
         {
+            // TODO: Replace hardcoded bounce factors with named constants
             if (t < (1f / 2.75f))
             {
                 return 7.5625f * t * t;
@@ -345,6 +346,7 @@ namespace RollABall.Environment
             if (other.CompareTag("Player"))
             {
                 other.transform.SetParent(transform);
+                // TODO: Handle players with character controllers to avoid parenting issues
             }
         }
         
