@@ -11,6 +11,7 @@ public class RotatingObstacle : MonoBehaviour
     [SerializeField] private float rotationSpeed = 45f; // degrees per second
     [SerializeField] private Vector3 rotationAxis = Vector3.up; // Y-axis rotation
     [SerializeField] private bool clockwise = true;
+    // TODO: Allow per-level tuning via ScriptableObject
     
     [Header("Visual")]
     [SerializeField] private bool showGizmos = true;
@@ -20,9 +21,15 @@ public class RotatingObstacle : MonoBehaviour
     {
         // Calculate rotation direction
         float direction = clockwise ? 1f : -1f;
-        
+
         // Apply rotation
         transform.Rotate(rotationAxis, rotationSpeed * direction * Time.deltaTime, Space.Self);
+    }
+
+    private void OnValidate()
+    {
+        rotationSpeed = Mathf.Max(0f, rotationSpeed);
+        // TODO: Expose min/max rotation speed in config
     }
     
     private void OnDrawGizmos()

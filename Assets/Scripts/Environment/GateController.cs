@@ -22,7 +22,9 @@ namespace RollABall.Environment
         {
             if (!gateObject)
                 gateObject = gameObject;
-                
+
+            // TODO: Add null-check warnings for missing gateObject in OnValidate()
+
             // Setup AudioSource for gate sounds
             audioSource = GetComponent<AudioSource>();
             if (!audioSource && openSound)
@@ -62,9 +64,10 @@ namespace RollABall.Environment
             {
                 audioSource.PlayOneShot(openSound);
             }
-            
+
             Debug.Log($"Gate {gameObject.name} opened!", this);
             // TODO: Provide matching TriggerClose() logic for reversible puzzles
+            // TODO: Fire gate opened event for other systems
         }
         
         /// <summary>

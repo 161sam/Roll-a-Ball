@@ -51,6 +51,8 @@ namespace RollABall.Environment
         private float pauseTimer = 0f;
         private Rigidbody platformRigidbody;
         private Vector3 lastPosition;
+
+        // TODO: Allow initialization from a shared ScriptableObject profile
         
         // Enums
         public enum MovementType
@@ -347,6 +349,7 @@ namespace RollABall.Environment
             // Automatische Korrektur ungültiger Werte
             moveSpeed = Mathf.Max(0.1f, moveSpeed);
             pauseDuration = Mathf.Max(0f, pauseDuration);
+            // TODO: Warn when start and end positions are identical
         }
         
         void OnTriggerEnter(Collider other)
@@ -359,6 +362,7 @@ namespace RollABall.Environment
                 {
                     other.transform.SetParent(transform);
                 }
+                // TODO: Add configurable tag for supported passengers
             }
         }
         

@@ -71,6 +71,7 @@ public class GroundMaterialController : MonoBehaviour
     /// </summary>
     private void InitializeMaterialSystem()
     {
+        // TODO: Validate material sources in OnValidate() to warn about missing assets
         // Initialize random generator with seed
         materialRandom = new System.Random(materialSeed);
         materialMap = new Dictionary<Vector2Int, Material>();
@@ -309,6 +310,7 @@ public class GroundMaterialController : MonoBehaviour
     private void ApplyMaterialToObject(GameObject obj, Material material)
     {
         Renderer renderer = obj.GetComponent<Renderer>();
+        // TODO: Cache renderer references to avoid repeated GetComponent calls
         if (renderer && renderer.material != material)
         {
             renderer.material = material;
@@ -412,6 +414,7 @@ public class GroundMaterialController : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         if (!enableDebugVisuals || materialMap == null) return;
+        // TODO: Disable or limit gizmo drawing in production builds
         
         // Draw material groups
         foreach (var kvp in materialMap)
