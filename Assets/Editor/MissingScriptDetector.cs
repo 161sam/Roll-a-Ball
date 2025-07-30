@@ -2,110 +2,110 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
-public class MissingScriptDetector
+namespace RollABall.Editor
 {
-    [MenuItem("Tools/Find All Missing Scripts")]
-    public static void FindMissingScripts()
+    public static class MissingScriptDetector
     {
-        Debug.Log("=== MISSING SCRIPT DETECTION STARTED ===");
-        
-        List<GameObject> missingScriptObjects = new List<GameObject>();
-        int totalObjects = 0;
-        int missingScripts = 0;
-
-        // Durchsuche alle GameObjects in der aktuellen Szene
-        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-        
-        foreach (GameObject go in allObjects)
+        [MenuItem("Tools/Find All Missing Scripts")]
+        public static void FindMissingScripts()
         {
-            totalObjects++;
-            Component[] components = go.GetComponents<Component>();
-            
-            foreach (Component comp in components)
+            Debug.Log("=== MISSING SCRIPT DETECTION STARTED ===");
+
+            List<GameObject> missingScriptObjects = new List<GameObject>();
+            int totalObjects = 0;
+            int missingScripts = 0;
+
+            GameObject[] allObjects = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+            foreach (GameObject go in allObjects)
             {
-                if (comp == null)
+                totalObjects++;
+                Component[] components = go.GetComponents<Component>();
+
+                foreach (Component comp in components)
                 {
-                    missingScripts++;
-                    if (!missingScriptObjects.Contains(go))
+                    if (comp == null)
                     {
-                        missingScriptObjects.Add(go);
+                        missingScripts++;
+                        if (!missingScriptObjects.Contains(go))
+                        {
+                            missingScriptObjects.Add(go);
+                        }
+                        Debug.LogError($"Missing Script found on GameObject: '{go.name}' (Path: {GetGameObjectPath(go)})", go);
                     }
-                    Debug.LogError($"Missing Script found on GameObject: '{go.name}' (Path: {GetGameObjectPath(go)})", go);
                 }
             }
-        }
 
-        Debug.Log($"=== SCAN COMPLETE ===");
-        Debug.Log($"Total GameObjects scanned: {totalObjects}");
-        Debug.Log($"Missing scripts found: {missingScripts}");
-        Debug.Log($"GameObjects with missing scripts: {missingScriptObjects.Count}");
-        
-        if (missingScriptObjects.Count > 0)
-        {
-            Debug.LogWarning("=== OBJECTS WITH MISSING SCRIPTS ===");
-            foreach (GameObject go in missingScriptObjects)
-            {
-                Debug.LogWarning($"- {go.name} (Path: {GetGameObjectPath(go)})", go);
-            }
-        }
-        else
-        {
-            Debug.Log("✅ No missing scripts found!");
-        }
-    }
+            Debug.Log($"=== SCAN COMPLETE ===");
+            Debug.Log($"Total GameObjects scanned: {totalObjects}");
+            Debug.Log($"Missing scripts found: {missingScripts}");
+            Debug.Log($"GameObjects with missing scripts: {missingScriptObjects.Count}");
 
-    [MenuItem("Tools/Remove All Missing Scripts")]
-    public static void RemoveMissingScripts()
-    {
-        Debug.Log("=== REMOVING MISSING SCRIPTS ===");
-        
-        int removedScripts = 0;
-        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-        
-        foreach (GameObject go in allObjects)
-        {
-            // Nutze SerializedObject um Missing Scripts zu entfernen
-            SerializedObject serializedObject = new SerializedObject(go);
-            SerializedProperty prop = serializedObject.FindProperty("m_Component");
-            
-            int r = 0;
-            for (int j = 0; j < prop.arraySize; j++)
+            if (missingScriptObjects.Count > 0)
             {
-                var componentProp = prop.GetArrayElementAtIndex(j);
-                var component = componentProp.FindPropertyRelative("component");
-                
-                if (component.objectReferenceValue == null)
+                Debug.LogWarning("=== OBJECTS WITH MISSING SCRIPTS ===");
+                foreach (GameObject go in missingScriptObjects)
                 {
-                    prop.DeleteArrayElementAtIndex(j);
-                    removedScripts++;
-                    r++;
-                    j--;
-                    Debug.Log($"Removed missing script from: {go.name}");
+                    Debug.LogWarning($"- {go.name} (Path: {GetGameObjectPath(go)})", go);
                 }
             }
-            
-            if (r > 0)
+            else
             {
-                serializedObject.ApplyModifiedProperties();
-                EditorUtility.SetDirty(go);
+                Debug.Log("✅ No missing scripts found!");
             }
         }
-        
-        Debug.Log($"✅ Removed {removedScripts} missing script references");
-        
-        // Speichere die Szene
-        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(
-            UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
-    }
 
-    private static string GetGameObjectPath(GameObject obj)
-    {
-        string path = obj.name;
-        while (obj.transform.parent != null)
+        [MenuItem("Tools/Remove All Missing Scripts")]
+        public static void RemoveMissingScripts()
         {
-            obj = obj.transform.parent.gameObject;
-            path = obj.name + "/" + path;
+            Debug.Log("=== REMOVING MISSING SCRIPTS ===");
+
+            int removedScripts = 0;
+            GameObject[] allObjects = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+            foreach (GameObject go in allObjects)
+            {
+                SerializedObject serializedObject = new SerializedObject(go);
+                SerializedProperty prop = serializedObject.FindProperty("m_Component");
+
+                int r = 0;
+                for (int j = 0; j < prop.arraySize; j++)
+                {
+                    var componentProp = prop.GetArrayElementAtIndex(j);
+                    var component = componentProp.FindPropertyRelative("component");
+
+                    if (component.objectReferenceValue == null)
+                    {
+                        prop.DeleteArrayElementAtIndex(j);
+                        removedScripts++;
+                        r++;
+                        j--;
+                        Debug.Log($"Removed missing script from: {go.name}");
+                    }
+                }
+
+                if (r > 0)
+                {
+                    serializedObject.ApplyModifiedProperties();
+                    EditorUtility.SetDirty(go);
+                }
+            }
+
+            Debug.Log($"✅ Removed {removedScripts} missing script references");
+
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(
+                UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
         }
-        return path;
+
+        private static string GetGameObjectPath(GameObject obj)
+        {
+            string path = obj.name;
+            while (obj.transform.parent != null)
+            {
+                obj = obj.transform.parent.gameObject;
+                path = obj.name + "/" + path;
+            }
+            return path;
+        }
     }
 }
