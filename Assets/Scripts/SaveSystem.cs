@@ -80,8 +80,9 @@ public class SaveSystem : MonoBehaviour
     
     [Header("Encryption")]
     [SerializeField] private bool encryptSaveFiles = true;
-    [SerializeField] private string encryptionKey = "RollABallGame2025";
-    // TODO: Move encryption key to external configuration for better security
+    [Tooltip("Configuration asset containing the encryption key.")]
+    [SerializeField] private SaveConfig saveConfig;
+    private string encryptionKey = "";
     
     [Header("Debug")]
     [SerializeField] private bool enableDebugLogging = true;
@@ -117,6 +118,16 @@ public class SaveSystem : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             InitializeSaveSystem();
+
+            // Load encryption key from configuration if available
+            if (saveConfig != null)
+            {
+                encryptionKey = saveConfig.encryptionKey;
+            }
+            else
+            {
+                encryptionKey = "RollABallGame2025";
+            }
         }
         else
         {
