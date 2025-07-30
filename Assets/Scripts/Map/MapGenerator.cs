@@ -67,6 +67,13 @@ namespace RollABall.Map
         [SerializeField] private bool useBatching = true;
         [SerializeField] private int maxBuildingsPerFrame = 5;
         [SerializeField] private int maxRoadSegmentsPerFrame = 10;
+
+        [Header("Atmosphere Settings")]
+        [SerializeField] private Color ambientLightColor = new Color(0.4f, 0.35f, 0.25f);
+        [SerializeField] private Color fogColor = new Color(0.5f, 0.4f, 0.3f);
+        [SerializeField] private bool enableFog = true;
+        [SerializeField] private float fogStartDistance = 20f;
+        [SerializeField] private float fogEndDistance = 80f;
         
         // Generation state
         private Transform mapContainer;
@@ -1597,13 +1604,12 @@ namespace RollABall.Map
         {
             Debug.Log("[MapGenerator] Adding Steampunk atmosphere...");
 
-            // Add ambient lighting adjustments
-            RenderSettings.ambientLight = new Color(0.4f, 0.35f, 0.25f);
-            RenderSettings.fogColor = new Color(0.5f, 0.4f, 0.3f);
-            RenderSettings.fog = true;
-            RenderSettings.fogStartDistance = 20f;
-            RenderSettings.fogEndDistance = 80f;
-            // TODO: Expose fog parameters via LevelProfile or ScriptableObject
+            // Apply ambient lighting and fog based on inspector settings
+            RenderSettings.ambientLight = ambientLightColor;
+            RenderSettings.fogColor = fogColor;
+            RenderSettings.fog = enableFog;
+            RenderSettings.fogStartDistance = fogStartDistance;
+            RenderSettings.fogEndDistance = fogEndDistance;
 
             yield return null;
         }

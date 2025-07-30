@@ -82,9 +82,8 @@ public class EmergencySceneBuilder : MonoBehaviour
     {
         Log("Building all minimal scenes...");
 
-        // Backup current scene
+        // Backup current scene to restore later
         string currentScene = SceneManager.GetActiveScene().name;
-        // TODO: Restore the originally active scene after building completes
 
         try
         {
@@ -94,12 +93,17 @@ public class EmergencySceneBuilder : MonoBehaviour
             BuildMinimalLevel3();
             BuildMinimalOSMLevel();
             BuildMinimalMiniGame();
-            
+
             Log("All minimal scenes built successfully!");
         }
         catch (System.Exception e)
         {
             LogError($"Error building scenes: {e.Message}");
+        }
+        finally
+        {
+            // Restore the originally active scene
+            SceneManager.LoadScene(currentScene);
         }
     }
 

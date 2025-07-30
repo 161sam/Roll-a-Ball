@@ -6,26 +6,54 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public static class SceneTypeDetector
 {
-    /// <summary>
-    /// Szenen, in denen prozedurale Generierung erlaubt ist
-    /// </summary>
-    public static readonly string[] ProceduralScenes =
+    // Default lists used if no configuration asset is found
+    private static readonly string[] defaultProceduralScenes =
     {
         "GeneratedLevel",
         "Level_OSM",
         "MiniGame"
     };
-    // TODO: Load scene lists from configuration instead of hardcoding
 
-    /// <summary>
-    /// Statische Szenen, die bereits manuell aufgebaut sind
-    /// </summary>
-    public static readonly string[] StaticScenes =
+    private static readonly string[] defaultStaticScenes =
     {
         "Level1",
         "Level2",
         "Level3"
     };
+
+    private static SceneTypeConfig config;
+
+    /// <summary>
+    /// Szenen, in denen prozedurale Generierung erlaubt ist
+    /// </summary>
+    public static string[] ProceduralScenes
+    {
+        get
+        {
+            EnsureConfigLoaded();
+            return config ? config.proceduralScenes : defaultProceduralScenes;
+        }
+    }
+
+    /// <summary>
+    /// Statische Szenen, die bereits manuell aufgebaut sind
+    /// </summary>
+    public static string[] StaticScenes
+    {
+        get
+        {
+            EnsureConfigLoaded();
+            return config ? config.staticScenes : defaultStaticScenes;
+        }
+    }
+
+    private static void EnsureConfigLoaded()
+    {
+        if (config == null)
+        {
+            config = Resources.Load<SceneTypeConfig>("DefaultSceneTypeConfig");
+        }
+    }
 
     /// <summary>
     /// Prüft, ob die aktuelle Szene prozedurale Generierung unterstützt
