@@ -1,0 +1,51 @@
+using UnityEngine;
+
+namespace RollABall.InputSystem
+{
+    /// <summary>
+    /// Simple wrapper around Unity's legacy Input to allow central configuration
+    /// of common gameplay keys. This can later be replaced with the new Input System.
+    /// </summary>
+    [AddComponentMenu("Roll-a-Ball/Input/Input Manager")]
+    public class InputManager : MonoBehaviour
+    {
+        public static InputManager Instance { get; private set; }
+
+        [Header("Key Bindings")]
+        [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
+        [SerializeField] private KeyCode restartKey = KeyCode.R;
+        [SerializeField] private KeyCode jumpKey = KeyCode.Space;
+        [SerializeField] private KeyCode flyKey = KeyCode.F;
+        [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
+        [SerializeField] private KeyCode slideKey = KeyCode.LeftControl;
+
+        private void Awake()
+        {
+            if (Instance && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        /// <summary>
+        /// Returns true when the pause key was pressed this frame.
+        /// </summary>
+        public bool PausePressed => UnityEngine.Input.GetKeyDown(pauseKey);
+
+        /// <summary>
+        /// Returns true when the restart key was pressed this frame.
+        /// </summary>
+        public bool RestartPressed => UnityEngine.Input.GetKeyDown(restartKey);
+
+        public Vector2 Movement => new Vector2(UnityEngine.Input.GetAxis("Horizontal"), UnityEngine.Input.GetAxis("Vertical"));
+
+        public bool JumpPressed => UnityEngine.Input.GetKeyDown(jumpKey);
+        public bool FlyHeld => UnityEngine.Input.GetKey(flyKey);
+        public bool SprintHeld => UnityEngine.Input.GetKey(sprintKey);
+        public bool SlidePressed => UnityEngine.Input.GetKeyDown(slideKey);
+        public bool SlideReleased => UnityEngine.Input.GetKeyUp(slideKey);
+    }
+}

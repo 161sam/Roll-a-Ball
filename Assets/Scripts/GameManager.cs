@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using RollABall.InputSystem;
 
 [System.Serializable]
 public class GameStats
@@ -29,8 +30,8 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] private bool debugMode = false;
     [SerializeField] private float gameTimeScale = 1f;
-    [SerializeField] private KeyCode pauseKey = KeyCode.Escape; // TODO: Expose pauseKey in settings menu
-    [SerializeField] private KeyCode restartKey = KeyCode.R;
+    [SerializeField, HideInInspector] private KeyCode pauseKey = KeyCode.Escape; // moved to InputManager
+    [SerializeField, HideInInspector] private KeyCode restartKey = KeyCode.R;
 
     [Header("Player Reference")]
     [SerializeField] private PlayerController player;
@@ -122,6 +123,22 @@ public class GameManager : MonoBehaviour
         
         // Set initial time scale
         Time.timeScale = gameTimeScale;
+
+        // Ensure an InputManager exists and apply configured keys
+        if (InputManager.Instance == null)
+        {
+            var obj = new GameObject("InputManager");
+            obj.AddComponent<InputManager>();
+        }
+        if (InputManager.Instance != null)
+        {
+            // migrate legacy key bindings if they were set in the scene
+            var mgr = InputManager.Instance;
+            var pauseField = pauseKey;
+            var restartField = restartKey;
+            typeof(InputManager).GetField("pauseKey", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(mgr, pauseField);
+            typeof(InputManager).GetField("restartKey", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(mgr, restartField);
+        }
         
         // CLAUDE: FIXED - Use cached references instead of Find calls
         if (autoFindPlayer && !player)
@@ -171,10 +188,9 @@ public class GameManager : MonoBehaviour
         player.OnFlyingChanged -= OnPlayerFlying;
     }
 
-    // TODO: Delegate input handling to a centralized InputManager for easier rebinding
     private void HandleInput()
     {
-        if (Input.GetKeyDown(pauseKey))
+        if (InputManager.Instance && InputManager.Instance.PausePressed)
         {
             if (isPaused)
                 ResumeGame();
@@ -182,8 +198,7 @@ public class GameManager : MonoBehaviour
                 PauseGame();
         }
 
-        // TODO: Expose restartKey in settings menu for player customization
-        if (Input.GetKeyDown(restartKey) && (debugMode || currentState == GameState.GameOver))
+        if (InputManager.Instance && InputManager.Instance.RestartPressed && (debugMode || currentState == GameState.GameOver))
         {
             RestartGame();
         }

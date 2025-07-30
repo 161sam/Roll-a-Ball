@@ -158,23 +158,33 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInput()
     {
-        // Movement input (WASD / Arrow Keys) - LEGACY INPUT
-        // TODO: Use InputAction bindings from a centralized input manager
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        movementInput = new Vector2(horizontal, vertical);
+        if (RollABall.InputSystem.InputManager.Instance)
+        {
+            var input = RollABall.InputSystem.InputManager.Instance;
+            movementInput = input.Movement;
+            jumpPressed = input.JumpPressed;
+            flyPressed = input.FlyHeld;
+            sprintPressed = input.SprintHeld;
 
-        // Action inputs - LEGACY INPUT
-        jumpPressed = Input.GetKeyDown(jumpKey);
-        flyPressed = Input.GetKey(flyKey);
-        sprintPressed = Input.GetKey(sprintKey);
-        
-        // Slide input handling - LEGACY INPUT
-        // TODO: Integrate slide action into input manager
-        if (Input.GetKeyDown(slideKey))
-            StartSlide();
-        else if (Input.GetKeyUp(slideKey))
-            StopSlide();
+            if (input.SlidePressed)
+                StartSlide();
+            else if (input.SlideReleased)
+                StopSlide();
+        }
+        else
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            movementInput = new Vector2(horizontal, vertical);
+            jumpPressed = Input.GetKeyDown(jumpKey);
+            flyPressed = Input.GetKey(flyKey);
+            sprintPressed = Input.GetKey(sprintKey);
+
+            if (Input.GetKeyDown(slideKey))
+                StartSlide();
+            else if (Input.GetKeyUp(slideKey))
+                StopSlide();
+        }
     }
 
     private void UpdateGroundState()
