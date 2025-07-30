@@ -273,13 +273,13 @@ public float CalculateDifficultyScore()
 
 ## 🚀 **Roadmap**
 
-### **✅ Phase 3 - Steampunk-Erweiterungen** (STATUS: in Arbeit)
-- [x] Bewegliche Plattformen mit 4 Bewegungstypen
-- [x] Rotierende Hindernisse mit Physik-Interaktion
-- [x] Steam-Emitter System mit 6 Atmosphären-Typen
-- [x] Interaktive Tore mit 6 Aktivierungsmechanismen
-- [x] Erweiterte Level-Profile mit 15+ neuen Parametern
-- [x] Modulare Code-Architektur und Namespace-Organisation
+### **🔄 Phase 3 - Steampunk-Erweiterungen** (STATUS: in Arbeit)
+- [ ] Bewegliche Plattformen mit 4 Bewegungstypen
+- [ ] Rotierende Hindernisse mit Physik-Interaktion
+- [ ] Steam-Emitter System mit 6 Atmosphären-Typen
+- [ ] Interaktive Tore mit 6 Aktivierungsmechanismen
+- [ ] Erweiterte Level-Profile mit 15+ neuen Parametern
+- [ ] Modulare Code-Architektur und Namespace-Organisation
 
 ### **🔄 Phase 4 - OpenStreetMap-Integration** (STATUS: in Arbeit)
 - [ ] Reale Kartendaten als Level-Basis
