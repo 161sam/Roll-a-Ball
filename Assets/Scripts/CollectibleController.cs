@@ -158,6 +158,7 @@ public class CollectibleController : MonoBehaviour
     {
         if (collectibleData.rotateObject)
         {
+
             // Rotate around the object's local Y-axis so each collectible spins independently
             Quaternion rotation = Quaternion.Euler(0f, collectibleData.rotationSpeed * Time.deltaTime, 0f);
             transform.localRotation *= rotation;
