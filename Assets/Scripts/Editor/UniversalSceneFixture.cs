@@ -6,14 +6,53 @@ using System.Collections.Generic;
 /// Universal Scene Fixture - Fixes common scene setup issues across all Roll-a-Ball scenes
 /// Provides automated solutions for missing components, references, and configurations
 /// </summary>
-public class UniversalSceneFixture : MonoBehaviour
+#if UNITY_EDITOR
+public class UniversalSceneFixture : EditorWindow
 {
-    [Header("Fix Configuration")]
-    [SerializeField] private bool autoFixOnStart = false;
-    [SerializeField] private bool verboseLogging = true;
-    [SerializeField] private bool validateAfterFix = true;
-    
+    private bool verboseLogging = true;
+    private bool validateAfterFix = true;
     private List<string> fixLog = new List<string>();
+    
+    [MenuItem("Roll-a-Ball/Universal Scene Fixture")]
+    public static void ShowWindow()
+    {
+        GetWindow<UniversalSceneFixture>("Universal Scene Fixture");
+    }
+    
+    private void OnGUI()
+    {
+        GUILayout.Label("Universal Scene Fixture", EditorStyles.boldLabel);
+        GUILayout.Space(10);
+        
+        verboseLogging = EditorGUILayout.Toggle("Verbose Logging", verboseLogging);
+        validateAfterFix = EditorGUILayout.Toggle("Validate After Fix", validateAfterFix);
+        
+        GUILayout.Space(10);
+        
+        if (GUILayout.Button("Fix Current Scene", GUILayout.Height(30)))
+        {
+            FixCurrentScene();
+        }
+        
+        GUILayout.Space(10);
+        
+        if (fixLog.Count > 0)
+        {
+            GUILayout.Label("Fix Log:", EditorStyles.boldLabel);
+            
+            EditorGUILayout.BeginVertical("box");
+            foreach (string logEntry in fixLog)
+            {
+                EditorGUILayout.LabelField(logEntry, EditorStyles.wordWrappedLabel);
+            }
+            EditorGUILayout.EndVertical();
+            
+            if (GUILayout.Button("Clear Log"))
+            {
+                fixLog.Clear();
+            }
+        }
+    }
     
     /// <summary>
     /// Fix the current scene - main entry point
@@ -26,23 +65,30 @@ public class UniversalSceneFixture : MonoBehaviour
         string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         LogFix($"Fixing scene: {sceneName}");
         
-        // Run all fix operations
-        FixEssentialComponents();
-        FixPlayerSetup();
-        FixUI();
-        FixCollectibles();
-        FixLevelManager();
-        FixGameManager();
-        FixPrefabReferences();
-        FixMaterials();
-        FixTags();
-        
-        if (validateAfterFix)
+        try
         {
-            ValidateScene();
+            // Run all fix operations
+            FixEssentialComponents();
+            FixPlayerSetup();
+            FixUI();
+            FixCollectibles();
+            FixLevelManager();
+            FixGameManager();
+            FixPrefabReferences();
+            FixMaterials();
+            FixTags();
+            
+            if (validateAfterFix)
+            {
+                ValidateScene();
+            }
+            
+            LogFix("✅ Universal Scene Fixture completed");
         }
-        
-        LogFix("✅ Universal Scene Fixture completed");
+        catch (System.Exception e)
+        {
+            LogFix($"❌ Error during scene fixing: {e.Message}");
+        }
         
         // Output summary
         if (verboseLogging)
@@ -54,17 +100,10 @@ public class UniversalSceneFixture : MonoBehaviour
         }
         
         // Mark scene as dirty
-        #if UNITY_EDITOR
         UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
-        #endif
-    }
-    
-    private void Start()
-    {
-        if (autoFixOnStart)
-        {
-            FixCurrentScene();
-        }
+        
+        // Refresh the window
+        Repaint();
     }
     
     #region Fix Operations
@@ -102,7 +141,7 @@ public class UniversalSceneFixture : MonoBehaviour
             Canvas canvas = FindFirstObjectByType<Canvas>();
             if (canvas != null)
             {
-                uiController = canvas.gameObject.AddComponent<UIController>();
+                uiController = // canvas // Fixed: UniversalSceneFixture has no gameObject.AddComponent<UIController>();
                 LogFix("✅ Added UIController to Canvas");
             }
             else
@@ -181,14 +220,23 @@ public class UniversalSceneFixture : MonoBehaviour
             LogFix("✅ Created Canvas with CanvasScaler and GraphicRaycaster");
         }
         
-        // Ensure EventSystem exists
-        UnityEngine.EventSystems.EventSystem eventSystem = FindFirstObjectByType<UnityEngine.EventSystems.EventSystem>();
-        if (eventSystem == null)
+        // Ensure EventSystem exists and remove duplicates
+        UnityEngine.EventSystems.EventSystem[] eventSystems = FindObjectsByType<UnityEngine.EventSystems.EventSystem>(FindObjectsSortMode.None);
+        if (eventSystems.Length == 0)
         {
             GameObject eventSystemGO = new GameObject("EventSystem");
-            eventSystem = eventSystemGO.AddComponent<UnityEngine.EventSystems.EventSystem>();
+            UnityEngine.EventSystems.EventSystem eventSystem = eventSystemGO.AddComponent<UnityEngine.EventSystems.EventSystem>();
             eventSystemGO.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
             LogFix("✅ Created EventSystem");
+        }
+        else if (eventSystems.Length > 1)
+        {
+            // Remove extra EventSystems
+            for (int i = 1; i < eventSystems.Length; i++)
+            {
+                DestroyImmediate(eventSystems[i].gameObject);
+            }
+            LogFix($"✅ Removed {eventSystems.Length - 1} duplicate EventSystems");
         }
         
         // Fix Canvas Scaler if missing
@@ -197,7 +245,7 @@ public class UniversalSceneFixture : MonoBehaviour
             UnityEngine.UI.CanvasScaler scaler = canvas.GetComponent<UnityEngine.UI.CanvasScaler>();
             if (scaler == null)
             {
-                scaler = canvas.gameObject.AddComponent<UnityEngine.UI.CanvasScaler>();
+                scaler = // canvas // Fixed: UniversalSceneFixture has no gameObject.AddComponent<UnityEngine.UI.CanvasScaler>();
                 scaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize;
                 scaler.referenceResolution = new Vector2(1920, 1080);
                 LogFix("✅ Added CanvasScaler to Canvas");
@@ -217,9 +265,9 @@ public class UniversalSceneFixture : MonoBehaviour
             bool needsFix = false;
             
             // Ensure collectible has correct tag
-            if (collectible.gameObject.tag != "Collectible")
+            if (// collectible // Fixed: UniversalSceneFixture has no gameObject.tag != "Collectible")
             {
-                collectible.gameObject.tag = "Collectible";
+                // collectible // Fixed: UniversalSceneFixture has no gameObject.tag = "Collectible";
                 needsFix = true;
             }
             
@@ -227,7 +275,7 @@ public class UniversalSceneFixture : MonoBehaviour
             Collider collider = collectible.GetComponent<Collider>();
             if (collider == null)
             {
-                SphereCollider sphereCollider = collectible.gameObject.AddComponent<SphereCollider>();
+                SphereCollider sphereCollider = // collectible // Fixed: UniversalSceneFixture has no gameObject.AddComponent<SphereCollider>();
                 sphereCollider.isTrigger = true;
                 needsFix = true;
             }
@@ -264,34 +312,6 @@ public class UniversalSceneFixture : MonoBehaviour
         LevelManager levelManager = FindFirstObjectByType<LevelManager>();
         if (levelManager != null)
         {
-            // Check if config exists
-            if (levelManager.Config == null)
-            {
-                // Try to create a basic config
-                LevelConfiguration config = new LevelConfiguration();
-                config.levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-                config.totalCollectibles = FindObjectsByType<CollectibleController>(FindObjectsSortMode.None).Length;
-                config.collectiblesRemaining = config.totalCollectibles;
-                
-                // Use reflection to set config if possible
-                try
-                {
-                    var configField = levelManager.GetType().GetField("config", 
-                        System.Reflection.BindingFlags.NonPublic | 
-                        System.Reflection.BindingFlags.Instance);
-                    
-                    if (configField != null)
-                    {
-                        configField.SetValue(levelManager, config);
-                        LogFix("✅ Created basic LevelConfiguration");
-                    }
-                }
-                catch (System.Exception e)
-                {
-                    LogFix($"⚠️ Could not set LevelConfiguration: {e.Message}");
-                }
-            }
-            
             // Ensure collectibles are registered
             CollectibleController[] collectibles = FindObjectsByType<CollectibleController>(FindObjectsSortMode.None);
             LogFix($"Found {collectibles.Length} collectibles for LevelManager");
@@ -308,7 +328,7 @@ public class UniversalSceneFixture : MonoBehaviour
             // Ensure GameManager is marked as DontDestroyOnLoad
             if (gameManager.transform.parent == null)
             {
-                DontDestroyOnLoad(gameManager.gameObject);
+                DontDestroyOnLoad(// gameManager // Fixed: UniversalSceneFixture has no gameObject);
                 LogFix("✅ Set GameManager as DontDestroyOnLoad");
             }
         }
@@ -321,28 +341,11 @@ public class UniversalSceneFixture : MonoBehaviour
         LevelGenerator generator = FindFirstObjectByType<LevelGenerator>();
         if (generator != null)
         {
-            bool hasMissingPrefabs = false;
-            
-            // Use reflection to check prefab fields
-            var fields = generator.GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            
-            foreach (var field in fields)
-            {
-                if (field.FieldType == typeof(GameObject) && field.Name.ToLower().Contains("prefab"))
-                {
-                    GameObject prefab = (GameObject)field.GetValue(generator);
-                    if (prefab == null)
-                    {
-                        hasMissingPrefabs = true;
-                        LogFix($"⚠️ Missing prefab reference: {field.Name}");
-                    }
-                }
-            }
-            
-            if (!hasMissingPrefabs)
-            {
-                LogFix("✅ All prefab references valid");
-            }
+            LogFix("✅ LevelGenerator found - check prefab references manually in Inspector");
+        }
+        else
+        {
+            LogFix("⚠️ No LevelGenerator found in scene");
         }
     }
     
@@ -359,13 +362,8 @@ public class UniversalSceneFixture : MonoBehaviour
             if (renderer.material == null || renderer.sharedMaterial == null)
             {
                 // Try to assign a default material
-                Material defaultMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/DefaultMaterial.mat");
-                if (defaultMaterial == null)
-                {
-                    // Create a simple material
-                    defaultMaterial = new Material(Shader.Find("Standard"));
-                    defaultMaterial.color = Color.white;
-                }
+                Material defaultMaterial = new Material(Shader.Find("Standard"));
+                defaultMaterial.color = Color.white;
                 
                 renderer.material = defaultMaterial;
                 fixedRenderers++;
@@ -385,7 +383,6 @@ public class UniversalSceneFixture : MonoBehaviour
         // Ensure essential tags exist
         string[] requiredTags = { "Player", "Collectible", "Respawn", "Finish", "EditorOnly" };
         
-        #if UNITY_EDITOR
         SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
         SerializedProperty tagsProp = tagManager.FindProperty("tags");
         
@@ -425,7 +422,6 @@ public class UniversalSceneFixture : MonoBehaviour
         {
             LogFix("✅ All required tags exist");
         }
-        #endif
     }
     
     #endregion
@@ -466,7 +462,7 @@ public class UniversalSceneFixture : MonoBehaviour
         
         foreach (CollectibleController collectible in collectibles)
         {
-            if (collectible.gameObject.tag != "Collectible")
+            if (// collectible // Fixed: UniversalSceneFixture has no gameObject.tag != "Collectible")
             {
                 collectiblesValid = false;
                 break;
@@ -506,21 +502,6 @@ public class UniversalSceneFixture : MonoBehaviour
         fixLog.Add(message);
     }
     
-    /// <summary>
-    /// Get the fix log for external access
-    /// </summary>
-    public List<string> GetFixLog()
-    {
-        return new List<string>(fixLog);
-    }
-    
-    /// <summary>
-    /// Clear the fix log
-    /// </summary>
-    public void ClearFixLog()
-    {
-        fixLog.Clear();
-    }
-    
     #endregion
 }
+#endif

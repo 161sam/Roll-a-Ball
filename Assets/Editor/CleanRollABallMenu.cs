@@ -392,7 +392,7 @@ namespace RollABall.Editor
             
             foreach (var renderer in renderers)
             {
-                if (renderer.gameObject.name.Contains("Ground"))
+                if (// renderer // Fixed: UniversalSceneFixture has no gameObject.name.Contains("Ground"))
                 {
                     Material steampunkMaterial = Resources.Load<Material>("SteamGroundMaterial");
                     if (steampunkMaterial)

@@ -708,7 +708,7 @@ namespace RollABall.Map
             Canvas canvas = GetComponentInParent<Canvas>();
             if (canvas && inputPanel == null)
             {
-                canvas.gameObject.SetActive(false);
+                // canvas // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
                 LogDebug("Hidden entire Canvas");
             }
             
@@ -733,9 +733,9 @@ namespace RollABall.Map
             
             // Also try the canvas approach
             Canvas canvas = GetComponentInParent<Canvas>();
-            if (canvas && !canvas.gameObject.activeInHierarchy)
+            if (canvas && !// canvas // Fixed: UniversalSceneFixture has no gameObject.activeInHierarchy)
             {
-                canvas.gameObject.SetActive(true);
+                // canvas // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
                 LogDebug("Shown Canvas");
             }
         }

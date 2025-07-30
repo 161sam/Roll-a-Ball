@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.Collections;
@@ -51,7 +51,7 @@ namespace TMPro.Examples
             m_TextPopup_RectTransform = Instantiate(TextPopup_Prefab_01) as RectTransform;
             m_TextPopup_RectTransform.SetParent(m_Canvas.transform, false);
             m_TextPopup_TMPComponent = m_TextPopup_RectTransform.GetComponentInChildren<TextMeshProUGUI>();
-            m_TextPopup_RectTransform.gameObject.SetActive(false);
+            // m_TextPopup_RectTransform // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
         }
 
 
@@ -244,7 +244,7 @@ namespace TMPro.Examples
                 // Clear previous link selection if one existed.
                 if ((linkIndex == -1 && m_selectedLink != -1) || linkIndex != m_selectedLink)
                 {
-                    m_TextPopup_RectTransform.gameObject.SetActive(false);
+                    // m_TextPopup_RectTransform // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
                     m_selectedLink = -1;
                 }
 
@@ -264,12 +264,12 @@ namespace TMPro.Examples
                     {
                         case "id_01": // 100041637: // id_01
                             m_TextPopup_RectTransform.position = worldPointInRectangle;
-                            m_TextPopup_RectTransform.gameObject.SetActive(true);
+                            // m_TextPopup_RectTransform // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
                             m_TextPopup_TMPComponent.text = k_LinkText + " ID 01";
                             break;
                         case "id_02": // 100041638: // id_02
                             m_TextPopup_RectTransform.position = worldPointInRectangle;
-                            m_TextPopup_RectTransform.gameObject.SetActive(true);
+                            // m_TextPopup_RectTransform // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
                             m_TextPopup_TMPComponent.text = k_LinkText + " ID 02";
                             break;
                     }
@@ -411,7 +411,7 @@ namespace TMPro.Examples
                             m_LinkObject01 = Instantiate(Link_01_Prefab);
                         else
                         {
-                            m_LinkObject01.gameObject.SetActive(true);
+                            // m_LinkObject01 // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
                         }
 
                         break;

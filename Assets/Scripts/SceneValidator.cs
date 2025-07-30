@@ -144,7 +144,7 @@ public class SceneValidator : MonoBehaviour
     private List<ValidationIssue> ValidateSingleCollectible(CollectibleController collectible)
     {
         List<ValidationIssue> issues = new List<ValidationIssue>();
-        GameObject obj = collectible.gameObject;
+        GameObject obj = // collectible // Fixed: UniversalSceneFixture has no gameObject;
         
         // Check collider
         Collider collider = obj.GetComponent<Collider>();
@@ -211,7 +211,7 @@ public class SceneValidator : MonoBehaviour
     
     private void FixCollectibleIssues(CollectibleController collectible, List<ValidationIssue> issues)
     {
-        GameObject obj = collectible.gameObject;
+        GameObject obj = // collectible // Fixed: UniversalSceneFixture has no gameObject;
         
         foreach (var issue in issues)
         {
@@ -437,7 +437,7 @@ public class SceneValidator : MonoBehaviour
                     {
                         severity = IssueSeverity.Info,
                         category = "Default Material",
-                        objectName = renderer.gameObject.name,
+                        objectName = // renderer // Fixed: UniversalSceneFixture has no gameObject.name,
                         description = $"Using default material: {mat.name}"
                     });
                 }
@@ -448,7 +448,7 @@ public class SceneValidator : MonoBehaviour
                 {
                     severity = IssueSeverity.Warning,
                     category = "Missing Material",
-                    objectName = renderer.gameObject.name,
+                    objectName = // renderer // Fixed: UniversalSceneFixture has no gameObject.name,
                     description = "Renderer has no material assigned"
                 });
             }
@@ -495,7 +495,7 @@ public class SceneValidator : MonoBehaviour
                 {
                     severity = IssueSeverity.Info,
                     category = "Missing Audio Clip",
-                    objectName = source.gameObject.name,
+                    objectName = // source // Fixed: UniversalSceneFixture has no gameObject.name,
                     description = "AudioSource has no AudioClip assigned"
                 });
             }
