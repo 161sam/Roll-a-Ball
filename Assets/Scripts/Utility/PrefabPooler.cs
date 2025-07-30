@@ -21,6 +21,7 @@ namespace RollABall.Utility
         }
 
         private static readonly Dictionary<GameObject, Pool> pools = new Dictionary<GameObject, Pool>();
+        // TODO: Add maximum pool size to prevent uncontrolled growth
 
         /// <summary>
         /// Get a pooled instance of the given prefab.

@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     [Header("Kamera Referenz")]
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private bool findCameraAutomatically = true;
+    // TODO: Integrate Cinemachine for camera following
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;

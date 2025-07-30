@@ -20,6 +20,7 @@ namespace RollABall.Utility
             {"NewGame", "Neues Spiel"},
             {"LastPlayed", "Zuletzt gespielt"}
         };
+        // TODO: Load localization data from external files to support more languages
 
         private static Dictionary<string, string> Current => Application.systemLanguage == SystemLanguage.German ? german : english;
 

@@ -42,6 +42,7 @@ namespace RollABall.Map
         [SerializeField] private Material defaultAreaMaterial;
         
         [Header("Steampunk Decoration Prefabs")]
+        // TODO: Move decoration prefabs to a centralized asset
         [SerializeField] private GameObject gearPrefab;
         [SerializeField] private GameObject steamPipePrefab;
         [SerializeField] private GameObject chimneySmokeParticles;
