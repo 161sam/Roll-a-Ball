@@ -1,5 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+# TODO: Ensure map generation uses prefabs from OSMAssets folder
 --- !u!29 &1
 OcclusionCullingSettings:
   m_ObjectHideFlags: 0

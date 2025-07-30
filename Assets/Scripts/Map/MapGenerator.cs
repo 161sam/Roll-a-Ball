@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 using System.Linq;
+using RollABall.Utility;
 
 namespace RollABall.Map
 {
@@ -45,6 +46,7 @@ namespace RollABall.Map
         [SerializeField] private GameObject gearPrefab;
         [SerializeField] private GameObject steamPipePrefab;
         [SerializeField] private GameObject chimneySmokeParticles;
+        [SerializeField] private GameObject steamEmitterPrefab;
         
         [Header("Road Settings")]
         [SerializeField] private float roadHeightOffset = 0.05f; // Height above ground
@@ -1548,26 +1550,36 @@ namespace RollABall.Map
         
         private void CreateSteamEmitter(Vector3 position)
         {
-            GameObject steamEmitter = new GameObject("SteamEmitter");
-            steamEmitter.transform.position = position;
-            
-            ParticleSystem particles = steamEmitter.AddComponent<ParticleSystem>();
-            var main = particles.main;
-            main.startColor = new Color(0.8f, 0.8f, 0.8f, 0.6f);
-            main.startLifetime = 3f;
-            main.startSpeed = 2f;
-            main.maxParticles = 50;
-            
-            var emission = particles.emission;
-            emission.rateOverTime = 10f;
-            
-            var shape = particles.shape;
-            shape.shapeType = ParticleSystemShapeType.Circle;
-            shape.radius = 0.5f;
+            GameObject steamEmitter = null;
 
-            steamEmitter.transform.SetParent(mapContainer);
+            if (steamEmitterPrefab != null)
+            {
+                steamEmitter = PrefabPooler.Get(steamEmitterPrefab, position, Quaternion.identity, mapContainer);
+            }
+            else
+            {
+                steamEmitter = new GameObject("SteamEmitter");
+                steamEmitter.transform.position = position;
 
-            // TODO: Pool steam emitters to reduce allocations during regeneration
+                ParticleSystem particles = steamEmitter.AddComponent<ParticleSystem>();
+                var main = particles.main;
+                main.startColor = new Color(0.8f, 0.8f, 0.8f, 0.6f);
+                main.startLifetime = 3f;
+                main.startSpeed = 2f;
+                main.maxParticles = 50;
+
+                var emission = particles.emission;
+                emission.rateOverTime = 10f;
+
+                var shape = particles.shape;
+                shape.shapeType = ParticleSystemShapeType.Circle;
+                shape.radius = 0.5f;
+
+                steamEmitter.transform.SetParent(mapContainer);
+            }
+
+            if (steamEmitter != null)
+                steamEmitter.transform.SetParent(mapContainer);
         }
         
         private IEnumerator ApplyMeshBatching()
