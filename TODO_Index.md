@@ -45,8 +45,8 @@
 | TODO-OPT#41 | Assets/Scripts/Map/MapStartupController.cs | LoadMapFromAddress(), Zeile 244 | Adressauflösung asynchron ausführen |
 | TODO-OPT#42 | Assets/Scripts/ProgressionManager.cs | CreateDefaultLevels(), Zeile 203 | Leveldaten extern speichern |
 | TODO-OPT#43 | Assets/Scripts/AchievementSystem.cs | CreateDefaultAchievements(), Zeile 186 | Achievements aus externer Konfiguration laden |
-| TODO-OPT#44 | Assets/Scripts/AchievementSystem.cs | SubscribeToGameEvents(), Zeile 295 | PlayerController-Referenz cachen |
-| TODO-OPT#45 | Assets/Scripts/AchievementSystem.cs | OnDestroy(), Zeile 720 | Von GameEvents abmelden |
+| TODO-OPT#44 | Assets/Scripts/AchievementSystem.cs | SubscribeToGameEvents(), Zeile 295 | PlayerController-Referenz cachen | **erledigt** |
+| TODO-OPT#45 | Assets/Scripts/AchievementSystem.cs | OnDestroy(), Zeile 720 | Von GameEvents abmelden | **erledigt** |
 | TODO-OPT#46 | Assets/Scripts/GameManager.cs | pauseKey, Zeile 32 | Pause-Taste im Einstellungsmenü konfigurierbar machen |
 | TODO-OPT#47 | Assets/Scripts/GameManager.cs | TrackStatistics(), Zeile 406 | Update-Intervall einstellbar machen |
 | TODO-OPT#48 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 708 | Offsetbereich als Felder exposen |
@@ -58,7 +58,7 @@
 | TODO-OPT#54 | Assets/Scripts/Map/MapGeneratorBatched.cs | InitializeBatchingCollections(), Zeile 114 | String-Keys durch Enum ersetzen |
 | TODO-OPT#55 | Assets/Scripts/Environment/SteampunkGateController.cs | InitializeGate(), Zeile 122 | Manager-Referenzen per Inspector setzen |
 | TODO-OPT#56 | Assets/Scripts/Environment/SteampunkGateController.cs | Zeile 665 | OnDestroy zur Coroutine-Aufräumung einführen |
-| TODO-OPT#57 | Assets/Scripts/Environment/MovingPlatform.cs | BounceEaseOut(), Zeile 241 | Magic Numbers durch Konstanten ersetzen |
+| TODO-OPT#57 | Assets/Scripts/Environment/MovingPlatform.cs | BounceEaseOut(), Zeile 241 | Magic Numbers durch Konstanten ersetzen | **erledigt** |
 | TODO-OPT#58 | Assets/Scripts/Environment/MovingPlatform.cs | OnTriggerEnter(), Zeile 349 | CharacterController-Unterstützung prüfen |
 | TODO-OPT#59 | Assets/Scripts/Map/MapStartupController.cs | CreateMinimalLevel(), Zeile 510 | Fallback-Level als Prefab realisieren |
 | TODO-OPT#60 | Assets/Scripts/PlayerController.cs | OnDestroy(), Zeile 528 | Von Events abmelden | **erledigt** |
@@ -71,5 +71,5 @@
 | TODO-OPT#67 | Assets/Scripts/VFX/SteamEmitter.cs | RandomizeSettings(), Zeile 249 | Zufallsbereiche per Inspector konfigurierbar machen |
 | TODO-OPT#68 | Assets/Scripts/SceneTypeDetector.cs | Zeile 18 | Szenenlisten aus Konfiguration laden |
 | TODO-OPT#69 | Assets/Scripts/CollectibleDiagnosticTool.cs | FindAllCollectibles(), Zeile 94 | Suchergebnisse cachen, um Allokationen zu vermeiden |
-| TODO-OPT#70 | Assets/Scripts/Map/MapStartupController.cs | leipzigCoords, Zeile 53 | Fallback-Koordinaten im Inspector einstellbar machen |
+| TODO-OPT#70 | Assets/Scripts/Map/MapStartupController.cs | leipzigCoords, Zeile 53 | Fallback-Koordinaten im Inspector einstellbar machen | **erledigt** |
 
