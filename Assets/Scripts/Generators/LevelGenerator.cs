@@ -93,6 +93,16 @@ public class LevelGenerator : MonoBehaviour
     public List<Vector3> SteamEmitterPositions => effectManager?.SteamEmitterPositions ?? new List<Vector3>();
     #endregion
 
+    #region Validation Helpers
+    /// <summary>
+    /// Checks if all required prefabs are assigned
+    /// </summary>
+    private bool HasRequiredPrefabs()
+    {
+        return groundPrefab && wallPrefab && collectiblePrefab && goalZonePrefab;
+    }
+    #endregion
+
     #region Unity Lifecycle
     void Start()
     {
@@ -350,7 +360,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         // Prefab validation
-        if (!groundPrefab || !wallPrefab || !collectiblePrefab || !goalZonePrefab)
+        if (!HasRequiredPrefabs())
         {
             Debug.LogError("Missing prefab references!");
             return false;
@@ -1050,6 +1060,11 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private void InitializeComponents()
     {
+        if (!HasRequiredPrefabs())
+        {
+            Debug.LogError("Cannot initialize components without required prefabs.");
+            return;
+        }
         System.Random rng = new System.Random(activeProfile.UseTimeBasedSeed ? 
             (int)System.DateTime.Now.Ticks : activeProfile.GenerationSeed);
         
