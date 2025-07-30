@@ -8,20 +8,20 @@ Kernel version:          6.14.0-24-generic
 Architecture:            x86_64
 Window Protocol:         Wayland (XWayland)
 Available memory:        64035 MB
-Date:                    2025-07-30T13:01:28Z
+Date:                    2025-07-30T13:17:47Z
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi" at "2025-07-30T13:01:28.969752Z"
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi" at "2025-07-30T13:17:47.153409Z"
 [SignatureVerifier] Application signature verification not supported on this platform.
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.0+aa6cfba
-  Session Id:              523c482e0ff446a699b1d68834a21877
+  Session Id:              4ac8ebc3081549aea40a7f6c6b40c78b
   Correlation Id:          afd4480767725667ebc0fe014b7402d6
-  External correlation Id: 794412052655605049
+  External correlation Id: 4780394192972400144
   Machine Id:              N5eJZWLBIzbCGgb+9YC42QGOtpA=
 [Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-saschi" (connect: 0.00s, validation: 0.01s, handshake: 0.00s)
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi-notifications" at "2025-07-30T13:01:28.980528Z"
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi-notifications" at "2025-07-30T13:17:47.16394Z"
 [Licensing::Client] Successfully updated the access token
-[Licensing::Module] Successfully updated the access token H02kTmaMAw...
+[Licensing::Module] Successfully updated the access token WXKDIQ-x9y...
 [Licensing::Client] Successfully resolved entitlement details
 [Licensing::Module] Serial number assigned to: "9072294802761-UnityPersXXXX"
 [Licensing::Client] Successfully updated license, isAync: True, time: 0.01
@@ -44,7 +44,7 @@ LicenseClient-saschi
 -hubSessionId
 56eaf80b-10c4-46de-a26e-4866c865b48b
 -accessToken
-H02kTmaMAwRJBSY1Wsl0StCEqAeaTrGAgHbxjHrsr6c008f
+WXKDIQ-x9y8AkUoBFF2mZ5pchqar-p_omzNOWwaEKjg008f
 Successfully changed project path to: /home/saschi/Games/Roll-a-Ball
 /home/saschi/Games/Roll-a-Ball
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -82,16 +82,16 @@ Successfully changed project path to: /home/saschi/Games/Roll-a-Ball
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [124801680725312]  Target information:
+Player connection [130457404425536]  Target information:
 
-Player connection [124801680725312]  * "[IP] 192.168.0.45 [Port] 55504 [Flags] 2 [Guid] 4015474857 [EditorId] 4015474857 [Version] 1048832 [Id] LinuxEditor(16,192.168.0.45) [Debug] 1 [PackageName] LinuxEditor [ProjectName] Editor" 
+Player connection [130457404425536]  * "[IP] 192.168.0.45 [Port] 55504 [Flags] 2 [Guid] 2716608765 [EditorId] 2716608765 [Version] 1048832 [Id] LinuxEditor(16,192.168.0.45) [Debug] 1 [PackageName] LinuxEditor [ProjectName] Editor" 
 
-Player connection [124801680725312] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [124801680725312] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [130457404425536] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [130457404425536] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-47034" after 0.1 seconds.
+[Package Manager] Connected to IPC stream "Upm-48768" after 0.1 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -163,8 +163,8 @@ Default GameObject Tag: Player already registered
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0,09 seconds
-Refreshing native plugins compatible for Editor in 0,66 ms, found 0 plugins.
+[Package Manager] Done registering packages in 0,08 seconds
+Refreshing native plugins compatible for Editor in 0,69 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0,00 ms.
 Initialize engine version: 6000.1.13f1 (418bd0acaa6b)
 [Subsystems] Discovering subsystems at path /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/UnitySubsystems
@@ -187,13 +187,13 @@ blend_equation_advanced_coherent GL_NVX_blend_equation_advanced_multi_draw_buffe
 der_passthrough GL_NV_gpu_program4 GL_NV_internalformat_sample_query GL_NV_gpu_program4_1 GL_NV_gpu_program5 GL_NV_gpu_program5_mem_extended GL_NV_gpu_program_fp64 GL_NV_gpu_program_multiview GL_NV_gpu_shader5 GL_NV_half_float GL_NV_light_max_exponent GL_NV_memory_attachment GL_NV_mesh_shader GL_NV_multisample_coverage GL_NV_multisample_filter_hint GL_NV_occlusion_query GL_NV_packed_depth_stencil GL_NV_parameter_buffer_object GL_NV_parameter_buffer_object2 GL_NV_path_rendering GL_NV_path_rendering_shared_edge GL_NV_pixel_data_range GL_NV_point_sprite GL_NV_primitive_restart GL_NV_primitive_shading_rate GL_NV_query_resource GL_NV_query_resource_tag GL_NV_register_combiners GL_NV_register_combiners2 GL_NV_representative_fragment_test GL_NV_sample_locations GL_NV_sample_mask_override_coverage GL_NV_scissor_exclusive GL_NV_shader_atomic_counters GL_NV_shader_atomic_float GL_NV_shader_atomic_float64 GL_NV_shader_atomic_fp16_vector GL_NV_shader_atomic_int64 GL_NV_shader_buffer_load GL_NV_shader_storage_buffer_obje
 ct GL_NV_shader_subgroup_partitioned GL_NV_shader_texture_footprint GL_NV_shading_rate_image GL_NV_stereo_view_rendering GL_NV_texgen_reflection GL_NV_texture_barrier GL_NV_texture_compression_vtc GL_NV_texture_dirty_tile_map GL_NV_texture_env_combine4 GL_NV_texture_multisample GL_NV_texture_rectangle GL_NV_texture_rectangle_compressed GL_NV_texture_shader GL_NV_texture_shader2 GL_NV_texture_shader3 GL_NV_transform_feedback GL_NV_transform_feedback2 GL_NV_uniform_buffer_unified_memory GL_NV_uniform_buffer_std430_layout GL_NV_vdpau_interop GL_NV_vdpau_interop2 GL_NV_vertex_array_range GL_NV_vertex_array_range2 GL_NV_vertex_attrib_integer_64bit GL_NV_vertex_buffer_unified_memory GL_NV_vertex_program GL_NV_vertex_program1_1 GL_NV_vertex_program2 GL_NV_vertex_program2_option GL_NV_vertex_program3 GL_NV_viewport_array2 GL_NV_viewport_swizzle GL_NVX_conditional_render GL_NV_gpu_multicast GL_NVX_progress_fence GL_NVX_gpu_memory_info GL_NVX_nvenc_interop GL_NV_shader_thread_group GL_NV_shader_thread_shuffle GL_KHR_b
 lend_equation_advanced GL_KHR_blend_equation_advanced_coherent GL_OVR_multiview GL_OVR_multiview2 GL_SGIS_generate_mipmap GL_SGIS_texture_lod GL_SGIX_depth_texture GL_SGIX_shadow GL_SUN_slice_accum
-OPENGL LOG: Creating OpenGL 4.5 graphics device ; Context level  <OpenGL 4.5> ; Context handle -764277720
+OPENGL LOG: Creating OpenGL 4.5 graphics device ; Context level  <OpenGL 4.5> ; Context handle -2085380040
 [Licensing::Client] Successfully resolved entitlement details
 Initialize mono
 Mono path[0] = '/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed'
 Mono path[1] = '/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-linux'
 Mono config path = '/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56034
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56768
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -209,7 +209,7 @@ Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Edit
 Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
 Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
-Registered in 0,022232 seconds.
+Registered in 0,021984 seconds.
 - Loaded All Assemblies, in  0,233 seconds
 Native extension for LinuxStandalone target not found
 [usbmuxd] Start listen thread
@@ -222,35 +222,35 @@ Native extension for VisionOS target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0,319 seconds
-Domain Reload Profiling: 552ms
-	BeginReloadAssembly (48ms)
+- Finished resetting the current domain, in  0,292 seconds
+Domain Reload Profiling: 525ms
+	BeginReloadAssembly (47ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (1ms)
+		CreateAndSetChildDomain (0ms)
 	RebuildCommonClasses (22ms)
 	RebuildNativeTypeToScriptingClass (5ms)
-	initialDomainReloadingComplete (55ms)
-	LoadAllAssembliesAndSetupDomain (103ms)
+	initialDomainReloadingComplete (57ms)
+	LoadAllAssembliesAndSetupDomain (101ms)
 		LoadAssemblies (47ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (100ms)
-			TypeCache.Refresh (99ms)
-				TypeCache.ScanAssembly (91ms)
+		AnalyzeDomain (99ms)
+			TypeCache.Refresh (98ms)
+				TypeCache.ScanAssembly (89ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (0ms)
-	FinalizeReload (319ms)
+	FinalizeReload (292ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (286ms)
+		SetupLoadedEditorAssemblies (263ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (125ms)
+			InitializePlatformSupportModulesInManaged (116ms)
 			SetLoadedEditorAssemblies (3ms)
-			BeforeProcessingInitializeOnLoad (37ms)
-			ProcessInitializeOnLoadAttributes (78ms)
-			ProcessInitializeOnLoadMethodAttributes (42ms)
+			BeforeProcessingInitializeOnLoad (34ms)
+			ProcessInitializeOnLoadAttributes (72ms)
+			ProcessInitializeOnLoadMethodAttributes (39ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -276,10 +276,10 @@ The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does no
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 24.1262ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 24.8653ms
 Starting: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/bee_backend --ipc --defer-dag-verification --dagfile="Library/Bee/2400b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: /home/saschi/Games/Roll-a-Ball
-ExitCode: 3 Duration: 1s218ms
+ExitCode: 3 Duration: 1s319ms
 [481/487    1s] Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll (+2 others)
 ##### CommandLine
 "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp2"
@@ -812,207 +812,81 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
-Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
-Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
-Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
-Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
-Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
-Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
-Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
-Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
-Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
-Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
-*** Tundra build failed (1.20 seconds), 1 items updated, 487 evaluated
+Assets/Scripts/Generators/LevelProfile.cs(145,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableRotatingObstacles'
+Assets/Scripts/Generators/LevelProfile.cs(146,18): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstacleDensity'
+Assets/Scripts/Generators/LevelProfile.cs(147,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableMovingPlatforms'
+Assets/Scripts/Generators/LevelProfile.cs(148,18): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformDensity'
+Assets/Scripts/Generators/LevelProfile.cs(149,25): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstaclePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(150,25): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(151,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableSteamEmitters'
+Assets/Scripts/Generators/LevelProfile.cs(152,18): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterDensity'
+Assets/Scripts/Generators/LevelProfile.cs(153,25): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(154,32): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamSettings'
+Assets/Scripts/Generators/LevelProfile.cs(155,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableInteractiveGates'
+Assets/Scripts/Generators/LevelProfile.cs(156,18): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGateDensity'
+Assets/Scripts/Generators/LevelProfile.cs(157,25): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGatePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(158,27): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkTheme'
+Assets/Scripts/Generators/LevelProfile.cs(159,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkGroundMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(160,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkWallMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(161,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightColor'
+Assets/Scripts/Generators/LevelProfile.cs(162,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightIntensity'
+Assets/Scripts/Generators/LevelGenerator.cs(86,12): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(51,30): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(1105,18): error CS0111: Type 'LevelGenerator' already defines a member called 'InitializeComponents' with the same parameter types
+*** Tundra build failed (1.30 seconds), 1 items updated, 487 evaluated
 ## Script Compilation Error for: Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll (+2 others)
 ## CmdLine: "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp2"
 ## Output:
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
-Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
-Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
-Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
-Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
-Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
-Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
-Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
-Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
-Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
-Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
+Assets/Scripts/Generators/LevelProfile.cs(145,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableRotatingObstacles'
+Assets/Scripts/Generators/LevelProfile.cs(146,18): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstacleDensity'
+Assets/Scripts/Generators/LevelProfile.cs(147,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableMovingPlatforms'
+Assets/Scripts/Generators/LevelProfile.cs(148,18): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformDensity'
+Assets/Scripts/Generators/LevelProfile.cs(149,25): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstaclePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(150,25): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(151,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableSteamEmitters'
+Assets/Scripts/Generators/LevelProfile.cs(152,18): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterDensity'
+Assets/Scripts/Generators/LevelProfile.cs(153,25): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(154,32): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamSettings'
+Assets/Scripts/Generators/LevelProfile.cs(155,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableInteractiveGates'
+Assets/Scripts/Generators/LevelProfile.cs(156,18): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGateDensity'
+Assets/Scripts/Generators/LevelProfile.cs(157,25): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGatePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(158,27): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkTheme'
+Assets/Scripts/Generators/LevelProfile.cs(159,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkGroundMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(160,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkWallMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(161,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightColor'
+Assets/Scripts/Generators/LevelProfile.cs(162,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightIntensity'
+Assets/Scripts/Generators/LevelGenerator.cs(86,12): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(51,30): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(1105,18): error CS0111: Type 'LevelGenerator' already defines a member called 'InitializeComponents' with the same parameter types
 
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
-Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
-Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
-Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
-Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
-Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
-Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
-Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
-Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
-Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
-Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
-AssetDatabase: script compilation time: 1,870876s
+Assets/Scripts/Generators/LevelProfile.cs(145,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableRotatingObstacles'
+Assets/Scripts/Generators/LevelProfile.cs(146,18): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstacleDensity'
+Assets/Scripts/Generators/LevelProfile.cs(147,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableMovingPlatforms'
+Assets/Scripts/Generators/LevelProfile.cs(148,18): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformDensity'
+Assets/Scripts/Generators/LevelProfile.cs(149,25): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstaclePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(150,25): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(151,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableSteamEmitters'
+Assets/Scripts/Generators/LevelProfile.cs(152,18): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterDensity'
+Assets/Scripts/Generators/LevelProfile.cs(153,25): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(154,32): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamSettings'
+Assets/Scripts/Generators/LevelProfile.cs(155,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableInteractiveGates'
+Assets/Scripts/Generators/LevelProfile.cs(156,18): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGateDensity'
+Assets/Scripts/Generators/LevelProfile.cs(157,25): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGatePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(158,27): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkTheme'
+Assets/Scripts/Generators/LevelProfile.cs(159,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkGroundMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(160,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkWallMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(161,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightColor'
+Assets/Scripts/Generators/LevelProfile.cs(162,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightIntensity'
+Assets/Scripts/Generators/LevelGenerator.cs(86,12): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(51,30): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(1105,18): error CS0111: Type 'LevelGenerator' already defines a member called 'InitializeComponents' with the same parameter types
+AssetDatabase: script compilation time: 1,638476s
 The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Total cache size 268081029
-Total cache size after purge 268081029, took 00:00:00.0711270
+Total cache size after purge 268081029, took 00:00:00.0749995
 [ScriptCompilation] Requested script compilation because: Exiting safe mode
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[1]
       Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
@@ -1021,216 +895,132 @@ Total cache size after purge 268081029, took 00:00:00.0711270
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 1.1358ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 1.6421ms
 Starting: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/bee_backend --ipc --defer-dag-verification --dagfile="Library/Bee/2400b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: /home/saschi/Games/Roll-a-Ball
 ## Script Compilation Error for: Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll (+2 others)
 ## CmdLine: "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp2"
 ## Output:
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
-Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
-Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
-Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
-Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
-Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
-Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
-Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
-Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
-Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
-Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
-Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
+Assets/Scripts/Generators/LevelProfile.cs(145,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableRotatingObstacles'
+Assets/Scripts/Generators/LevelProfile.cs(146,18): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstacleDensity'
+Assets/Scripts/Generators/LevelProfile.cs(147,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableMovingPlatforms'
+Assets/Scripts/Generators/LevelProfile.cs(148,18): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformDensity'
+Assets/Scripts/Generators/LevelProfile.cs(149,25): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstaclePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(150,25): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(151,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableSteamEmitters'
+Assets/Scripts/Generators/LevelProfile.cs(152,18): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterDensity'
+Assets/Scripts/Generators/LevelProfile.cs(153,25): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(154,32): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamSettings'
+Assets/Scripts/Generators/LevelProfile.cs(155,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableInteractiveGates'
+Assets/Scripts/Generators/LevelProfile.cs(156,18): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGateDensity'
+Assets/Scripts/Generators/LevelProfile.cs(157,25): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGatePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(158,27): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkTheme'
+Assets/Scripts/Generators/LevelProfile.cs(159,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkGroundMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(160,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkWallMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(161,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightColor'
+Assets/Scripts/Generators/LevelProfile.cs(162,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightIntensity'
+Assets/Scripts/Generators/LevelGenerator.cs(86,12): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(51,30): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(1105,18): error CS0111: Type 'LevelGenerator' already defines a member called 'InitializeComponents' with the same parameter types
 
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
-Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
-Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
-Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
-Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
-Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
-Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
-Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
-Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
-Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
-Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
-Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
+Assets/Scripts/Generators/LevelProfile.cs(145,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableRotatingObstacles'
+Assets/Scripts/Generators/LevelProfile.cs(146,18): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstacleDensity'
+Assets/Scripts/Generators/LevelProfile.cs(147,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableMovingPlatforms'
+Assets/Scripts/Generators/LevelProfile.cs(148,18): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformDensity'
+Assets/Scripts/Generators/LevelProfile.cs(149,25): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstaclePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(150,25): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(151,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableSteamEmitters'
+Assets/Scripts/Generators/LevelProfile.cs(152,18): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterDensity'
+Assets/Scripts/Generators/LevelProfile.cs(153,25): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(154,32): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamSettings'
+Assets/Scripts/Generators/LevelProfile.cs(155,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableInteractiveGates'
+Assets/Scripts/Generators/LevelProfile.cs(156,18): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGateDensity'
+Assets/Scripts/Generators/LevelProfile.cs(157,25): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGatePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(158,27): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkTheme'
+Assets/Scripts/Generators/LevelProfile.cs(159,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkGroundMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(160,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkWallMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(161,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightColor'
+Assets/Scripts/Generators/LevelProfile.cs(162,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightIntensity'
+Assets/Scripts/Generators/LevelGenerator.cs(86,12): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(51,30): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(1105,18): error CS0111: Type 'LevelGenerator' already defines a member called 'InitializeComponents' with the same parameter types
 Total cache size 268081029
-Total cache size after purge 268081029, took 00:00:00.0386871
-ExitCode: 3 Duration: 0s388ms
-[301/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.pdb
-[302/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.dll
-[306/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.pdb
-[307/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.dll
-[321/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.dll
+Total cache size after purge 268081029, took 00:00:00.0363282
+ExitCode: 3 Duration: 0s749ms
+[302/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.dll
+[303/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.pdb
+[306/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.dll
+[307/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.pdb
 [324/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.pdb
-[335/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.dll
-[336/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.pdb
-[343/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.pdb
-[348/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.dll
-[349/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll
-[352/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll
-[365/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.pdb
-[366/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.pdb
-[374/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.dll
-[376/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll
-[377/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.dll
-[378/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.dll
-[382/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.pdb
-[384/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.dll
-[385/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.pdb
-[387/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.pdb
-[388/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.dll
-[390/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll
-[392/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll
-[394/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll
-[399/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.pdb
-[403/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.pdb
-[404/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.pdb
-[405/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.dll
-[406/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.dll
-[407/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll
-[408/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.pdb
-[439/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
-[440/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.pdb
-[441/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.pdb
-[442/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.pdb
-[443/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.pdb
-[444/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.dll
-[445/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.pdb
-[446/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.dll
-[447/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.pdb
-[448/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.pdb
-[449/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.pdb
-[451/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.pdb
-[452/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.pdb
-[453/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll
-[454/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll
-[455/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.dll
-[456/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.pdb
-[457/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll
-[458/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.pdb
-[459/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll
-[460/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.pdb
-[461/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.pdb
-[462/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.dll
-[463/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.pdb
-[464/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
-[465/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.pdb
-[466/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.pdb
-[467/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.pdb
-[468/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll
-[469/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.pdb
-[470/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.pdb
-[471/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.dll
-[472/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.pdb
-[473/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.dll
-[474/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll
-[475/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.pdb
-[476/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.pdb
-[477/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll
-[478/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll
-[479/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.dll
-[480/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.dll
+[325/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.dll
+[329/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.dll
+[330/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.pdb
+[338/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.dll
+[340/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.pdb
+[341/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll
+[349/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll
+[350/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.pdb
+[351/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.pdb
+[354/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll
+[358/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.pdb
+[363/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.pdb
+[364/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.dll
+[376/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.dll
+[382/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.pdb
+[383/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll
+[385/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.pdb
+[386/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.dll
+[390/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.dll
+[398/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.pdb
+[402/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.pdb
+[403/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.dll
+[404/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.pdb
+[406/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll
+[407/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.dll
+[409/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll
+[411/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.pdb
+[413/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll
+[414/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.dll
+[416/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.pdb
+[417/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.pdb
+[420/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.dll
+[421/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.pdb
+[422/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.dll
+[423/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.pdb
+[424/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.dll
+[426/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.pdb
+[427/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.pdb
+[428/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.pdb
+[429/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.pdb
+[431/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.dll
+[432/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
+[433/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll
+[434/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.pdb
+[435/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.pdb
+[436/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.pdb
+[437/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
+[440/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.dll
+[441/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.pdb
+[443/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.dll
+[444/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.pdb
+[446/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll
+[464/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.pdb
+[465/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.pdb
+[466/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.pdb
+[467/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll
+[468/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll
+[469/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.dll
+[470/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.dll
+[471/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll
+[472/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll
+[473/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll
+[474/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.pdb
+[475/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.pdb
+[476/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.pdb
+[477/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.pdb
+[478/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.pdb
+[479/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll
+[480/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.pdb
 [481/487    0s] Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll (+2 others)
 ##### CommandLine
 "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp2"
@@ -1763,75 +1553,33 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
-Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
-Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
-Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
-Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
-Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
-Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
-Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
-Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
-Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
-Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
-Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
-Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
-Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
-Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
-Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
-Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
-Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
-Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
-Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
-Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
-Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
-Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
-Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
-Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
-Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
-*** Tundra build failed (0.27 seconds), 75 items updated, 487 evaluated
+Assets/Scripts/Generators/LevelProfile.cs(145,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableRotatingObstacles'
+Assets/Scripts/Generators/LevelProfile.cs(146,18): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstacleDensity'
+Assets/Scripts/Generators/LevelProfile.cs(147,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableMovingPlatforms'
+Assets/Scripts/Generators/LevelProfile.cs(148,18): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformDensity'
+Assets/Scripts/Generators/LevelProfile.cs(149,25): error CS0102: The type 'LevelProfile' already contains a definition for 'RotatingObstaclePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(150,25): error CS0102: The type 'LevelProfile' already contains a definition for 'MovingPlatformPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(151,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableSteamEmitters'
+Assets/Scripts/Generators/LevelProfile.cs(152,18): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterDensity'
+Assets/Scripts/Generators/LevelProfile.cs(153,25): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamEmitterPrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(154,32): error CS0102: The type 'LevelProfile' already contains a definition for 'SteamSettings'
+Assets/Scripts/Generators/LevelProfile.cs(155,17): error CS0102: The type 'LevelProfile' already contains a definition for 'EnableInteractiveGates'
+Assets/Scripts/Generators/LevelProfile.cs(156,18): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGateDensity'
+Assets/Scripts/Generators/LevelProfile.cs(157,25): error CS0102: The type 'LevelProfile' already contains a definition for 'InteractiveGatePrefabs'
+Assets/Scripts/Generators/LevelProfile.cs(158,27): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkTheme'
+Assets/Scripts/Generators/LevelProfile.cs(159,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkGroundMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(160,23): error CS0102: The type 'LevelProfile' already contains a definition for 'SteampunkWallMaterials'
+Assets/Scripts/Generators/LevelProfile.cs(161,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightColor'
+Assets/Scripts/Generators/LevelProfile.cs(162,18): error CS0102: The type 'LevelProfile' already contains a definition for 'AmbientLightIntensity'
+Assets/Scripts/Generators/LevelGenerator.cs(86,12): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(51,30): error CS0246: The type or namespace name 'LevelObjectInstantiator' could not be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Generators/LevelGenerator.cs(1105,18): error CS0111: Type 'LevelGenerator' already defines a member called 'InitializeComponents' with the same parameter types
+*** Tundra build failed (0.63 seconds), 75 items updated, 487 evaluated
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  0,402 seconds
-The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+- Loaded All Assemblies, in  0,394 seconds
 The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 Refreshing native plugins compatible for Editor in 0,19 ms, found 0 plugins.
@@ -1858,9 +1606,9 @@ UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[]) (
 (Filename: ./Library/PackageCache/com.justinpbarnett.unity-mcp@226400e03ac3/Editor/UnityMcpBridge.cs Line: 80)
 
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0,612 seconds
-Domain Reload Profiling: 1014ms
-	BeginReloadAssembly (99ms)
+- Finished resetting the current domain, in  0,623 seconds
+Domain Reload Profiling: 1017ms
+	BeginReloadAssembly (97ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (7ms)
 		BackupInstance (0ms)
@@ -1869,78 +1617,68 @@ Domain Reload Profiling: 1014ms
 	RebuildCommonClasses (22ms)
 	RebuildNativeTypeToScriptingClass (5ms)
 	initialDomainReloadingComplete (17ms)
-	LoadAllAssembliesAndSetupDomain (258ms)
-		LoadAssemblies (164ms)
+	LoadAllAssembliesAndSetupDomain (252ms)
+		LoadAssemblies (167ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (129ms)
-			TypeCache.Refresh (105ms)
-				TypeCache.ScanAssembly (95ms)
+		AnalyzeDomain (120ms)
+			TypeCache.Refresh (98ms)
+				TypeCache.ScanAssembly (89ms)
 			BuildScriptInfoCaches (18ms)
 			ResolveRequiredComponents (3ms)
-	FinalizeReload (613ms)
+	FinalizeReload (624ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (524ms)
+		SetupLoadedEditorAssemblies (533ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (65ms)
-			SetLoadedEditorAssemblies (2ms)
-			BeforeProcessingInitializeOnLoad (95ms)
-			ProcessInitializeOnLoadAttributes (336ms)
-			ProcessInitializeOnLoadMethodAttributes (23ms)
-			AfterProcessingInitializeOnLoad (3ms)
+			InitializePlatformSupportModulesInManaged (61ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (88ms)
+			ProcessInitializeOnLoadAttributes (351ms)
+			ProcessInitializeOnLoadMethodAttributes (26ms)
+			AfterProcessingInitializeOnLoad (2ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (4ms)
+		AwakeInstancesAfterBackupRestoration (3ms)
 The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
-Start importing Assets/Prefabs/PlayerPrefab.prefab using Guid(45ef084dc624dcdf0b08ad52e8c34b92) (PrefabImporter) -> (artifact id: 'ff656f8c89f1eff564e04e4076fcbbbb') in 0.008148454 seconds
-Start importing Assets/Prefabs/CollectiblePrefab.prefab using Guid(5c967c7e30735590190a1ecefffb2f59) (PrefabImporter) -> (artifact id: '253042152e25335ebbe14727ed142a8a') in 0.000931552 seconds
-Start importing Assets/Prefabs/Player.prefab using Guid(8e1ad3f37feab50eb8883b04878e2d3f) (PrefabImporter) -> (artifact id: '10737e79d9ed301ab5465b4534694b94') in 0.00284363 seconds
-Refreshing native plugins compatible for Editor in 0,24 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0,00 ms.
-Asset Pipeline Refresh (id=106f87c80a8658a42bc3b61e7f6a2e3c): Total: 5.246 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+Asset Pipeline Refresh (id=27ae142a9208aab69adf126b44831751): Total: 5.520 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
 	Summary:
-		Imports: total=3 (actual=3, local cache=0, cache server=0)
-		Asset DB Process Time: managed=2 ms, native=2384 ms
-		Asset DB Callback time: managed=117 ms, native=2 ms
-		Scripting: domain reloads=1, domain reload time=846 ms, compile time=1873 ms, other=19 ms
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=2641 ms
+		Asset DB Callback time: managed=9 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=1207 ms, compile time=1640 ms, other=20 ms
 		Project Asset Count: scripts=937, non-scripts=1697
 		Asset File Changes: new=0, changed=0, moved=0, deleted=0
 		Scan Filter Count: 1
 	InvokeCustomDependenciesCallbacks: 0,003ms
-	InvokePackagesCallback: 0,302ms
-	ApplyChangesToAssetFolders: 0,229ms
-	Scan: 192,857ms
-	OnSourceAssetsModified: 0,005ms
-	CategorizeAssetsWithTransientArtifact: 24,796ms
-	ProcessAssetsWithTransientArtifactChanges: 25,802ms
-	CategorizeAssets: 14,091ms
-	ImportOutOfDateAssets: 629,795ms (-1256,785ms without children)
-		ImportManagerImport: 13,209ms (0,883ms without children)
-			ImportInProcess: 12,310ms
-			UpdateCategorizedAssets: 0,016ms
-		CompileScripts: 1872,589ms
+	InvokePackagesCallback: 0,292ms
+	ApplyChangesToAssetFolders: 0,227ms
+	Scan: 185,680ms
+	OnSourceAssetsModified: 0,008ms
+	CategorizeAssetsWithTransientArtifact: 24,413ms
+	ProcessAssetsWithTransientArtifactChanges: 24,439ms
+	CategorizeAssets: 13,683ms
+	ImportOutOfDateAssets: 627,247ms (-1013,591ms without children)
+		CompileScripts: 1640,138ms
 		ReloadNativeAssets: 0,000ms
-		UnloadImportedAssets: 0,167ms
-		ReloadImportedAssets: 0,000ms
-		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0,295ms
-		InitializingProgressBar: 0,001ms
+		UnloadImportedAssets: 0,178ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0,282ms
+		InitializingProgressBar: 0,000ms
 		PostProcessAllAssetNotificationsAddChangedAssets: 0,000ms
-		OnDemandSchedulerStart: 0,319ms
-	PostProcessAllAssets: 118,201ms
-	Hotreload: 1,649ms
+		OnDemandSchedulerStart: 0,239ms
+	PostProcessAllAssets: 9,990ms
 	GatherAllCurrentPrimaryArtifactRevisions: 0,000ms
-	UnloadStreamsBegin: 1,994ms
-	PersistCurrentRevisions: 0,085ms
-	UnloadStreamsEnd: 0,000ms
-	GenerateScriptTypeHashes: 1,662ms
-	Untracked: 4235,778ms
+	UnloadStreamsBegin: 1,534ms
+	PersistCurrentRevisions: 0,067ms
+	UnloadStreamsEnd: 0,001ms
+	GenerateScriptTypeHashes: 1,640ms
+	Untracked: 4632,526ms
 
 Application.AssetDatabase Initial Refresh End
-AutoLocale: current locale expects 'C' but got 'de_DE.UTF-8'Launched and connected shader compiler UnityShaderCompiler after 0.01 seconds
-Scanning for USB devices : 3.120ms
+AutoLocale: current locale expects 'C' but got 'de_DE.UTF-8'Launched and connected shader compiler UnityShaderCompiler after 0.02 seconds
+Scanning for USB devices : 2.692ms
 Initializing Unity extensions:
 [Licensing::Client] Successfully resolved entitlement details
 UpdateMenuTitleForLanguage: 10
@@ -1949,14 +1687,14 @@ UpdateMenuTitleForLanguage: 10
 [MODES] Loading mode Default (0) for mode-current-id-Roll-a-Ball
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
 Loaded scene 'Assets/Scenes/Level1.unity'
-	Deserialize:            15.381 ms
-	Integration:            34.178 ms
-	Integration of assets:  1.287 ms
-	Thread Wait Time:       -0.012 ms
-	Total Operation Time:   50.833 ms
-Unloading 3896 unused Assets / (2.6 MB). Loaded Objects now: 4636.
-Memory consumption went from 133.7 MB to 131.1 MB.
-Total: 6.321907 ms (FindLiveObjects: 0.208947 ms CreateObjectMapping: 0.086983 ms MarkObjects: 4.457288 ms  DeleteObjects: 1.568217 ms)
+	Deserialize:            15.718 ms
+	Integration:            37.066 ms
+	Integration of assets:  1.409 ms
+	Thread Wait Time:       -0.020 ms
+	Total Operation Time:   54.173 ms
+Unloading 3896 unused Assets / (2.1 MB). Loaded Objects now: 4636.
+Memory consumption went from 128.3 MB to 126.2 MB.
+Total: 6.127175 ms (FindLiveObjects: 0.216911 ms CreateObjectMapping: 0.120740 ms MarkObjects: 4.326175 ms  DeleteObjects: 1.462884 ms)
 
 [LAYOUT] About to load UserSettings/Layouts/default-6000.dwlt, keepMainWindow=False
 GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
@@ -1969,44 +1707,45 @@ GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info
 [LAYOUT] About to save layout /home/saschi/.config/unity3d/Preferences/Editor-5.x/Layouts/current/default-6000.dwlt
 [MODES] ModeService[default].InitializeCurrentMode
 [MODES] ModeService[default].RaiseModeChanged(default, default)
-[Project] Loading completed in 8.358 seconds
-	Project init time: 				6.397 seconds
+[Project] Loading completed in 7.931 seconds
+	Project init time: 				6.638 seconds
 		Template init time: 		0.000 seconds
-		Package Manager init time: 		0.114 seconds
-		Asset Database init time: 		0.102 seconds
-		Global illumination init time: 	0.002 seconds
-		Assemblies load time: 			0.564 seconds
-		Unity extensions init time: 	0.004 seconds
-		Asset Database refresh time: 	5.254 seconds
-	Scene opening time: 			1.652 seconds
-##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1753880497323,"processId":47034,"projectLoad":8.358216622,"projectInit":6.397312401,"templateInit":0.0,"packageManagerInit":0.114417948,"assetDatabaseInit":0.102443758,"globalIlluminationInit":0.002477566,"assembliesLoad":0.564160021,"unityExtensionsInit":0.003701852,"assetDatabaseRefresh":5.253767311,"sceneOpening":1.651778422}
-##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1753880497323,"processId":47034,"editorVersion":"6000.1.13f1 (418bd0acaa6b)","branch":"6000.1/staging","buildType":"Release","platform":"Linux"}
+		Package Manager init time: 		0.106 seconds
+		Asset Database init time: 		0.095 seconds
+		Global illumination init time: 	0.003 seconds
+		Assemblies load time: 			0.534 seconds
+		Unity extensions init time: 	0.012 seconds
+		Asset Database refresh time: 	5.520 seconds
+	Scene opening time: 			0.987 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1753881475079,"processId":48768,"projectLoad":7.930716358,"projectInit":6.638096914,"templateInit":0.0,"packageManagerInit":0.105759716,"assetDatabaseInit":0.094695332,"globalIlluminationInit":0.002673709,"assembliesLoad":0.534147123,"unityExtensionsInit":0.0119457,"assetDatabaseRefresh":5.520171471,"sceneOpening":0.987483296}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1753881475079,"processId":48768,"editorVersion":"6000.1.13f1 (418bd0acaa6b)","branch":"6000.1/staging","buildType":"Release","platform":"Linux"}
 The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
-The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
-Asset Pipeline Refresh (id=8fac950427e5a401684614c7034a158d): Total: 0.132 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
-The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+Asset Pipeline Refresh (id=b11d92c0fa48a203f83c4a408216f5f8): Total: 0.102 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
 The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
-Asset Pipeline Refresh (id=4fcce5c780de48686b919dae3b874b6f): Total: 0.044 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
-The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+Asset Pipeline Refresh (id=669f1020d17ec0513af3c84d53b1016d): Total: 0.045 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
 The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
 The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
 The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
-Asset Pipeline Refresh (id=067cfe23f89ca803b86cbb0005f16392): Total: 0.062 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
-Created GICache directory at /home/saschi/.cache/unity3d/GiCache. Took: 0.001s, timestamps: [8.500 - 8.501]
+Asset Pipeline Refresh (id=9dc658416d959816ab7b1b19965d0530): Total: 0.036 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Created GICache directory at /home/saschi/.cache/unity3d/GiCache. Took: 0.001s, timestamps: [8.042 - 8.043]
+Android Extension - Scanning For ADB Devices 594 ms
 [Licensing::Client] Successfully updated the access token
-[Licensing::Module] Successfully updated access token: "H02kTmaM"... (expires: 2026-07-30T13:01:38Z)
-Android Extension - Scanning For ADB Devices 730 ms
-Android Extension - Scanning For ADB Devices 168 ms
+[Licensing::Module] Successfully updated access token: "WXKDIQ-x"... (expires: 2026-07-30T13:17:55Z)
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated access token: "WXKDIQ-x"... (expires: 2026-07-30T13:17:56Z)
+Android Extension - Scanning For ADB Devices 163 ms
 Attempted to call .Dispose on an already disposed CancellationTokenSource
-Android Extension - Scanning For ADB Devices 166 ms
-GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
-Android Extension - Scanning For ADB Devices 164 ms
+Android Extension - Scanning For ADB Devices 165 ms
+Android Extension - Scanning For ADB Devices 163 ms
 TrimDiskCacheJob: Current cache size 0mb
