@@ -50,6 +50,7 @@ namespace RollABall.Map
         
         // Leipzig coordinates (fallback)
         private readonly Vector2 leipzigCoords = new Vector2(51.3387f, 12.3799f);
+        // TODO: Expose fallback coordinates via inspector to allow easy changes
         
         // Component references
         private AddressResolver addressResolver;

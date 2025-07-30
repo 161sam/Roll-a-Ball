@@ -246,6 +246,7 @@ namespace RollABall.VFX
             burstInterval = Random.Range(2f, 6f);
             baseEmissionRate = Random.Range(30f, 80f);
             temperatureCycleDuration = Random.Range(8f, 15f);
+            // TODO: Make random ranges configurable via serialized fields
             
             // Zufällige Startzeit für Audio
             audioTimer = Random.Range(0f, audioIntervalRange.y);

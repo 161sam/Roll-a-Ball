@@ -9,20 +9,21 @@ public static class SceneTypeDetector
     /// <summary>
     /// Szenen, in denen prozedurale Generierung erlaubt ist
     /// </summary>
-    public static readonly string[] ProceduralScenes = 
+    public static readonly string[] ProceduralScenes =
     {
         "GeneratedLevel",
         "Level_OSM",
         "MiniGame"
     };
+    // TODO: Load scene lists from configuration instead of hardcoding
 
     /// <summary>
     /// Statische Szenen, die bereits manuell aufgebaut sind
     /// </summary>
-    public static readonly string[] StaticScenes = 
+    public static readonly string[] StaticScenes =
     {
         "Level1",
-        "Level2", 
+        "Level2",
         "Level3"
     };
 

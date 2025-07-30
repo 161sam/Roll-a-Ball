@@ -89,8 +89,9 @@ public class CollectibleDiagnosticTool : MonoBehaviour
     private void FindAllCollectibles()
     {
         Log("Step 1: Finding all CollectibleController components...");
-        
+
         CollectibleController[] controllers = FindObjectsByType<CollectibleController>(FindObjectsSortMode.None);
+        // TODO: Avoid repeated allocations by caching results when auto-running frequently
         foundCollectibles.AddRange(controllers);
         
         Log($"Found {foundCollectibles.Count} CollectibleController components");

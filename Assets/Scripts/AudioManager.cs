@@ -417,6 +417,7 @@ public class AudioManager : MonoBehaviour
 
     void OnEnable()
     {
+        // TODO: Cache player reference in Awake to avoid repeated lookups
         PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player)
         {
