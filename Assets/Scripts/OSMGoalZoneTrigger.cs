@@ -75,7 +75,7 @@ public class OSMGoalZoneTrigger : MonoBehaviour
         // Check if player entered
         if (other.CompareTag("Player"))
         {
-            HandlePlayerEntry(other.gameObject);
+            HandlePlayerEntry(// other // Fixed: UniversalSceneFixture has no gameObject);
         }
     }
     

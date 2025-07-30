@@ -34,6 +34,11 @@ public class LevelProgressionProfile : ScriptableObject
     [SerializeField] private string osmModePrefab = "Level_OSM"; 
     [SerializeField] private string mainMenuScene = "MainMenu";
     
+    // Properties to access private fields (removes unused warnings)
+    public string EndlessModePrefab => endlessModePrefab;
+    public string OsmModePrefab => osmModePrefab;
+    public string MainMenuScene => mainMenuScene;
+    
     /// <summary>
     /// Get next scene name for given current scene
     /// </summary>

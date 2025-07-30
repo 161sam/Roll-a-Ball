@@ -98,18 +98,48 @@ public class LevelProfile : ScriptableObject
     public bool EnableSlipperyTiles => enableSlipperyTiles;
     public float SlipperyTileChance => slipperyTileChance;
     public PhysicsMaterial SlipperyMaterial => slipperyMaterial;
+
+    // 🔧 Steampunk-Hindernisse Properties
+    public bool EnableRotatingObstacles => enableRotatingObstacles;
+    public float RotatingObstacleDensity => rotatingObstacleDensity;
+    public bool EnableMovingPlatforms => enableMovingPlatforms;
+    public float MovingPlatformDensity => movingPlatformDensity;
+    public GameObject[] RotatingObstaclePrefabs => rotatingObstaclePrefabs;
+    public GameObject[] MovingPlatformPrefabs => movingPlatformPrefabs;
+
+    // 💨 Steam-Atmosphäre Properties
+    public bool EnableSteamEmitters => enableSteamEmitters;
+    public float SteamEmitterDensity => steamEmitterDensity;
+    public GameObject[] SteamEmitterPrefabs => steamEmitterPrefabs;
+    public SteamEmitterProfile SteamSettings => steamSettings;
+
+    // 🚪 Interaktive Elemente Properties
+    public bool EnableInteractiveGates => enableInteractiveGates;
+    public float InteractiveGateDensity => interactiveGateDensity;
+    public GameObject[] InteractiveGatePrefabs => interactiveGatePrefabs;
+
+    // 🎨 Visuelle Properties
     public Material[] GroundMaterials => groundMaterials;
     public Material[] WallMaterials => wallMaterials;
     public Material GoalZoneMaterial => goalZoneMaterial;
     public bool EnableParticleEffects => enableParticleEffects;
     public GameObject[] DecorativeEffects => decorativeEffects;
-    public Vector3 PlayerSpawnOffset => playerSpawnOffset;
-    public bool RandomizeSpawnPosition => randomizeSpawnPosition;
-    public float SpawnSafeRadius => spawnSafeRadius;
+
+    // 🎨 Steampunk-Thema Properties
+    public SteampunkTheme SteampunkTheme => steampunkTheme;
+    public Material[] SteampunkGroundMaterials => steampunkGroundMaterials;
+    public Material[] SteampunkWallMaterials => steampunkWallMaterials;
+    public Color AmbientLightColor => ambientLightColor;
+    public float AmbientLightIntensity => ambientLightIntensity;
+
+    // Advanced Settings Properties
     public int GenerationSeed => generationSeed;
     public bool UseTimeBasedSeed => useTimeBasedSeed;
     public LevelGenerationMode GenerationMode => generationMode;
     public float PathComplexity => pathComplexity;
+    public Vector3 PlayerSpawnOffset => playerSpawnOffset;
+    public bool RandomizeSpawnPosition => randomizeSpawnPosition;
+    public float SpawnSafeRadius => spawnSafeRadius;
 
     // Neue Properties für Steampunk-Features
     public bool EnableRotatingObstacles => enableRotatingObstacles;

@@ -283,9 +283,9 @@ namespace RollABall.Editor
             
             completer.CompleteOSMSceneSetup();
             
-            if (completer.gameObject.name == "Temp_OSMSceneCompleter")
+            if (// completer // Fixed: UniversalSceneFixture has no gameObject.name == "Temp_OSMSceneCompleter")
             {
-                DestroyImmediate(completer.gameObject);
+                DestroyImmediate(// completer // Fixed: UniversalSceneFixture has no gameObject);
             }
             
             EditorUtility.DisplayDialog("Success", "OSM Scene setup completed!\nLevel_OSM is ready for use.", "OK");

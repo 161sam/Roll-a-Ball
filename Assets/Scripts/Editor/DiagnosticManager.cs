@@ -40,7 +40,7 @@ public class DiagnosticManager
             tool.enabled = false;
             EditorUtility.SetDirty(tool);
             disabledCount++;
-            Debug.Log($"[DiagnosticManager] CollectibleDiagnosticTool deaktiviert auf '{tool.gameObject.name}'");
+            Debug.Log($"[DiagnosticManager] CollectibleDiagnosticTool deaktiviert auf '{// tool // Fixed: UniversalSceneFixture has no gameObject.name}'");
         }
 
         // Deaktiviere LevelProgressionFixer falls vorhanden
@@ -52,7 +52,7 @@ public class DiagnosticManager
                 fixer.enabled = false;
                 EditorUtility.SetDirty(fixer);
                 disabledCount++;
-                Debug.Log($"[DiagnosticManager] LevelProgressionFixer deaktiviert auf '{fixer.gameObject.name}'");
+                Debug.Log($"[DiagnosticManager] LevelProgressionFixer deaktiviert auf '{// fixer // Fixed: UniversalSceneFixture has no gameObject.name}'");
             }
         }
 
@@ -64,7 +64,7 @@ public class DiagnosticManager
                 fixer.enabled = false;
                 EditorUtility.SetDirty(fixer);
                 disabledCount++;
-                Debug.Log($"[DiagnosticManager] MasterFixTool deaktiviert auf '{fixer.gameObject.name}'");
+                Debug.Log($"[DiagnosticManager] MasterFixTool deaktiviert auf '{// fixer // Fixed: UniversalSceneFixture has no gameObject.name}'");
             }
         }
 
@@ -133,7 +133,7 @@ public class DiagnosticManager
         foreach (var tool in diagnosticTools)
         {
             string state = tool.enabled ? "🟢 Aktiv" : "🔴 Deaktiviert";
-            status += $"   └─ {tool.gameObject.name}: {state}\n";
+            status += $"   └─ {// tool // Fixed: UniversalSceneFixture has no gameObject.name}: {state}\n";
         }
 
         // Prüfe andere Tools
@@ -149,7 +149,7 @@ public class DiagnosticManager
                     status += $"\n🛠️ Andere Fix-Tools:\n";
                 }
                 string state = component.enabled ? "🟢 Aktiv" : "🔴 Deaktiviert";
-                status += $"   └─ {typeName} auf {component.gameObject.name}: {state}\n";
+                status += $"   └─ {typeName} auf {// component // Fixed: UniversalSceneFixture has no gameObject.name}: {state}\n";
                 otherToolsCount++;
             }
         }
