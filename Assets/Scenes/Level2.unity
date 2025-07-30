@@ -610,63 +610,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &200102792
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 200102794}
-  - component: {fileID: 200102793}
-  m_Layer: 0
-  m_Name: MasterFixTool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &200102793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200102792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24dc9162df853ba5790bbc2abf3f139c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoFixOnStart: 1
-  debugMode: 1
-  showProgressNotifications: 1
-  runCompleteFixNow: 0
-  runQuickDiagnostic: 0
-  fixUIProblems: 1
-  fixCollectibleProblems: 1
-  fixLevelProgression: 1
-  fixOSMSpecificIssues: 1
-  totalProblemsFound: 0
-  totalProblemsFixed: 0
-  fixedIssues: []
-  remainingIssues: []
---- !u!4 &200102794
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200102792}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &242820534
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -776,50 +719,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6259465797952542069, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   m_PrefabInstance: {fileID: 242820534}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &339608150
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 339608152}
-  - component: {fileID: 339608151}
-  m_Layer: 0
-  m_Name: UniversalSceneFixture
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &339608151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339608150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee0937edc10a8327daef47bab47a7540, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &339608152
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339608150}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &378108845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2548,6 +2447,7 @@ MonoBehaviour:
   autoFindGoalZone: 1
   levelCollectibles: []
   autoFindCollectibles: 1
+  progressionProfile: {fileID: 0}
   uiController: {fileID: 966336628}
   debugMode: 0
 --- !u!1001 &1656059071
@@ -2808,7 +2708,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742414279}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13c787ff32ca807ce8e64436f33a098c, type: 3}
   m_Name: 
@@ -3196,8 +3096,6 @@ SceneRoots:
   - {fileID: 2017032067}
   - {fileID: 744239201}
   - {fileID: 998819358}
-  - {fileID: 200102794}
-  - {fileID: 339608152}
   - {fileID: 732945404}
   - {fileID: 966336629}
   - {fileID: 1717064832}

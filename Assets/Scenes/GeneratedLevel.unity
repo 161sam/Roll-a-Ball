@@ -295,7 +295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &278893942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
   collectiblePrefab: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
   goalZonePrefab: {fileID: 7897462713699335167, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
   playerPrefab: {fileID: 7963736951585476877, guid: 45ef084dc624dcdf0b08ad52e8c34b92, type: 3}
-  roadMotorway: {fileID: 0}
+  roadMotorway: {fileID: 2100000, guid: 97f3266ccbd84684f9aaf5a019ce1106, type: 2}
   roadPrimary: {fileID: 0}
   roadSecondary: {fileID: 0}
   roadResidential: {fileID: 0}
@@ -489,6 +489,7 @@ MonoBehaviour:
   autoFindGoalZone: 1
   levelCollectibles: []
   autoFindCollectibles: 1
+  progressionProfile: {fileID: 0}
   uiController: {fileID: 1401927670}
   debugMode: 0
 --- !u!4 &478187466
@@ -535,10 +536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08c811373c76fb4b8b11ea6e14be021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoFixOnStart: 1
-  debugMode: 1
-  createMissingComponents: 1
-  runFixNow: 0
 --- !u!4 &575356288
 Transform:
   m_ObjectHideFlags: 0
@@ -629,10 +626,20 @@ MonoBehaviour:
   wallContainer: {fileID: 1766948056}
   collectibleContainer: {fileID: 37669108}
   effectsContainer: {fileID: 2076099733}
-  showGenerationDebug: 0
+  showGenerationDebug: 1
   showWalkableArea: 1
   walkableColor: {r: 0, g: 1, b: 0, a: 1}
   blockedColor: {r: 1, g: 0, b: 0, a: 1}
+  mainPathColor: {r: 0, g: 1, b: 1, a: 1}
+  platformCenterColor: {r: 1, g: 0, b: 1, a: 1}
+  caSeedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  caStartColor: {r: 0, g: 0, b: 1, a: 1}
+  terrainGenerator:
+    showTerrainDebug: 1
+    walkableColor: {r: 0, g: 1, b: 0, a: 1}
+    blockedColor: {r: 1, g: 0, b: 0, a: 1}
+    mainPathColor: {r: 0, g: 1, b: 1, a: 1}
+    platformCenterColor: {r: 1, g: 0, b: 1, a: 1}
 --- !u!4 &584997447
 Transform:
   m_ObjectHideFlags: 0
@@ -1062,63 +1069,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7897462713699335167, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
   m_PrefabInstance: {fileID: 1441850108}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1366336708
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1366336710}
-  - component: {fileID: 1366336709}
-  m_Layer: 0
-  m_Name: MasterFixTool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1366336709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366336708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49503879836e5a55a988275bcf5d83eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoFixOnStart: 1
-  debugMode: 1
-  showProgressNotifications: 1
-  runCompleteFixNow: 0
-  runQuickDiagnostic: 0
-  fixUIProblems: 1
-  fixCollectibleProblems: 1
-  fixLevelProgression: 1
-  fixOSMSpecificIssues: 1
-  totalProblemsFound: 0
-  totalProblemsFixed: 0
-  fixedIssues: []
-  remainingIssues: []
---- !u!4 &1366336710
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366336708}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1391886967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1785,7 +1735,6 @@ SceneRoots:
   - {fileID: 584997447}
   - {fileID: 1401927671}
   - {fileID: 778644236}
-  - {fileID: 1366336710}
   - {fileID: 278893943}
   - {fileID: 674954130}
   - {fileID: 577010964}
