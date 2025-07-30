@@ -48,6 +48,7 @@ public class SceneValidator : MonoBehaviour
     /// </summary>
     public IEnumerator ValidateSceneAsync()
     {
+        // TODO: Display progress UI while validation routines run
         LogValidation("🔍 Starting comprehensive scene validation...", true);
         
         validationReport = new ValidationReport();

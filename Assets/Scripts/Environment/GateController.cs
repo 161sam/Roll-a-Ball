@@ -64,6 +64,7 @@ namespace RollABall.Environment
             }
             
             Debug.Log($"Gate {gameObject.name} opened!", this);
+            // TODO: Provide matching TriggerClose() logic for reversible puzzles
         }
         
         /// <summary>

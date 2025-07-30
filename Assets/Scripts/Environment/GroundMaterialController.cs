@@ -16,6 +16,7 @@ public class GroundMaterialController : MonoBehaviour
     [SerializeField] private float materialGroupSize = 4f; // Size of material groups
     
     [Header("Material Sources")]
+    // TODO: Move material paths to a configuration ScriptableObject for easier updates
     [SerializeField] private string[] materialPaths = {
         "SteamGroundMaterial",
         "StandardGroundMaterial",

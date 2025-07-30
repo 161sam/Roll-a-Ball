@@ -62,6 +62,7 @@ namespace RollABall.Map
         [ContextMenu("Test Multiple Locations")]
         public void TestMultipleLocations()
         {
+            // TODO: Expose test locations via inspector to allow custom cases
             var testLocations = new[]
             {
                 ("Leipzig", 51.3397, 12.3731),
@@ -106,6 +107,7 @@ namespace RollABall.Map
             Debug.Log($"[BoundingBoxTester] === RESULTS: {passed}/{total} tests passed ===");
         }
         
+        // TODO: Move bounding box calculation to a shared utility class for reuse
         private (double minLat, double maxLat, double minLon, double maxLon) CalculateBoundingBox(double lat, double lon, float radius)
         {
             // Same algorithm as in AddressResolver (improved version)
