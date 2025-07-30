@@ -158,8 +158,10 @@ public class CollectibleController : MonoBehaviour
     {
         if (collectibleData.rotateObject)
         {
-            // Rotate around the global Y-axis so parent rotations do not affect the spin
-            transform.Rotate(Vector3.up, collectibleData.rotationSpeed * Time.deltaTime, Space.World);
+
+            // Rotate around the object's local Y-axis so each collectible spins independently
+            Quaternion rotation = Quaternion.Euler(0f, collectibleData.rotationSpeed * Time.deltaTime, 0f);
+            transform.localRotation *= rotation;
         }
     }
 
