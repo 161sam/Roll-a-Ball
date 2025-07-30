@@ -42,6 +42,7 @@ namespace RollABall.Environment
         [Header("Debug")]
         [SerializeField] private bool showGizmos = true;
         [SerializeField] private Color gizmoColor = Color.cyan;
+        [SerializeField] private string passengerTag = "Player";
         
         // Private Variablen
         private Vector3 worldStartPosition;
@@ -350,27 +351,29 @@ namespace RollABall.Environment
             // Automatische Korrektur ungültiger Werte
             moveSpeed = Mathf.Max(0.1f, moveSpeed);
             pauseDuration = Mathf.Max(0f, pauseDuration);
-            // TODO: Warn when start and end positions are identical
+            if (startPosition == endPosition)
+            {
+                Debug.LogWarning($"[MovingPlatform] Start and End positions are identical on {name}", this);
+            }
         }
         
         void OnTriggerEnter(Collider other)
         {
             // Spieler zur Plattform "heften" für realistisches Verhalten
-            if (other.CompareTag("Player"))
+            if (other.CompareTag(passengerTag))
             {
                 // CharacterController sollte nicht geparentet werden
                 if (!other.GetComponent<CharacterController>())
                 {
                     other.transform.SetParent(transform);
                 }
-                // TODO: Add configurable tag for supported passengers
             }
         }
         
         void OnTriggerExit(Collider other)
         {
             // Spieler von Plattform lösen
-            if (other.CompareTag("Player"))
+            if (other.CompareTag(passengerTag))
             {
                 other.transform.SetParent(null);
             }

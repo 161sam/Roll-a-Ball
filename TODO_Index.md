@@ -73,16 +73,16 @@
 | TODO-OPT#69 | Assets/Scripts/CollectibleDiagnosticTool.cs | FindAllCollectibles(), Zeile 94 | Suchergebnisse cachen, um Allokationen zu vermeiden | **erledigt** |
 | TODO-OPT#70 | Assets/Scripts/Map/MapStartupController.cs | leipzigCoords, Zeile 53 | Fallback-Koordinaten im Inspector einstellbar machen | **erledigt** |
 
-| TODO-OPT#71 | Assets/Scripts/Environment/GateController.cs | Awake(), Zeile 26 | Null-check warning for gateObject in OnValidate | |
-| TODO-OPT#72 | Assets/Scripts/Environment/GateController.cs | TriggerOpen(), Zeile 69 | Provide TriggerClose logic for reversible puzzles | |
-| TODO-OPT#73 | Assets/Scripts/Environment/GateController.cs | TriggerOpen(), Zeile 70 | Fire gate opened event for other systems | |
+| TODO-OPT#71 | Assets/Scripts/Environment/GateController.cs | Awake(), Zeile 26 | Null-check warning for gateObject in OnValidate | **erledigt** |
+| TODO-OPT#72 | Assets/Scripts/Environment/GateController.cs | TriggerOpen(), Zeile 69 | Provide TriggerClose logic for reversible puzzles | **erledigt** |
+| TODO-OPT#73 | Assets/Scripts/Environment/GateController.cs | TriggerOpen(), Zeile 70 | Fire gate opened event for other systems | **erledigt** |
 | TODO-OPT#74 | Assets/Scripts/Environment/GroundMaterialController.cs | Zeile 19 | Material paths via ScriptableObject | |
-| TODO-OPT#75 | Assets/Scripts/Environment/GroundMaterialController.cs | InitializeMaterialSystem(), Zeile 74 | Validate material sources in OnValidate | |
-| TODO-OPT#76 | Assets/Scripts/Environment/GroundMaterialController.cs | ApplyMaterialToObject(), Zeile 313 | Cache renderer references | |
-| TODO-OPT#77 | Assets/Scripts/Environment/GroundMaterialController.cs | OnDrawGizmosSelected(), Zeile 417 | Disable gizmo drawing in production | |
+| TODO-OPT#75 | Assets/Scripts/Environment/GroundMaterialController.cs | InitializeMaterialSystem(), Zeile 74 | Validate material sources in OnValidate | **erledigt** |
+| TODO-OPT#76 | Assets/Scripts/Environment/GroundMaterialController.cs | ApplyMaterialToObject(), Zeile 313 | Cache renderer references | **erledigt** |
+| TODO-OPT#77 | Assets/Scripts/Environment/GroundMaterialController.cs | OnDrawGizmosSelected(), Zeile 417 | Disable gizmo drawing in production | **erledigt** |
 | TODO-OPT#78 | Assets/Scripts/Environment/MovingPlatform.cs | Zeile 55 | Init from ScriptableObject profile | |
-| TODO-OPT#79 | Assets/Scripts/Environment/MovingPlatform.cs | OnValidate(), Zeile 352 | Warn if start and end positions match | |
-| TODO-OPT#80 | Assets/Scripts/Environment/MovingPlatform.cs | OnTriggerEnter(), Zeile 365 | Configurable passenger tag | |
+| TODO-OPT#79 | Assets/Scripts/Environment/MovingPlatform.cs | OnValidate(), Zeile 352 | Warn if start and end positions match | **erledigt** |
+| TODO-OPT#80 | Assets/Scripts/Environment/MovingPlatform.cs | OnTriggerEnter(), Zeile 365 | Configurable passenger tag | **erledigt** |
 | TODO-OPT#81 | Assets/Scripts/Environment/RotatingObstacle.cs | Zeile 14 | Tune rotation via ScriptableObject | |
 | TODO-OPT#82 | Assets/Scripts/Environment/RotatingObstacle.cs | OnValidate(), Zeile 32 | Expose min/max rotation speed | |
 | TODO-OPT#83 | Assets/Scripts/Environment/RotatingObstacle.cs | OnTriggerEnter(), Zeile 56 | Integrate damage system on contact | |

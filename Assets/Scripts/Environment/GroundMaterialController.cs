@@ -36,17 +36,40 @@ public class GroundMaterialController : MonoBehaviour
     private System.Random materialRandom;
     private Dictionary<Vector2Int, Material> materialMap;
     private List<GameObject> managedGroundObjects;
+    private Dictionary<GameObject, Renderer> rendererCache;
     private Material[] availableMaterials;
     
     // Public properties
     public Material[] AvailableMaterials => availableMaterials;
     public int AssignedObjectCount => managedGroundObjects?.Count ?? 0;
-    
+
     void Start()
     {
         if (assignOnStart)
         {
             AssignMaterials();
+        }
+    }
+
+    private void OnValidate()
+    {
+        if (groundMaterials != null)
+        {
+            for (int i = 0; i < groundMaterials.Length; i++)
+            {
+                if (groundMaterials[i] == null)
+                {
+                    Debug.LogWarning($"[GroundMaterialController] Missing material reference at index {i} on {name}", this);
+                }
+            }
+        }
+
+        foreach (string path in materialPaths)
+        {
+            if (!string.IsNullOrEmpty(path) && Resources.Load<Material>(path) == null)
+            {
+                Debug.LogWarning($"[GroundMaterialController] Material at Resources path '{path}' not found", this);
+            }
         }
     }
     
@@ -71,11 +94,11 @@ public class GroundMaterialController : MonoBehaviour
     /// </summary>
     private void InitializeMaterialSystem()
     {
-        // TODO: Validate material sources in OnValidate() to warn about missing assets
         // Initialize random generator with seed
         materialRandom = new System.Random(materialSeed);
         materialMap = new Dictionary<Vector2Int, Material>();
         managedGroundObjects = new List<GameObject>();
+        rendererCache = new Dictionary<GameObject, Renderer>();
         
         // Load available materials
         LoadAvailableMaterials();
@@ -197,6 +220,7 @@ public class GroundMaterialController : MonoBehaviour
                 if (IsGroundObject(obj))
                 {
                     managedGroundObjects.Add(obj);
+                    CacheRenderer(obj);
                 }
             }
         }
@@ -209,6 +233,7 @@ public class GroundMaterialController : MonoBehaviour
                 if (IsGroundObject(child))
                 {
                     managedGroundObjects.Add(child);
+                    CacheRenderer(child);
                 }
             }
         }
@@ -309,8 +334,11 @@ public class GroundMaterialController : MonoBehaviour
     /// </summary>
     private void ApplyMaterialToObject(GameObject obj, Material material)
     {
-        Renderer renderer = obj.GetComponent<Renderer>();
-        // TODO: Cache renderer references to avoid repeated GetComponent calls
+        if (!rendererCache.TryGetValue(obj, out Renderer renderer) || renderer == null)
+        {
+            renderer = obj.GetComponent<Renderer>();
+            rendererCache[obj] = renderer;
+        }
         if (renderer && renderer.material != material)
         {
             renderer.material = material;
@@ -366,6 +394,7 @@ public class GroundMaterialController : MonoBehaviour
         if (!managedGroundObjects.Contains(groundObj))
         {
             managedGroundObjects.Add(groundObj);
+            CacheRenderer(groundObj);
             
             if (availableMaterials != null && availableMaterials.Length > 0)
             {
@@ -383,6 +412,22 @@ public class GroundMaterialController : MonoBehaviour
         if (managedGroundObjects != null)
         {
             managedGroundObjects.Remove(groundObj);
+            if (rendererCache != null)
+                rendererCache.Remove(groundObj);
+        }
+    }
+
+    /// <summary>
+    /// Cache renderer for faster access
+    /// </summary>
+    private void CacheRenderer(GameObject obj)
+    {
+        if (rendererCache == null)
+            rendererCache = new Dictionary<GameObject, Renderer>();
+
+        if (!rendererCache.ContainsKey(obj))
+        {
+            rendererCache[obj] = obj.GetComponent<Renderer>();
         }
     }
     
@@ -413,8 +458,8 @@ public class GroundMaterialController : MonoBehaviour
     
     void OnDrawGizmosSelected()
     {
+#if UNITY_EDITOR
         if (!enableDebugVisuals || materialMap == null) return;
-        // TODO: Disable or limit gizmo drawing in production builds
         
         // Draw material groups
         foreach (var kvp in materialMap)
@@ -432,6 +477,7 @@ public class GroundMaterialController : MonoBehaviour
             Gizmos.color = material.color;
             Gizmos.DrawWireCube(worldPos, new Vector3(materialGroupSize, 0.1f, materialGroupSize));
         }
+#endif
     }
     
     #endregion

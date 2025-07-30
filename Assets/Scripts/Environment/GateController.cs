@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RollABall.Environment
 {
@@ -14,6 +15,10 @@ namespace RollABall.Environment
         [SerializeField] private bool disableVisuals = true;
         [SerializeField] private bool disableCollider = true;
         [SerializeField] private AudioClip openSound;
+
+        [Header("Events")]
+        public UnityEvent GateOpened;
+        public UnityEvent GateClosed;
         
         private bool isOpened = false;
         private AudioSource audioSource;
@@ -23,8 +28,6 @@ namespace RollABall.Environment
             if (!gateObject)
                 gateObject = gameObject;
 
-            // TODO: Add null-check warnings for missing gateObject in OnValidate()
-
             // Setup AudioSource for gate sounds
             audioSource = GetComponent<AudioSource>();
             if (!audioSource && openSound)
@@ -32,6 +35,14 @@ namespace RollABall.Environment
                 audioSource = gameObject.AddComponent<AudioSource>();
                 audioSource.playOnAwake = false;
                 audioSource.spatialBlend = 1f; // 3D sound
+            }
+        }
+
+        private void OnValidate()
+        {
+            if (!gateObject)
+            {
+                Debug.LogWarning($"[GateController] Missing gateObject reference on {name}", this);
             }
         }
 
@@ -65,9 +76,36 @@ namespace RollABall.Environment
                 audioSource.PlayOneShot(openSound);
             }
 
+            GateOpened?.Invoke();
             Debug.Log($"Gate {gameObject.name} opened!", this);
-            // TODO: Provide matching TriggerClose() logic for reversible puzzles
-            // TODO: Fire gate opened event for other systems
+        }
+
+        /// <summary>
+        /// Closes the gate again if it was opened.
+        /// </summary>
+        public void TriggerClose()
+        {
+            if (!isOpened) return;
+
+            isOpened = false;
+
+            if (gateObject)
+            {
+                if (disableCollider)
+                {
+                    var col = gateObject.GetComponent<Collider>();
+                    if (col) col.enabled = true;
+                }
+
+                if (disableVisuals)
+                {
+                    var rend = gateObject.GetComponent<Renderer>();
+                    if (rend) rend.enabled = true;
+                }
+            }
+
+            GateClosed?.Invoke();
+            Debug.Log($"Gate {gameObject.name} closed!", this);
         }
         
         /// <summary>
