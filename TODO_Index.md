@@ -98,4 +98,3 @@
 | TODO-OPT#94 | Assets/Scenes/Level3.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
 | TODO-OPT#95 | Assets/Scenes/GeneratedLevel.unity | n/a | Environment prefabs missing in generated level | |
 | TODO-OPT#96 | Assets/Scenes/Level_OSM.unity | n/a | Environment prefabs missing in OSM level | |
-| TODO-OPT#97 | Assets/Scenes/MiniGame.unity | n/a | Environment prefabs missing in minigame | |
