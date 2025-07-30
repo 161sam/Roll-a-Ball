@@ -38,8 +38,10 @@ namespace RollABall.Map
         public event Action<OSMMapData> OnMapDataLoaded;
         public event Action<string> OnError;
         public event Action<string> OnMapLoadErrorEvent;
-        
+
         private Coroutine currentRequest;
+        [SerializeField] private bool enableGeocodeCache = true;
+        private readonly Dictionary<string, GeocodeResult> geocodeCache = new();
         
         /// <summary>
         /// Result of address geocoding
@@ -98,11 +100,17 @@ namespace RollABall.Map
         {
             Debug.Log($"[AddressResolver] Resolving address: {address}");
 
+            if (enableGeocodeCache && geocodeCache.TryGetValue(address, out GeocodeResult cached))
+            {
+                Debug.Log($"[AddressResolver] Using cached geocode for {address}");
+                OnAddressResolved?.Invoke(cached);
+                yield return LoadMapDataCoroutine(cached.lat, cached.lon, searchRadius);
+                yield break;
+            }
+
             // Build Nominatim search URL
             string encodedAddress = UnityWebRequest.EscapeURL(address);
             string geocodeUrl = $"{nominatimBaseUrl}/search?q={encodedAddress}&format=json&limit=1&addressdetails=1&extratags=1";
-
-            // TODO: Cache geocode responses to minimize network requests
             
             using (UnityWebRequest request = UnityWebRequest.Get(geocodeUrl))
             {
@@ -120,8 +128,12 @@ namespace RollABall.Map
                     if (result != null && result.IsValid())
                     {
                         Debug.Log($"[AddressResolver] Address resolved: {result.displayName} at {result.lat}, {result.lon}");
+
+                        if (enableGeocodeCache)
+                            geocodeCache[address] = result;
+
                         OnAddressResolved?.Invoke(result);
-                        
+
                         // Now fetch map data for this location
                         yield return LoadMapDataCoroutine(result.lat, result.lon, searchRadius);
                     }

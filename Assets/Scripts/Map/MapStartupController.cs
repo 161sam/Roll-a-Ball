@@ -501,12 +501,18 @@ namespace RollABall.Map
         
         private void CreateMinimalLevel()
         {
-            // Create ground plane
+            // TODO-OPT#59: Use prefab for fallback level if available
+            if (fallbackLevelPrefab)
+            {
+                Instantiate(fallbackLevelPrefab);
+                return;
+            }
+
+            // Manual creation as last resort
             GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "OSM_Ground";
             ground.transform.localScale = Vector3.one * 2;
-            
-            // Create some walls
+
             for (int i = 0; i < 4; i++)
             {
                 GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -518,7 +524,6 @@ namespace RollABall.Map
                 );
                 wall.transform.localScale = new Vector3(2, 2, 2);
             }
-            // TODO: Convert fallback level creation to reusable prefab-based setup
         }
         
         private void PlaceCollectiblesOnMap()
