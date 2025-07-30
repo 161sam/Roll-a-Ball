@@ -24,3 +24,11 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/Generators/LevelGenerator.cs | 396 | Replace reflection with an interface for adaptive mode selection |
 | Assets/Scripts/Generators/LevelTerrainGenerator.cs | 162 | Refactor to interface-based lookup instead of reflection |
 | Assets/Scripts/Map/BatchingPerformanceTest.cs | 174 | Cache object list to avoid allocations during testing |
+| Assets/Material/CollectibleMaterial | 3 | Verify metallic/smoothness values for PBR consistency |
+| Assets/OSMAssets/Materials/OSM_Park_Material.mat | 3 | Adjust color to match overall scene lighting |
+| Assets/Prefabs/Player.prefab | 3 | Separate player stats into dedicated ScriptableObject |
+| Assets/Scenes/Level1.unity | 3 | Review occlusion and lighting settings for optimized performance |
+| Assets/Scenes/Level_OSM.unity | 3 | Ensure map generation uses prefabs from OSMAssets folder |
+| Assets/Resources/LevelProfiles/EasyProfile.asset | 25 | Balance collectible spawn height for easier levels |
+| Assets/ScriptableObjects/HardProfile.asset | 34 | Assign default moving platform prefabs for hard difficulty |
+| Assets/Scenes/GeneratedLevel.unity | 3 | Replace sample level with procedurally generated layout |
