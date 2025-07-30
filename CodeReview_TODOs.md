@@ -18,3 +18,9 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/SceneTypeDetector.cs | 18 | Read scene lists from config instead of hardcoding |
 | Assets/Scripts/CollectibleDiagnosticTool.cs | 94 | Cache results to avoid allocations |
 | Assets/Scripts/Map/MapStartupController.cs | 53 | Allow editing fallback coordinates in inspector |
+| Assets/Scripts/Input/InputManager.cs | 21 | Allow runtime key rebinding via settings menu |
+| Assets/Scripts/Map/MapGenerator.cs | 1492 | Expose chimney offset factors via inspector fields |
+| Assets/Scripts/Map/MapGenerator.cs | 1510 | Make gear decoration ranges configurable in LevelProfile |
+| Assets/Scripts/Generators/LevelGenerator.cs | 396 | Replace reflection with an interface for adaptive mode selection |
+| Assets/Scripts/Generators/LevelTerrainGenerator.cs | 162 | Refactor to interface-based lookup instead of reflection |
+| Assets/Scripts/Map/BatchingPerformanceTest.cs | 174 | Cache object list to avoid allocations during testing |

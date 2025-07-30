@@ -1489,7 +1489,8 @@ namespace RollABall.Map
                     0.5f,
                     Random.Range(-buildingSize.z * 0.3f, buildingSize.z * 0.3f)
                 );
-                
+                // TODO: Expose chimney offset factors via inspector fields
+
                 GameObject steamEmitter = Instantiate(chimneySmokeParticles, chimneyPos, Quaternion.identity);
                 steamEmitter.transform.SetParent(buildingObject.transform);
                 steamEmitter.name = "ChimneySteam";
@@ -1506,6 +1507,7 @@ namespace RollABall.Map
                         Random.Range(-0.2f, 0.5f),
                         Random.Range(-buildingSize.z * 0.4f, buildingSize.z * 0.4f)
                     );
+                    // TODO: Make gear decoration ranges configurable in LevelProfile
                     
                     GameObject gear = Instantiate(gearPrefab, gearPos, 
                         Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)));
