@@ -573,7 +573,7 @@ namespace RollABall.Environment
         /// </summary>
         void OnCollisionEnter(Collision collision)
         {
-            if (!// collision // Fixed: UniversalSceneFixture has no gameObject.CompareTag(requiredTag))
+            if (!collision.gameObject.CompareTag(requiredTag))
                 return;
             
             // Button-Aktivierung bei Kollision

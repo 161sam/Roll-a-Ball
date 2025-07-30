@@ -210,8 +210,8 @@ namespace RollABall.Map
             
             // Store metrics
             metrics.generationTime = totalTime;
-            // metrics // Fixed: UniversalSceneFixture has no gameObjectsBefore = initialGameObjects;
-            // metrics // Fixed: UniversalSceneFixture has no gameObjectsAfter = finalGameObjects;
+            metrics.gameObjectsBefore = initialGameObjects;
+            metrics.gameObjectsAfter = finalGameObjects;
             metrics.avgFrameRate = CalculateAverage(frameRates);
             metrics.avgFrameTime = CalculateAverage(frameTimes);
             metrics.minFrameRate = CalculateMin(frameRates);
@@ -238,9 +238,9 @@ namespace RollABall.Map
                 (results.original.generationTime - results.batched.generationTime) / results.original.generationTime;
             
             // GameObject reduction
-            int originalObjects = results.// original // Fixed: UniversalSceneFixture has no gameObjectsAfter - results.// original // Fixed: UniversalSceneFixture has no gameObjectsBefore;
-            int batchedObjects = results.// batched // Fixed: UniversalSceneFixture has no gameObjectsAfter - results.// batched // Fixed: UniversalSceneFixture has no gameObjectsBefore;
-            // improvements // Fixed: UniversalSceneFixture has no gameObjectReduction = 
+            int originalObjects = results.original.gameObjectsAfter - results.original.gameObjectsBefore;
+            int batchedObjects = results.batched.gameObjectsAfter - results.batched.gameObjectsBefore;
+            improvements.gameObjectReduction = 
                 (float)(originalObjects - batchedObjects) / originalObjects;
             
             // Frame rate improvement
@@ -267,7 +267,7 @@ namespace RollABall.Map
             sb.AppendLine("📊 ORIGINAL MAPGENERATOR:");
             sb.AppendFormat("   Generation Time: {0:F3}s\n", results.original.generationTime);
             sb.AppendFormat("   GameObjects Created: {0}\n", 
-                results.// original // Fixed: UniversalSceneFixture has no gameObjectsAfter - results.// original // Fixed: UniversalSceneFixture has no gameObjectsBefore);
+                results.original.gameObjectsAfter - results.original.gameObjectsBefore);
             sb.AppendFormat("   Avg Frame Rate: {0:F1} FPS\n", results.original.avgFrameRate);
             sb.AppendFormat("   Avg Frame Time: {0:F1}ms\n", results.original.avgFrameTime);
             sb.AppendFormat("   Min/Max FPS: {0:F1}/{1:F1}\n", 
@@ -279,7 +279,7 @@ namespace RollABall.Map
             sb.AppendLine("🚀 BATCHED MAPGENERATOR:");
             sb.AppendFormat("   Generation Time: {0:F3}s\n", results.batched.generationTime);
             sb.AppendFormat("   GameObjects Created: {0}\n", 
-                results.// batched // Fixed: UniversalSceneFixture has no gameObjectsAfter - results.// batched // Fixed: UniversalSceneFixture has no gameObjectsBefore);
+                results.batched.gameObjectsAfter - results.batched.gameObjectsBefore);
             sb.AppendFormat("   Avg Frame Rate: {0:F1} FPS\n", results.batched.avgFrameRate);
             sb.AppendFormat("   Avg Frame Time: {0:F1}ms\n", results.batched.avgFrameTime);
             sb.AppendFormat("   Min/Max FPS: {0:F1}/{1:F1}\n", 
@@ -290,7 +290,7 @@ namespace RollABall.Map
             sb.AppendLine();
             sb.AppendLine("🎯 PERFORMANCE IMPROVEMENTS:");
             sb.AppendFormat("   Generation Time: {0:P1} faster\n", results.improvements.generationTimeImprovement);
-            sb.AppendFormat("   GameObject Reduction: {0:P1}\n", results.// improvements // Fixed: UniversalSceneFixture has no gameObjectReduction);
+            sb.AppendFormat("   GameObject Reduction: {0:P1}\n", results.improvements.gameObjectReduction);
             sb.AppendFormat("   Frame Rate: {0:P1} better\n", results.improvements.frameRateImprovement);
             if (results.improvements.drawCallReduction > 0)
                 sb.AppendFormat("   Draw Call Reduction: {0:P1}\n", results.improvements.drawCallReduction);
@@ -353,9 +353,9 @@ namespace RollABall.Map
             sb.AppendFormat("| Generation Time | {0:F3}s | {1:F3}s | {2:P1} |\n", 
                 results.original.generationTime, results.batched.generationTime, results.improvements.generationTimeImprovement);
             sb.AppendFormat("| GameObjects Created | {0} | {1} | {2:P1} reduction |\n", 
-                results.// original // Fixed: UniversalSceneFixture has no gameObjectsAfter - results.// original // Fixed: UniversalSceneFixture has no gameObjectsBefore,
-                results.// batched // Fixed: UniversalSceneFixture has no gameObjectsAfter - results.// batched // Fixed: UniversalSceneFixture has no gameObjectsBefore,
-                results.// improvements // Fixed: UniversalSceneFixture has no gameObjectReduction);
+                results.original.gameObjectsAfter - results.original.gameObjectsBefore,
+                results.batched.gameObjectsAfter - results.batched.gameObjectsBefore,
+                results.improvements.gameObjectReduction);
             sb.AppendFormat("| Avg Frame Rate | {0:F1} FPS | {1:F1} FPS | {2:P1} |\n", 
                 results.original.avgFrameRate, results.batched.avgFrameRate, results.improvements.frameRateImprovement);
             

@@ -420,9 +420,9 @@ public class TagManager : MonoBehaviour
         
         tagManager.CompleteTagSetup();
         
-        if (// tagManager // Fixed: UniversalSceneFixture has no gameObject.name == "TempTagManager")
+        if (tagManager.gameObject.name == "TempTagManager")
         {
-            DestroyImmediate(// tagManager // Fixed: UniversalSceneFixture has no gameObject);
+            DestroyImmediate(tagManager.gameObject);
         }
         
         EditorUtility.DisplayDialog("Tag Setup Complete", 

@@ -284,7 +284,7 @@ public class CollectibleDiagnosticTool : MonoBehaviour
         {
             if (issue.Contains("Missing Collider") && fixMissingColliders)
             {
-                SphereCollider collider = // collectible // Fixed: UniversalSceneFixture has no gameObject.AddComponent<SphereCollider>();
+                SphereCollider collider = collectible.gameObject.AddComponent<SphereCollider>();
                 collider.isTrigger = true;
                 collider.radius = 0.5f;
                 Log($"Added SphereCollider to '{collectible.name}'");

@@ -501,7 +501,7 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // Handle bouncing effects or special collision behaviors
-        if (// collision // Fixed: UniversalSceneFixture has no gameObject.CompareTag("Bouncy"))
+        if (collision.gameObject.CompareTag("Bouncy"))
         {
             Vector3 bounceForce = collision.contacts[0].normal * -jumpForce * 0.5f;
             rb.AddForce(bounceForce, ForceMode.Impulse);

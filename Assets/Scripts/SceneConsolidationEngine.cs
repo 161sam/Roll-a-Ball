@@ -509,7 +509,7 @@ public class SceneConsolidationEngine : MonoBehaviour
             CameraController cameraController = mainCamera.GetComponent<CameraController>();
             if (cameraController == null)
             {
-                cameraController = // mainCamera // Fixed: UniversalSceneFixture has no gameObject.AddComponent<CameraController>();
+                cameraController = mainCamera.gameObject.AddComponent<CameraController>();
                 LogRepair("✅ CameraController added to Main Camera");
                 _totalIssuesFixed++;
             }
@@ -792,7 +792,7 @@ public class SceneConsolidationEngine : MonoBehaviour
             Renderer[] renderers = FindObjectsByType<Renderer>(FindObjectsSortMode.None);
             foreach (Renderer renderer in renderers)
             {
-                if (// renderer // Fixed: UniversalSceneFixture has no gameObject.name.Contains("Ground"))
+                if (renderer.gameObject.name.Contains("Ground"))
                 {
                     renderer.material = steampunkMaterial;
                 }
@@ -1057,7 +1057,7 @@ public class SceneConsolidationEngine : MonoBehaviour
         {
             if (oldText != null)
             {
-                GameObject textGO = // oldText // Fixed: UniversalSceneFixture has no gameObject;
+                GameObject textGO = oldText.gameObject;
                 string textContent = oldText.text;
                 Color textColor = oldText.color;
                 int fontSize = oldText.fontSize;

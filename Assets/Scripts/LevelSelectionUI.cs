@@ -221,8 +221,8 @@ public class LevelSelectionUI : MonoBehaviour
         // Clear existing items
         foreach (LevelItemUI item in levelItems)
         {
-            if (item && // item // Fixed: UniversalSceneFixture has no gameObject)
-                Destroy(// item // Fixed: UniversalSceneFixture has no gameObject);
+            if (item && item.gameObject)
+                Destroy(item.gameObject);
         }
         levelItems.Clear();
         

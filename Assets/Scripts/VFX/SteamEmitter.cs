@@ -281,49 +281,49 @@ namespace RollABall.VFX
         
         private void EnableSteamMode()
         {
-            if (steamParticles != null) // steamParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
-            if (sparksParticles != null) // sparksParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
-            if (smokeParticles != null) // smokeParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
+            if (steamParticles != null) steamParticles.gameObject.SetActive(true);
+            if (sparksParticles != null) sparksParticles.gameObject.SetActive(false);
+            if (smokeParticles != null) smokeParticles.gameObject.SetActive(false);
         }
         
         private void EnableFurnaceMode()
         {
-            if (steamParticles != null) // steamParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
-            if (sparksParticles != null) // sparksParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
-            if (smokeParticles != null) // smokeParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
+            if (steamParticles != null) steamParticles.gameObject.SetActive(true);
+            if (sparksParticles != null) sparksParticles.gameObject.SetActive(true);
+            if (smokeParticles != null) smokeParticles.gameObject.SetActive(false);
             useRandomBursts = true;
         }
         
         private void EnablePipeMode()
         {
-            if (steamParticles != null) // steamParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
-            if (sparksParticles != null) // sparksParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
-            if (smokeParticles != null) // smokeParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
+            if (steamParticles != null) steamParticles.gameObject.SetActive(true);
+            if (sparksParticles != null) sparksParticles.gameObject.SetActive(false);
+            if (smokeParticles != null) smokeParticles.gameObject.SetActive(false);
             burstInterval = 0.5f; // Häufige kleine Stöße
         }
         
         private void EnableEngineMode()
         {
-            if (steamParticles != null) // steamParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
-            if (sparksParticles != null) // sparksParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
-            if (smokeParticles != null) // smokeParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
+            if (steamParticles != null) steamParticles.gameObject.SetActive(true);
+            if (sparksParticles != null) sparksParticles.gameObject.SetActive(true);
+            if (smokeParticles != null) smokeParticles.gameObject.SetActive(true);
             affectPlayerMovement = true;
         }
         
         private void EnableGeyserMode()
         {
-            if (steamParticles != null) // steamParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
-            if (sparksParticles != null) // sparksParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
-            if (smokeParticles != null) // smokeParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
+            if (steamParticles != null) steamParticles.gameObject.SetActive(true);
+            if (sparksParticles != null) sparksParticles.gameObject.SetActive(false);
+            if (smokeParticles != null) smokeParticles.gameObject.SetActive(false);
             burstInterval = 8f; // Seltene, große Ausbrüche
             burstCountRange = new Vector2(100, 300);
         }
         
         private void EnableChimneyMode()
         {
-            if (steamParticles != null) // steamParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
-            if (sparksParticles != null) // sparksParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(false);
-            if (smokeParticles != null) // smokeParticles // Fixed: UniversalSceneFixture has no gameObject.SetActive(true);
+            if (steamParticles != null) steamParticles.gameObject.SetActive(false);
+            if (sparksParticles != null) sparksParticles.gameObject.SetActive(false);
+            if (smokeParticles != null) smokeParticles.gameObject.SetActive(true);
         }
         
         void Update()
@@ -359,12 +359,12 @@ namespace RollABall.VFX
         {
             int burstCount = (int)Random.Range(burstCountRange.x, burstCountRange.y);
             
-            if (steamParticles != null && // steamParticles // Fixed: UniversalSceneFixture has no gameObject.activeInHierarchy)
+            if (steamParticles != null && steamParticles.gameObject.activeInHierarchy)
             {
                 steamParticles.Emit(burstCount);
             }
             
-            if (sparksParticles != null && // sparksParticles // Fixed: UniversalSceneFixture has no gameObject.activeInHierarchy)
+            if (sparksParticles != null && sparksParticles.gameObject.activeInHierarchy)
             {
                 sparksParticles.Emit(burstCount / 5); // Weniger Funken
             }

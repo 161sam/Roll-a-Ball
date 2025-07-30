@@ -144,7 +144,7 @@ public class OSMSceneAutoSetup : MonoBehaviour
         else if (canvas != null)
         {
             // Add UIController to existing Canvas
-            uiControllerGO = // canvas // Fixed: UniversalSceneFixture has no gameObject;
+            uiControllerGO = canvas.gameObject;
             if (uiControllerGO.GetComponent<UIController>() == null)
             {
                 uiControllerGO.AddComponent<UIController>();

@@ -1038,9 +1038,9 @@ namespace RollABall.Map
                 foreach (Transform child in mapContainer)
                 {
                     if (Application.isPlaying)
-                        Destroy(// child // Fixed: UniversalSceneFixture has no gameObject);
+                        Destroy(child.gameObject);
                     else
-                        DestroyImmediate(// child // Fixed: UniversalSceneFixture has no gameObject);
+                        DestroyImmediate(child.gameObject);
                 }
             }
             

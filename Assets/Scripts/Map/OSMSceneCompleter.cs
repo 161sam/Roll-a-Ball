@@ -101,7 +101,7 @@ public class OSMSceneCompleter : MonoBehaviour
         var existing = parent.Find(name);
         if (existing != null)
         {
-            return existing.GetComponent<T>() ?? // existing // Fixed: UniversalSceneFixture has no gameObject.AddComponent<T>();
+            return existing.GetComponent<T>() ?? existing.gameObject.AddComponent<T>();
         }
 
         var newObj = new GameObject(name);
@@ -114,7 +114,7 @@ public class OSMSceneCompleter : MonoBehaviour
         var existing = parent.Find(name);
         if (existing != null)
         {
-            return // existing // Fixed: UniversalSceneFixture has no gameObject;
+            return existing.gameObject;
         }
 
         var newObj = new GameObject(name);
@@ -434,7 +434,7 @@ public class OSMSceneCompleter : MonoBehaviour
     {
         var existing = parent.Find(name);
         if (existing != null)
-            return // existing // Fixed: UniversalSceneFixture has no gameObject;
+            return existing.gameObject;
 
         var newObj = new GameObject(name);
         newObj.transform.SetParent(parent, false);
@@ -499,7 +499,7 @@ public class OSMSceneCompleter : MonoBehaviour
             var target = FindUIElementRecursive(searchRoot, targetName);
             if (target != null)
             {
-                field.SetValue(controller, // target // Fixed: UniversalSceneFixture has no gameObject);
+                field.SetValue(controller, target.gameObject);
                 Log($"Assigned {fieldName} -> {targetName}");
             }
         }
@@ -636,7 +636,7 @@ public class OSMSceneCompleter : MonoBehaviour
         var cameraController = camera.GetComponent<CameraController>();
         if (cameraController == null)
         {
-            cameraController = // camera // Fixed: UniversalSceneFixture has no gameObject.AddComponent<CameraController>();
+            cameraController = camera.gameObject.AddComponent<CameraController>();
             Log("CameraController added to Main Camera");
         }
 
@@ -644,7 +644,7 @@ public class OSMSceneCompleter : MonoBehaviour
         var audioListener = camera.GetComponent<AudioListener>();
         if (audioListener == null)
         {
-            // camera // Fixed: UniversalSceneFixture has no gameObject.AddComponent<AudioListener>();
+            camera.gameObject.AddComponent<AudioListener>();
             Log("AudioListener added to Main Camera");
         }
 
@@ -801,9 +801,9 @@ public class OSMSceneCompleter : MonoBehaviour
 
         completer.CompleteOSMSceneSetup();
 
-        if (// completer // Fixed: UniversalSceneFixture has no gameObject.name == "Temp_OSMSceneCompleter")
+        if (completer.gameObject.name == "Temp_OSMSceneCompleter")
         {
-            DestroyImmediate(// completer // Fixed: UniversalSceneFixture has no gameObject);
+            DestroyImmediate(completer.gameObject);
         }
     }
 #endif
