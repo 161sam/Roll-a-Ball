@@ -72,7 +72,6 @@
 | TODO-OPT#68 | Assets/Scripts/SceneTypeDetector.cs | Zeile 18 | Szenenlisten aus Konfiguration laden | **erledigt** |
 | TODO-OPT#69 | Assets/Scripts/CollectibleDiagnosticTool.cs | FindAllCollectibles(), Zeile 94 | Suchergebnisse cachen, um Allokationen zu vermeiden | **erledigt** |
 | TODO-OPT#70 | Assets/Scripts/Map/MapStartupController.cs | leipzigCoords, Zeile 53 | Fallback-Koordinaten im Inspector einstellbar machen | **erledigt** |
-
 | TODO-OPT#71 | Assets/Scripts/Environment/GateController.cs | Awake(), Zeile 26 | Null-check warning for gateObject in OnValidate | **erledigt** |
 | TODO-OPT#72 | Assets/Scripts/Environment/GateController.cs | TriggerOpen(), Zeile 69 | Provide TriggerClose logic for reversible puzzles | **erledigt** |
 | TODO-OPT#73 | Assets/Scripts/Environment/GateController.cs | TriggerOpen(), Zeile 70 | Fire gate opened event for other systems | **erledigt** |
