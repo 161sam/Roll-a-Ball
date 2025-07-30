@@ -79,7 +79,7 @@ public class CollectibleController : MonoBehaviour
     {
         if (!collectibleData.isCollected)
         {
-            HandleRotation();
+            RotateLocally();
             HandlePulseEffect();
         }
     }
@@ -158,14 +158,13 @@ public class CollectibleController : MonoBehaviour
         }
     }
 
-    private void HandleRotation()
+    private void RotateLocally()
     {
-        if (collectibleData.rotateObject)
-        {
-            // Rotate around the object's local Y-axis
-            // This keeps each collectible spinning in place regardless of parent rotation
-            transform.Rotate(Vector3.up, collectibleData.rotationSpeed * Time.deltaTime, Space.Self);
-        }
+        if (!collectibleData.rotateObject) return;
+
+        // Rotate around this object's local Y-axis
+        float angle = collectibleData.rotationSpeed * Time.deltaTime;
+        transform.localRotation *= Quaternion.Euler(0f, angle, 0f);
     }
 
     private void HandlePulseEffect()
