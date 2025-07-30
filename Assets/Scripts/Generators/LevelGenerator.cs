@@ -138,60 +138,6 @@ public class LevelGenerator : MonoBehaviour
     }
     #endregion
 
-    #region Component Initialization
-    /// <summary>
-    /// Initialisiert die modularen Komponenten
-    /// </summary>
-    private void InitializeComponents()
-    {
-        // Erstelle Komponenten-Instanzen falls nicht vorhanden
-        if (terrainGenerator == null)
-            terrainGenerator = new LevelTerrainGenerator();
-            
-        if (collectiblePlacer == null)
-            collectiblePlacer = new LevelCollectiblePlacer();
-            
-        if (effectManager == null)
-            effectManager = new LevelEffectManager();
-
-        // Subscribe to component events
-        SetupComponentEvents();
-
-        if (showGenerationDebug)
-        {
-            Debug.Log("[LevelGenerator] Modular components initialized");
-        }
-    }
-
-    /// <summary>
-    /// Richtet Event-Verbindungen zwischen Komponenten ein
-    /// </summary>
-    private void SetupComponentEvents()
-    {
-        // Terrain Generator Events
-        if (terrainGenerator != null)
-        {
-            terrainGenerator.OnTerrainGenerationCompleted += OnTerrainCompleted;
-            terrainGenerator.OnTerrainGenerationError += OnComponentError;
-        }
-
-        // Collectible Placer Events
-        if (collectiblePlacer != null)
-        {
-            collectiblePlacer.OnCollectiblesPlaced += OnCollectiblesPlaced;
-            collectiblePlacer.OnGoalZonePlaced += OnGoalZonePlaced;
-            collectiblePlacer.OnPlacementError += OnComponentError;
-        }
-
-        // Effect Manager Events
-        if (effectManager != null)
-        {
-            effectManager.OnEffectsApplied += OnEffectsApplied;
-            effectManager.OnSteamEmittersPlaced += OnSteamEmittersPlaced;
-            effectManager.OnEffectError += OnComponentError;
-        }
-    }
-    #endregion
 
     #region Public API
     /// <summary>
@@ -1127,12 +1073,15 @@ public class LevelGenerator : MonoBehaviour
             objectInstantiator = new LevelObjectInstantiator();
         
         objectInstantiator.Initialize(
-            activeProfile, terrainGenerator, 
+            activeProfile, terrainGenerator,
             groundPrefab, wallPrefab, collectiblePrefab, goalZonePrefab,
             levelContainer, groundContainer, wallContainer, collectibleContainer, effectsContainer,
             rng, showGenerationDebug
         );
-        
+
+        // Subscribe to component events
+        SetupComponentEvents();
+
         if (showGenerationDebug)
         {
             Debug.Log($"[LevelGenerator] All components initialized for {activeProfile.DisplayName}");
@@ -1142,7 +1091,7 @@ public class LevelGenerator : MonoBehaviour
     /// <summary>
     /// Subscribe to component events
     /// </summary>
-    private void SubscribeToComponentEvents()
+    private void SetupComponentEvents()
     {
         // Terrain events
         if (terrainGenerator != null)

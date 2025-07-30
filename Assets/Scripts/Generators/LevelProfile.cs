@@ -141,25 +141,6 @@ public class LevelProfile : ScriptableObject
     public bool RandomizeSpawnPosition => randomizeSpawnPosition;
     public float SpawnSafeRadius => spawnSafeRadius;
 
-    // Neue Properties für Steampunk-Features
-    public bool EnableRotatingObstacles => enableRotatingObstacles;
-    public float RotatingObstacleDensity => rotatingObstacleDensity;
-    public bool EnableMovingPlatforms => enableMovingPlatforms;
-    public float MovingPlatformDensity => movingPlatformDensity;
-    public GameObject[] RotatingObstaclePrefabs => rotatingObstaclePrefabs;
-    public GameObject[] MovingPlatformPrefabs => movingPlatformPrefabs;
-    public bool EnableSteamEmitters => enableSteamEmitters;
-    public float SteamEmitterDensity => steamEmitterDensity;
-    public GameObject[] SteamEmitterPrefabs => steamEmitterPrefabs;
-    public SteamEmitterProfile SteamSettings => steamSettings;
-    public bool EnableInteractiveGates => enableInteractiveGates;
-    public float InteractiveGateDensity => interactiveGateDensity;
-    public GameObject[] InteractiveGatePrefabs => interactiveGatePrefabs;
-    public SteampunkTheme SteampunkTheme => steampunkTheme;
-    public Material[] SteampunkGroundMaterials => steampunkGroundMaterials;
-    public Material[] SteampunkWallMaterials => steampunkWallMaterials;
-    public Color AmbientLightColor => ambientLightColor;
-    public float AmbientLightIntensity => ambientLightIntensity;
 
     /// <summary>
     /// Berechnet den tatsächlichen Seed für die Levelgenerierung
