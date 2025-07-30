@@ -158,8 +158,8 @@ public class CollectibleController : MonoBehaviour
     {
         if (collectibleData.rotateObject)
         {
-            // Rotate around local Y-axis to ensure independent spinning
-            transform.Rotate(Vector3.up, collectibleData.rotationSpeed * Time.deltaTime, Space.Self);
+            // Rotate around the global Y-axis so parent rotations do not affect the spin
+            transform.Rotate(Vector3.up, collectibleData.rotationSpeed * Time.deltaTime, Space.World);
         }
     }
 
