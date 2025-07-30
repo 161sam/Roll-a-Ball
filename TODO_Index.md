@@ -1,7 +1,7 @@
 ### TODO-Index für Codeoptimierung
 
-| ID | Datei | Ort (Zeile/Funktion) | Beschreibung |
-| --- | --- | --- | --- |
+| ID | Datei | Ort (Zeile/Funktion) | Beschreibung | Status | 
+| --- | --- | --- | --- | --- |
 | TODO-OPT#1 | Assets/Scripts/Generators/LevelGenerator.cs | CreateGroundTile(), Zeile 1350 | Redundante Materialauswahl mit CreateWallTile | **erledigt** |
 | TODO-OPT#2 | Assets/Scripts/Generators/LevelGenerator.cs | InstantiateLevelObjects(), Zeile 1309 | Wiederholte Prefab-Existenzprüfung | **erledigt** |
 | TODO-OPT#3 | Assets/Scripts/Generators/LevelGenerator.cs | SetupPlayerSpawn(), Zeile 1651 | Duplizierter Velocity-Reset | **erledigt** |
