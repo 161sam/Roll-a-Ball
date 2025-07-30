@@ -37,15 +37,16 @@ public class RotatingObstacle : MonoBehaviour
         Gizmos.DrawRay(transform.position, forward);
     }
     
-    private void OnTriggerEnter(Collider other)
-    {
-        // Optional: Add sound effect when player touches obstacle
-        if (other.CompareTag("Player"))
+        private void OnTriggerEnter(Collider other)
         {
-            if (AudioManager.Instance)
+            // Optional: Add sound effect when player touches obstacle
+            if (other.CompareTag("Player"))
             {
-                AudioManager.Instance.PlaySound("MetalClank");
+                if (AudioManager.Instance)
+                {
+                    AudioManager.Instance.PlaySound("MetalClank");
+                }
+                // TODO: Integrate damage system to penalize the player on contact
             }
         }
-    }
 }

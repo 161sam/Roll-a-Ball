@@ -66,6 +66,7 @@ namespace RollABall.Map
             }
         }
         
+        // TODO: Replace OnGUI with a UI Canvas overlay to support scaling and styling
         private void OnGUI()
         {
             if (!showOnScreen || !isVisible) return;
@@ -112,6 +113,7 @@ namespace RollABall.Map
             
             backgroundStyle = new GUIStyle(GUI.skin.box);
             backgroundStyle.normal.background = CreateColorTexture(backgroundColor);
+            // TODO: Cache created textures if display colors change frequently
         }
         
         private Texture2D CreateColorTexture(Color color)

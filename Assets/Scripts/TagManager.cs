@@ -13,9 +13,10 @@ using UnityEditor;
 public class TagManager : MonoBehaviour
 {
     [Header("Required Tags")]
+    // TODO: Load required tags from a central config file instead of hardcoding
     [SerializeField] private string[] requiredTags = {
         "Player",
-        "Collectible", 
+        "Collectible",
         "Finish",
         "Ground",
         "Wall",

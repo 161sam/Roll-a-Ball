@@ -78,6 +78,7 @@ namespace RollABall.Performance
             Debug.Log("========================");
         }
         
+        // TODO: Replace OnGUI debug overlay with a Canvas-based UI for better performance
         private void OnGUI()
         {
             if (!showPerformanceStats) return;

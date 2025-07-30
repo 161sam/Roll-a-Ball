@@ -60,6 +60,7 @@ namespace RollABall.Testing
         /// <summary>
         /// Create synthetic test data with various road types
         /// </summary>
+        // TODO: Move synthetic test data generation to a ScriptableObject for easier tweaking
         private OSMMapData CreateTestMapData()
         {
             Debug.Log("[MapGeneratorTester] Creating test OSM data...");

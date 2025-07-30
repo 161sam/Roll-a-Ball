@@ -160,6 +160,7 @@ public class OSMGoalZoneTrigger : MonoBehaviour
         UIController uiController = FindFirstObjectByType<UIController>();
         if (uiController != null)
         {
+            // TODO: Use an event from UIController instead of direct lookup
             uiController.ShowNotification(message, 3f);
         }
         
