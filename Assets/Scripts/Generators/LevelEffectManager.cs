@@ -234,7 +234,9 @@ namespace RollABall.Generators
         /// </summary>
         public void ApplySlipperyPhysics(GameObject obj)
         {
-            if (!activeProfile.EnableSlipperyTiles || activeProfile.SlipperyMaterial == null) return;
+            if (obj == null || activeProfile == null ||
+                !activeProfile.EnableSlipperyTiles || activeProfile.SlipperyMaterial == null)
+                return;
 
             if (random.NextDouble() < activeProfile.SlipperyTileChance)
             {
