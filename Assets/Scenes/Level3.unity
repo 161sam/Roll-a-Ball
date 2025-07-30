@@ -2226,7 +2226,7 @@ MonoBehaviour:
     levelIndex: 3
     nextSceneName: GeneratedLevel
     totalCollectibles: 12
-    collectiblesRemaining: 5
+    collectiblesRemaining: 12
     difficultyMultiplier: 2
     hasTimeLimit: 1
     timeLimit: 120
