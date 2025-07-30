@@ -248,9 +248,9 @@ namespace RollABall.Editor
             CollectibleController[] collectibles = Object.FindObjectsByType<CollectibleController>(FindObjectsSortMode.None);
             foreach (CollectibleController collectible in collectibles)
             {
-                if (!// collectible // Fixed: UniversalSceneFixture has no gameObject.CompareTag("Collectible"))
+                if (!collectible.CompareTag("Collectible"))
                 {
-                    // collectible // Fixed: UniversalSceneFixture has no gameObject.tag = "Collectible";
+                    collectible.tag = "Collectible";
                     Debug.Log($"Fixed collectible tag in {sceneToFix.name}");
                 }
             }

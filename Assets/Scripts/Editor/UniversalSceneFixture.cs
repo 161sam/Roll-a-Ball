@@ -141,7 +141,7 @@ public class UniversalSceneFixture : EditorWindow
             Canvas canvas = FindFirstObjectByType<Canvas>();
             if (canvas != null)
             {
-                uiController = // canvas // Fixed: UniversalSceneFixture has no gameObject.AddComponent<UIController>();
+                uiController = canvas.gameObject.AddComponent<UIController>();
                 LogFix("✅ Added UIController to Canvas");
             }
             else
@@ -245,7 +245,7 @@ public class UniversalSceneFixture : EditorWindow
             UnityEngine.UI.CanvasScaler scaler = canvas.GetComponent<UnityEngine.UI.CanvasScaler>();
             if (scaler == null)
             {
-                scaler = // canvas // Fixed: UniversalSceneFixture has no gameObject.AddComponent<UnityEngine.UI.CanvasScaler>();
+                scaler = canvas.gameObject.AddComponent<UnityEngine.UI.CanvasScaler>();
                 scaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize;
                 scaler.referenceResolution = new Vector2(1920, 1080);
                 LogFix("✅ Added CanvasScaler to Canvas");
@@ -265,9 +265,9 @@ public class UniversalSceneFixture : EditorWindow
             bool needsFix = false;
             
             // Ensure collectible has correct tag
-            if (// collectible // Fixed: UniversalSceneFixture has no gameObject.tag != "Collectible")
+            if (collectible.tag != "Collectible")
             {
-                // collectible // Fixed: UniversalSceneFixture has no gameObject.tag = "Collectible";
+                collectible.tag = "Collectible";
                 needsFix = true;
             }
             
@@ -275,7 +275,7 @@ public class UniversalSceneFixture : EditorWindow
             Collider collider = collectible.GetComponent<Collider>();
             if (collider == null)
             {
-                SphereCollider sphereCollider = // collectible // Fixed: UniversalSceneFixture has no gameObject.AddComponent<SphereCollider>();
+                SphereCollider sphereCollider = collectible.gameObject.AddComponent<SphereCollider>();
                 sphereCollider.isTrigger = true;
                 needsFix = true;
             }
@@ -328,7 +328,7 @@ public class UniversalSceneFixture : EditorWindow
             // Ensure GameManager is marked as DontDestroyOnLoad
             if (gameManager.transform.parent == null)
             {
-                DontDestroyOnLoad(// gameManager // Fixed: UniversalSceneFixture has no gameObject);
+                DontDestroyOnLoad(gameManager.gameObject);
                 LogFix("✅ Set GameManager as DontDestroyOnLoad");
             }
         }
@@ -460,13 +460,13 @@ public class UniversalSceneFixture : EditorWindow
         CollectibleController[] collectibles = FindObjectsByType<CollectibleController>(FindObjectsSortMode.None);
         bool collectiblesValid = true;
         
-        foreach (CollectibleController collectible in collectibles)
-        {
-            if (// collectible // Fixed: UniversalSceneFixture has no gameObject.tag != "Collectible")
+            foreach (CollectibleController collectible in collectibles)
             {
-                collectiblesValid = false;
-                break;
-            }
+                if (collectible.tag != "Collectible")
+                {
+                    collectiblesValid = false;
+                    break;
+                }
             
             Collider collider = collectible.GetComponent<Collider>();
             if (collider == null || !collider.isTrigger)
