@@ -159,6 +159,7 @@ namespace RollABall.Generators
         try
         {
             var methodInfo = profile.GetType().GetMethod("GetAdaptiveGenerationMode");
+            // TODO: Refactor to interface-based lookup instead of reflection
             if (methodInfo != null)
             {
                 return (LevelGenerationMode)methodInfo.Invoke(profile, new object[] { random.Next() });

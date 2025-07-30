@@ -393,6 +393,7 @@ public class LevelGenerator : MonoBehaviour
         try
         {
             var methodInfo = activeProfile.GetType().GetMethod("GetAdaptiveGenerationMode");
+            // TODO: Replace reflection with an interface for adaptive mode selection
             if (methodInfo != null)
             {
                 usedGenerationMode = (LevelGenerationMode)methodInfo.Invoke(activeProfile, new object[] { seed });

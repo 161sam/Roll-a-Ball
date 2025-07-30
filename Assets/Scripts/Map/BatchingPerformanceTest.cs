@@ -168,9 +168,10 @@ namespace RollABall.Map
             List<float> frameTimes = new List<float>();
             int initialGameObjects = 0;
             int finalGameObjects = 0;
-            
+
             // Take baseline measurements
             initialGameObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None).Length;
+            // TODO: Cache object list to avoid allocations during testing
             
             // Generate map and measure time
             float startTime = Time.realtimeSinceStartup;
