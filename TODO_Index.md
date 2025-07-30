@@ -28,9 +28,9 @@
 | TODO-OPT#24 | Assets/Scripts/Map/OSMSceneCompleter.cs | SetupUIComponents(), Zeile 67 | UI-Setup-Methoden mit generischen Buildern vereinheitlichen |
 | TODO-OPT#25 | Assets/Editor/ProjectCleanupAndFix.cs | CreateProperLevelProfiles(), Zeile 100 | Wiederholte Folder-Checks in Hilfsmethode auslagern | **erledigt** |
 | TODO-OPT#26 | Assets/Scripts/LevelManager.cs | OnDestroy(), Zeile 116 | Events vor Zerstörung abmelden | **erledigt** |
-| TODO-OPT#27 | Assets/Scripts/Map/MapGenerator.cs | CreateSteamEmitter(), Zeile 1565 | SteamEmitter-Pooling einführen |
-| TODO-OPT#28 | Assets/Scripts/PlayerController.cs | CheckGrounded(), Zeile 206 | LayerMask-Abfrage cachen oder CharacterController nutzen |
-| TODO-OPT#29 | Assets/Scripts/PlayerController.cs | SlideRoutine(), Zeile 427 | Slide-Impulse konfigurierbar machen |
+| TODO-OPT#27 | Assets/Scripts/Map/MapGenerator.cs | CreateSteamEmitter(), Zeile 1565 | SteamEmitter-Pooling einführen | **erledigt** |
+| TODO-OPT#28 | Assets/Scripts/PlayerController.cs | CheckGrounded(), Zeile 206 | LayerMask-Abfrage cachen oder CharacterController nutzen | **erledigt** |
+| TODO-OPT#29 | Assets/Scripts/PlayerController.cs | SlideRoutine(), Zeile 427 | Slide-Impulse konfigurierbar machen | **erledigt** |
 | TODO-OPT#30 | Assets/Scripts/OSMGoalZoneTrigger.cs | SetupGoalZone(), Zeile 40 | Fallback bei fehlendem LevelManager einbauen | **erledigt** |
 | TODO-OPT#31 | Assets/Scripts/Map/MapStartupController.cs | GetCoordsFromAddress(), Zeile 403 | Geocoding-Service integrieren |
 | TODO-OPT#32 | Assets/Scripts/Map/MapGeneratorBatched.cs | CreateSeparateColliders(), Zeile 548 | Collider-Pooling zur GC-Reduktion |
@@ -56,8 +56,8 @@
 | TODO-OPT#52 | Assets/Scripts/UIController.cs | UpdateMainMenuUI(), Zeile 313 | UI-Texte lokalisieren |
 | TODO-OPT#53 | Assets/Scripts/UIController.cs | ShowNotificationCoroutine(), Zeile 820 | Notification-Pool verwenden |
 | TODO-OPT#54 | Assets/Scripts/Map/MapGeneratorBatched.cs | InitializeBatchingCollections(), Zeile 114 | String-Keys durch Enum ersetzen |
-| TODO-OPT#55 | Assets/Scripts/Environment/SteampunkGateController.cs | InitializeGate(), Zeile 122 | Manager-Referenzen per Inspector setzen |
-| TODO-OPT#56 | Assets/Scripts/Environment/SteampunkGateController.cs | Zeile 665 | OnDestroy zur Coroutine-Aufräumung einführen |
+| TODO-OPT#55 | Assets/Scripts/Environment/SteampunkGateController.cs | InitializeGate(), Zeile 122 | Manager-Referenzen per Inspector setzen | **erledigt** |
+| TODO-OPT#56 | Assets/Scripts/Environment/SteampunkGateController.cs | Zeile 665 | OnDestroy zur Coroutine-Aufräumung einführen | **erledigt** |
 | TODO-OPT#57 | Assets/Scripts/Environment/MovingPlatform.cs | BounceEaseOut(), Zeile 241 | Magic Numbers durch Konstanten ersetzen | **erledigt** |
 | TODO-OPT#58 | Assets/Scripts/Environment/MovingPlatform.cs | OnTriggerEnter(), Zeile 349 | CharacterController-Unterstützung prüfen |
 | TODO-OPT#59 | Assets/Scripts/Map/MapStartupController.cs | CreateMinimalLevel(), Zeile 510 | Fallback-Level als Prefab realisieren |
@@ -67,8 +67,8 @@
 | TODO-OPT#63 | Assets/Scripts/UIController.cs | Zeile 983 | OnDestroy zum Deregistrieren der Events schreiben | **erledigt** |
 | TODO-OPT#64 | Assets/Scripts/PlayerController.cs | HandleInput(), Zeile 174 | Legacy Input System durch New Input System ersetzen |
 | TODO-OPT#65 | Assets/Scripts/AudioManager.cs | OnEnable(), Zeile 420 | PlayerController-Referenz cachen | **erledigt** |
-| TODO-OPT#66 | Assets/Scripts/VFX/RotatingGear.cs | Start(), Zeile 27 | Range für Rotationsvarianz exponieren |
-| TODO-OPT#67 | Assets/Scripts/VFX/SteamEmitter.cs | RandomizeSettings(), Zeile 249 | Zufallsbereiche per Inspector konfigurierbar machen |
+| TODO-OPT#66 | Assets/Scripts/VFX/RotatingGear.cs | Start(), Zeile 27 | Range für Rotationsvarianz exponieren | **erledigt** |
+| TODO-OPT#67 | Assets/Scripts/VFX/SteamEmitter.cs | RandomizeSettings(), Zeile 249 | Zufallsbereiche per Inspector konfigurierbar machen | **erledigt** |
 | TODO-OPT#68 | Assets/Scripts/SceneTypeDetector.cs | Zeile 18 | Szenenlisten aus Konfiguration laden |
 | TODO-OPT#69 | Assets/Scripts/CollectibleDiagnosticTool.cs | FindAllCollectibles(), Zeile 94 | Suchergebnisse cachen, um Allokationen zu vermeiden | **erledigt** |
 | TODO-OPT#70 | Assets/Scripts/Map/MapStartupController.cs | leipzigCoords, Zeile 53 | Fallback-Koordinaten im Inspector einstellbar machen | **erledigt** |
