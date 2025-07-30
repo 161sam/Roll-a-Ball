@@ -1,14 +1,15 @@
 wiki/docs/development/AGENTS-INDEX.md stellt eine AGENTEN-ÜBERSICHT bereit.
 
-WORKING DIR = /home/saschi/Games/Roll-a-Ball // Lokales Arbeitsverzeichnis 
-
+local_working_dir = /home/saschi/Games/Roll-a-Ball  
 default_user = Sam Schimmelpfennig/saschi161  
-Github_User = 161sam  
+github_user = 161sam  
 
 ---
 
+Game development
+
 Programming Language: C#
-Engine: Unity Editor 6.1
+Game Engine: Unity Editor 6.1
 
 ---
 
