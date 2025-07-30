@@ -328,22 +328,6 @@ public float CalculateDifficultyScore()
 
 ---
 
-## 🧪 **Testing & Quality Assurance**
-
-### **Gameplay-Tests**
-- ✅ Bewegliche Plattformen: Player-Attachment funktioniert
-- ✅ Rotierende Hindernisse: Bounce-Effekte korrekt
-- ✅ Steam-Emitter: Partikel-Performance optimiert
-- ✅ Interaktive Tore: Alle 6 Aktivierungstypen getestet
-
-### **Performance-Tests**  
-- ✅ Level-Generierung: Keine Frame-Drops bei 16x16
-- ✅ Partikelsysteme: <5% CPU-Last bei maximaler Dichte
-- ✅ Audio-System: 3D-Rolloff funktioniert korrekt
-- ✅ Memory Management: Keine Leaks nach 100+ Regenerationen
-
----
-
 ## 📝 **Lizenz**
 
 Dieses Projekt steht unter der **MIT-Lizenz** - siehe [LICENSE](LICENSE) für Details.
