@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using RollABall.Utility;
 
 /// <summary>
 /// Controller für sammelbare Objekte im Roll-a-Ball Spiel
@@ -319,8 +320,8 @@ public class CollectibleController : MonoBehaviour
             yield return new WaitWhile(() => audioSource.isPlaying);
         }
 
-        // Destroy object
-        Destroy(gameObject);
+        // Return to pool instead of destroying
+        PrefabPooler.Release(gameObject);
     }
 
     // Public utility methods
@@ -359,7 +360,8 @@ public class CollectibleController : MonoBehaviour
             }
         }
 
-        // TODO: Return collectible to object pool instead of keeping in scene
+        // Return collectible to pool to reuse later
+        PrefabPooler.Release(gameObject);
     }
 
     // Debug
