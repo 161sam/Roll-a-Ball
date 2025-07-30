@@ -79,12 +79,12 @@
 | TODO-OPT#75 | Assets/Scripts/Environment/GroundMaterialController.cs | InitializeMaterialSystem(), Zeile 74 | Validate material sources in OnValidate | **erledigt** |
 | TODO-OPT#76 | Assets/Scripts/Environment/GroundMaterialController.cs | ApplyMaterialToObject(), Zeile 313 | Cache renderer references | **erledigt** |
 | TODO-OPT#77 | Assets/Scripts/Environment/GroundMaterialController.cs | OnDrawGizmosSelected(), Zeile 417 | Disable gizmo drawing in production | **erledigt** |
-| TODO-OPT#78 | Assets/Scripts/Environment/MovingPlatform.cs | Zeile 55 | Init from ScriptableObject profile | |
+| TODO-OPT#78 | Assets/Scripts/Environment/MovingPlatform.cs | Zeile 55 | Init from ScriptableObject profile | **erledigt** |
 | TODO-OPT#79 | Assets/Scripts/Environment/MovingPlatform.cs | OnValidate(), Zeile 352 | Warn if start and end positions match | **erledigt** |
 | TODO-OPT#80 | Assets/Scripts/Environment/MovingPlatform.cs | OnTriggerEnter(), Zeile 365 | Configurable passenger tag | **erledigt** |
 | TODO-OPT#81 | Assets/Scripts/Environment/RotatingObstacle.cs | Zeile 14 | Tune rotation via ScriptableObject | **erledigt** |
 | TODO-OPT#82 | Assets/Scripts/Environment/RotatingObstacle.cs | OnValidate(), Zeile 32 | Expose min/max rotation speed | **erledigt** |
-| TODO-OPT#83 | Assets/Scripts/Environment/RotatingObstacle.cs | OnTriggerEnter(), Zeile 56 | Integrate damage system on contact | |
+| TODO-OPT#83 | Assets/Scripts/Environment/RotatingObstacle.cs | OnTriggerEnter(), Zeile 56 | Integrate damage system on contact | **erledigt** |
 | TODO-OPT#84 | Assets/Scripts/Environment/SteampunkGateController.cs | Zeile 80 | Replace FindFirstObjectByType with injection | **erledigt** |
 | TODO-OPT#85 | Assets/Scripts/Environment/SteampunkGateController.cs | Start(), Zeile 96 | Delay initialization until managers ready | **erledigt** |
 | TODO-OPT#86 | Assets/Scripts/Environment/SteampunkGateController.cs | CheckSequentialRequirement(), Zeile 303 | Dedicated sequence controller | |
