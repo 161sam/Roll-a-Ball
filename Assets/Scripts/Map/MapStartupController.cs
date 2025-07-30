@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using Newtonsoft.Json.Linq;
+using System.Globalization;
 using RollABall.Map;
 
 namespace RollABall.Map
@@ -380,9 +382,25 @@ namespace RollABall.Map
         {
             UpdateStatus("🔧 Generating level from map data...");
             
-            // For Leipzig or as fallback, use specific coordinates
-            Vector2 coords = address.ToLower().Contains("leipzig") ? leipzigCoords : GetCoordsFromAddress(address);
-            
+            // Resolve coordinates using Nominatim for realistic placement
+            Vector2 coords = leipzigCoords;
+            if (address.ToLower().Contains("leipzig"))
+            {
+                coords = leipzigCoords;
+            }
+            else
+            {
+                bool done = false;
+                yield return StartCoroutine(GetCoordsFromAddressCoroutine(address, result =>
+                {
+                    coords = result;
+                    done = true;
+                }));
+
+                if (!done)
+                    coords = leipzigCoords; // fallback on error
+            }
+
             // Generate a simple level based on coordinates
             yield return StartCoroutine(CreateLevelFromCoordinates(coords));
             
@@ -399,12 +417,42 @@ namespace RollABall.Map
             }
         }
         
-        private Vector2 GetCoordsFromAddress(string address)
+        private IEnumerator GetCoordsFromAddressCoroutine(string address, System.Action<Vector2> callback)
         {
-            // Placeholder: In real implementation, this would use Nominatim or similar geocoding API
-            // TODO: Replace with proper geocoding service
-            // For now, return Leipzig coordinates as fallback
-            return leipzigCoords;
+            string encoded = UnityEngine.Networking.UnityWebRequest.EscapeURL(address);
+            string url = $"https://nominatim.openstreetmap.org/search?q={encoded}&format=json&limit=1";
+
+            using (var request = UnityEngine.Networking.UnityWebRequest.Get(url))
+            {
+                request.SetRequestHeader("User-Agent", "RollABallGame/1.0");
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityEngine.Networking.UnityWebRequest.Result.Success)
+                {
+                    try
+                    {
+                        JArray array = JArray.Parse(request.downloadHandler.text);
+                        if (array.Count > 0)
+                        {
+                            double lat = double.Parse(array[0]["lat"].ToString(), CultureInfo.InvariantCulture);
+                            double lon = double.Parse(array[0]["lon"].ToString(), CultureInfo.InvariantCulture);
+                            callback?.Invoke(new Vector2((float)lat, (float)lon));
+                            yield break;
+                        }
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogError($"[MapStartupController] Failed to parse geocode result: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Debug.LogError($"[MapStartupController] Geocoding request failed: {request.error}");
+                }
+            }
+
+            // Fallback
+            callback?.Invoke(leipzigCoords);
         }
         
         private IEnumerator CreateLevelFromCoordinates(Vector2 coordinates)

@@ -102,11 +102,23 @@ namespace RollABall.Map
         private Transform batchedBuildingsContainer;
         private Transform batchedAreasContainer;
         private Transform collidersContainer;
+
+        [Header("Collider Pooling")]
+        [SerializeField] private int initialColliderPoolSize = 50;
+        private readonly Queue<GameObject> colliderPool = new();
         
         private void Awake()
         {
             CreateMapContainer();
             InitializeBatchingCollections();
+
+            // Pre-populate collider pool
+            for (int i = 0; i < initialColliderPoolSize; i++)
+            {
+                GameObject pooled = new GameObject("PooledCollider");
+                pooled.SetActive(false);
+                colliderPool.Enqueue(pooled);
+            }
         }
         
         /// <summary>
@@ -541,8 +553,6 @@ namespace RollABall.Map
         {
             Debug.Log("[MapGeneratorBatched] Creating separate colliders...");
 
-            // TODO: Reuse collider objects via pooling to reduce GC pressure
-
             int colliderCount = 0;
             
             // Create road colliders
@@ -574,7 +584,7 @@ namespace RollABall.Map
         /// </summary>
         private void CreateColliderObject(ColliderData data, Transform parent)
         {
-            GameObject colliderObj = new GameObject($"{data.name}_Collider");
+            GameObject colliderObj = GetPooledCollider($"{data.name}_Collider");
             colliderObj.transform.SetParent(parent);
             
             // Apply transform from the original mesh
@@ -599,6 +609,21 @@ namespace RollABall.Map
             {
                 colliderObj.isStatic = true;
             }
+        }
+
+        private GameObject GetPooledCollider(string name)
+        {
+            GameObject obj = colliderPool.Count > 0 ? colliderPool.Dequeue() : new GameObject();
+            obj.name = name;
+            obj.SetActive(true);
+            return obj;
+        }
+
+        private void ReturnCollider(GameObject obj)
+        {
+            obj.SetActive(false);
+            obj.transform.SetParent(null);
+            colliderPool.Enqueue(obj);
         }
         
         // Helper Methods
@@ -1061,10 +1086,26 @@ namespace RollABall.Map
         
         private void ClearExistingMap()
         {
+            if (collidersContainer != null)
+            {
+                foreach (Transform col in collidersContainer)
+                {
+                    ReturnCollider(col.gameObject);
+                }
+                if (Application.isPlaying)
+                    Destroy(collidersContainer.gameObject);
+                else
+                    DestroyImmediate(collidersContainer.gameObject);
+                collidersContainer = null;
+            }
+
             if (mapContainer != null)
             {
                 foreach (Transform child in mapContainer)
                 {
+                    if (child == collidersContainer)
+                        continue;
+
                     if (Application.isPlaying)
                         Destroy(child.gameObject);
                     else
