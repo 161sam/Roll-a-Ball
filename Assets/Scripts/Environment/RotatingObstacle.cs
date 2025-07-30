@@ -7,15 +7,31 @@ using UnityEngine;
 [AddComponentMenu("Roll-a-Ball/Environment/Rotating Obstacle")]
 public class RotatingObstacle : MonoBehaviour
 {
+    [Header("Profile")]
+    [SerializeField] private RotatingObstacleProfile profile;
     [Header("Rotation Settings")]
     [SerializeField] private float rotationSpeed = 45f; // degrees per second
     [SerializeField] private Vector3 rotationAxis = Vector3.up; // Y-axis rotation
     [SerializeField] private bool clockwise = true;
-    // TODO: Allow per-level tuning via ScriptableObject
+    [SerializeField] private float minRotationSpeed = 0f;
+    [SerializeField] private float maxRotationSpeed = 180f;
+    // parameters can be overridden via profile
     
     [Header("Visual")]
     [SerializeField] private bool showGizmos = true;
     [SerializeField] private Color gizmoColor = Color.red;
+
+    private void Awake()
+    {
+        if (profile)
+        {
+            rotationSpeed = profile.rotationSpeed;
+            rotationAxis = profile.rotationAxis;
+            clockwise = profile.clockwise;
+            minRotationSpeed = profile.minRotationSpeed;
+            maxRotationSpeed = profile.maxRotationSpeed;
+        }
+    }
     
     private void Update()
     {
@@ -28,8 +44,13 @@ public class RotatingObstacle : MonoBehaviour
 
     private void OnValidate()
     {
-        rotationSpeed = Mathf.Max(0f, rotationSpeed);
-        // TODO: Expose min/max rotation speed in config
+        if (profile && (minRotationSpeed != profile.minRotationSpeed || maxRotationSpeed != profile.maxRotationSpeed))
+        {
+            minRotationSpeed = profile.minRotationSpeed;
+            maxRotationSpeed = profile.maxRotationSpeed;
+        }
+
+        rotationSpeed = Mathf.Clamp(rotationSpeed, minRotationSpeed, maxRotationSpeed);
     }
     
     private void OnDrawGizmos()
@@ -53,7 +74,7 @@ public class RotatingObstacle : MonoBehaviour
                 {
                     AudioManager.Instance.PlaySound("MetalClank");
                 }
-                // TODO: Integrate damage system to penalize the player on contact
+                // Damage system not yet implemented but can be hooked up here
             }
         }
 }
