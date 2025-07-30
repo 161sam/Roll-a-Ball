@@ -880,7 +880,8 @@ namespace RollABall.Map
                 areaObject.name = $"Area_{area.areaType}_{area.id}";
                 
                 MeshRenderer renderer = areaObject.GetComponent<MeshRenderer>();
-                renderer.material = GetAreaMaterial(area.areaType);
+                AreaCategory materialKey = GetAreaMaterialKey(area.areaType);
+                renderer.material = GetAreaMaterial(materialKey);
                 
                 if (enableStaticBatching)
                 {
