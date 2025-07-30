@@ -104,104 +104,57 @@ public class EmergencySceneBuilder : MonoBehaviour
     }
 
     // TODO-OPT#11: BuildMinimalX methods duplicate setup steps - refactor into shared BuildMinimalScene()
-    private void BuildMinimalGeneratedLevel()
+    private void BuildMinimalScene(System.Action additionalSetup)
     {
-        Log("Building minimal GeneratedLevel...");
-
-        // Clear scene (keep only essentials)
         ClearSceneKeepEssentials();
-
-        // Create core game objects
         CreatePlayer();
         CreateCamera();
         CreateLighting();
         CreateManagers();
         CreateUISystem();
-        CreateLevelGenerator();
 
+        additionalSetup?.Invoke();
+    }
+
+    private void BuildMinimalGeneratedLevel()
+    {
+        Log("Building minimal GeneratedLevel...");
+        BuildMinimalScene(CreateLevelGenerator);
         Log("Minimal GeneratedLevel completed!");
     }
 
     private void BuildMinimalLevel1()
     {
         Log("Building minimal Level1...");
-
-        ClearSceneKeepEssentials();
-
-        // Create tutorial level layout
-        CreatePlayer();
-        CreateCamera();
-        CreateLighting();
-        CreateManagers();
-        CreateUISystem();
-
-        // Create simple level geometry
-        CreateTutorialGeometry();
-
+        BuildMinimalScene(CreateTutorialGeometry);
         Log("Minimal Level1 completed!");
     }
 
     private void BuildMinimalLevel2()
     {
         Log("Building minimal Level2...");
-
-        ClearSceneKeepEssentials();
-        CreatePlayer();
-        CreateCamera();
-        CreateLighting();
-        CreateManagers();
-        CreateUISystem();
-        
-        // Level2 with medium difficulty
-        CreateMediumLevelGeometry();
-
+        BuildMinimalScene(CreateMediumLevelGeometry);
         Log("Minimal Level2 completed!");
     }
 
     private void BuildMinimalLevel3()
     {
         Log("Building minimal Level3...");
-
-        ClearSceneKeepEssentials();
-        CreatePlayer();
-        CreateCamera();
-        CreateLighting();
-        CreateManagers();
-        CreateUISystem();
-        
-        // Level3 with hard difficulty
-        CreateHardLevelGeometry();
-
+        BuildMinimalScene(CreateHardLevelGeometry);
         Log("Minimal Level3 completed!");
     }
 
     private void BuildMinimalOSMLevel()
     {
         Log("Building minimal OSM Level...");
-
-        ClearSceneKeepEssentials();
-        CreatePlayer();
-        CreateCamera();
-        CreateLighting();
-        CreateManagers();
-        CreateUISystem();
-        CreateOSMSystem();
-
+        BuildMinimalScene(CreateOSMSystem);
         Log("Minimal OSM Level completed!");
     }
 
     private void BuildMinimalMiniGame()
     {
         Log("Building minimal MiniGame...");
-
-        ClearSceneKeepEssentials();
-        CreatePlayer();
-        CreateCamera();
-        CreateLighting();
-        CreateManagers();
-        CreateUISystem();
-        CreateMiniGameSystem();
-
+        BuildMinimalScene(CreateMiniGameSystem);
         Log("Minimal MiniGame completed!");
     }
 

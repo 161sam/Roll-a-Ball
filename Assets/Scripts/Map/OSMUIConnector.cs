@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using RollABall.Utility;
 
 namespace RollABall.Map
 {
@@ -106,22 +107,8 @@ namespace RollABall.Map
 
         private void SetupMapController()
         {
-            // TODO: Cache controller references instead of recreating them
-            mapController = FindFirstObjectByType<MapStartupController>();
-            if (!mapController)
-            {
-                Log("Creating MapStartupController...");
-                GameObject controllerGO = new GameObject("MapStartupController");
-                mapController = controllerGO.AddComponent<MapStartupController>();
-            }
-            
-            uiController = FindFirstObjectByType<UIController>();
-            if (!uiController)
-            {
-                Log("Creating UIController...");
-                GameObject uiGO = new GameObject("UIController");
-                uiController = uiGO.AddComponent<UIController>();
-            }
+            mapController = Utility.SceneObjectUtils.FindOrCreateComponent<MapStartupController>("MapStartupController");
+            uiController = Utility.SceneObjectUtils.FindOrCreateComponent<UIController>("UIController");
         }
 
         private void DiscoverUIElements()

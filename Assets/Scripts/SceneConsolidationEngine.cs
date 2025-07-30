@@ -7,6 +7,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine.Events;
 using RollABall.Map;
+using RollABall.Utility;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -248,16 +249,13 @@ public class SceneConsolidationEngine : MonoBehaviour
         LogRepair("🎮 Repairing Level1 - Tutorial Level");
         
         // Fix Level1-specific issues
-        var levelManager = FindFirstObjectByType<LevelManager>();
-        if (levelManager != null)
-        {
-            // Configure for tutorial difficulty
-            levelManager.Config.totalCollectibles = 5;
-            levelManager.SetNextScene("Level2");
-            levelManager.Config.difficultyMultiplier = 1.0f;
-            LogRepair("✅ Level1 LevelManager configured");
-            _totalIssuesFixed++;
-        }
+        var levelManager = GetOrCreateManager<LevelManager>();
+        // Configure for tutorial difficulty
+        levelManager.Config.totalCollectibles = 5;
+        levelManager.SetNextScene("Level2");
+        levelManager.Config.difficultyMultiplier = 1.0f;
+        LogRepair("✅ Level1 LevelManager configured");
+        _totalIssuesFixed++;
         
         // Ensure simple, open layout for tutorial
         yield return EnsureSimpleLayout();
@@ -273,15 +271,12 @@ public class SceneConsolidationEngine : MonoBehaviour
     {
         LogRepair("⚙️ Repairing Level2 - Medium Difficulty + Steampunk Theme");
         
-        var levelManager = FindFirstObjectByType<LevelManager>();
-        if (levelManager != null)
-        {
-            levelManager.Config.totalCollectibles = 8;
-            levelManager.SetNextScene("Level3");
-            levelManager.Config.difficultyMultiplier = 1.5f;
-            LogRepair("✅ Level2 LevelManager configured");
-            _totalIssuesFixed++;
-        }
+        var levelManager = GetOrCreateManager<LevelManager>();
+        levelManager.Config.totalCollectibles = 8;
+        levelManager.SetNextScene("Level3");
+        levelManager.Config.difficultyMultiplier = 1.5f;
+        LogRepair("✅ Level2 LevelManager configured");
+        _totalIssuesFixed++;
         
         // Add Steampunk elements
         yield return AddSteampunkElements();
@@ -300,15 +295,12 @@ public class SceneConsolidationEngine : MonoBehaviour
     {
         LogRepair("🏭 Repairing Level3 - Hard Difficulty + Full Steampunk Factory");
         
-        var levelManager = FindFirstObjectByType<LevelManager>();
-        if (levelManager != null)
-        {
-            levelManager.Config.totalCollectibles = 12;
-            levelManager.SetNextScene("GeneratedLevel");
-            levelManager.Config.difficultyMultiplier = 2.0f;
-            LogRepair("✅ Level3 LevelManager configured");
-            _totalIssuesFixed++;
-        }
+        var levelManager = GetOrCreateManager<LevelManager>();
+        levelManager.Config.totalCollectibles = 12;
+        levelManager.SetNextScene("GeneratedLevel");
+        levelManager.Config.difficultyMultiplier = 2.0f;
+        LogRepair("✅ Level3 LevelManager configured");
+        _totalIssuesFixed++;
         
         // Transform to Steampunk Factory
         yield return TransformToSteampunkFactory();
@@ -431,21 +423,19 @@ public class SceneConsolidationEngine : MonoBehaviour
         }
         
         // Ensure LevelManager exists and is configured
-        LevelManager levelManager = FindFirstObjectByType<LevelManager>();
-        if (levelManager == null)
+        bool createdLevelManager = Object.FindFirstObjectByType<LevelManager>() == null;
+        LevelManager levelManager = GetOrCreateManager<LevelManager>();
+        if (createdLevelManager)
         {
-            GameObject lmGO = new GameObject("LevelManager");
-            levelManager = lmGO.AddComponent<LevelManager>();
             LogRepair("✅ LevelManager created");
             _totalIssuesFixed++;
         }
         
         // Ensure UIController exists and is configured
-        UIController uiController = FindFirstObjectByType<UIController>();
-        if (uiController == null)
+        bool createdUIController = Object.FindFirstObjectByType<UIController>() == null;
+        UIController uiController = GetOrCreateManager<UIController>();
+        if (createdUIController)
         {
-            GameObject uiGO = new GameObject("UIController");
-            uiController = uiGO.AddComponent<UIController>();
             LogRepair("✅ UIController created");
             _totalIssuesFixed++;
         }
@@ -600,6 +590,11 @@ public class SceneConsolidationEngine : MonoBehaviour
         };
         
         LogRepair("✅ Scene Repair Profiles initialized");
+    }
+
+    private T GetOrCreateManager<T>() where T : Component
+    {
+        return SceneObjectUtils.FindOrCreateComponent<T>();
     }
     
     /// <summary>

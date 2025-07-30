@@ -36,6 +36,9 @@ public class CollectibleController : MonoBehaviour
     [SerializeField] private Renderer[] renderers;
     [SerializeField] private ParticleSystem collectEffect;
     [SerializeField] private Light itemLight;
+    [SerializeField] private float flashMultiplier = 3f;
+    [SerializeField] private float flashDuration = 0.3f;
+    [SerializeField] private float flashHoldTime = 0.1f;
 
     [Header("Physics")]
     [SerializeField] private Collider triggerCollider;
@@ -248,18 +251,17 @@ public class CollectibleController : MonoBehaviour
         if (!itemLight) yield break;
 
         float originalIntensity = itemLight.intensity;
-        itemLight.intensity = originalIntensity * 3f;
-        // TODO: Expose flash intensity and duration as serialized fields
+        itemLight.intensity = originalIntensity * flashMultiplier;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(flashHoldTime);
 
         float elapsed = 0f;
-        float duration = 0.3f;
+        float duration = flashDuration;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            itemLight.intensity = Mathf.Lerp(originalIntensity * 3f, 0f, elapsed / duration);
+            itemLight.intensity = Mathf.Lerp(originalIntensity * flashMultiplier, 0f, elapsed / duration);
             yield return null;
         }
 

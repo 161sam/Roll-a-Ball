@@ -268,6 +268,11 @@ public class UIController : MonoBehaviour
                 break;
         }
     }
+
+    private void ShowState(UIState state)
+    {
+        ChangeUIState(state);
+    }
     
     private void SetAllPanelsInactive()
     {
@@ -288,7 +293,7 @@ public class UIController : MonoBehaviour
     
     public void ShowMainMenu()
     {
-        ChangeUIState(UIState.MainMenu);
+        ShowState(UIState.MainMenu);
     }
     
     private void UpdateMainMenuUI()
@@ -440,12 +445,12 @@ public class UIController : MonoBehaviour
     
     public void ShowPauseMenu()
     {
-        ChangeUIState(UIState.PauseMenu);
+        ShowState(UIState.PauseMenu);
     }
     
     public void HidePauseMenu()
     {
-        ChangeUIState(UIState.GamePlay);
+        ShowState(UIState.GamePlay);
     }
     
     private void ResumeGame()
@@ -485,13 +490,12 @@ public class UIController : MonoBehaviour
         {
             saveLoadTitleText.text = isLoading ? "Load Game" : "Save Game";
         }
-        
-        ChangeUIState(UIState.SaveLoad);
+        ShowState(UIState.SaveLoad);
     }
-    
+
     public void HideSaveLoadPanel()
     {
-        ChangeUIState(UIState.MainMenu);
+        ShowState(UIState.MainMenu);
     }
     
     private void UpdateSaveLoadUI()
@@ -536,12 +540,12 @@ public class UIController : MonoBehaviour
     
     public void ShowSettingsPanel()
     {
-        ChangeUIState(UIState.Settings);
+        ShowState(UIState.Settings);
     }
-    
+
     public void HideSettingsPanel()
     {
-        ChangeUIState(currentState == UIState.Settings ? UIState.MainMenu : UIState.PauseMenu);
+        ShowState(currentState == UIState.Settings ? UIState.MainMenu : UIState.PauseMenu);
     }
     
     private void UpdateSettingsUI()
@@ -632,12 +636,12 @@ public class UIController : MonoBehaviour
     
     public void ShowAchievementPanel()
     {
-        ChangeUIState(UIState.Achievements);
+        ShowState(UIState.Achievements);
     }
-    
+
     public void HideAchievementPanel()
     {
-        ChangeUIState(UIState.MainMenu);
+        ShowState(UIState.MainMenu);
     }
     
     private void UpdateAchievementUI()
