@@ -123,26 +123,26 @@ public class Unity61APIFixer : EditorWindow
             string content = File.ReadAllText(filePath);
             string originalContent = content;
 
-            // Pattern 1: FindObjectsOfType<T>(FindObjectsSortMode.None) → Object.FindObjectsByType<T>(FindObjectsSortMode.None)
+            // Pattern 1: Object.FindObjectsByType<T>(FindObjectsSortMode.None) → Object.FindObjectsByType<T>(FindObjectsSortMode.None)
             content = Regex.Replace(content, 
-                @"FindObjectsOfType<([^>]+)>\(\)",
+                @"Object.FindObjectsByType<([^>]+)>\(\)",
                 @"Object.FindObjectsByType<$1>(FindObjectsSortMode.None)");
 
             // Pattern 2: FindFirstObjectByType<T>() → Object.FindFirstObjectByType<T>()
             content = Regex.Replace(content,
-                @"FindObjectOfType<([^>]+)>\(\)",
+                @"Object.FindFirstObjectByType<([^>]+)>\(\)",
                 @"Object.FindFirstObjectByType<$1>()");
 
             // Pattern 3: GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None) → Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None)
             content = Regex.Replace(content,
-                @"GameObject\.FindObjectsOfType<([^>]+)>\(\)",
+                @"GameObject\.Object.FindObjectsByType<([^>]+)>\(\)",
                 @"Object.FindObjectsByType<$1>(FindObjectsSortMode.None)");
 
             // Additional specific patterns that might occur
             
             // Pattern 4: Object.FindObjectsOfType (already using Object. but without sort mode)
             content = Regex.Replace(content,
-                @"Object\.FindObjectsOfType<([^>]+)>\(\)",
+                @"Object\.Object.FindObjectsByType<([^>]+)>\(\)",
                 @"Object.FindObjectsByType<$1>(FindObjectsSortMode.None)");
 
             // If content changed, write it back
