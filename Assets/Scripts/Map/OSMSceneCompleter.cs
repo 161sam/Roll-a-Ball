@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEditor;
 using TMPro;
 using RollABall.Map;
+using RollABall.Utility;
 
 /// <summary>
 /// Automated setup tool for completing the Level_OSM scene with all required UI components
@@ -127,7 +128,7 @@ public class OSMSceneCompleter : MonoBehaviour
         if (panel == null) return;
 
         // Ensure Image component for background
-        var image = panel.GetComponent<Image>() ?? panel.AddComponent<Image>();
+        var image = PhysicsUtils.EnsureComponent<Image>(panel);
         image.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
 
         var rectTransform = panel.GetComponent<RectTransform>();
@@ -159,16 +160,16 @@ public class OSMSceneCompleter : MonoBehaviour
         rectTransform.sizeDelta = Vector2.zero;
 
         // Setup TMP_InputField
-        var inputField = inputFieldObj.GetComponent<TMP_InputField>() ?? inputFieldObj.AddComponent<TMP_InputField>();
+        var inputField = PhysicsUtils.EnsureComponent<TMP_InputField>(inputFieldObj);
         
         // Background
-        var background = inputFieldObj.GetComponent<Image>() ?? inputFieldObj.AddComponent<Image>();
+        var background = PhysicsUtils.EnsureComponent<Image>(inputFieldObj);
         background.color = Color.white;
         inputField.targetGraphic = background;
 
         // Text Component
         var textObj = FindOrCreateChild("Text", inputFieldObj.transform);
-        var text = textObj.GetComponent<TextMeshProUGUI>() ?? textObj.AddComponent<TextMeshProUGUI>();
+        var text = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(textObj);
         text.text = "";
         text.fontSize = 14;
         text.color = Color.black;
@@ -176,7 +177,7 @@ public class OSMSceneCompleter : MonoBehaviour
 
         // Placeholder
         var placeholderObj = FindOrCreateChild("Placeholder", inputFieldObj.transform);
-        var placeholder = placeholderObj.GetComponent<TextMeshProUGUI>() ?? placeholderObj.AddComponent<TextMeshProUGUI>();
+        var placeholder = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(placeholderObj);
         placeholder.text = "z.B. Leipzig, Markt";
         placeholder.fontSize = 14;
         placeholder.color = new Color(0.5f, 0.5f, 0.5f, 1f);
@@ -195,14 +196,14 @@ public class OSMSceneCompleter : MonoBehaviour
         rectTransform.anchoredPosition = Vector2.zero;
         rectTransform.sizeDelta = Vector2.zero;
 
-        var button = buttonObj.GetComponent<Button>() ?? buttonObj.AddComponent<Button>();
-        var image = buttonObj.GetComponent<Image>() ?? buttonObj.AddComponent<Image>();
+        var button = PhysicsUtils.EnsureComponent<Button>(buttonObj);
+        var image = PhysicsUtils.EnsureComponent<Image>(buttonObj);
         image.color = new Color(0.2f, 0.6f, 1f, 1f);
         button.targetGraphic = image;
 
         // Button Text
         var textObj = FindOrCreateChild("Text", buttonObj.transform);
-        var text = textObj.GetComponent<TextMeshProUGUI>() ?? textObj.AddComponent<TextMeshProUGUI>();
+        var text = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(textObj);
         text.text = "Karte laden";
         text.fontSize = 16;
         text.color = Color.white;
@@ -221,14 +222,14 @@ public class OSMSceneCompleter : MonoBehaviour
         rectTransform.anchoredPosition = Vector2.zero;
         rectTransform.sizeDelta = Vector2.zero;
 
-        var button = buttonObj.GetComponent<Button>() ?? buttonObj.AddComponent<Button>();
-        var image = buttonObj.GetComponent<Image>() ?? buttonObj.AddComponent<Image>();
+        var button = PhysicsUtils.EnsureComponent<Button>(buttonObj);
+        var image = PhysicsUtils.EnsureComponent<Image>(buttonObj);
         image.color = new Color(0.2f, 0.8f, 0.2f, 1f);
         button.targetGraphic = image;
 
         // Button Text
         var textObj = FindOrCreateChild("Text", buttonObj.transform);
-        var text = textObj.GetComponent<TextMeshProUGUI>() ?? textObj.AddComponent<TextMeshProUGUI>();
+        var text = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(textObj);
         text.text = "Mein Standort";
         text.fontSize = 14;
         text.color = Color.white;
@@ -241,7 +242,7 @@ public class OSMSceneCompleter : MonoBehaviour
     {
         if (panel == null) return;
 
-        var image = panel.GetComponent<Image>() ?? panel.AddComponent<Image>();
+        var image = PhysicsUtils.EnsureComponent<Image>(panel);
         image.color = new Color(0f, 0f, 0f, 0.7f);
 
         var rectTransform = panel.GetComponent<RectTransform>();
@@ -258,7 +259,7 @@ public class OSMSceneCompleter : MonoBehaviour
         textRect.anchoredPosition = Vector2.zero;
         textRect.sizeDelta = new Vector2(400, 50);
 
-        var text = textObj.GetComponent<TextMeshProUGUI>() ?? textObj.AddComponent<TextMeshProUGUI>();
+        var text = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(textObj);
         text.text = "Lade Kartendaten...";
         text.fontSize = 24;
         text.color = Color.white;
@@ -272,8 +273,8 @@ public class OSMSceneCompleter : MonoBehaviour
         progressRect.anchoredPosition = Vector2.zero;
         progressRect.sizeDelta = new Vector2(0, 20);
 
-        var slider = progressObj.GetComponent<Slider>() ?? progressObj.AddComponent<Slider>();
-        var sliderImage = progressObj.GetComponent<Image>() ?? progressObj.AddComponent<Image>();
+        var slider = PhysicsUtils.EnsureComponent<Slider>(progressObj);
+        var sliderImage = PhysicsUtils.EnsureComponent<Image>(progressObj);
         sliderImage.color = new Color(0.3f, 0.3f, 0.3f, 1f);
 
         // Initially hidden
@@ -328,7 +329,7 @@ public class OSMSceneCompleter : MonoBehaviour
         rectTransform.anchoredPosition = Vector2.zero;
         rectTransform.sizeDelta = Vector2.zero;
 
-        var text = textObj.GetComponent<TextMeshProUGUI>() ?? textObj.AddComponent<TextMeshProUGUI>();
+        var text = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(textObj);
         text.text = "Collectibles: 0";
         text.fontSize = 20;
         text.color = Color.white;
@@ -345,7 +346,7 @@ public class OSMSceneCompleter : MonoBehaviour
         rectTransform.anchoredPosition = Vector2.zero;
         rectTransform.sizeDelta = Vector2.zero;
 
-        var text = textObj.GetComponent<TextMeshProUGUI>() ?? textObj.AddComponent<TextMeshProUGUI>();
+        var text = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(textObj);
         text.text = "Ort: Unbekannt";
         text.fontSize = 18;
         text.color = Color.white;
@@ -362,7 +363,7 @@ public class OSMSceneCompleter : MonoBehaviour
         rectTransform.anchoredPosition = Vector2.zero;
         rectTransform.sizeDelta = Vector2.zero;
 
-        var text = textObj.GetComponent<TextMeshProUGUI>() ?? textObj.AddComponent<TextMeshProUGUI>();
+        var text = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(textObj);
         text.text = "OSM Map";
         text.fontSize = 18;
         text.color = Color.white;
@@ -379,8 +380,8 @@ public class OSMSceneCompleter : MonoBehaviour
         rectTransform.anchoredPosition = Vector2.zero;
         rectTransform.sizeDelta = Vector2.zero;
 
-        var slider = barObj.GetComponent<Slider>() ?? barObj.AddComponent<Slider>();
-        var image = barObj.GetComponent<Image>() ?? barObj.AddComponent<Image>();
+        var slider = PhysicsUtils.EnsureComponent<Slider>(barObj);
+        var image = PhysicsUtils.EnsureComponent<Image>(barObj);
         image.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
         
         slider.minValue = 0f;
@@ -399,12 +400,12 @@ public class OSMSceneCompleter : MonoBehaviour
         regenRect.anchoredPosition = Vector2.zero;
         regenRect.sizeDelta = Vector2.zero;
 
-        var regenButton = regenObj.GetComponent<Button>() ?? regenObj.AddComponent<Button>();
-        var regenImage = regenObj.GetComponent<Image>() ?? regenObj.AddComponent<Image>();
+        var regenButton = PhysicsUtils.EnsureComponent<Button>(regenObj);
+        var regenImage = PhysicsUtils.EnsureComponent<Image>(regenObj);
         regenImage.color = new Color(1f, 0.6f, 0f, 1f);
 
         var regenTextObj = FindOrCreateChild("Text", regenObj.transform);
-        var regenText = regenTextObj.GetComponent<TextMeshProUGUI>() ?? regenTextObj.AddComponent<TextMeshProUGUI>();
+        var regenText = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(regenTextObj);
         regenText.text = "Neu laden";
         regenText.fontSize = 14;
         regenText.color = Color.white;
@@ -418,12 +419,12 @@ public class OSMSceneCompleter : MonoBehaviour
         backRect.anchoredPosition = Vector2.zero;
         backRect.sizeDelta = Vector2.zero;
 
-        var backButton = backObj.GetComponent<Button>() ?? backObj.AddComponent<Button>();
-        var backImage = backObj.GetComponent<Image>() ?? backObj.AddComponent<Image>();
+        var backButton = PhysicsUtils.EnsureComponent<Button>(backObj);
+        var backImage = PhysicsUtils.EnsureComponent<Image>(backObj);
         backImage.color = new Color(0.8f, 0.2f, 0.2f, 1f);
 
         var backTextObj = FindOrCreateChild("Text", backObj.transform);
-        var backText = backTextObj.GetComponent<TextMeshProUGUI>() ?? backTextObj.AddComponent<TextMeshProUGUI>();
+        var backText = PhysicsUtils.EnsureComponent<TextMeshProUGUI>(backTextObj);
         backText.text = "Menü";
         backText.fontSize = 14;
         backText.color = Color.white;
