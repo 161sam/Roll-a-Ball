@@ -664,6 +664,7 @@ public class SaveSystem : MonoBehaviour
     private System.Collections.IEnumerator SyncToCloud(SaveData saveData)
     {
         if (!enableCloudSync && !simulateCloudSync) yield break;
+        // TODO: Create incremental backup before uploading to cloud
         
         LogSave("Starting cloud sync...");
         

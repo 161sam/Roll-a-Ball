@@ -22,6 +22,7 @@ namespace RollABall.InputSystem
         [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
         [SerializeField] private KeyCode slideKey = KeyCode.LeftControl;
         // TODO: Allow runtime key rebinding via settings menu
+        // TODO: Support gamepad bindings alongside keyboard controls
 
         private void Awake()
         {

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public static class SceneTypeDetector
 {
     // Default lists used if no configuration asset is found
+    // TODO: Allow overriding scene lists at runtime via config file
     private static readonly string[] defaultProceduralScenes =
     {
         "GeneratedLevel",

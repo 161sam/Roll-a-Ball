@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] private bool debugMode = false;
     [SerializeField] private float gameTimeScale = 1f;
+    // TODO: Move basic game settings to a ScriptableObject for easier tuning
     [SerializeField, HideInInspector] private KeyCode pauseKey = KeyCode.Escape; // moved to InputManager
     [SerializeField, HideInInspector] private KeyCode restartKey = KeyCode.R;
 
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float fallDeathHeight = -50f;
     [SerializeField] private bool enableRespawn = true;
     [SerializeField] private float respawnDelay = 2f;
+    // TODO: Make respawn delay configurable per level/difficulty
 
     // Private fields
     private GameState currentState = GameState.Playing;

@@ -18,6 +18,7 @@ namespace RollABall.Environment
         private const float BounceReturn1 = 0.75f;
         private const float BounceReturn2 = 0.9375f;
         private const float BounceReturn3 = 0.984375f;
+        // TODO: Expose bounce parameters in inspector for finer control
 
         [Header("Bewegungseinstellungen")]
         [SerializeField] private Vector3 startPosition;

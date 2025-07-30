@@ -13,6 +13,7 @@ namespace RollABall.Map
     public class MapGenerator : MonoBehaviour
     {
         [Header("Generation Prefabs")]
+        // TODO: Store prefab references in a configuration asset
         [SerializeField] private GameObject roadPrefab;
         [SerializeField] private GameObject buildingPrefab;
         [SerializeField] private GameObject areaPrefab;
