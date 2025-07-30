@@ -1,10 +1,16 @@
 wiki/docs/development/AGENTS-INDEX.md stellt eine AGENTEN-ÜBERSICHT bereit.
 
-// Lokales Arbeitsverzeichnis
-WORKING DIR = /home/saschi/Games/Roll-a-Ball 
-default_user = Sam Schimmelpfennig/saschi161
-Github_User = 161sam
+WORKING DIR = /home/saschi/Games/Roll-a-Ball // Lokales Arbeitsverzeichnis 
 
+default_user = Sam Schimmelpfennig/saschi161  
+Github_User = 161sam  
+
+---
+
+Programming Language: C#
+Engine: Unity Editor 6.1
+
+---
 
 Follow these steps for each interaction:
 
@@ -131,134 +137,4 @@ Following these guidelines will keep the project maintainable and ensure new fea
 
 ---
 
-🌍 Roll-a-Ball – Entwicklungsplan
 
-📌 Überblick
-
-Ein 3D-Spiel im Steampunk-Stil, bei dem der Spieler eine Kugel steuert, um Objekte einzusammeln und Levelziele zu erreichen. Später sollen reale Kartendaten via OpenStreetMap genutzt werden, um das Startlevel automatisch anhand einer eingegebenen Adresse zu generieren.
-
-
----
-
-📅 Entwicklungsphasen
-
-🔹 Phase 1: Grundlagen & Setup ✅ (abgeschlossen)
-
-Unity 6.1, Blender, Claude Desktop + MCP eingerichtet
-
-Roll-a-Ball Template implementiert (Spieler, Kamera, Input System)
-
-MVP-Testszene mit PlayerController, KameraFollow und Physik erstellt
-
-Projektstruktur mit /Assets/Scenes, /Assets/Scripts, /Assets/Prefabs definiert
-
-
-🔹 Phase 2: 3-Level-Struktur mit Steampunk-Thema (in Umsetzung)
-
-🧩 Level1–3 mit zunehmender Schwierigkeit
-
-🧱 Prefabs: Boden, Wand, Sammelobjekte, Zielzone
-
-🎮 GameManager, UIController, CollectibleController, LevelManager
-
-🎨 Steampunk-Materialien: Metall, Kupfer, Emissive Collectibles
-
-🖥️ UI: Collectible-Counter, Fly-Energy-Bar
-
-🔧 Best Practices (UnityEvents, AddComponentMenu, moderne APIs)
-
-
-🔹 Phase 3: Prozedurale Levelgenerierung (in Umsetzung)
-
-Ziel: Automatische Erstellung dynamischer Levels mit Gameplay-Elementen, basierend auf einem Level-Profil.
-
-✅ 3.1: Generator-Grundstruktur (erledigt)
-
-LevelGenerator.cs: Generiert modularen Boden, Wände, Collectibles, Zielzone
-
-Parameter: Größe, Anzahl Collectibles, Zielposition, etc.
-
-
-🔄 3.2: Erweiterung – Hindernisse & Dynamik (aktuell)
-
-ObstaclePrefab: rotierende Zahnräder, bewegliche Steampunk-Elemente
-
-MovingPlatform.cs + MovingPlatformPrefab
-
-Partikelsysteme (SteamEmitter) mit Audio (Zischen)
-
-Optional: Interaktive Tore via Trigger (Prefab GatePrefab)
-
-Modular via LevelProfile.cs steuerbar (obstacleDensity etc.)
-
-
-🔹 Phase 4: Map-basierte Generierung (OpenStreetMap)
-
-Ziel: Spieler gibt Startadresse ein → Scene wird automatisch aus OSM-Daten generiert.
-
-API-Zugriff auf OSM / Mapbox / TileServer
-
-Umwandlung von Karten-Koordinaten in Unity-Terrain
-
-Platzierung von Gebäuden, Straßen, Zielen, Collectibles nach Geo-Daten
-
-Integration in LevelGenerator.cs mit MapDataAdapter.cs
-
-
-🔹 Phase 5: Progression, UI & Save System
-
-Fortschrittsverfolgung pro Spieler
-
-Auswahlmenü für Level & Map
-
-Speicherstände lokal sichern
-
-Fly-Energie-Management mit Balken-UI
-
-
-🔹 Phase 6: Multiplayer & soziale Funktionen (optional/später)
-
-Kooperative oder kompetitive Spielmodi
-
-Scoreboard mit lokalem Speicher oder Serveranbindung
-
-
-🔹 Phase 7: Polishing & Deployment
-
-Shader & Lighting pass für Steampunk-Flair
-
-Optimierung für Performance (Batching, LOD, QualitySettings)
-
-Build für WebGL & Desktop
-
-
-
----
-
-📁 Projektstruktur (Best Practice)
-
-Assets/
-├── Prefabs/
-│   ├── GroundPrefab
-│   ├── WallPrefab
-│   ├── CollectiblePrefab
-│   ├── GoalZonePrefab
-│   └── ObstaclePrefab, MovingPlatformPrefab
-├── Scenes/
-│   ├── Level1, Level2, Level3
-├── Scripts/
-│   ├── Core/: PlayerController, GameManager
-│   ├── Level/: LevelGenerator, LevelManager, LevelProfile
-│   ├── UI/: UIController
-│   ├── Collectibles/: CollectibleController
-│   └── Environment/: MovingPlatform.cs, GateController.cs
-├── UI/
-│   ├── Canvas, TextMeshPro, FlyBar
-├── VFX/
-│   └── SteamEmitter.prefab
-├── Materials/
-│   └── SteamGroundMaterial, SteamWallMaterial, Emissives
-├── Audio/
-│   └── steam_hiss.wav, metal_clank.wav
-
----
