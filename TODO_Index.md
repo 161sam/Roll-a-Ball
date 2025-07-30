@@ -52,7 +52,7 @@
 | TODO-OPT#48 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 708 | Offsetbereich als Felder exposen | **erledigt** |
 | TODO-OPT#49 | Assets/Scripts/Map/MapGenerator.cs | FindOptimalGoalPosition(), Zeile 736 | Pfadfindung zur Zielplatzierung nutzen |
 | TODO-OPT#50 | Assets/Scripts/Map/MapStartupController.cs | endlessModeAddresses, Zeile 41 | Adressliste extern speichern | **erledigt** |
-| TODO-OPT#51 | Assets/Scripts/Map/AddressResolver.cs | ResolveAddressCoroutine(), Zeile 105 | Geocode-Cache implementieren |
+| TODO-OPT#51 | Assets/Scripts/Map/AddressResolver.cs | ResolveAddressCoroutine(), Zeile 105 | Geocode-Cache implementieren | **erledigt** |
 | TODO-OPT#52 | Assets/Scripts/UIController.cs | UpdateMainMenuUI(), Zeile 313 | UI-Texte lokalisieren |
 | TODO-OPT#53 | Assets/Scripts/UIController.cs | ShowNotificationCoroutine(), Zeile 820 | Notification-Pool verwenden |
 | TODO-OPT#54 | Assets/Scripts/Map/MapGeneratorBatched.cs | InitializeBatchingCollections(), Zeile 114 | String-Keys durch Enum ersetzen |
@@ -60,7 +60,7 @@
 | TODO-OPT#56 | Assets/Scripts/Environment/SteampunkGateController.cs | Zeile 665 | OnDestroy zur Coroutine-Aufräumung einführen | **erledigt** |
 | TODO-OPT#57 | Assets/Scripts/Environment/MovingPlatform.cs | BounceEaseOut(), Zeile 241 | Magic Numbers durch Konstanten ersetzen | **erledigt** |
 | TODO-OPT#58 | Assets/Scripts/Environment/MovingPlatform.cs | OnTriggerEnter(), Zeile 349 | CharacterController-Unterstützung prüfen | **erledigt** |
-| TODO-OPT#59 | Assets/Scripts/Map/MapStartupController.cs | CreateMinimalLevel(), Zeile 510 | Fallback-Level als Prefab realisieren |
+| TODO-OPT#59 | Assets/Scripts/Map/MapStartupController.cs | CreateMinimalLevel(), Zeile 510 | Fallback-Level als Prefab realisieren | **erledigt** |
 | TODO-OPT#60 | Assets/Scripts/PlayerController.cs | OnDestroy(), Zeile 528 | Von Events abmelden | **erledigt** |
 | TODO-OPT#61 | Assets/Scripts/Generators/LevelGenerator.cs | ApplyMaterialsAndEffects(), Zeile 1461 | Steam-Emitter pooling umsetzen | **erledigt** |
 | TODO-OPT#62 | Assets/Scripts/Map/MapGenerator.cs | AddSteampunkAtmosphere(), Zeile 1590 | Nebel-Parameter konfigurierbar machen | **erledigt** |
