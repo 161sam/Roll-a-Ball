@@ -33,7 +33,7 @@
 | TODO-OPT#29 | Assets/Scripts/PlayerController.cs | SlideRoutine(), Zeile 427 | Slide-Impulse konfigurierbar machen | **erledigt** |
 | TODO-OPT#30 | Assets/Scripts/OSMGoalZoneTrigger.cs | SetupGoalZone(), Zeile 40 | Fallback bei fehlendem LevelManager einbauen | **erledigt** |
 | TODO-OPT#31 | Assets/Scripts/Map/MapStartupController.cs | GetCoordsFromAddress(), Zeile 403 | Geocoding-Service integrieren | **erledigt** |
-| TODO-OPT#32 | Assets/Scripts/Map/MapGeneratorBatched.cs | CreateSeparateColliders(), Zeile 548 | Collider-Pooling zur GC-Reduktion |
+| TODO-OPT#32 | Assets/Scripts/Map/MapGeneratorBatched.cs | CreateSeparateColliders(), Zeile 548 | Collider-Pooling zur GC-Reduktion | **erledigt** |
 | TODO-OPT#33 | Assets/Scripts/SaveSystem.cs | SaveEncrypted()/SaveUnencrypted(), Zeile 360/348 | Async File IO verwenden | **erledigt** |
 | TODO-OPT#34 | Assets/Scripts/AchievementSystem.cs | OnLevelCompleted(), Zeile 332 | Levelnamen nicht per String vergleichen | **erledigt** |
 | TODO-OPT#35 | Assets/Scripts/AchievementSystem.cs | DisplayNotificationCoroutine(), Zeile 558 | Notification-Objekte poolen | **erledigt** |

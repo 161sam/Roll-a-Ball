@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 using System.Linq;
+using RollABall.Utility;
 
 namespace RollABall.Map
 {
@@ -575,24 +576,26 @@ namespace RollABall.Map
         /// </summary>
         private void CreateColliderObject(ColliderData data, Transform parent)
         {
-            GameObject colliderObj = new GameObject($"{data.name}_Collider");
-            colliderObj.transform.SetParent(parent);
+            GameObject colliderObj = ColliderPooler.Get(data.mesh != null, parent, $"{data.name}_Collider");
             
             // Apply transform from the original mesh
             colliderObj.transform.position = data.position;
             colliderObj.transform.rotation = data.rotation;
             colliderObj.transform.localScale = data.scale;
             
-            // Add appropriate collider type
+            // Add or reuse collider component
             if (data.mesh != null)
             {
-                MeshCollider meshCollider = colliderObj.AddComponent<MeshCollider>();
+                MeshCollider meshCollider = colliderObj.GetComponent<MeshCollider>();
+                if (!meshCollider)
+                    meshCollider = colliderObj.AddComponent<MeshCollider>();
                 meshCollider.sharedMesh = data.mesh;
             }
             else
             {
                 // Use BoxCollider for simple shapes
-                BoxCollider boxCollider = colliderObj.AddComponent<BoxCollider>();
+                if (!colliderObj.TryGetComponent<BoxCollider>(out _))
+                    colliderObj.AddComponent<BoxCollider>();
             }
             
             // Mark as static for performance
@@ -1062,6 +1065,14 @@ namespace RollABall.Map
         
         private void ClearExistingMap()
         {
+            if (collidersContainer != null)
+            {
+                foreach (Transform child in collidersContainer)
+                {
+                    ColliderPooler.Release(child.gameObject);
+                }
+            }
+
             if (mapContainer != null)
             {
                 foreach (Transform child in mapContainer)

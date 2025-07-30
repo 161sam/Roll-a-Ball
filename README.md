@@ -282,10 +282,11 @@ public float CalculateDifficultyScore()
 - [ ] Modulare Code-Architektur und Namespace-Organisation
 
 ### **🔄 Phase 4 - OpenStreetMap-Integration** (STATUS: in Arbeit)
-- [ ] Reale Kartendaten als Level-Basis
-- [ ] Adress-basierte Level-Generierung  
+- [x] Reale Kartendaten als Level-Basis
+- [x] Adress-basierte Level-Generierung (Nominatim-Geocoder)
 - [ ] Geografische Collectible-Platzierung
 - [ ] Street-View Integration für immersive Navigation
+- [x] Collider-Pooling für optimierte Physik
 
 ### **🎮 Phase 5 - Erweiterte Features** (Zukunft)
 - [ ] Multiplayer-Unterstützung (Kooperativ/Kompetitiv)
