@@ -1,0 +1,2012 @@
+Unity Editor version:    6000.1.13f1 (418bd0acaa6b)
+Branch:                  6000.1/staging
+Build type:              Release
+Batch mode:              NO
+System name:             Linux
+Distro version:          #24~24.04.3-Ubuntu SMP PREEMPT_DYNAMIC Mon Jul  7 16:39:17 UTC 2
+Kernel version:          6.14.0-24-generic
+Architecture:            x86_64
+Window Protocol:         Wayland (XWayland)
+Available memory:        64035 MB
+Date:                    2025-07-30T13:01:28Z
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi" at "2025-07-30T13:01:28.969752Z"
+[SignatureVerifier] Application signature verification not supported on this platform.
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.0+aa6cfba
+  Session Id:              523c482e0ff446a699b1d68834a21877
+  Correlation Id:          afd4480767725667ebc0fe014b7402d6
+  External correlation Id: 794412052655605049
+  Machine Id:              N5eJZWLBIzbCGgb+9YC42QGOtpA=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-saschi" (connect: 0.00s, validation: 0.01s, handshake: 0.00s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi-notifications" at "2025-07-30T13:01:28.980528Z"
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated the access token H02kTmaMAw...
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "9072294802761-UnityPersXXXX"
+[Licensing::Client] Successfully updated license, isAync: True, time: 0.01
+[Licensing::Client] Successfully resolved entitlement details
+Pro License: NO
+Selected window backend: (null) 
+Desktop is 1920 x 2130 @ 60 Hz
+Initialize udev device monitor.
+
+COMMAND LINE ARGUMENTS:
+/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Unity
+-projectpath
+/home/saschi/Games/Roll-a-Ball
+-useHub
+-hubIPC
+-cloudEnvironment
+production
+-licensingIpc
+LicenseClient-saschi
+-hubSessionId
+56eaf80b-10c4-46de-a26e-4866c865b48b
+-accessToken
+H02kTmaMAwRJBSY1Wsl0StCEqAeaTrGAgHbxjHrsr6c008f
+Successfully changed project path to: /home/saschi/Games/Roll-a-Ball
+/home/saschi/Games/Roll-a-Ball
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [124801680725312]  Target information:
+
+Player connection [124801680725312]  * "[IP] 192.168.0.45 [Port] 55504 [Flags] 2 [Guid] 4015474857 [EditorId] 4015474857 [Version] 1048832 [Id] LinuxEditor(16,192.168.0.45) [Debug] 1 [PackageName] LinuxEditor [ProjectName] Editor" 
+
+Player connection [124801680725312] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [124801680725312] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-47034" after 0.1 seconds.
+Library Redirect Path: Library/
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 54 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.nuget.newtonsoft-json@3.2.1 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.nuget.newtonsoft-json@74deb55db2a0)
+    com.unity.collab-proxy@2.8.2 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.collab-proxy@c854d1f7d97f)
+    com.unity.inputsystem@1.14.1 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.inputsystem@978211393e28)
+    com.unity.timeline@1.8.7 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.timeline@c58b4ee65782)
+    com.unity.toolchain.linux-x86_64@2.0.10 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.toolchain.linux-x86_64@5a6ce31f8a65)
+    com.unity.visualscripting@1.9.7 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.visualscripting@6279e2b7c485)
+    com.unity.sysroot@2.0.10 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.sysroot@7bbbb9339c14)
+    com.unity.sysroot.linux-x86_64@2.0.9 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.sysroot.linux-x86_64@1998d1c7730e)
+    com.unity.ide.visualstudio@2.0.23 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.ide.visualstudio@198cdf337d13)
+    com.unity.ide.rider@3.0.36 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.ide.rider@4d374c7eb6db)
+    com.unity.editorcoroutines@1.0.0 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.editorcoroutines@7d48783e7b8c)
+    com.unity.performance.profile-analyzer@1.2.3 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.performance.profile-analyzer@a68e7bc84997)
+    com.unity.testtools.codecoverage@1.2.6 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.testtools.codecoverage@205a02cbcb39)
+    com.unity.settings-manager@2.1.0 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.settings-manager@41738c275190)
+  Built-in packages:
+    com.unity.feature.development@1.0.2 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.feature.development@767aadbc6eb7)
+    com.unity.multiplayer.center@1.0.0 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.multiplayer.center@f5e57a8bed06)
+    com.unity.ugui@2.0.0 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.ugui@4f19047c8f25)
+    com.unity.modules.accessibility@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.accessibility)
+    com.unity.modules.ai@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vehicles@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.modules.hierarchycore)
+    com.unity.test-framework@1.5.1 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.test-framework@960f8d82a4fc)
+    com.unity.ext.nunit@2.0.5 (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.unity.ext.nunit@b16e6d09cd93)
+  Git packages:
+    com.justinpbarnett.unity-mcp@https://github.com/justinpbarnett/unity-mcp.git?path=/UnityMcpBridge (location: /home/saschi/Games/Roll-a-Ball/Library/PackageCache/com.justinpbarnett.unity-mcp@226400e03ac3)
+Default GameObject Tag: Finish already registered
+Default GameObject Tag: Player already registered
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+[Subsystems] No new subsystems found in resolved package list.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0,09 seconds
+Refreshing native plugins compatible for Editor in 0,66 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0,00 ms.
+Initialize engine version: 6000.1.13f1 (418bd0acaa6b)
+[Subsystems] Discovering subsystems at path /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /home/saschi/Games/Roll-a-Ball/Assets
+kGfxThreadingModeSplitJobs is not supported on OpenGL Core. Reverting to kGfxThreadingModeDirect instead.
+GfxDevice: creating device client; kGfxThreadingModeDirect
+GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
+Renderer: NVIDIA GeForce RTX 3060/PCIe/SSE2
+Vendor:   NVIDIA Corporation
+Version:  4.5.0 NVIDIA 575.64.03
+GLES:     0
+ GL_AMD_multi_draw_indirect GL_AMD_seamless_cubemap_per_texture GL_AMD_vertex_shader_viewport_index GL_AMD_vertex_shader_layer GL_ARB_arrays_of_arrays GL_ARB_base_instance GL_ARB_bindless_texture GL_ARB_blend_func_extended GL_ARB_buffer_storage GL_ARB_clear_buffer_object GL_ARB_clear_texture GL_ARB_clip_control GL_ARB_color_buffer_float GL_ARB_compressed_texture_pixel_storage GL_ARB_conservative_depth GL_ARB_compute_shader GL_ARB_compute_variable_group_size GL_ARB_conditional_render_inverted GL_ARB_copy_buffer GL_ARB_copy_image GL_ARB_cull_distance GL_ARB_debug_output GL_ARB_depth_buffer_float GL_ARB_depth_clamp GL_ARB_depth_texture GL_ARB_derivative_control GL_ARB_direct_state_access GL_ARB_draw_buffers GL_ARB_draw_buffers_blend GL_ARB_draw_indirect GL_ARB_draw_elements_base_vertex GL_ARB_draw_instanced GL_ARB_enhanced_layouts GL_ARB_ES2_compatibility GL_ARB_ES3_compatibility GL_ARB_ES3_1_compatibility GL_ARB_ES3_2_compatibility GL_ARB_explicit_attrib_location GL_ARB_explicit_uniform_location GL_ARB_fragmen
+t_coord_conventions GL_ARB_fragment_layer_viewport GL_ARB_fragment_program GL_ARB_fragment_program_shadow GL_ARB_fragment_shader GL_ARB_fragment_shader_interlock GL_ARB_framebuffer_no_attachments GL_ARB_framebuffer_object GL_ARB_framebuffer_sRGB GL_ARB_geometry_shader4 GL_ARB_get_program_binary GL_ARB_get_texture_sub_image GL_ARB_gl_spirv GL_ARB_gpu_shader5 GL_ARB_gpu_shader_fp64 GL_ARB_gpu_shader_int64 GL_ARB_half_float_pixel GL_ARB_half_float_vertex GL_ARB_imaging GL_ARB_indirect_parameters GL_ARB_instanced_arrays GL_ARB_internalformat_query GL_ARB_internalformat_query2 GL_ARB_invalidate_subdata GL_ARB_map_buffer_alignment GL_ARB_map_buffer_range GL_ARB_multi_bind GL_ARB_multi_draw_indirect GL_ARB_multisample GL_ARB_multitexture GL_ARB_occlusion_query GL_ARB_occlusion_query2 GL_ARB_parallel_shader_compile GL_ARB_pipeline_statistics_query GL_ARB_pixel_buffer_object GL_ARB_point_parameters GL_ARB_point_sprite GL_ARB_polygon_offset_clamp GL_ARB_post_depth_coverage GL_ARB_program_interface_query GL_ARB_provoki
+ng_vertex GL_ARB_query_buffer_object GL_ARB_robust_buffer_access_behavior GL_ARB_robustness GL_ARB_sample_locations GL_ARB_sample_shading GL_ARB_sampler_objects GL_ARB_seamless_cube_map GL_ARB_seamless_cubemap_per_texture GL_ARB_separate_shader_objects GL_ARB_shader_atomic_counter_ops GL_ARB_shader_atomic_counters GL_ARB_shader_ballot GL_ARB_shader_bit_encoding GL_ARB_shader_clock GL_ARB_shader_draw_parameters GL_ARB_shader_group_vote GL_ARB_shader_image_load_store GL_ARB_shader_image_size GL_ARB_shader_objects GL_ARB_shader_precision GL_ARB_shader_storage_buffer_object GL_ARB_shader_subroutine GL_ARB_shader_texture_image_samples GL_ARB_shader_texture_lod GL_ARB_shading_language_100 GL_ARB_shader_viewport_layer_array GL_ARB_shading_language_420pack GL_ARB_shading_language_include GL_ARB_shading_language_packing GL_ARB_shadow GL_ARB_sparse_buffer GL_ARB_sparse_texture GL_ARB_sparse_texture2 GL_ARB_sparse_texture_clamp GL_ARB_spirv_extensions GL_ARB_stencil_texturing GL_ARB_sync GL_ARB_tessellation_shader GL_A
+RB_texture_barrier GL_ARB_texture_border_clamp GL_ARB_texture_buffer_object GL_ARB_texture_buffer_object_rgb32 GL_ARB_texture_buffer_range GL_ARB_texture_compression GL_ARB_texture_compression_bptc GL_ARB_texture_compression_rgtc GL_ARB_texture_cube_map GL_ARB_texture_cube_map_array GL_ARB_texture_env_add GL_ARB_texture_env_combine GL_ARB_texture_env_crossbar GL_ARB_texture_env_dot3 GL_ARB_texture_filter_anisotropic GL_ARB_texture_filter_minmax GL_ARB_texture_float GL_ARB_texture_gather GL_ARB_texture_mirror_clamp_to_edge GL_ARB_texture_mirrored_repeat GL_ARB_texture_multisample GL_ARB_texture_non_power_of_two GL_ARB_texture_query_levels GL_ARB_texture_query_lod GL_ARB_texture_rectangle GL_ARB_texture_rg GL_ARB_texture_rgb10_a2ui GL_ARB_texture_stencil8 GL_ARB_texture_storage GL_ARB_texture_storage_multisample GL_ARB_texture_swizzle GL_ARB_texture_view GL_ARB_timer_query GL_ARB_transform_feedback2 GL_ARB_transform_feedback3 GL_ARB_transform_feedback_instanced GL_ARB_transform_feedback_overflow_query GL_ARB_t
+ranspose_matrix GL_ARB_uniform_buffer_object GL_ARB_vertex_array_bgra GL_ARB_vertex_array_object GL_ARB_vertex_attrib_64bit GL_ARB_vertex_attrib_binding GL_ARB_vertex_buffer_object GL_ARB_vertex_program GL_ARB_vertex_shader GL_ARB_vertex_type_10f_11f_11f_rev GL_ARB_vertex_type_2_10_10_10_rev GL_ARB_viewport_array GL_ARB_window_pos GL_ATI_draw_buffers GL_ATI_texture_float GL_ATI_texture_mirror_once GL_S3_s3tc GL_EXT_texture_env_add GL_EXT_abgr GL_EXT_bgra GL_EXT_bindable_uniform GL_EXT_blend_color GL_EXT_blend_equation_separate GL_EXT_blend_func_separate GL_EXT_blend_minmax GL_EXT_blend_subtract GL_EXT_compiled_vertex_array GL_EXT_Cg_shader GL_EXT_depth_bounds_test GL_EXT_direct_state_access GL_EXT_draw_buffers2 GL_EXT_draw_instanced GL_EXT_draw_range_elements GL_EXT_fog_coord GL_EXT_framebuffer_blit GL_EXT_framebuffer_multisample GL_EXTX_framebuffer_mixed_formats GL_EXT_framebuffer_multisample_blit_scaled GL_EXT_framebuffer_object GL_EXT_framebuffer_sRGB GL_EXT_geometry_shader4 GL_EXT_gpu_program_parameters 
+GL_EXT_gpu_shader4 GL_EXT_multi_draw_arrays GL_EXT_multiview_texture_multisample GL_EXT_multiview_timer_query GL_EXT_packed_depth_stencil GL_EXT_packed_float GL_EXT_packed_pixels GL_EXT_pixel_buffer_object GL_EXT_point_parameters GL_EXT_polygon_offset_clamp GL_EXT_post_depth_coverage GL_EXT_provoking_vertex GL_EXT_raster_multisample GL_EXT_rescale_normal GL_EXT_secondary_color GL_EXT_separate_shader_objects GL_EXT_separate_specular_color GL_EXT_shader_image_load_formatted GL_EXT_shader_image_load_store GL_EXT_shader_integer_mix GL_EXT_shadow_funcs GL_EXT_sparse_texture2 GL_EXT_stencil_two_side GL_EXT_stencil_wrap GL_EXT_texture3D GL_EXT_texture_array GL_EXT_texture_buffer_object GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_latc GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc GL_EXT_texture_cube_map GL_EXT_texture_edge_clamp GL_EXT_texture_env_combine GL_EXT_texture_env_dot3 GL_EXT_texture_filter_anisotropic GL_EXT_texture_filter_minmax GL_EXT_texture_integer GL_EXT_texture_lod G
+L_EXT_texture_lod_bias GL_EXT_texture_mirror_clamp GL_EXT_texture_object GL_EXT_texture_shadow_lod GL_EXT_texture_shared_exponent GL_EXT_texture_sRGB GL_EXT_texture_sRGB_R8 GL_EXT_texture_sRGB_decode GL_EXT_texture_storage GL_EXT_texture_swizzle GL_EXT_timer_query GL_EXT_transform_feedback2 GL_EXT_vertex_array GL_EXT_vertex_array_bgra GL_EXT_vertex_attrib_64bit GL_EXT_window_rectangles GL_EXT_x11_sync_object GL_EXT_import_sync_object GL_NV_robustness_video_memory_purge GL_IBM_rasterpos_clip GL_IBM_texture_mirrored_repeat GL_KHR_context_flush_control GL_KHR_debug GL_EXT_memory_object GL_EXT_memory_object_fd GL_NV_memory_object_sparse GL_KHR_parallel_shader_compile GL_KHR_no_error GL_KHR_robust_buffer_access_behavior GL_KHR_robustness GL_EXT_semaphore GL_EXT_semaphore_fd GL_NV_timeline_semaphore GL_KHR_shader_subgroup GL_KTX_buffer_region GL_NV_alpha_to_coverage_dither_control GL_NV_bindless_multi_draw_indirect GL_NV_bindless_multi_draw_indirect_count GL_NV_bindless_texture GL_NV_blend_equation_advanced GL_NV_
+blend_equation_advanced_coherent GL_NVX_blend_equation_advanced_multi_draw_buffers GL_NV_blend_minmax_factor GL_NV_blend_square GL_NV_clip_space_w_scaling GL_NV_command_list GL_NV_compute_program5 GL_NV_compute_shader_derivatives GL_NV_conditional_render GL_NV_conservative_raster GL_NV_conservative_raster_dilate GL_NV_conservative_raster_pre_snap GL_NV_conservative_raster_pre_snap_triangles GL_NV_conservative_raster_underestimation GL_NV_copy_depth_to_color GL_NV_copy_image GL_NV_depth_buffer_float GL_NV_depth_clamp GL_NV_draw_texture GL_NV_draw_vulkan_image GL_NV_ES1_1_compatibility GL_NV_ES3_1_compatibility GL_NV_explicit_multisample GL_NV_feature_query GL_NV_fence GL_NV_fill_rectangle GL_NV_float_buffer GL_NV_fog_distance GL_NV_fragment_coverage_to_color GL_NV_fragment_program GL_NV_fragment_program_option GL_NV_fragment_program2 GL_NV_fragment_shader_barycentric GL_NV_fragment_shader_interlock GL_NV_framebuffer_mixed_samples GL_NV_framebuffer_multisample_coverage GL_NV_geometry_shader4 GL_NV_geometry_sha
+der_passthrough GL_NV_gpu_program4 GL_NV_internalformat_sample_query GL_NV_gpu_program4_1 GL_NV_gpu_program5 GL_NV_gpu_program5_mem_extended GL_NV_gpu_program_fp64 GL_NV_gpu_program_multiview GL_NV_gpu_shader5 GL_NV_half_float GL_NV_light_max_exponent GL_NV_memory_attachment GL_NV_mesh_shader GL_NV_multisample_coverage GL_NV_multisample_filter_hint GL_NV_occlusion_query GL_NV_packed_depth_stencil GL_NV_parameter_buffer_object GL_NV_parameter_buffer_object2 GL_NV_path_rendering GL_NV_path_rendering_shared_edge GL_NV_pixel_data_range GL_NV_point_sprite GL_NV_primitive_restart GL_NV_primitive_shading_rate GL_NV_query_resource GL_NV_query_resource_tag GL_NV_register_combiners GL_NV_register_combiners2 GL_NV_representative_fragment_test GL_NV_sample_locations GL_NV_sample_mask_override_coverage GL_NV_scissor_exclusive GL_NV_shader_atomic_counters GL_NV_shader_atomic_float GL_NV_shader_atomic_float64 GL_NV_shader_atomic_fp16_vector GL_NV_shader_atomic_int64 GL_NV_shader_buffer_load GL_NV_shader_storage_buffer_obje
+ct GL_NV_shader_subgroup_partitioned GL_NV_shader_texture_footprint GL_NV_shading_rate_image GL_NV_stereo_view_rendering GL_NV_texgen_reflection GL_NV_texture_barrier GL_NV_texture_compression_vtc GL_NV_texture_dirty_tile_map GL_NV_texture_env_combine4 GL_NV_texture_multisample GL_NV_texture_rectangle GL_NV_texture_rectangle_compressed GL_NV_texture_shader GL_NV_texture_shader2 GL_NV_texture_shader3 GL_NV_transform_feedback GL_NV_transform_feedback2 GL_NV_uniform_buffer_unified_memory GL_NV_uniform_buffer_std430_layout GL_NV_vdpau_interop GL_NV_vdpau_interop2 GL_NV_vertex_array_range GL_NV_vertex_array_range2 GL_NV_vertex_attrib_integer_64bit GL_NV_vertex_buffer_unified_memory GL_NV_vertex_program GL_NV_vertex_program1_1 GL_NV_vertex_program2 GL_NV_vertex_program2_option GL_NV_vertex_program3 GL_NV_viewport_array2 GL_NV_viewport_swizzle GL_NVX_conditional_render GL_NV_gpu_multicast GL_NVX_progress_fence GL_NVX_gpu_memory_info GL_NVX_nvenc_interop GL_NV_shader_thread_group GL_NV_shader_thread_shuffle GL_KHR_b
+lend_equation_advanced GL_KHR_blend_equation_advanced_coherent GL_OVR_multiview GL_OVR_multiview2 GL_SGIS_generate_mipmap GL_SGIS_texture_lod GL_SGIX_depth_texture GL_SGIX_shadow GL_SUN_slice_accum
+OPENGL LOG: Creating OpenGL 4.5 graphics device ; Context level  <OpenGL 4.5> ; Context handle -764277720
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = '/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed'
+Mono path[1] = '/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-linux'
+Mono config path = '/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56034
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+[Licensing::Client] Successfully resolved entitlement details
+Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/VisionOSPlayer/UnityEditor.VisionOS.Extensions.dll
+Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+[Licensing::Client] Successfully resolved entitlement details
+Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
+Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
+Registered in 0,022232 seconds.
+- Loaded All Assemblies, in  0,233 seconds
+Native extension for LinuxStandalone target not found
+[usbmuxd] Start listen thread
+[usbmuxd] Listen thread started
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+Failed to load: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/VisionOSPlayer/x64/UnityEditor.VisionOS.Native.so
+Native extension for VisionOS target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0,319 seconds
+Domain Reload Profiling: 552ms
+	BeginReloadAssembly (48ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (5ms)
+	initialDomainReloadingComplete (55ms)
+	LoadAllAssembliesAndSetupDomain (103ms)
+		LoadAssemblies (47ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (100ms)
+			TypeCache.Refresh (99ms)
+				TypeCache.ScanAssembly (91ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (319ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (286ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (125ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (37ms)
+			ProcessInitializeOnLoadAttributes (78ms)
+			ProcessInitializeOnLoadMethodAttributes (42ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+[40m[32minfo[39m[22m[49m: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://unix:/tmp/ilpp.sock-105c83947e776508fd8490730b182f27
+[40m[32minfo[39m[22m[49m: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+[40m[32minfo[39m[22m[49m: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+[40m[32minfo[39m[22m[49m: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/saschi/Games/Roll-a-Ball/
+[40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
+[40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+[40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+[40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 24.1262ms
+Starting: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/bee_backend --ipc --defer-dag-verification --dagfile="Library/Bee/2400b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: /home/saschi/Games/Roll-a-Ball
+ExitCode: 3 Duration: 1s218ms
+[481/487    1s] Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll (+2 others)
+##### CommandLine
+"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp2"
+##### Contents of Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp
+-target:library
+-out:"Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll"
+-refout:"Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.ref.dll"
+-define:UNITY_6000_1_13
+-define:UNITY_6000_1
+-define:UNITY_6000
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_4_OR_NEWER
+-define:UNITY_5_5_OR_NEWER
+-define:UNITY_5_6_OR_NEWER
+-define:UNITY_2017_1_OR_NEWER
+-define:UNITY_2017_2_OR_NEWER
+-define:UNITY_2017_3_OR_NEWER
+-define:UNITY_2017_4_OR_NEWER
+-define:UNITY_2018_1_OR_NEWER
+-define:UNITY_2018_2_OR_NEWER
+-define:UNITY_2018_3_OR_NEWER
+-define:UNITY_2018_4_OR_NEWER
+-define:UNITY_2019_1_OR_NEWER
+-define:UNITY_2019_2_OR_NEWER
+-define:UNITY_2019_3_OR_NEWER
+-define:UNITY_2019_4_OR_NEWER
+-define:UNITY_2020_1_OR_NEWER
+-define:UNITY_2020_2_OR_NEWER
+-define:UNITY_2020_3_OR_NEWER
+-define:UNITY_2021_1_OR_NEWER
+-define:UNITY_2021_2_OR_NEWER
+-define:UNITY_2021_3_OR_NEWER
+-define:UNITY_2022_1_OR_NEWER
+-define:UNITY_2022_2_OR_NEWER
+-define:UNITY_2022_3_OR_NEWER
+-define:UNITY_2023_1_OR_NEWER
+-define:UNITY_2023_2_OR_NEWER
+-define:UNITY_2023_3_OR_NEWER
+-define:UNITY_6000_0_OR_NEWER
+-define:UNITY_6000_1_OR_NEWER
+-define:PLATFORM_ARCH_64
+-define:UNITY_64
+-define:UNITY_INCLUDE_TESTS
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_TEXTURE_STREAMING
+-define:ENABLE_VIRTUALTEXTURING
+-define:ENABLE_LZMA
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_VR
+-define:ENABLE_WEBCAM
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+-define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_EDITOR_GAME_SERVICES
+-define:ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_HUB_LICENSE
+-define:ENABLE_WEBSOCKET_CLIENT
+-define:ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API
+-define:ENABLE_DIRECTOR_AUDIO
+-define:ENABLE_DIRECTOR_TEXTURE
+-define:ENABLE_MANAGED_JOBS
+-define:ENABLE_MANAGED_TRANSFORM_JOBS
+-define:ENABLE_MANAGED_ANIMATION_JOBS
+-define:ENABLE_MANAGED_AUDIO_JOBS
+-define:ENABLE_MANAGED_UNITYTLS
+-define:INCLUDE_DYNAMIC_GI
+-define:ENABLE_SCRIPTING_GC_WBARRIERS
+-define:PLATFORM_SUPPORTS_MONO
+-define:RENDER_SOFTWARE_CURSOR
+-define:ENABLE_MARSHALLING_TESTS
+-define:ENABLE_VIDEO
+-define:ENABLE_NAVIGATION_OFFMESHLINK_TO_NAVMESHLINK
+-define:ENABLE_ACCELERATOR_CLIENT_DEBUGGING
+-define:TEXTCORE_1_0_OR_NEWER
+-define:EDITOR_ONLY_NAVMESH_BUILDER_DEPRECATED
+-define:PLATFORM_STANDALONE_LINUX
+-define:PLATFORM_STANDALONE
+-define:UNITY_STANDALONE_LINUX
+-define:UNITY_STANDALONE
+-define:UNITY_STANDALONE_LINUX_API
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_MOVIES
+-define:ENABLE_NETWORK
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:ENABLE_CLUSTER_SYNC
+-define:ENABLE_CLUSTERINPUT
+-define:ENABLE_SPATIALTRACKING
+-define:ENABLE_MODULAR_UNITYENGINE_ASSEMBLIES
+-define:PLATFORM_SUPPORTS_SPLIT_GRAPHICS_JOBS
+-define:PLATFORM_USES_EXPLICIT_MEMORY_MANAGER_INITIALIZER
+-define:ENABLE_MONO
+-define:NET_STANDARD_2_0
+-define:NET_STANDARD
+-define:NET_STANDARD_2_1
+-define:NETSTANDARD
+-define:NETSTANDARD2_1
+-define:ENABLE_PROFILER
+-define:DEBUG
+-define:TRACE
+-define:UNITY_ASSERTIONS
+-define:UNITY_EDITOR
+-define:UNITY_EDITOR_64
+-define:UNITY_EDITOR_LINUX
+-define:ENABLE_UNITY_COLLECTIONS_CHECKS
+-define:ENABLE_BURST_AOT
+-define:UNITY_TEAM_LICENSE
+-define:ENABLE_CUSTOM_RENDER_TEXTURE
+-define:ENABLE_DIRECTOR
+-define:ENABLE_LOCALIZATION
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_TILEMAP
+-define:ENABLE_TIMELINE
+-define:ENABLE_INPUT_SYSTEM
+-define:ENABLE_LEGACY_INPUT_MANAGER
+-define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
+-define:TEXTCORE_TEXT_ENGINE_1_5_OR_NEWER
+-define:CSHARP_7_OR_LATER
+-define:CSHARP_7_3_OR_NEWER
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.AccessibilityModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.AdaptivePerformanceModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.BuildProfileModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreBusinessMetricsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.DiagnosticsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.EditorToolbarModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.EmbreeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GraphViewModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GraphicsStateCollectionSerializerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GridAndSnapModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GridModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.MultiplayerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.Physics2DModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.PhysicsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.PresetsUIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.PropertiesModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.QuickSearchModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SafeModeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneTemplateModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneViewModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.ShaderFoundryModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SketchUpModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SpriteMaskModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SpriteShapeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SubstanceModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TerrainModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreFontEngineModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreTextEngineModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextRenderingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TilemapModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TreeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIAutomationModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIBuilderModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsSamplesModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UmbraModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.VFXModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.VideoModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.XRModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AndroidJNIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ContentLoadModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.DSPGraphModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.GIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.GraphicsStateCollectionSerializerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.HierarchyCoreModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputForUIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputLegacyModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.MarshallingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.MultiplayerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.PropertiesModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ShaderVariantAnalyticsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubsystemsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreFontEngineModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreTextEngineModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsCommonModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityCurlModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VirtualTexturingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ComponentModel.Composition.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Core.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Data.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Drawing.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.IO.Compression.FileSystem.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Net.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Numerics.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Runtime.Serialization.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ServiceModel.Web.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Transactions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Web.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Windows.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Linq.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Serialization.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/Microsoft.Win32.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.AppContext.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Buffers.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Concurrent.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.NonGeneric.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Specialized.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.EventBasedAsync.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.TypeConverter.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Console.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Data.Common.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Contracts.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Debug.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.FileVersionInfo.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Process.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.StackTrace.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TextWriterTraceListener.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tools.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TraceSource.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tracing.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Drawing.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Dynamic.Runtime.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Calendars.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.ZipFile.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.DriveInfo.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Watcher.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.IsolatedStorage.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.MemoryMappedFiles.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Pipes.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.UnmanagedMemoryStream.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Expressions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Parallel.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Queryable.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Memory.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Http.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NameResolution.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NetworkInformation.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Ping.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Requests.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Security.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Sockets.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebHeaderCollection.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.Client.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Numerics.Vectors.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ObjectModel.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.DispatchProxy.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.ILGeneration.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.Lightweight.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Reader.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.ResourceManager.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Writer.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.CompilerServices.VisualC.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Handles.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.RuntimeInformation.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Numerics.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Formatters.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Json.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Xml.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Claims.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Algorithms.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Csp.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Encoding.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.X509Certificates.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Principal.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.SecureString.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.RegularExpressions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Overlapped.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Parallel.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Thread.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.ThreadPool.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Timer.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ValueTuple.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.ReaderWriter.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XDocument.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.XDocument.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlDocument.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlSerializer.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Gradle.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.iOS.Extensions.Xcode.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/VisionOSPlayer/UnityEditor.Apple.Extensions.Common.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/VisionOSPlayer/UnityEditor.iOS.Extensions.Xcode.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.Apple.Extensions.Common.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll"
+-r:"Library/PackageCache/com.unity.ext.nunit@b16e6d09cd93/net40/unity-custom/nunit.framework.dll"
+-r:"Library/PackageCache/com.unity.nuget.newtonsoft-json@74deb55db2a0/Runtime/Newtonsoft.Json.dll"
+-r:"Library/PackageCache/com.unity.testtools.codecoverage@205a02cbcb39/lib/ReportGenerator/ReportGeneratorMerged.dll"
+-r:"Library/PackageCache/com.unity.visualscripting@6279e2b7c485/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.EditorCoroutines.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.InputSystem.ForUI.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.InputSystem.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Multiplayer.Center.Common.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Multiplayer.Center.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Rider.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Settings.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Sysroot.Linux_x86_64.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.SysrootPackage.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TestTools.CodeCoverage.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TextMeshPro.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TextMeshPro.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Timeline.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Timeline.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Toolchain.Linux-x86_64.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Core.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Core.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Flow.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Flow.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.SettingsProvider.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Shared.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.State.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.State.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualStudio.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/UnityEditor.UI.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/UnityEngine.UI.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/UnityMcpBridge.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/UnityMcpBridge.Runtime.ref.dll"
+-analyzer:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
+-analyzer:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
+-analyzer:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
+"Assets/Scripts/AchievementSystem.cs"
+"Assets/Scripts/AudioManager.cs"
+"Assets/Scripts/CameraController.cs"
+"Assets/Scripts/CollectibleController.cs"
+"Assets/Scripts/CollectibleDiagnosticTool.cs"
+"Assets/Scripts/EGPUPerformanceOptimizer.cs"
+"Assets/Scripts/EmergencySceneBuilder.cs"
+"Assets/Scripts/EndlessModeTester.cs"
+"Assets/Scripts/Environment/GateController.cs"
+"Assets/Scripts/Environment/GroundMaterialController.cs"
+"Assets/Scripts/Environment/MovingPlatform.cs"
+"Assets/Scripts/Environment/RotatingObstacle.cs"
+"Assets/Scripts/Environment/SteampunkGateController.cs"
+"Assets/Scripts/GameManager.cs"
+"Assets/Scripts/GeneratedLevelFixer.cs"
+"Assets/Scripts/Generators/LevelCollectiblePlacer.cs"
+"Assets/Scripts/Generators/LevelEffectManager.cs"
+"Assets/Scripts/Generators/LevelGenerator.cs"
+"Assets/Scripts/Generators/LevelProfile.cs"
+"Assets/Scripts/Generators/LevelProfileCreator.cs"
+"Assets/Scripts/Generators/LevelSetupHelper.cs"
+"Assets/Scripts/Generators/LevelTerrainGenerator.cs"
+"Assets/Scripts/LevelManager.cs"
+"Assets/Scripts/LevelProgressionFixer.cs"
+"Assets/Scripts/LevelProgressionProfile.cs"
+"Assets/Scripts/LevelSelectionUI.cs"
+"Assets/Scripts/Map/AddressResolver.cs"
+"Assets/Scripts/Map/BatchingPerformanceTest.cs"
+"Assets/Scripts/Map/BoundingBoxTester.cs"
+"Assets/Scripts/Map/CoordinateValidator.cs"
+"Assets/Scripts/Map/MapGenerator.cs"
+"Assets/Scripts/Map/MapGeneratorBatched.cs"
+"Assets/Scripts/Map/MapGeneratorTester.cs"
+"Assets/Scripts/Map/MapGenerator_Segmented.cs"
+"Assets/Scripts/Map/MapStartupController.cs"
+"Assets/Scripts/Map/MeshUtilities.cs"
+"Assets/Scripts/Map/OSMMapData.cs"
+"Assets/Scripts/Map/OSMSceneCompleter.cs"
+"Assets/Scripts/Map/OSMUIConnector.cs"
+"Assets/Scripts/Map/PerformanceMonitor.cs"
+"Assets/Scripts/Map/PolygonTriangulationTester.cs"
+"Assets/Scripts/MasterFixTool.cs"
+"Assets/Scripts/OSMGoalZoneTrigger.cs"
+"Assets/Scripts/OSMSceneAutoSetup.cs"
+"Assets/Scripts/PlayerController.cs"
+"Assets/Scripts/ProgressionManager.cs"
+"Assets/Scripts/Repairs/OSMSystemFixer.cs"
+"Assets/Scripts/SaveSystem.cs"
+"Assets/Scripts/SceneConsolidationEngine.cs"
+"Assets/Scripts/SceneTypeDetector.cs"
+"Assets/Scripts/SceneValidator.cs"
+"Assets/Scripts/TagManager.cs"
+"Assets/Scripts/Testing/LiveOverpassAPITester.cs"
+"Assets/Scripts/Testing/OSMCoordinateTestRunner.cs"
+"Assets/Scripts/Testing/OSMTestController.cs"
+"Assets/Scripts/Testing/OSMValidator.cs"
+"Assets/Scripts/Testing/SimpleOverpassTester.cs"
+"Assets/Scripts/UIController.cs"
+"Assets/Scripts/Unity61APIFixer.cs"
+"Assets/Scripts/Utility/LevelProgressionSetup.cs"
+"Assets/Scripts/Utility/PhysicsUtils.cs"
+"Assets/Scripts/Utility/PrefabPooler.cs"
+"Assets/Scripts/VFX/RotatingGear.cs"
+"Assets/Scripts/VFX/SteamEmitter.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark03.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark04.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/CameraController.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/ChatController.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/DropdownSample.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/EnvMapAnimator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/ObjectSpin.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/ShaderPropAnimator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/SimpleScript.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/SkewTextExample.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_DigitValidator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_ExampleScript_01.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_FrameRateCounter.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_PhoneNumberValidator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextEventCheck.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextEventHandler.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextInfoDebugTool.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextSelector_A.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextSelector_B.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_UiFrameRateCounter.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMPro_InstructionOverlay.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TeleType.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TextConsoleSimulator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TextMeshProFloatingText.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TextMeshSpawner.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexColorCycler.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexJitter.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexShakeA.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexShakeB.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
+-langversion:9.0
+/deterministic
+/optimize+
+/debug:portable
+/nologo
+/RuntimeMetadataVersion:v4.0.30319
+/nowarn:0169
+/nowarn:0649
+/nowarn:0282
+/nowarn:1701
+/nowarn:1702
+/utf8output
+/preferreduilang:en-US
+/additionalfile:"Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.UnityAdditionalFile.txt"
+##### Custom Environment Variables
+DOTNET_MULTILEVEL_LOOKUP=0
+##### ExitCode
+1
+##### Output
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
+Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
+Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
+Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
+Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
+Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
+Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
+Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
+Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
+Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
+Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
+*** Tundra build failed (1.20 seconds), 1 items updated, 487 evaluated
+## Script Compilation Error for: Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll (+2 others)
+## CmdLine: "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp2"
+## Output:
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
+Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
+Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
+Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
+Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
+Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
+Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
+Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
+Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
+Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
+Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
+
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
+Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
+Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
+Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
+Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
+Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
+Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
+Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
+Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
+Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
+Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
+AssetDatabase: script compilation time: 1,870876s
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+Total cache size 268081029
+Total cache size after purge 268081029, took 00:00:00.0711270
+[ScriptCompilation] Requested script compilation because: Exiting safe mode
+[40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
+[40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+[40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+[40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 1.1358ms
+Starting: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/bee_backend --ipc --defer-dag-verification --dagfile="Library/Bee/2400b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: /home/saschi/Games/Roll-a-Ball
+## Script Compilation Error for: Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll (+2 others)
+## CmdLine: "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp2"
+## Output:
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
+Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
+Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
+Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
+Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
+Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
+Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
+Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
+Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
+Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
+Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
+Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
+
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
+Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
+Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
+Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
+Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
+Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
+Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
+Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
+Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
+Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
+Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
+Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
+Total cache size 268081029
+Total cache size after purge 268081029, took 00:00:00.0386871
+ExitCode: 3 Duration: 0s388ms
+[301/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.pdb
+[302/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.dll
+[306/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.pdb
+[307/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.dll
+[321/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.dll
+[324/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.pdb
+[335/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.dll
+[336/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.pdb
+[343/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.pdb
+[348/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.dll
+[349/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll
+[352/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll
+[365/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.pdb
+[366/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.pdb
+[374/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.dll
+[376/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll
+[377/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.dll
+[378/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.dll
+[382/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.pdb
+[384/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.dll
+[385/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.pdb
+[387/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.pdb
+[388/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.dll
+[390/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll
+[392/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll
+[394/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll
+[399/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.pdb
+[403/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.pdb
+[404/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.pdb
+[405/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.dll
+[406/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.dll
+[407/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll
+[408/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.pdb
+[439/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
+[440/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.pdb
+[441/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.pdb
+[442/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.pdb
+[443/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.pdb
+[444/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.dll
+[445/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.pdb
+[446/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.dll
+[447/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.pdb
+[448/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.pdb
+[449/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.pdb
+[451/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.pdb
+[452/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.pdb
+[453/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll
+[454/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll
+[455/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.dll
+[456/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.pdb
+[457/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll
+[458/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.pdb
+[459/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll
+[460/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.pdb
+[461/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.pdb
+[462/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.dll
+[463/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.pdb
+[464/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
+[465/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.pdb
+[466/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.pdb
+[467/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.pdb
+[468/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll
+[469/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.pdb
+[470/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.pdb
+[471/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.dll
+[472/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.pdb
+[473/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.dll
+[474/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll
+[475/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.pdb
+[476/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.pdb
+[477/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll
+[478/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll
+[479/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.dll
+[480/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.dll
+[481/487    0s] Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll (+2 others)
+##### CommandLine
+"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp2"
+##### Contents of Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.rsp
+-target:library
+-out:"Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.dll"
+-refout:"Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.ref.dll"
+-define:UNITY_6000_1_13
+-define:UNITY_6000_1
+-define:UNITY_6000
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_4_OR_NEWER
+-define:UNITY_5_5_OR_NEWER
+-define:UNITY_5_6_OR_NEWER
+-define:UNITY_2017_1_OR_NEWER
+-define:UNITY_2017_2_OR_NEWER
+-define:UNITY_2017_3_OR_NEWER
+-define:UNITY_2017_4_OR_NEWER
+-define:UNITY_2018_1_OR_NEWER
+-define:UNITY_2018_2_OR_NEWER
+-define:UNITY_2018_3_OR_NEWER
+-define:UNITY_2018_4_OR_NEWER
+-define:UNITY_2019_1_OR_NEWER
+-define:UNITY_2019_2_OR_NEWER
+-define:UNITY_2019_3_OR_NEWER
+-define:UNITY_2019_4_OR_NEWER
+-define:UNITY_2020_1_OR_NEWER
+-define:UNITY_2020_2_OR_NEWER
+-define:UNITY_2020_3_OR_NEWER
+-define:UNITY_2021_1_OR_NEWER
+-define:UNITY_2021_2_OR_NEWER
+-define:UNITY_2021_3_OR_NEWER
+-define:UNITY_2022_1_OR_NEWER
+-define:UNITY_2022_2_OR_NEWER
+-define:UNITY_2022_3_OR_NEWER
+-define:UNITY_2023_1_OR_NEWER
+-define:UNITY_2023_2_OR_NEWER
+-define:UNITY_2023_3_OR_NEWER
+-define:UNITY_6000_0_OR_NEWER
+-define:UNITY_6000_1_OR_NEWER
+-define:PLATFORM_ARCH_64
+-define:UNITY_64
+-define:UNITY_INCLUDE_TESTS
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_TEXTURE_STREAMING
+-define:ENABLE_VIRTUALTEXTURING
+-define:ENABLE_LZMA
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_VR
+-define:ENABLE_WEBCAM
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+-define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_EDITOR_GAME_SERVICES
+-define:ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_HUB_LICENSE
+-define:ENABLE_WEBSOCKET_CLIENT
+-define:ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API
+-define:ENABLE_DIRECTOR_AUDIO
+-define:ENABLE_DIRECTOR_TEXTURE
+-define:ENABLE_MANAGED_JOBS
+-define:ENABLE_MANAGED_TRANSFORM_JOBS
+-define:ENABLE_MANAGED_ANIMATION_JOBS
+-define:ENABLE_MANAGED_AUDIO_JOBS
+-define:ENABLE_MANAGED_UNITYTLS
+-define:INCLUDE_DYNAMIC_GI
+-define:ENABLE_SCRIPTING_GC_WBARRIERS
+-define:PLATFORM_SUPPORTS_MONO
+-define:RENDER_SOFTWARE_CURSOR
+-define:ENABLE_MARSHALLING_TESTS
+-define:ENABLE_VIDEO
+-define:ENABLE_NAVIGATION_OFFMESHLINK_TO_NAVMESHLINK
+-define:ENABLE_ACCELERATOR_CLIENT_DEBUGGING
+-define:TEXTCORE_1_0_OR_NEWER
+-define:EDITOR_ONLY_NAVMESH_BUILDER_DEPRECATED
+-define:PLATFORM_STANDALONE_LINUX
+-define:PLATFORM_STANDALONE
+-define:UNITY_STANDALONE_LINUX
+-define:UNITY_STANDALONE
+-define:UNITY_STANDALONE_LINUX_API
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_MOVIES
+-define:ENABLE_NETWORK
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:ENABLE_CLUSTER_SYNC
+-define:ENABLE_CLUSTERINPUT
+-define:ENABLE_SPATIALTRACKING
+-define:ENABLE_MODULAR_UNITYENGINE_ASSEMBLIES
+-define:PLATFORM_SUPPORTS_SPLIT_GRAPHICS_JOBS
+-define:PLATFORM_USES_EXPLICIT_MEMORY_MANAGER_INITIALIZER
+-define:ENABLE_MONO
+-define:NET_STANDARD_2_0
+-define:NET_STANDARD
+-define:NET_STANDARD_2_1
+-define:NETSTANDARD
+-define:NETSTANDARD2_1
+-define:ENABLE_PROFILER
+-define:DEBUG
+-define:TRACE
+-define:UNITY_ASSERTIONS
+-define:UNITY_EDITOR
+-define:UNITY_EDITOR_64
+-define:UNITY_EDITOR_LINUX
+-define:ENABLE_UNITY_COLLECTIONS_CHECKS
+-define:ENABLE_BURST_AOT
+-define:UNITY_TEAM_LICENSE
+-define:ENABLE_CUSTOM_RENDER_TEXTURE
+-define:ENABLE_DIRECTOR
+-define:ENABLE_LOCALIZATION
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_TILEMAP
+-define:ENABLE_TIMELINE
+-define:ENABLE_INPUT_SYSTEM
+-define:ENABLE_LEGACY_INPUT_MANAGER
+-define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
+-define:TEXTCORE_TEXT_ENGINE_1_5_OR_NEWER
+-define:CSHARP_7_OR_LATER
+-define:CSHARP_7_3_OR_NEWER
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.AccessibilityModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.AdaptivePerformanceModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.BuildProfileModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreBusinessMetricsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.DiagnosticsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.EditorToolbarModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.EmbreeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GraphViewModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GraphicsStateCollectionSerializerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GridAndSnapModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.GridModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.MultiplayerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.Physics2DModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.PhysicsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.PresetsUIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.PropertiesModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.QuickSearchModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SafeModeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneTemplateModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneViewModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.ShaderFoundryModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SketchUpModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SpriteMaskModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SpriteShapeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.SubstanceModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TerrainModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreFontEngineModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreTextEngineModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TextRenderingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TilemapModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.TreeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIAutomationModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIBuilderModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsSamplesModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UmbraModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.VFXModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.VideoModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.XRModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEditor.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AndroidJNIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ContentLoadModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.DSPGraphModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.GIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.GraphicsStateCollectionSerializerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.HierarchyCoreModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputForUIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputLegacyModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.MarshallingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.MultiplayerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.PropertiesModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.ShaderVariantAnalyticsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.SubsystemsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreFontEngineModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreTextEngineModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsCommonModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityCurlModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.VirtualTexturingModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ComponentModel.Composition.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Core.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Data.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Drawing.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.IO.Compression.FileSystem.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Net.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Numerics.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Runtime.Serialization.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ServiceModel.Web.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Transactions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Web.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Windows.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Linq.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Serialization.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/Microsoft.Win32.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.AppContext.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Buffers.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Concurrent.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.NonGeneric.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Specialized.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.EventBasedAsync.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.TypeConverter.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Console.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Data.Common.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Contracts.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Debug.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.FileVersionInfo.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Process.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.StackTrace.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TextWriterTraceListener.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tools.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TraceSource.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tracing.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Drawing.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Dynamic.Runtime.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Calendars.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.ZipFile.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.DriveInfo.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Watcher.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.IsolatedStorage.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.MemoryMappedFiles.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Pipes.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.UnmanagedMemoryStream.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Expressions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Parallel.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Queryable.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Memory.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Http.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NameResolution.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NetworkInformation.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Ping.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Requests.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Security.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Sockets.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebHeaderCollection.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.Client.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Numerics.Vectors.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ObjectModel.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.DispatchProxy.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.ILGeneration.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.Lightweight.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Reader.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.ResourceManager.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Writer.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.CompilerServices.VisualC.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Handles.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.RuntimeInformation.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Numerics.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Formatters.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Json.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Xml.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Claims.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Algorithms.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Csp.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Encoding.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Primitives.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.X509Certificates.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Principal.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.SecureString.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.RegularExpressions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Overlapped.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Extensions.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Parallel.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Thread.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.ThreadPool.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Timer.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ValueTuple.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.ReaderWriter.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XDocument.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.XDocument.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlDocument.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlSerializer.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Gradle.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.iOS.Extensions.Xcode.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/VisionOSPlayer/UnityEditor.Apple.Extensions.Common.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/VisionOSPlayer/UnityEditor.iOS.Extensions.Xcode.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.Apple.Extensions.Common.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll"
+-r:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll"
+-r:"Library/PackageCache/com.unity.ext.nunit@b16e6d09cd93/net40/unity-custom/nunit.framework.dll"
+-r:"Library/PackageCache/com.unity.nuget.newtonsoft-json@74deb55db2a0/Runtime/Newtonsoft.Json.dll"
+-r:"Library/PackageCache/com.unity.testtools.codecoverage@205a02cbcb39/lib/ReportGenerator/ReportGeneratorMerged.dll"
+-r:"Library/PackageCache/com.unity.visualscripting@6279e2b7c485/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.EditorCoroutines.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.InputSystem.ForUI.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.InputSystem.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Multiplayer.Center.Common.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Multiplayer.Center.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Rider.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Settings.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Sysroot.Linux_x86_64.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.SysrootPackage.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TestTools.CodeCoverage.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TextMeshPro.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.TextMeshPro.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Timeline.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Timeline.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.Toolchain.Linux-x86_64.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Core.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Core.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Flow.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Flow.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.SettingsProvider.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.Shared.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.State.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualScripting.State.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/Unity.VisualStudio.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/UnityEditor.UI.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/UnityEngine.UI.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/UnityMcpBridge.Editor.ref.dll"
+-r:"Library/Bee/artifacts/2400b0aE.dag/UnityMcpBridge.Runtime.ref.dll"
+-analyzer:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
+-analyzer:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
+-analyzer:"/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
+"Assets/Scripts/AchievementSystem.cs"
+"Assets/Scripts/AudioManager.cs"
+"Assets/Scripts/CameraController.cs"
+"Assets/Scripts/CollectibleController.cs"
+"Assets/Scripts/CollectibleDiagnosticTool.cs"
+"Assets/Scripts/EGPUPerformanceOptimizer.cs"
+"Assets/Scripts/EmergencySceneBuilder.cs"
+"Assets/Scripts/EndlessModeTester.cs"
+"Assets/Scripts/Environment/GateController.cs"
+"Assets/Scripts/Environment/GroundMaterialController.cs"
+"Assets/Scripts/Environment/MovingPlatform.cs"
+"Assets/Scripts/Environment/RotatingObstacle.cs"
+"Assets/Scripts/Environment/SteampunkGateController.cs"
+"Assets/Scripts/GameManager.cs"
+"Assets/Scripts/GeneratedLevelFixer.cs"
+"Assets/Scripts/Generators/LevelCollectiblePlacer.cs"
+"Assets/Scripts/Generators/LevelEffectManager.cs"
+"Assets/Scripts/Generators/LevelGenerator.cs"
+"Assets/Scripts/Generators/LevelProfile.cs"
+"Assets/Scripts/Generators/LevelProfileCreator.cs"
+"Assets/Scripts/Generators/LevelSetupHelper.cs"
+"Assets/Scripts/Generators/LevelTerrainGenerator.cs"
+"Assets/Scripts/LevelManager.cs"
+"Assets/Scripts/LevelProgressionFixer.cs"
+"Assets/Scripts/LevelProgressionProfile.cs"
+"Assets/Scripts/LevelSelectionUI.cs"
+"Assets/Scripts/Map/AddressResolver.cs"
+"Assets/Scripts/Map/BatchingPerformanceTest.cs"
+"Assets/Scripts/Map/BoundingBoxTester.cs"
+"Assets/Scripts/Map/CoordinateValidator.cs"
+"Assets/Scripts/Map/MapGenerator.cs"
+"Assets/Scripts/Map/MapGeneratorBatched.cs"
+"Assets/Scripts/Map/MapGeneratorTester.cs"
+"Assets/Scripts/Map/MapGenerator_Segmented.cs"
+"Assets/Scripts/Map/MapStartupController.cs"
+"Assets/Scripts/Map/MeshUtilities.cs"
+"Assets/Scripts/Map/OSMMapData.cs"
+"Assets/Scripts/Map/OSMSceneCompleter.cs"
+"Assets/Scripts/Map/OSMUIConnector.cs"
+"Assets/Scripts/Map/PerformanceMonitor.cs"
+"Assets/Scripts/Map/PolygonTriangulationTester.cs"
+"Assets/Scripts/MasterFixTool.cs"
+"Assets/Scripts/OSMGoalZoneTrigger.cs"
+"Assets/Scripts/OSMSceneAutoSetup.cs"
+"Assets/Scripts/PlayerController.cs"
+"Assets/Scripts/ProgressionManager.cs"
+"Assets/Scripts/Repairs/OSMSystemFixer.cs"
+"Assets/Scripts/SaveSystem.cs"
+"Assets/Scripts/SceneConsolidationEngine.cs"
+"Assets/Scripts/SceneTypeDetector.cs"
+"Assets/Scripts/SceneValidator.cs"
+"Assets/Scripts/TagManager.cs"
+"Assets/Scripts/Testing/LiveOverpassAPITester.cs"
+"Assets/Scripts/Testing/OSMCoordinateTestRunner.cs"
+"Assets/Scripts/Testing/OSMTestController.cs"
+"Assets/Scripts/Testing/OSMValidator.cs"
+"Assets/Scripts/Testing/SimpleOverpassTester.cs"
+"Assets/Scripts/UIController.cs"
+"Assets/Scripts/Unity61APIFixer.cs"
+"Assets/Scripts/Utility/LevelProgressionSetup.cs"
+"Assets/Scripts/Utility/PhysicsUtils.cs"
+"Assets/Scripts/Utility/PrefabPooler.cs"
+"Assets/Scripts/VFX/RotatingGear.cs"
+"Assets/Scripts/VFX/SteamEmitter.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark03.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark04.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/CameraController.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/ChatController.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/DropdownSample.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/EnvMapAnimator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/ObjectSpin.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/ShaderPropAnimator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/SimpleScript.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/SkewTextExample.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_DigitValidator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_ExampleScript_01.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_FrameRateCounter.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_PhoneNumberValidator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextEventCheck.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextEventHandler.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextInfoDebugTool.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextSelector_A.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_TextSelector_B.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMP_UiFrameRateCounter.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TMPro_InstructionOverlay.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TeleType.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TextConsoleSimulator.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TextMeshProFloatingText.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/TextMeshSpawner.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexColorCycler.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexJitter.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexShakeA.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexShakeB.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
+"Assets/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
+-langversion:9.0
+/deterministic
+/optimize+
+/debug:portable
+/nologo
+/RuntimeMetadataVersion:v4.0.30319
+/nowarn:0169
+/nowarn:0649
+/nowarn:0282
+/nowarn:1701
+/nowarn:1702
+/utf8output
+/preferreduilang:en-US
+/additionalfile:"Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp.UnityAdditionalFile.txt"
+##### Custom Environment Variables
+DOTNET_MULTILEVEL_LOOKUP=0
+##### ExitCode
+1
+##### Output
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1525: Invalid expression term 'if'
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1525: Invalid expression term '{'
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1525: Invalid expression term '{'
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1525: Invalid expression term 'return'
+Assets/Scripts/PlayerController.cs(504,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/Environment/SteampunkGateController.cs(576,18): error CS1026: ) expected
+Assets/Scripts/SceneConsolidationEngine.cs(795,21): error CS1026: ) expected
+Assets/Scripts/PlayerController.cs(504,13): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1026: ) expected
+Assets/Scripts/Map/MapStartupController.cs(736,28): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/OSMSceneAutoSetup.cs(147,29): error CS1002: ; expected
+Assets/Scripts/Map/MapGenerator.cs(1611,33): error CS1002: ; expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1026: ) expected
+Assets/Scripts/Map/MapGenerator.cs(1613,42): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(286,40): error CS1002: ; expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1026: ) expected
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1525: Invalid expression term '}'
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1525: Invalid expression term '}'
+Assets/Scripts/LevelSelectionUI.cs(225,25): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(326,40): error CS1002: ; expected
+Assets/Scripts/SceneConsolidationEngine.cs(1061,17): error CS1525: Invalid expression term 'string'
+Assets/Scripts/Map/MapGeneratorBatched.cs(1041,33): error CS1002: ; expected
+Assets/Scripts/SceneConsolidationEngine.cs(1061,24): error CS1002: ; expected
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/MapGeneratorBatched.cs(1043,42): error CS1002: ; expected
+Assets/Scripts/VFX/SteamEmitter.cs(362,42): error CS1026: ) expected
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1525: Invalid expression term '{'
+Assets/Scripts/VFX/SteamEmitter.cs(367,43): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(241,43): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(242,42): error CS1001: Identifier expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(244,18): error CS1525: Invalid expression term 'float'
+Assets/Scripts/Map/BatchingPerformanceTest.cs(271,94): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(283,93): error CS1026: ) expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(294,105): error CS1026: ) expected
+Assets/Scripts/SceneValidator.cs(150,18): error CS1002: ; expected
+Assets/Scripts/Map/BatchingPerformanceTest.cs(360,120): error CS1026: ) expected
+Assets/Scripts/SceneValidator.cs(214,25): error CS1525: Invalid expression term 'foreach'
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1026: ) expected
+Assets/Scripts/SceneValidator.cs(214,25): error CS1002: ; expected
+Assets/Scripts/OSMGoalZoneTrigger.cs(78,31): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1039: Unterminated string literal
+Assets/Scripts/TagManager.cs(423,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/TagManager.cs(423,13): error CS1026: ) expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,13): error CS1733: Expected expression
+Assets/Scripts/TagManager.cs(425,30): error CS1026: ) expected
+Assets/Scripts/TagManager.cs(425,30): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1525: Invalid expression term '}'
+Assets/Scripts/Utility/LevelProgressionSetup.cs(101,14): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(104,49): error CS1002: ; expected
+Assets/Scripts/Utility/LevelProgressionSetup.cs(114,2): error CS1513: } expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1525: Invalid expression term '}'
+Assets/Scripts/Map/OSMSceneCompleter.cs(117,19): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(439,13): error CS1002: ; expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(503,61): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1525: Invalid expression term '{'
+Assets/Scripts/Map/OSMSceneCompleter.cs(804,13): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1026: ) expected
+Assets/Scripts/Map/OSMSceneCompleter.cs(806,30): error CS1002: ; expected
+*** Tundra build failed (0.27 seconds), 75 items updated, 487 evaluated
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory is not a mono symbol file
+- Loaded All Assemblies, in  0,402 seconds
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+Refreshing native plugins compatible for Editor in 0,19 ms, found 0 plugins.
+Native extension for LinuxStandalone target not found
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+Failed to load: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/VisionOSPlayer/x64/UnityEditor.VisionOS.Native.so
+Native extension for VisionOS target not found
+Native extension for OSXStandalone target not found
+Native extension for WebGL target not found
+UnityMcpBridge started on port 6400.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /home/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:35)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+UnityMcpBridge.Editor.UnityMcpBridge:Start () (at ./Library/PackageCache/com.justinpbarnett.unity-mcp@226400e03ac3/Editor/UnityMcpBridge.cs:80)
+UnityMcpBridge.Editor.UnityMcpBridge:.cctor () (at ./Library/PackageCache/com.justinpbarnett.unity-mcp@226400e03ac3/Editor/UnityMcpBridge.cs:53)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[]) (at /home/bokken/build/output/unity/unity/Editor/Mono/EditorAssemblies.cs:124)
+
+(Filename: ./Library/PackageCache/com.justinpbarnett.unity-mcp@226400e03ac3/Editor/UnityMcpBridge.cs Line: 80)
+
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0,612 seconds
+Domain Reload Profiling: 1014ms
+	BeginReloadAssembly (99ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (7ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (27ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (5ms)
+	initialDomainReloadingComplete (17ms)
+	LoadAllAssembliesAndSetupDomain (258ms)
+		LoadAssemblies (164ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (129ms)
+			TypeCache.Refresh (105ms)
+				TypeCache.ScanAssembly (95ms)
+			BuildScriptInfoCaches (18ms)
+			ResolveRequiredComponents (3ms)
+	FinalizeReload (613ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (524ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (65ms)
+			SetLoadedEditorAssemblies (2ms)
+			BeforeProcessingInitializeOnLoad (95ms)
+			ProcessInitializeOnLoadAttributes (336ms)
+			ProcessInitializeOnLoadMethodAttributes (23ms)
+			AfterProcessingInitializeOnLoad (3ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (4ms)
+The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+Start importing Assets/Prefabs/PlayerPrefab.prefab using Guid(45ef084dc624dcdf0b08ad52e8c34b92) (PrefabImporter) -> (artifact id: 'ff656f8c89f1eff564e04e4076fcbbbb') in 0.008148454 seconds
+Start importing Assets/Prefabs/CollectiblePrefab.prefab using Guid(5c967c7e30735590190a1ecefffb2f59) (PrefabImporter) -> (artifact id: '253042152e25335ebbe14727ed142a8a') in 0.000931552 seconds
+Start importing Assets/Prefabs/Player.prefab using Guid(8e1ad3f37feab50eb8883b04878e2d3f) (PrefabImporter) -> (artifact id: '10737e79d9ed301ab5465b4534694b94') in 0.00284363 seconds
+Refreshing native plugins compatible for Editor in 0,24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0,00 ms.
+Asset Pipeline Refresh (id=106f87c80a8658a42bc3b61e7f6a2e3c): Total: 5.246 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=3 (actual=3, local cache=0, cache server=0)
+		Asset DB Process Time: managed=2 ms, native=2384 ms
+		Asset DB Callback time: managed=117 ms, native=2 ms
+		Scripting: domain reloads=1, domain reload time=846 ms, compile time=1873 ms, other=19 ms
+		Project Asset Count: scripts=937, non-scripts=1697
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 1
+	InvokeCustomDependenciesCallbacks: 0,003ms
+	InvokePackagesCallback: 0,302ms
+	ApplyChangesToAssetFolders: 0,229ms
+	Scan: 192,857ms
+	OnSourceAssetsModified: 0,005ms
+	CategorizeAssetsWithTransientArtifact: 24,796ms
+	ProcessAssetsWithTransientArtifactChanges: 25,802ms
+	CategorizeAssets: 14,091ms
+	ImportOutOfDateAssets: 629,795ms (-1256,785ms without children)
+		ImportManagerImport: 13,209ms (0,883ms without children)
+			ImportInProcess: 12,310ms
+			UpdateCategorizedAssets: 0,016ms
+		CompileScripts: 1872,589ms
+		ReloadNativeAssets: 0,000ms
+		UnloadImportedAssets: 0,167ms
+		ReloadImportedAssets: 0,000ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0,295ms
+		InitializingProgressBar: 0,001ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0,000ms
+		OnDemandSchedulerStart: 0,319ms
+	PostProcessAllAssets: 118,201ms
+	Hotreload: 1,649ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0,000ms
+	UnloadStreamsBegin: 1,994ms
+	PersistCurrentRevisions: 0,085ms
+	UnloadStreamsEnd: 0,000ms
+	GenerateScriptTypeHashes: 1,662ms
+	Untracked: 4235,778ms
+
+Application.AssetDatabase Initial Refresh End
+AutoLocale: current locale expects 'C' but got 'de_DE.UTF-8'Launched and connected shader compiler UnityShaderCompiler after 0.01 seconds
+Scanning for USB devices : 3.120ms
+Initializing Unity extensions:
+[Licensing::Client] Successfully resolved entitlement details
+UpdateMenuTitleForLanguage: 10
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Roll-a-Ball
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/Scenes/Level1.unity'
+	Deserialize:            15.381 ms
+	Integration:            34.178 ms
+	Integration of assets:  1.287 ms
+	Thread Wait Time:       -0.012 ms
+	Total Operation Time:   50.833 ms
+Unloading 3896 unused Assets / (2.6 MB). Loaded Objects now: 4636.
+Memory consumption went from 133.7 MB to 131.1 MB.
+Total: 6.321907 ms (FindLiveObjects: 0.208947 ms CreateObjectMapping: 0.086983 ms MarkObjects: 4.457288 ms  DeleteObjects: 1.568217 ms)
+
+[LAYOUT] About to load UserSettings/Layouts/default-6000.dwlt, keepMainWindow=False
+GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
+GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
+GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
+GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
+GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
+GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
+[LAYOUT] About to save layout /home/saschi/Games/Roll-a-Ball/UserSettings/Layouts/default-6000.dwlt
+[LAYOUT] About to save layout /home/saschi/.config/unity3d/Preferences/Editor-5.x/Layouts/current/default-6000.dwlt
+[MODES] ModeService[default].InitializeCurrentMode
+[MODES] ModeService[default].RaiseModeChanged(default, default)
+[Project] Loading completed in 8.358 seconds
+	Project init time: 				6.397 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.114 seconds
+		Asset Database init time: 		0.102 seconds
+		Global illumination init time: 	0.002 seconds
+		Assemblies load time: 			0.564 seconds
+		Unity extensions init time: 	0.004 seconds
+		Asset Database refresh time: 	5.254 seconds
+	Scene opening time: 			1.652 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1753880497323,"processId":47034,"projectLoad":8.358216622,"projectInit":6.397312401,"templateInit":0.0,"packageManagerInit":0.114417948,"assetDatabaseInit":0.102443758,"globalIlluminationInit":0.002477566,"assembliesLoad":0.564160021,"unityExtensionsInit":0.003701852,"assetDatabaseRefresh":5.253767311,"sceneOpening":1.651778422}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1753880497323,"processId":47034,"editorVersion":"6000.1.13f1 (418bd0acaa6b)","branch":"6000.1/staging","buildType":"Release","platform":"Linux"}
+The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+Asset Pipeline Refresh (id=8fac950427e5a401684614c7034a158d): Total: 0.132 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+Asset Pipeline Refresh (id=4fcce5c780de48686b919dae3b874b6f): Total: 0.044 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+The GUID inside 'Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The GUID inside 'Assets/Scripts/Environment/SwitchTrigger.cs.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The .meta file Assets/Scripts/Environment/SwitchTrigger.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+The .meta file Assets/Scripts/Generators/LevelObjectInstantiator.cs.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+Asset Pipeline Refresh (id=067cfe23f89ca803b86cbb0005f16392): Total: 0.062 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Created GICache directory at /home/saschi/.cache/unity3d/GiCache. Took: 0.001s, timestamps: [8.500 - 8.501]
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated access token: "H02kTmaM"... (expires: 2026-07-30T13:01:38Z)
+Android Extension - Scanning For ADB Devices 730 ms
+Android Extension - Scanning For ADB Devices 168 ms
+Attempted to call .Dispose on an already disposed CancellationTokenSource
+Android Extension - Scanning For ADB Devices 166 ms
+GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
+Android Extension - Scanning For ADB Devices 164 ms
+TrimDiskCacheJob: Current cache size 0mb
