@@ -51,10 +51,10 @@ Never say "Ready for production deployment!" or similar, we are stil in developm
 
 ---
 
-Links for OSM integration:
-https://wiki.openstreetmap.org/wiki/Downloading_data
-https://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_/api/0.6/map
-https://wiki.openstreetmap.org/wiki/API_v0.6
+Links for OSM integration:  
+https://wiki.openstreetmap.org/wiki/Downloading_data  
+https://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_/api/0.6/map  
+https://wiki.openstreetmap.org/wiki/API_v0.6  
 
 ---
 
