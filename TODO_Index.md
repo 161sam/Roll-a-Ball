@@ -25,7 +25,7 @@
 | TODO-OPT#21 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 499 | Platzierungslogik für Collectibles/Goal vereinheitlichen |
 | TODO-OPT#22 | Assets/Scripts/Map/MapGenerator_Original.cs | PlaceGoalZone(), Zeile 305 | Gemeinsame Platzierungsfunktion nutzen |
 | TODO-OPT#23 | Assets/Scripts/Map/MapStartupController.cs | InitializeUI(), Zeile 52 | Find-or-create Logik mit OSMUIConnector teilen | **erledigt** |
-| TODO-OPT#24 | Assets/Scripts/Map/OSMSceneCompleter.cs | SetupUIComponents(), Zeile 67 | UI-Setup-Methoden mit generischen Buildern vereinheitlichen |
+| TODO-OPT#24 | Assets/Scripts/Map/OSMSceneCompleter.cs | SetupUIComponents(), Zeile 67 | UI-Setup-Methoden mit generischen Buildern vereinheitlichen | **erledigt** |
 | TODO-OPT#25 | Assets/Editor/ProjectCleanupAndFix.cs | CreateProperLevelProfiles(), Zeile 100 | Wiederholte Folder-Checks in Hilfsmethode auslagern | **erledigt** |
 | TODO-OPT#26 | Assets/Scripts/LevelManager.cs | OnDestroy(), Zeile 116 | Events vor Zerstörung abmelden | **erledigt** |
 | TODO-OPT#27 | Assets/Scripts/Map/MapGenerator.cs | CreateSteamEmitter(), Zeile 1565 | SteamEmitter-Pooling einführen | **erledigt** |
@@ -42,7 +42,7 @@
 | TODO-OPT#38 | Assets/Scripts/CollectibleController.cs | FlashLight(), Zeile 251 | Blitz-Parameter als Felder exposen | **erledigt** |
 | TODO-OPT#39 | Assets/Scripts/CollectibleController.cs | ResetCollectible(), Zeile 359 | Collectible in Pool zurücklegen | **erledigt** |
 | TODO-OPT#40 | Assets/Scripts/SaveSystem.cs | encryptionKey, Zeile 84 | Schlüssel aus externer Konfiguration laden | **erledigt** |
-| TODO-OPT#41 | Assets/Scripts/Map/MapStartupController.cs | LoadMapFromAddress(), Zeile 244 | Adressauflösung asynchron ausführen |
+| TODO-OPT#41 | Assets/Scripts/Map/MapStartupController.cs | LoadMapFromAddress(), Zeile 244 | Adressauflösung asynchron ausführen | **erledigt** |
 | TODO-OPT#42 | Assets/Scripts/ProgressionManager.cs | CreateDefaultLevels(), Zeile 203 | Leveldaten extern speichern |
 | TODO-OPT#43 | Assets/Scripts/AchievementSystem.cs | CreateDefaultAchievements(), Zeile 186 | Achievements aus externer Konfiguration laden |
 | TODO-OPT#44 | Assets/Scripts/AchievementSystem.cs | SubscribeToGameEvents(), Zeile 295 | PlayerController-Referenz cachen | **erledigt** |
