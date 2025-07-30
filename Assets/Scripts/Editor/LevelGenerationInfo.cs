@@ -76,18 +76,10 @@ public class LevelGenerationInfo
             // Kurze Pause für Unity
             System.Threading.Thread.Sleep(500);
             
-            // Schritt 2: Validiere aktuelle Szene
-            UniversalSceneFixture fixture = Object.FindFirstObjectByType<UniversalSceneFixture>();
-            if (fixture == null)
-            {
-                GameObject fixtureGO = new GameObject("TempUniversalSceneFixture");
-                fixture = fixtureGO.AddComponent<UniversalSceneFixture>();
-            }
+            // Schritt 2: Validiere aktuelle Szene using a temporary EditorWindow
+            UniversalSceneFixture fixture = ScriptableObject.CreateInstance<UniversalSceneFixture>();
             fixture.FixCurrentScene();
-            if (fixture.gameObject.name == "TempUniversalSceneFixture")
-            {
-                Object.DestroyImmediate(fixture.gameObject);
-            }
+            Object.DestroyImmediate(fixture);
             
             // Schritt 3: Erfolgsmeldung
             EditorUtility.DisplayDialog(

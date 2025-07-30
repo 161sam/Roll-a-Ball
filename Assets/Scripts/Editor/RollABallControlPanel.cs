@@ -604,11 +604,10 @@ public class RollABallControlPanel : EditorWindow
             uiControllerGO.AddComponent<UIController>();
         }
         
-        // Add UniversalSceneFixture
-        if (!FindFirstObjectByType<UniversalSceneFixture>())
+        // Launch UniversalSceneFixture window for scene validation
+        if (Resources.FindObjectsOfTypeAll<UniversalSceneFixture>().Length == 0)
         {
-            GameObject fixtureGO = new GameObject("UniversalSceneFixture");
-            fixtureGO.AddComponent<UniversalSceneFixture>();
+            UniversalSceneFixture.ShowWindow();
         }
         
         Debug.Log("Added essential scene components");
