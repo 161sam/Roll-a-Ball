@@ -8,18 +8,18 @@ Kernel version:          6.14.0-24-generic
 Architecture:            x86_64
 Window Protocol:         Wayland (XWayland)
 Available memory:        64035 MB
-Date:                    2025-07-30T13:33:24Z
+Date:                    2025-07-30T14:03:55Z
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi" at "2025-07-30T13:33:24.561971Z"
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi" at "2025-07-30T14:03:55.393198Z"
 [SignatureVerifier] Application signature verification not supported on this platform.
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.17.0+aa6cfba
-  Session Id:              c9cf5019f9aa4df19e30daa9870d2347
+  Session Id:              adae1ca3b4024ee3ac2ffe768937bca0
   Correlation Id:          afd4480767725667ebc0fe014b7402d6
-  External correlation Id: 8569161664008978298
+  External correlation Id: 6948062766002620697
   Machine Id:              N5eJZWLBIzbCGgb+9YC42QGOtpA=
 [Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-saschi" (connect: 0.00s, validation: 0.01s, handshake: 0.00s)
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi-notifications" at "2025-07-30T13:33:24.572526Z"
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-saschi-notifications" at "2025-07-30T14:03:55.403836Z"
 [Licensing::Client] Successfully updated the access token
 [Licensing::Module] Successfully updated the access token WXKDIQ-x9y...
 [Licensing::Client] Successfully resolved entitlement details
@@ -82,16 +82,16 @@ Successfully changed project path to: /home/saschi/Games/Roll-a-Ball
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [134917708756288]  Target information:
+Player connection [137115256694080]  Target information:
 
-Player connection [134917708756288]  * "[IP] 192.168.0.45 [Port] 55504 [Flags] 2 [Guid] 1837551235 [EditorId] 1837551235 [Version] 1048832 [Id] LinuxEditor(16,192.168.0.45) [Debug] 1 [PackageName] LinuxEditor [ProjectName] Editor" 
+Player connection [137115256694080]  * "[IP] 192.168.0.45 [Port] 55504 [Flags] 2 [Guid] 2172666765 [EditorId] 2172666765 [Version] 1048832 [Id] LinuxEditor(16,192.168.0.45) [Debug] 1 [PackageName] LinuxEditor [ProjectName] Editor" 
 
-Player connection [134917708756288] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [134917708756288] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [137115256694080] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [137115256694080] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-50799" after 0.1 seconds.
+[Package Manager] Connected to IPC stream "Upm-52823" after 0.1 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -163,8 +163,8 @@ Default GameObject Tag: Player already registered
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0,09 seconds
-Refreshing native plugins compatible for Editor in 0,69 ms, found 0 plugins.
+[Package Manager] Done registering packages in 0,03 seconds
+Refreshing native plugins compatible for Editor in 0,73 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0,00 ms.
 Initialize engine version: 6000.1.13f1 (418bd0acaa6b)
 [Subsystems] Discovering subsystems at path /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Resources/UnitySubsystems
@@ -187,13 +187,13 @@ blend_equation_advanced_coherent GL_NVX_blend_equation_advanced_multi_draw_buffe
 der_passthrough GL_NV_gpu_program4 GL_NV_internalformat_sample_query GL_NV_gpu_program4_1 GL_NV_gpu_program5 GL_NV_gpu_program5_mem_extended GL_NV_gpu_program_fp64 GL_NV_gpu_program_multiview GL_NV_gpu_shader5 GL_NV_half_float GL_NV_light_max_exponent GL_NV_memory_attachment GL_NV_mesh_shader GL_NV_multisample_coverage GL_NV_multisample_filter_hint GL_NV_occlusion_query GL_NV_packed_depth_stencil GL_NV_parameter_buffer_object GL_NV_parameter_buffer_object2 GL_NV_path_rendering GL_NV_path_rendering_shared_edge GL_NV_pixel_data_range GL_NV_point_sprite GL_NV_primitive_restart GL_NV_primitive_shading_rate GL_NV_query_resource GL_NV_query_resource_tag GL_NV_register_combiners GL_NV_register_combiners2 GL_NV_representative_fragment_test GL_NV_sample_locations GL_NV_sample_mask_override_coverage GL_NV_scissor_exclusive GL_NV_shader_atomic_counters GL_NV_shader_atomic_float GL_NV_shader_atomic_float64 GL_NV_shader_atomic_fp16_vector GL_NV_shader_atomic_int64 GL_NV_shader_buffer_load GL_NV_shader_storage_buffer_obje
 ct GL_NV_shader_subgroup_partitioned GL_NV_shader_texture_footprint GL_NV_shading_rate_image GL_NV_stereo_view_rendering GL_NV_texgen_reflection GL_NV_texture_barrier GL_NV_texture_compression_vtc GL_NV_texture_dirty_tile_map GL_NV_texture_env_combine4 GL_NV_texture_multisample GL_NV_texture_rectangle GL_NV_texture_rectangle_compressed GL_NV_texture_shader GL_NV_texture_shader2 GL_NV_texture_shader3 GL_NV_transform_feedback GL_NV_transform_feedback2 GL_NV_uniform_buffer_unified_memory GL_NV_uniform_buffer_std430_layout GL_NV_vdpau_interop GL_NV_vdpau_interop2 GL_NV_vertex_array_range GL_NV_vertex_array_range2 GL_NV_vertex_attrib_integer_64bit GL_NV_vertex_buffer_unified_memory GL_NV_vertex_program GL_NV_vertex_program1_1 GL_NV_vertex_program2 GL_NV_vertex_program2_option GL_NV_vertex_program3 GL_NV_viewport_array2 GL_NV_viewport_swizzle GL_NVX_conditional_render GL_NV_gpu_multicast GL_NVX_progress_fence GL_NVX_gpu_memory_info GL_NVX_nvenc_interop GL_NV_shader_thread_group GL_NV_shader_thread_shuffle GL_KHR_b
 lend_equation_advanced GL_KHR_blend_equation_advanced_coherent GL_OVR_multiview GL_OVR_multiview2 GL_SGIS_generate_mipmap GL_SGIS_texture_lod GL_SGIX_depth_texture GL_SGIX_shadow GL_SUN_slice_accum
-OPENGL LOG: Creating OpenGL 4.5 graphics device ; Context level  <OpenGL 4.5> ; Context handle 1602366552
+OPENGL LOG: Creating OpenGL 4.5 graphics device ; Context level  <OpenGL 4.5> ; Context handle -1178838024
 [Licensing::Client] Successfully resolved entitlement details
 Initialize mono
 Mono path[0] = '/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/Managed'
 Mono path[1] = '/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-linux'
 Mono config path = '/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56799
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56823
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -209,8 +209,8 @@ Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Edit
 Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
 Register platform support module: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
-Registered in 0,022166 seconds.
-- Loaded All Assemblies, in  0,236 seconds
+Registered in 0,021893 seconds.
+- Loaded All Assemblies, in  0,234 seconds
 Native extension for LinuxStandalone target not found
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
@@ -222,37 +222,37 @@ Native extension for VisionOS target not found
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0,297 seconds
-Domain Reload Profiling: 533ms
-	BeginReloadAssembly (48ms)
+- Finished resetting the current domain, in  0,291 seconds
+Domain Reload Profiling: 525ms
+	BeginReloadAssembly (47ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (0ms)
-	RebuildCommonClasses (24ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (23ms)
 	RebuildNativeTypeToScriptingClass (5ms)
-	initialDomainReloadingComplete (56ms)
+	initialDomainReloadingComplete (55ms)
 	LoadAllAssembliesAndSetupDomain (103ms)
-		LoadAssemblies (49ms)
+		LoadAssemblies (47ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
 		AnalyzeDomain (100ms)
 			TypeCache.Refresh (99ms)
-				TypeCache.ScanAssembly (91ms)
+				TypeCache.ScanAssembly (90ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (0ms)
-	FinalizeReload (297ms)
+	FinalizeReload (292ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (269ms)
+		SetupLoadedEditorAssemblies (257ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (112ms)
-			SetLoadedEditorAssemblies (3ms)
+			InitializePlatformSupportModulesInManaged (110ms)
+			SetLoadedEditorAssemblies (4ms)
 			BeforeProcessingInitializeOnLoad (33ms)
-			ProcessInitializeOnLoadAttributes (77ms)
-			ProcessInitializeOnLoadMethodAttributes (42ms)
+			ProcessInitializeOnLoadAttributes (72ms)
+			ProcessInitializeOnLoadMethodAttributes (39ms)
 			AfterProcessingInitializeOnLoad (0ms)
-			EditorAssembliesLoaded (1ms)
+			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (0ms)
 [Licensing::Client] Successfully resolved entitlement details
@@ -272,10 +272,10 @@ Application.AssetDatabase Initial Refresh Start
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 28.5945ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 28.2486ms
 Starting: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/bee_backend --ipc --defer-dag-verification --dagfile="Library/Bee/2400b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: /home/saschi/Games/Roll-a-Ball
-ExitCode: 3 Duration: 1s163ms
+ExitCode: 3 Duration: 1s266ms
 [484/487    1s] Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
 ##### CommandLine
 "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.rsp2"
@@ -763,137 +763,35 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1525: Invalid expression term '{'
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1525: Invalid expression term '{'
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1002: ; expected
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1525: Invalid expression term '{'
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(44,10): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,13): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,98): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(86,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(126,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(137,10): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(154,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(153,17): error CS1073: Unexpected token ';'
-Assets/Scripts/Editor/DiagnosticManager.cs(154,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(168,2): error CS1513: } expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(332,65): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1026: ) expected
-*** Tundra build failed (1.14 seconds), 1 items updated, 487 evaluated
+Assets/Editor/RollABallMenuIntegration.cs(539,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(84,37): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Scripts/Editor/LevelGenerationInfo.cs(87,25): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(89,49): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Editor/RollABallMenuIntegration.cs(383,33): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Editor/RollABallMenuIntegration.cs(435,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/RollABallControlPanel.cs(611,23): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+*** Tundra build failed (1.25 seconds), 1 items updated, 487 evaluated
 ## Script Compilation Error for: Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
 ## CmdLine: "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.rsp2"
 ## Output:
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1525: Invalid expression term '{'
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1525: Invalid expression term '{'
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1002: ; expected
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1525: Invalid expression term '{'
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(44,10): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,13): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,98): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(86,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(126,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(137,10): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(154,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(153,17): error CS1073: Unexpected token ';'
-Assets/Scripts/Editor/DiagnosticManager.cs(154,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(168,2): error CS1513: } expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(332,65): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1026: ) expected
+Assets/Editor/RollABallMenuIntegration.cs(539,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(84,37): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Scripts/Editor/LevelGenerationInfo.cs(87,25): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(89,49): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Editor/RollABallMenuIntegration.cs(383,33): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Editor/RollABallMenuIntegration.cs(435,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/RollABallControlPanel.cs(611,23): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
 
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1525: Invalid expression term '{'
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1525: Invalid expression term '{'
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1002: ; expected
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1525: Invalid expression term '{'
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(44,10): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,13): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,98): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(86,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(126,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(137,10): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(154,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(153,17): error CS1073: Unexpected token ';'
-Assets/Scripts/Editor/DiagnosticManager.cs(154,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(168,2): error CS1513: } expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(332,65): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1026: ) expected
-AssetDatabase: script compilation time: 1,490731s
+Assets/Editor/RollABallMenuIntegration.cs(539,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(84,37): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Scripts/Editor/LevelGenerationInfo.cs(87,25): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(89,49): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Editor/RollABallMenuIntegration.cs(383,33): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Editor/RollABallMenuIntegration.cs(435,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/RollABallControlPanel.cs(611,23): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+AssetDatabase: script compilation time: 1,596934s
 Total cache size 268081029
-Total cache size after purge 268081029, took 00:00:00.0631185
+Total cache size after purge 268081029, took 00:00:00.0742005
 [ScriptCompilation] Requested script compilation because: Exiting safe mode
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[1]
       Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
@@ -902,174 +800,106 @@ Total cache size after purge 268081029, took 00:00:00.0631185
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
       Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
 [40m[32minfo[39m[22m[49m: Microsoft.AspNetCore.Hosting.Diagnostics[2]
-      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 1.4006ms
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 1.5049ms
 Starting: /home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/bee_backend --ipc --defer-dag-verification --dagfile="Library/Bee/2400b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: /home/saschi/Games/Roll-a-Ball
 ## Script Compilation Error for: Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
 ## CmdLine: "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.rsp2"
 ## Output:
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1525: Invalid expression term '{'
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1525: Invalid expression term '{'
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1525: Invalid expression term '{'
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1026: ) expected
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(332,65): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1002: ; expected
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1002: ; expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(44,10): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,13): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,98): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(86,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(126,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(137,10): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(154,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(153,17): error CS1073: Unexpected token ';'
-Assets/Scripts/Editor/DiagnosticManager.cs(154,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(168,2): error CS1513: } expected
+Assets/Editor/RollABallMenuIntegration.cs(539,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(84,37): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Scripts/Editor/LevelGenerationInfo.cs(87,25): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(89,49): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Editor/RollABallMenuIntegration.cs(383,33): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Editor/RollABallMenuIntegration.cs(435,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/RollABallControlPanel.cs(611,23): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
 
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1525: Invalid expression term '{'
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1525: Invalid expression term '{'
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1525: Invalid expression term '{'
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1026: ) expected
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(332,65): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1002: ; expected
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1002: ; expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(44,10): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,13): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,98): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(86,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(126,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(137,10): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(154,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(153,17): error CS1073: Unexpected token ';'
-Assets/Scripts/Editor/DiagnosticManager.cs(154,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(168,2): error CS1513: } expected
+Assets/Editor/RollABallMenuIntegration.cs(539,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(84,37): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Scripts/Editor/LevelGenerationInfo.cs(87,25): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(89,49): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Editor/RollABallMenuIntegration.cs(383,33): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Editor/RollABallMenuIntegration.cs(435,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/RollABallControlPanel.cs(611,23): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
 Total cache size 268081029
-Total cache size after purge 268081029, took 00:00:00.0381933
-ExitCode: 3 Duration: 0s355ms
-[304/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.pdb
+Total cache size after purge 268081029, took 00:00:00.0367824
+ExitCode: 3 Duration: 0s765ms
+[303/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.dll
+[304/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.dll
 [305/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.pdb
-[306/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.TestRunner.dll
-[307/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.dll
-[322/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.dll
-[326/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.pdb
-[330/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.pdb
-[334/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.dll
-[342/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.dll
-[344/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.pdb
-[356/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.dll
-[359/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.pdb
-[361/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.pdb
-[367/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.dll
-[369/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.pdb
-[375/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.dll
-[376/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.pdb
-[381/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.dll
-[382/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll
-[385/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll
-[387/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.dll
-[388/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll
-[390/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.dll
-[391/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.pdb
-[393/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.pdb
-[394/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.dll
-[398/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.pdb
-[399/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.pdb
-[402/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.pdb
-[403/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll
-[405/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll
-[407/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.dll
-[408/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.pdb
-[409/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
-[410/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.pdb
-[413/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.pdb
-[415/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.pdb
-[416/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.pdb
-[418/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.pdb
-[419/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll
-[420/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.dll
-[421/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll
-[425/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.pdb
-[426/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.pdb
-[427/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.pdb
-[428/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll
-[429/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.dll
-[430/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll
-[431/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.pdb
-[433/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.pdb
-[434/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.pdb
-[435/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll
-[436/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
-[443/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.pdb
-[448/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.dll
-[449/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.pdb
-[452/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.dll
-[453/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.pdb
-[463/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll
-[464/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.pdb
+[306/487    0s] CopyFiles Library/ScriptAssemblies/UnityEngine.UI.pdb
+[322/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.pdb
+[325/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.TestRunner.dll
+[327/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.pdb
+[330/487    0s] CopyFiles Library/ScriptAssemblies/UnityEditor.UI.dll
+[345/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.pdb
+[357/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.dll
+[368/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll
+[369/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Runtime.dll
+[373/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.pdb
+[374/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.pdb
+[377/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.pdb
+[378/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.pdb
+[381/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.dll
+[384/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.pdb
+[385/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Rider.Editor.dll
+[386/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.pdb
+[388/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll
+[389/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.pdb
+[391/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.pdb
+[392/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.dll
+[393/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Settings.Editor.dll
+[395/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.dll
+[396/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll
+[397/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.pdb
+[398/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.pdb
+[399/487    0s] CopyFiles Library/ScriptAssemblies/Unity.CollabProxy.Editor.pdb
+[400/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll
+[402/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll
+[409/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.TestFramework.pdb
+[412/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.DocCodeSamples.dll
+[413/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll
+[414/487    0s] CopyFiles Library/ScriptAssemblies/Unity.SysrootPackage.Editor.dll
+[415/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll
+[418/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.pdb
+[419/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.pdb
+[422/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.pdb
+[423/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.pdb
+[425/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll
+[426/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.dll
+[427/487    0s] CopyFiles Library/ScriptAssemblies/Unity.PlasticSCM.Editor.pdb
+[428/487    0s] CopyFiles Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.pdb
+[429/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll
+[430/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Performance.Profile-Analyzer.Editor.dll
+[431/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.dll
+[432/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.pdb
+[433/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.dll
+[435/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.pdb
+[436/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.pdb
+[437/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.dll
+[438/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualStudio.Editor.pdb
+[440/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll
+[441/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.ForUI.pdb
+[442/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Sysroot.Linux_x86_64.pdb
+[443/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.dll
+[444/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Toolchain.Linux-x86_64.pdb
+[445/487    0s] CopyFiles Library/ScriptAssemblies/UnityMcpBridge.Editor.dll
 [468/487    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
 [469/487    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
-[470/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.pdb
-[471/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll
-[472/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll
-[473/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.pdb
-[474/487    0s] CopyFiles Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.dll
-[475/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.pdb
-[476/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.pdb
-[477/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.pdb
-[478/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.pdb
-[479/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll
-[480/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll
+[470/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.pdb
+[471/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.dll
+[472/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll
+[473/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.pdb
+[474/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.pdb
+[475/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll
+[476/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.pdb
+[477/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.pdb
+[478/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll
+[479/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.pdb
+[480/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.State.pdb
 [481/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.dll
-[482/487    0s] CopyFiles Library/ScriptAssemblies/Unity.InputSystem.pdb
-[483/487    0s] CopyFiles Library/ScriptAssemblies/Unity.Timeline.Editor.dll
+[482/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll
+[483/487    0s] CopyFiles Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll
 [484/487    0s] Csc Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
 ##### CommandLine
 "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/NetCoreRuntime/dotnet" exec "/home/saschi/Unity/Hub/Editor/6000.1.13f1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.rsp" "@Library/Bee/artifacts/2400b0aE.dag/Assembly-CSharp-Editor.rsp2"
@@ -1557,51 +1387,17 @@ DOTNET_MULTILEVEL_LOOKUP=0
 ##### ExitCode
 1
 ##### Output
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1525: Invalid expression term '{'
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1525: Invalid expression term '{'
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1525: Invalid expression term '{'
-Assets/Editor/CleanRollABallMenu.cs(395,21): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(268,17): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(239,17): error CS1026: ) expected
-Assets/Editor/ProjectCleanupAndFix.cs(251,22): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(281,13): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1026: ) expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(332,65): error CS1026: ) expected
-Assets/Scripts/Editor/CleanRollABallMenuIntegration.cs(283,37): error CS1002: ; expected
-Assets/Editor/OSMEditorExtension.cs(286,17): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1026: ) expected
-Assets/Editor/OSMEditorExtension.cs(288,34): error CS1002: ; expected
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1525: Invalid expression term '{'
-Assets/Scripts/Editor/UniversalSceneFixture.cs(465,17): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(44,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(44,10): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,13): error CS1003: Syntax error, ',' expected
-Assets/Scripts/Editor/DiagnosticManager.cs(47,98): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(56,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(56,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(68,13): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1026: ) expected
-Assets/Scripts/Editor/DiagnosticManager.cs(68,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(86,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(126,5): error CS0106: The modifier 'public' is not valid for this item
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(137,9): error CS1733: Expected expression
-Assets/Scripts/Editor/DiagnosticManager.cs(137,10): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(154,13): error CS1039: Unterminated string literal
-Assets/Scripts/Editor/DiagnosticManager.cs(153,17): error CS1073: Unexpected token ';'
-Assets/Scripts/Editor/DiagnosticManager.cs(154,14): error CS1002: ; expected
-Assets/Scripts/Editor/DiagnosticManager.cs(168,2): error CS1513: } expected
-*** Tundra build failed (0.24 seconds), 77 items updated, 487 evaluated
+Assets/Editor/RollABallMenuIntegration.cs(539,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(84,37): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Scripts/Editor/LevelGenerationInfo.cs(87,25): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/LevelGenerationInfo.cs(89,49): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Editor/RollABallMenuIntegration.cs(383,33): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+Assets/Editor/RollABallMenuIntegration.cs(435,45): error CS1061: 'UniversalSceneFixture' does not contain a definition for 'gameObject' and no accessible extension method 'gameObject' accepting a first argument of type 'UniversalSceneFixture' could be found (are you missing a using directive or an assembly reference?)
+Assets/Scripts/Editor/RollABallControlPanel.cs(611,23): error CS0311: The type 'UniversalSceneFixture' cannot be used as type parameter 'T' in the generic type or method 'GameObject.AddComponent<T>()'. There is no implicit reference conversion from 'UniversalSceneFixture' to 'UnityEngine.Component'.
+*** Tundra build failed (0.65 seconds), 77 items updated, 487 evaluated
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  0,398 seconds
+- Loaded All Assemblies, in  0,411 seconds
 Refreshing native plugins compatible for Editor in 0,19 ms, found 0 plugins.
 Native extension for LinuxStandalone target not found
 Native extension for iOS target not found
@@ -1627,75 +1423,74 @@ UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[]) (
 
 Mono: successfully reloaded assembly
 - Finished resetting the current domain, in  0,631 seconds
-Domain Reload Profiling: 1030ms
-	BeginReloadAssembly (103ms)
+Domain Reload Profiling: 1042ms
+	BeginReloadAssembly (107ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (7ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (29ms)
-	RebuildCommonClasses (23ms)
+		CreateAndSetChildDomain (30ms)
+	RebuildCommonClasses (22ms)
 	RebuildNativeTypeToScriptingClass (5ms)
 	initialDomainReloadingComplete (17ms)
-	LoadAllAssembliesAndSetupDomain (251ms)
-		LoadAssemblies (167ms)
+	LoadAllAssembliesAndSetupDomain (261ms)
+		LoadAssemblies (171ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (121ms)
-			TypeCache.Refresh (98ms)
-				TypeCache.ScanAssembly (89ms)
-			BuildScriptInfoCaches (18ms)
+		AnalyzeDomain (129ms)
+			TypeCache.Refresh (105ms)
+				TypeCache.ScanAssembly (94ms)
+			BuildScriptInfoCaches (19ms)
 			ResolveRequiredComponents (3ms)
-	FinalizeReload (632ms)
+	FinalizeReload (631ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (544ms)
+		SetupLoadedEditorAssemblies (537ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (66ms)
-			SetLoadedEditorAssemblies (4ms)
-			BeforeProcessingInitializeOnLoad (84ms)
-			ProcessInitializeOnLoadAttributes (363ms)
-			ProcessInitializeOnLoadMethodAttributes (25ms)
-			AfterProcessingInitializeOnLoad (2ms)
+			InitializePlatformSupportModulesInManaged (61ms)
+			SetLoadedEditorAssemblies (2ms)
+			BeforeProcessingInitializeOnLoad (90ms)
+			ProcessInitializeOnLoadAttributes (358ms)
+			ProcessInitializeOnLoadMethodAttributes (23ms)
+			AfterProcessingInitializeOnLoad (3ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (3ms)
-Asset Pipeline Refresh (id=d6b0f2bb8501c07e4a3bd673317f2fcc): Total: 5.667 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+		AwakeInstancesAfterBackupRestoration (4ms)
+Asset Pipeline Refresh (id=6c621ad47e8ccd85c8041cda0367a477): Total: 6.437 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
 	Summary:
-		Imports: total=3 (actual=0, local cache=3, cache server=0)
-		Asset DB Process Time: managed=0 ms, native=3342 ms
-		Asset DB Callback time: managed=7 ms, native=0 ms
-		Scripting: domain reloads=1, domain reload time=803 ms, compile time=1492 ms, other=20 ms
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=3579 ms
+		Asset DB Callback time: managed=8 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=1231 ms, compile time=1599 ms, other=19 ms
 		Project Asset Count: scripts=937, non-scripts=1697
 		Asset File Changes: new=0, changed=0, moved=0, deleted=0
 		Scan Filter Count: 1
-	InvokeCustomDependenciesCallbacks: 0,003ms
-	InvokePackagesCallback: 0,276ms
-	ApplyChangesToAssetFolders: 0,207ms
-	Scan: 175,726ms
-	OnSourceAssetsModified: 0,003ms
-	CategorizeAssetsWithTransientArtifact: 28,187ms
-	ProcessAssetsWithTransientArtifactChanges: 26,169ms
-	CategorizeAssets: 13,776ms
-	ImportOutOfDateAssets: 635,394ms (-857,813ms without children)
-		CompileScripts: 1492,478ms
+	InvokeCustomDependenciesCallbacks: 0,004ms
+	InvokePackagesCallback: 0,263ms
+	ApplyChangesToAssetFolders: 0,202ms
+	Scan: 172,419ms
+	OnSourceAssetsModified: 0,007ms
+	CategorizeAssetsWithTransientArtifact: 24,625ms
+	ProcessAssetsWithTransientArtifactChanges: 26,207ms
+	CategorizeAssets: 13,780ms
+	ImportOutOfDateAssets: 635,306ms (-964,173ms without children)
+		CompileScripts: 1598,538ms
 		ReloadNativeAssets: 0,000ms
-		UnloadImportedAssets: 0,171ms
-		ReloadImportedAssets: 0,000ms
-		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0,290ms
+		UnloadImportedAssets: 0,173ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0,302ms
 		InitializingProgressBar: 0,000ms
 		PostProcessAllAssetNotificationsAddChangedAssets: 0,000ms
-		OnDemandSchedulerStart: 0,266ms
-	PostProcessAllAssets: 7,862ms
-	GatherAllCurrentPrimaryArtifactRevisions: 0,000ms
-	UnloadStreamsBegin: 1,306ms
-	PersistCurrentRevisions: 0,134ms
+		OnDemandSchedulerStart: 0,465ms
+	PostProcessAllAssets: 8,188ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0,001ms
+	UnloadStreamsBegin: 1,413ms
+	PersistCurrentRevisions: 0,077ms
 	UnloadStreamsEnd: 0,001ms
-	GenerateScriptTypeHashes: 1,836ms
-	Untracked: 4777,684ms
+	GenerateScriptTypeHashes: 1,663ms
+	Untracked: 5554,753ms
 
 Application.AssetDatabase Initial Refresh End
-AutoLocale: current locale expects 'C' but got 'de_DE.UTF-8'Launched and connected shader compiler UnityShaderCompiler after 0.01 seconds
-Scanning for USB devices : 2.737ms
+AutoLocale: current locale expects 'C' but got 'de_DE.UTF-8'Launched and connected shader compiler UnityShaderCompiler after 0.02 seconds
+Scanning for USB devices : 2.714ms
 Initializing Unity extensions:
 [Licensing::Client] Successfully resolved entitlement details
 UpdateMenuTitleForLanguage: 10
@@ -1704,14 +1499,14 @@ UpdateMenuTitleForLanguage: 10
 [MODES] Loading mode Default (0) for mode-current-id-Roll-a-Ball
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
 Loaded scene 'Assets/Scenes/Level1.unity'
-	Deserialize:            19.267 ms
-	Integration:            35.872 ms
-	Integration of assets:  1.373 ms
-	Thread Wait Time:       0.007 ms
-	Total Operation Time:   56.519 ms
-Unloading 3898 unused Assets / (1.8 MB). Loaded Objects now: 4638.
-Memory consumption went from 128.6 MB to 126.9 MB.
-Total: 6.468341 ms (FindLiveObjects: 0.213220 ms CreateObjectMapping: 0.118188 ms MarkObjects: 4.664717 ms  DeleteObjects: 1.471786 ms)
+	Deserialize:            17.602 ms
+	Integration:            38.690 ms
+	Integration of assets:  1.403 ms
+	Thread Wait Time:       -0.016 ms
+	Total Operation Time:   57.679 ms
+Unloading 3898 unused Assets / (1.5 MB). Loaded Objects now: 4638.
+Memory consumption went from 128.7 MB to 127.2 MB.
+Total: 6.040625 ms (FindLiveObjects: 0.214599 ms CreateObjectMapping: 0.102683 ms MarkObjects: 4.352416 ms  DeleteObjects: 1.370456 ms)
 
 [LAYOUT] About to load UserSettings/Layouts/default-6000.dwlt, keepMainWindow=False
 GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info GLX_EXT_visual_rating GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGI_swap_control GLX_EXT_swap_control GLX_EXT_buffer_age GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_fbconfig_float GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_NV_copy_image GLX_NV_copy_buffer GLX_EXT_create_context_es_profile GLX_EXT_create_context_es2_profile GLX_ARB_create_context_no_error GLX_ARB_create_context_robustness GLX_ARB_context_flush_control 
@@ -1724,26 +1519,26 @@ GLX Extensions: GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_visual_info
 [LAYOUT] About to save layout /home/saschi/.config/unity3d/Preferences/Editor-5.x/Layouts/current/default-6000.dwlt
 [MODES] ModeService[default].InitializeCurrentMode
 [MODES] ModeService[default].RaiseModeChanged(default, default)
-[Project] Loading completed in 8.099 seconds
-	Project init time: 				6.802 seconds
+[Project] Loading completed in 8.783 seconds
+	Project init time: 				7.501 seconds
 		Template init time: 		0.000 seconds
-		Package Manager init time: 		0.115 seconds
-		Asset Database init time: 		0.106 seconds
-		Global illumination init time: 	0.004 seconds
-		Assemblies load time: 			0.545 seconds
-		Unity extensions init time: 	0.013 seconds
-		Asset Database refresh time: 	5.667 seconds
-	Scene opening time: 			0.989 seconds
-##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1753882412656,"processId":50799,"projectLoad":8.099456889,"projectInit":6.802225913,"templateInit":0.0,"packageManagerInit":0.114647756,"assetDatabaseInit":0.105817839,"globalIlluminationInit":0.00352117,"assembliesLoad":0.544833303,"unityExtensionsInit":0.012558185,"assetDatabaseRefresh":5.666787711,"sceneOpening":0.98857236}
-##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1753882412656,"processId":50799,"editorVersion":"6000.1.13f1 (418bd0acaa6b)","branch":"6000.1/staging","buildType":"Release","platform":"Linux"}
-Asset Pipeline Refresh (id=ee30186722bad5daaa61ce0cc3c499bf): Total: 0.091 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
-Asset Pipeline Refresh (id=0ba1017cadaecdfafbc7468dc006530d): Total: 0.058 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
-Asset Pipeline Refresh (id=c3d68f345dac20ed2a729e5be0093481): Total: 0.032 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
-Created GICache directory at /home/saschi/.cache/unity3d/GiCache. Took: 0.001s, timestamps: [8.199 - 8.201]
+		Package Manager init time: 		0.106 seconds
+		Asset Database init time: 		0.046 seconds
+		Global illumination init time: 	0.003 seconds
+		Assemblies load time: 			0.536 seconds
+		Unity extensions init time: 	0.012 seconds
+		Asset Database refresh time: 	6.437 seconds
+	Scene opening time: 			0.979 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1753884244172,"processId":52823,"projectLoad":8.783468150000001,"projectInit":7.500857526,"templateInit":0.0,"packageManagerInit":0.105703283,"assetDatabaseInit":0.046189213,"globalIlluminationInit":0.003047576,"assembliesLoad":0.536083685,"unityExtensionsInit":0.012406362,"assetDatabaseRefresh":6.437304026,"sceneOpening":0.979057229}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1753884244172,"processId":52823,"editorVersion":"6000.1.13f1 (418bd0acaa6b)","branch":"6000.1/staging","buildType":"Release","platform":"Linux"}
+Asset Pipeline Refresh (id=91cfc626c85e3dbc5a80f8d41c642670): Total: 0.134 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Asset Pipeline Refresh (id=162924b32452d21daa87c7f3906f7b96): Total: 0.059 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=9be62ed04bd8f9fa18dfde40fca04244): Total: 0.043 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Created GICache directory at /home/saschi/.cache/unity3d/GiCache. Took: 0.001s, timestamps: [8.926 - 8.927]
 [Licensing::Client] Successfully updated the access token
-[Licensing::Module] Successfully updated access token: "WXKDIQ-x"... (expires: 2026-07-30T13:33:33Z)
+[Licensing::Module] Successfully updated access token: "WXKDIQ-x"... (expires: 2026-07-30T14:04:05Z)
 Android Extension - Scanning For ADB Devices 705 ms
-Android Extension - Scanning For ADB Devices 159 ms
+Android Extension - Scanning For ADB Devices 158 ms
 Attempted to call .Dispose on an already disposed CancellationTokenSource
-Android Extension - Scanning For ADB Devices 163 ms
 Android Extension - Scanning For ADB Devices 159 ms
+Android Extension - Scanning For ADB Devices 160 ms
