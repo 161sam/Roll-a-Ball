@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Advanced save system for Roll-a-Ball progress, settings, and achievements
@@ -181,21 +182,21 @@ public class SaveSystem : MonoBehaviour
     /// <summary>
     /// Save current game state to the active slot
     /// </summary>
-    public void SaveCurrentGame()
+    public async void SaveCurrentGame()
     {
         if (currentSave == null)
         {
             LogSave("No save data to save!", true);
             return;
         }
-        
-        SaveToSlot(activeSaveSlot);
+
+        await SaveToSlot(activeSaveSlot);
     }
     
     /// <summary>
     /// Save current game state to a specific slot
     /// </summary>
-    public void SaveToSlot(int slot)
+    public async Task SaveToSlot(int slot)
     {
         if (slot < 0 || slot >= maxSaveSlots)
         {
@@ -220,11 +221,11 @@ public class SaveSystem : MonoBehaviour
             // Save the data
             if (encryptSaveFiles)
             {
-                SaveEncrypted(filePath, currentSave);
+                await SaveEncrypted(filePath, currentSave);
             }
             else
             {
-                SaveUnencrypted(filePath, currentSave);
+                await SaveUnencrypted(filePath, currentSave);
             }
             
             isDirty = false;
@@ -354,11 +355,10 @@ public class SaveSystem : MonoBehaviour
     
     #region File Operations
     
-    private void SaveUnencrypted(string filePath, SaveData data)
+    private async System.Threading.Tasks.Task SaveUnencrypted(string filePath, SaveData data)
     {
         string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(filePath, json);
-        // TODO: Use async file IO to prevent frame spikes on save
+        await File.WriteAllTextAsync(filePath, json);
     }
     
     private SaveData LoadUnencrypted(string filePath)
@@ -367,12 +367,11 @@ public class SaveSystem : MonoBehaviour
         return JsonUtility.FromJson<SaveData>(json);
     }
     
-    private void SaveEncrypted(string filePath, SaveData data)
+    private async System.Threading.Tasks.Task SaveEncrypted(string filePath, SaveData data)
     {
         string json = JsonUtility.ToJson(data, true);
         string encrypted = EncryptString(json, encryptionKey);
-        File.WriteAllText(filePath, encrypted);
-        // TODO: Use async file IO to prevent frame spikes on save
+        await File.WriteAllTextAsync(filePath, encrypted);
     }
     
     private SaveData LoadEncrypted(string filePath)

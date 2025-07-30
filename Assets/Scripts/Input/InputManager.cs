@@ -12,6 +12,9 @@ namespace RollABall.InputSystem
         public static InputManager Instance { get; private set; }
 
         [Header("Key Bindings")]
+        private const string PauseKeyPref = "PauseKey";
+        private const string RestartKeyPref = "RestartKey";
+
         [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
         [SerializeField] private KeyCode restartKey = KeyCode.R;
         [SerializeField] private KeyCode jumpKey = KeyCode.Space;
@@ -29,6 +32,35 @@ namespace RollABall.InputSystem
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            LoadKeyBindings();
+        }
+
+        private void LoadKeyBindings()
+        {
+            if (PlayerPrefs.HasKey(PauseKeyPref))
+            {
+                if (System.Enum.TryParse(PlayerPrefs.GetString(PauseKeyPref), out KeyCode key))
+                    pauseKey = key;
+            }
+
+            if (PlayerPrefs.HasKey(RestartKeyPref))
+            {
+                if (System.Enum.TryParse(PlayerPrefs.GetString(RestartKeyPref), out KeyCode key))
+                    restartKey = key;
+            }
+        }
+
+        public void SetPauseKey(KeyCode key)
+        {
+            pauseKey = key;
+            PlayerPrefs.SetString(PauseKeyPref, key.ToString());
+        }
+
+        public void SetRestartKey(KeyCode key)
+        {
+            restartKey = key;
+            PlayerPrefs.SetString(RestartKeyPref, key.ToString());
         }
 
         /// <summary>
