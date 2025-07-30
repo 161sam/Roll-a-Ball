@@ -73,3 +73,30 @@
 | TODO-OPT#69 | Assets/Scripts/CollectibleDiagnosticTool.cs | FindAllCollectibles(), Zeile 94 | Suchergebnisse cachen, um Allokationen zu vermeiden | **erledigt** |
 | TODO-OPT#70 | Assets/Scripts/Map/MapStartupController.cs | leipzigCoords, Zeile 53 | Fallback-Koordinaten im Inspector einstellbar machen | **erledigt** |
 
+| TODO-OPT#71 | Assets/Scripts/Environment/GateController.cs | Awake(), Zeile 26 | Null-check warning for gateObject in OnValidate | |
+| TODO-OPT#72 | Assets/Scripts/Environment/GateController.cs | TriggerOpen(), Zeile 69 | Provide TriggerClose logic for reversible puzzles | |
+| TODO-OPT#73 | Assets/Scripts/Environment/GateController.cs | TriggerOpen(), Zeile 70 | Fire gate opened event for other systems | |
+| TODO-OPT#74 | Assets/Scripts/Environment/GroundMaterialController.cs | Zeile 19 | Material paths via ScriptableObject | |
+| TODO-OPT#75 | Assets/Scripts/Environment/GroundMaterialController.cs | InitializeMaterialSystem(), Zeile 74 | Validate material sources in OnValidate | |
+| TODO-OPT#76 | Assets/Scripts/Environment/GroundMaterialController.cs | ApplyMaterialToObject(), Zeile 313 | Cache renderer references | |
+| TODO-OPT#77 | Assets/Scripts/Environment/GroundMaterialController.cs | OnDrawGizmosSelected(), Zeile 417 | Disable gizmo drawing in production | |
+| TODO-OPT#78 | Assets/Scripts/Environment/MovingPlatform.cs | Zeile 55 | Init from ScriptableObject profile | |
+| TODO-OPT#79 | Assets/Scripts/Environment/MovingPlatform.cs | OnValidate(), Zeile 352 | Warn if start and end positions match | |
+| TODO-OPT#80 | Assets/Scripts/Environment/MovingPlatform.cs | OnTriggerEnter(), Zeile 365 | Configurable passenger tag | |
+| TODO-OPT#81 | Assets/Scripts/Environment/RotatingObstacle.cs | Zeile 14 | Tune rotation via ScriptableObject | |
+| TODO-OPT#82 | Assets/Scripts/Environment/RotatingObstacle.cs | OnValidate(), Zeile 32 | Expose min/max rotation speed | |
+| TODO-OPT#83 | Assets/Scripts/Environment/RotatingObstacle.cs | OnTriggerEnter(), Zeile 56 | Integrate damage system on contact | |
+| TODO-OPT#84 | Assets/Scripts/Environment/SteampunkGateController.cs | Zeile 80 | Replace FindFirstObjectByType with injection | |
+| TODO-OPT#85 | Assets/Scripts/Environment/SteampunkGateController.cs | Start(), Zeile 96 | Delay initialization until managers ready | |
+| TODO-OPT#86 | Assets/Scripts/Environment/SteampunkGateController.cs | CheckSequentialRequirement(), Zeile 303 | Dedicated sequence controller | |
+| TODO-OPT#87 | Assets/Scripts/Environment/SteampunkGateController.cs | OnDestroy(), Zeile 678 | Deregister from global events | |
+| TODO-OPT#88 | Assets/Scripts/Environment/SwitchTrigger.cs | Zeile 17 | Expose activation requirements | |
+| TODO-OPT#89 | Assets/Scripts/Environment/SwitchTrigger.cs | Awake(), Zeile 32 | Warn if gate missing | |
+| TODO-OPT#90 | Assets/Scripts/Environment/SwitchTrigger.cs | ActivateSwitch(), Zeile 83 | Reset/deactivation logic | |
+| TODO-OPT#91 | Assets/Scripts/Environment/SwitchTrigger.cs | OnValidate(), Zeile 93 | Highlight object when gate missing | |
+| TODO-OPT#92 | Assets/Scenes/Level1.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
+| TODO-OPT#93 | Assets/Scenes/Level2.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
+| TODO-OPT#94 | Assets/Scenes/Level3.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
+| TODO-OPT#95 | Assets/Scenes/GeneratedLevel.unity | n/a | Environment prefabs missing in generated level | |
+| TODO-OPT#96 | Assets/Scenes/Level_OSM.unity | n/a | Environment prefabs missing in OSM level | |
+| TODO-OPT#97 | Assets/Scenes/MiniGame.unity | n/a | Environment prefabs missing in minigame | |

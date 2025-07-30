@@ -14,21 +14,23 @@ namespace RollABall.Environment
         [SerializeField] private bool oneTimeUse = true;
         [SerializeField] private AudioClip activationSound;
         [SerializeField] private ParticleSystem activationEffect;
+        // TODO: Expose activation requirements (e.g. key item) via inspector
         
         private bool isActivated = false;
         private AudioSource audioSource;
 
-        private void Awake()
+    private void Awake()
+    {
+        // Setup AudioSource for switch sounds
+        audioSource = GetComponent<AudioSource>();
+        if (!audioSource && activationSound)
         {
-            // Setup AudioSource for switch sounds
-            audioSource = GetComponent<AudioSource>();
-            if (!audioSource && activationSound)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-                audioSource.playOnAwake = false;
-                audioSource.spatialBlend = 1f; // 3D sound
-            }
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+            audioSource.spatialBlend = 1f; // 3D sound
         }
+        // TODO: Warn if connectedGate is missing to avoid silent switches
+    }
 
         /// <summary>
         /// Set the gate that this switch controls.
@@ -48,9 +50,9 @@ namespace RollABall.Environment
             }
         }
 
-        private void ActivateSwitch()
-        {
-            isActivated = true;
+    private void ActivateSwitch()
+    {
+        isActivated = true;
             
             // Open connected gate
             if (connectedGate)
@@ -77,12 +79,18 @@ namespace RollABall.Environment
                 renderer.material.color = Color.green;
             }
             
-            Debug.Log($"Switch {gameObject.name} activated!", this);
-        }
+        Debug.Log($"Switch {gameObject.name} activated!", this);
+        // TODO: Implement reset/deactivation logic for multi-use puzzles
+    }
         
         /// <summary>
         /// Check if switch has been activated.
         /// </summary>
-        public bool IsActivated => isActivated;
+    public bool IsActivated => isActivated;
+
+        private void OnValidate()
+        {
+            // TODO: Highlight object in scene view when connectedGate is null
+        }
     }
 }

@@ -77,6 +77,7 @@ namespace RollABall.Environment
         private Vector3 originalGatePosition;
         private Vector3 originalButtonPosition;
         private Collider gateCollider;
+        // TODO: Replace FindFirstObjectByType with dependency injection
         
         // Enums
         public enum GateType
@@ -92,6 +93,7 @@ namespace RollABall.Environment
         void Start()
         {
             InitializeGate();
+            // TODO: Optionally delay initialization until level managers are ready
         }
         
         /// <summary>
@@ -294,12 +296,13 @@ namespace RollABall.Environment
         /// <summary>
         /// Prüft sequenzielle Anforderungen (Platzhalter für komplexere Logik)
         /// </summary>
-        private bool CheckSequentialRequirement()
-        {
-            // Hier könnte eine komplexere Sequenz-Logik implementiert werden
-            // Z.B. Prüfung anderer Tore, Switches, etc.
-            return CheckCollectibleRequirement();
-        }
+    private bool CheckSequentialRequirement()
+    {
+        // Hier könnte eine komplexere Sequenz-Logik implementiert werden
+        // Z.B. Prüfung anderer Tore, Switches, etc.
+        // TODO: Use dedicated sequence controller for complex puzzles
+        return CheckCollectibleRequirement();
+    }
         
         /// <summary>
         /// Öffnet das Tor
@@ -672,6 +675,7 @@ namespace RollABall.Environment
                 StopCoroutine(buttonResetCoroutine);
             if (autoCloseCoroutine != null)
                 StopCoroutine(autoCloseCoroutine);
+            // TODO: Deregister from global events if subscribed
         }
     }
 }
