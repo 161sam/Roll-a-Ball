@@ -58,6 +58,8 @@ namespace RollABall.Map
         [SerializeField] private LayerMask groundLayer = 1;
         [SerializeField] private float minimumBuildingSize = 2.0f;
         [SerializeField] private bool enablePolygonalBuildings = true;
+        [SerializeField] private Vector2 collectibleOffsetRange = new Vector2(-5f, 5f);
+        [SerializeField] private float collectibleHeight = 1f;
         
         [Header("Performance Settings")]
         [SerializeField] private bool useBatching = true;
@@ -702,10 +704,10 @@ namespace RollABall.Map
                         
                         // Offset randomly around the building
                         Vector3 offset = new Vector3(
-                            Random.Range(-5f, 5f),
-                            1f, // Above ground
-                            Random.Range(-5f, 5f)
-                        ); // TODO: Expose offset range as serialized fields
+                            Random.Range(collectibleOffsetRange.x, collectibleOffsetRange.y),
+                            collectibleHeight,
+                            Random.Range(collectibleOffsetRange.x, collectibleOffsetRange.y)
+                        );
                         
                         positions.Add(buildingPos + offset);
                     }
@@ -719,7 +721,7 @@ namespace RollABall.Map
                 {
                     OSMNode randomNode = road.nodes[Random.Range(0, road.nodes.Count)];
                     Vector3 roadPos = currentMapData.LatLonToWorldPosition(randomNode.lat, randomNode.lon);
-                    roadPos.y = 1f;
+                    roadPos.y = collectibleHeight;
                     positions.Add(roadPos);
                 }
             }

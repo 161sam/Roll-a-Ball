@@ -31,7 +31,7 @@
 | TODO-OPT#27 | Assets/Scripts/Map/MapGenerator.cs | CreateSteamEmitter(), Zeile 1565 | SteamEmitter-Pooling einführen |
 | TODO-OPT#28 | Assets/Scripts/PlayerController.cs | CheckGrounded(), Zeile 206 | LayerMask-Abfrage cachen oder CharacterController nutzen |
 | TODO-OPT#29 | Assets/Scripts/PlayerController.cs | SlideRoutine(), Zeile 427 | Slide-Impulse konfigurierbar machen |
-| TODO-OPT#30 | Assets/Scripts/OSMGoalZoneTrigger.cs | SetupGoalZone(), Zeile 40 | Fallback bei fehlendem LevelManager einbauen |
+| TODO-OPT#30 | Assets/Scripts/OSMGoalZoneTrigger.cs | SetupGoalZone(), Zeile 40 | Fallback bei fehlendem LevelManager einbauen | **erledigt** |
 | TODO-OPT#31 | Assets/Scripts/Map/MapStartupController.cs | GetCoordsFromAddress(), Zeile 403 | Geocoding-Service integrieren |
 | TODO-OPT#32 | Assets/Scripts/Map/MapGeneratorBatched.cs | CreateSeparateColliders(), Zeile 548 | Collider-Pooling zur GC-Reduktion |
 | TODO-OPT#33 | Assets/Scripts/SaveSystem.cs | SaveEncrypted()/SaveUnencrypted(), Zeile 360/348 | Async File IO verwenden |
@@ -49,7 +49,7 @@
 | TODO-OPT#45 | Assets/Scripts/AchievementSystem.cs | OnDestroy(), Zeile 720 | Von GameEvents abmelden | **erledigt** |
 | TODO-OPT#46 | Assets/Scripts/GameManager.cs | pauseKey, Zeile 32 | Pause-Taste im Einstellungsmenü konfigurierbar machen |
 | TODO-OPT#47 | Assets/Scripts/GameManager.cs | TrackStatistics(), Zeile 406 | Update-Intervall einstellbar machen |
-| TODO-OPT#48 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 708 | Offsetbereich als Felder exposen |
+| TODO-OPT#48 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 708 | Offsetbereich als Felder exposen | **erledigt** |
 | TODO-OPT#49 | Assets/Scripts/Map/MapGenerator.cs | FindOptimalGoalPosition(), Zeile 736 | Pfadfindung zur Zielplatzierung nutzen |
 | TODO-OPT#50 | Assets/Scripts/Map/MapStartupController.cs | endlessModeAddresses, Zeile 41 | Adressliste extern speichern |
 | TODO-OPT#51 | Assets/Scripts/Map/AddressResolver.cs | ResolveAddressCoroutine(), Zeile 105 | Geocode-Cache implementieren |
@@ -66,10 +66,10 @@
 | TODO-OPT#62 | Assets/Scripts/Map/MapGenerator.cs | AddSteampunkAtmosphere(), Zeile 1590 | Nebel-Parameter konfigurierbar machen |
 | TODO-OPT#63 | Assets/Scripts/UIController.cs | Zeile 983 | OnDestroy zum Deregistrieren der Events schreiben | **erledigt** |
 | TODO-OPT#64 | Assets/Scripts/PlayerController.cs | HandleInput(), Zeile 174 | Legacy Input System durch New Input System ersetzen |
-| TODO-OPT#65 | Assets/Scripts/AudioManager.cs | OnEnable(), Zeile 420 | PlayerController-Referenz cachen |
+| TODO-OPT#65 | Assets/Scripts/AudioManager.cs | OnEnable(), Zeile 420 | PlayerController-Referenz cachen | **erledigt** |
 | TODO-OPT#66 | Assets/Scripts/VFX/RotatingGear.cs | Start(), Zeile 27 | Range für Rotationsvarianz exponieren |
 | TODO-OPT#67 | Assets/Scripts/VFX/SteamEmitter.cs | RandomizeSettings(), Zeile 249 | Zufallsbereiche per Inspector konfigurierbar machen |
 | TODO-OPT#68 | Assets/Scripts/SceneTypeDetector.cs | Zeile 18 | Szenenlisten aus Konfiguration laden |
-| TODO-OPT#69 | Assets/Scripts/CollectibleDiagnosticTool.cs | FindAllCollectibles(), Zeile 94 | Suchergebnisse cachen, um Allokationen zu vermeiden |
+| TODO-OPT#69 | Assets/Scripts/CollectibleDiagnosticTool.cs | FindAllCollectibles(), Zeile 94 | Suchergebnisse cachen, um Allokationen zu vermeiden | **erledigt** |
 | TODO-OPT#70 | Assets/Scripts/Map/MapStartupController.cs | leipzigCoords, Zeile 53 | Fallback-Koordinaten im Inspector einstellbar machen | **erledigt** |
 

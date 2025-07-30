@@ -37,8 +37,9 @@ public class OSMGoalZoneTrigger : MonoBehaviour
         levelManager = FindFirstObjectByType<LevelManager>();
         if (levelManager == null)
         {
-            Debug.LogWarning("[OSMGoalZone] No LevelManager found in scene!");
-            // TODO: Disable goal zone or load fallback scene when manager is missing
+            Debug.LogWarning("[OSMGoalZone] No LevelManager found in scene! Creating fallback manager.");
+            GameObject managerObj = new GameObject("LevelManager");
+            levelManager = managerObj.AddComponent<LevelManager>();
         }
         
         // Ensure we have a trigger collider
