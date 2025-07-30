@@ -76,6 +76,7 @@ public class LevelManager : MonoBehaviour
 
     // Properties
     public LevelConfiguration Config => levelConfig;
+    public LevelProgressionProfile ProgressionProfile => progressionProfile;
     public bool IsLevelCompleted => levelCompleted;
     public int CollectiblesRemaining => levelConfig.collectiblesRemaining;
     public int TotalCollectibles => levelConfig.totalCollectibles;

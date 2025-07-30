@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using RollABall.Utility;
 
 /// <summary>
 /// Comprehensive achievement system for Roll-a-Ball
@@ -352,28 +353,34 @@ public class AchievementSystem : MonoBehaviour
     private void OnLevelCompleted(LevelConfiguration levelConfig)
     {
         string levelName = levelConfig.levelName;
-        // TODO: Replace string-based level checks with a lookup table or enum for robustness
-        
-        // Level-specific achievements
-        if (levelName.Contains("Level1") || levelName.Contains("Level_1"))
+
+        int levelIndex = levelConfig.levelIndex;
+        var profile = LevelManager.Instance ? LevelManager.Instance.ProgressionProfile : null;
+        if (profile)
         {
-            UpdateAchievementProgress("level_1_complete", 1);
-            
-            // Check for speed run
-            if (GameManager.Instance && GameManager.Instance.PlayTime < 30f)
-            {
-                UpdateAchievementProgress("quick_level_1", 1);
-            }
+            var entry = profile.GetLevelEntry(levelName);
+            if (entry != null) levelIndex = entry.levelIndex;
         }
-        else if (levelName.Contains("Level2") || levelName.Contains("Level_2"))
+
+        // Level-specific achievements via level index
+        switch (levelIndex)
         {
-            UpdateAchievementProgress("level_2_complete", 1);
+            case 1:
+                UpdateAchievementProgress("level_1_complete", 1);
+                if (GameManager.Instance && GameManager.Instance.PlayTime < 30f)
+                {
+                    UpdateAchievementProgress("quick_level_1", 1);
+                }
+                break;
+            case 2:
+                UpdateAchievementProgress("level_2_complete", 1);
+                break;
+            case 3:
+                UpdateAchievementProgress("level_3_complete", 1);
+                break;
         }
-        else if (levelName.Contains("Level3") || levelName.Contains("Level_3"))
-        {
-            UpdateAchievementProgress("level_3_complete", 1);
-        }
-        else if (levelName.StartsWith("OSM:"))
+
+        if (levelName.StartsWith("OSM:"))
         {
             UpdateAchievementProgress("explorer", 1);
             
@@ -564,8 +571,8 @@ public class AchievementSystem : MonoBehaviour
     {
         isShowingNotification = true;
         
-        // Instantiate notification UI
-        GameObject notification = Instantiate(achievementNotificationPrefab, notificationParent);
+        // Get notification UI from pool
+        GameObject notification = PrefabPooler.Get(achievementNotificationPrefab, Vector3.zero, Quaternion.identity, notificationParent);
         
         // Configure notification (this would depend on your notification prefab structure)
         // TODO: Implement AchievementNotificationUI to display icon and text
@@ -574,11 +581,10 @@ public class AchievementSystem : MonoBehaviour
         // Wait for notification duration
         yield return new WaitForSeconds(notificationDuration);
         
-        // Destroy notification
+        // Return notification to pool
         if (notification)
         {
-            Destroy(notification);
-            // TODO: Reuse notification objects instead of instantiating each time
+            PrefabPooler.Release(notification);
         }
         
         isShowingNotification = false;

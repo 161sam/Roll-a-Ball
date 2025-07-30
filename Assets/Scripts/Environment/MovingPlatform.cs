@@ -354,8 +354,11 @@ namespace RollABall.Environment
             // Spieler zur Plattform "heften" für realistisches Verhalten
             if (other.CompareTag("Player"))
             {
-                other.transform.SetParent(transform);
-                // TODO: Handle players with character controllers to avoid parenting issues
+                // CharacterController sollte nicht geparentet werden
+                if (!other.GetComponent<CharacterController>())
+                {
+                    other.transform.SetParent(transform);
+                }
             }
         }
         
