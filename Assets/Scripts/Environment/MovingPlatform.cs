@@ -15,6 +15,9 @@ namespace RollABall.Environment
         private const float BounceStage2 = 2f / BounceDiv;
         private const float BounceStage3 = 2.5f / BounceDiv;
         private const float BounceStage4 = 2.625f / BounceDiv;
+        private const float BounceReturn1 = 0.75f;
+        private const float BounceReturn2 = 0.9375f;
+        private const float BounceReturn3 = 0.984375f;
 
         [Header("Bewegungseinstellungen")]
         [SerializeField] private Vector3 startPosition;
@@ -251,15 +254,15 @@ namespace RollABall.Environment
             }
             else if (t < BounceStage2)
             {
-                return BounceFactor * (t -= (1.5f / BounceDiv)) * t + 0.75f;
+                return BounceFactor * (t -= (1.5f / BounceDiv)) * t + BounceReturn1;
             }
             else if (t < BounceStage3)
             {
-                return BounceFactor * (t -= (2.25f / BounceDiv)) * t + 0.9375f;
+                return BounceFactor * (t -= (2.25f / BounceDiv)) * t + BounceReturn2;
             }
             else
             {
-                return BounceFactor * (t -= (BounceStage4)) * t + 0.984375f;
+                return BounceFactor * (t -= (BounceStage4)) * t + BounceReturn3;
             }
         }
         

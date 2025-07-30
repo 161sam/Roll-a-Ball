@@ -107,6 +107,7 @@ public class AchievementSystem : MonoBehaviour
     private Dictionary<string, Achievement> achievementLookup;
     private Queue<Achievement> pendingNotifications;
     private bool isShowingNotification = false;
+    private PlayerController cachedPlayer;
     
     // Events
     public System.Action<Achievement> OnAchievementUnlocked;
@@ -292,11 +293,32 @@ public class AchievementSystem : MonoBehaviour
         }
         
         // Subscribe to player events
-        PlayerController player = FindFirstObjectByType<PlayerController>(); // TODO: Cache reference to avoid repeated searches
-        if (player)
+        cachedPlayer = FindFirstObjectByType<PlayerController>();
+        if (cachedPlayer)
         {
-            player.OnGroundedChanged += OnPlayerGrounded;
-            player.OnFlyingChanged += OnPlayerFlying;
+            cachedPlayer.OnGroundedChanged += OnPlayerGrounded;
+            cachedPlayer.OnFlyingChanged += OnPlayerFlying;
+        }
+    }
+
+    private void UnsubscribeFromGameEvents()
+    {
+        if (GameManager.Instance)
+        {
+            GameManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+            GameManager.Instance.OnStatisticsUpdated -= OnStatisticsUpdated;
+        }
+
+        if (LevelManager.Instance)
+        {
+            LevelManager.Instance.OnLevelCompleted -= OnLevelCompleted;
+            LevelManager.Instance.OnCollectibleCountChanged -= OnCollectibleCountChanged;
+        }
+
+        if (cachedPlayer)
+        {
+            cachedPlayer.OnGroundedChanged -= OnPlayerGrounded;
+            cachedPlayer.OnFlyingChanged -= OnPlayerFlying;
         }
     }
     
@@ -717,6 +739,6 @@ public class AchievementSystem : MonoBehaviour
     {
         // Save progress before destruction
         SaveAchievementProgress();
-        // TODO: Unsubscribe from game events to prevent memory leaks
+        UnsubscribeFromGameEvents();
     }
 }
