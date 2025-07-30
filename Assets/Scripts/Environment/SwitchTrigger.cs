@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 namespace RollABall.Environment
 {
@@ -12,9 +13,13 @@ namespace RollABall.Environment
         [Header("Switch Configuration")]
         [SerializeField] private GateController connectedGate;
         [SerializeField] private bool oneTimeUse = true;
+        [SerializeField] private bool allowDeactivation = false;
         [SerializeField] private AudioClip activationSound;
         [SerializeField] private ParticleSystem activationEffect;
-        // TODO: Expose activation requirements (e.g. key item) via inspector
+
+        [Header("Activation Requirements")]
+        [SerializeField] private bool requiresKeyItem = false;
+        [SerializeField] private string requiredItemTag = "KeyItem";
         
         private bool isActivated = false;
         private AudioSource audioSource;
@@ -29,7 +34,10 @@ namespace RollABall.Environment
             audioSource.playOnAwake = false;
             audioSource.spatialBlend = 1f; // 3D sound
         }
-        // TODO: Warn if connectedGate is missing to avoid silent switches
+        if (connectedGate == null)
+        {
+            Debug.LogWarning($"[SwitchTrigger] No gate assigned on {name}", this);
+        }
     }
 
         /// <summary>
@@ -43,10 +51,13 @@ namespace RollABall.Environment
         private void OnTriggerEnter(Collider other)
         {
             if (oneTimeUse && isActivated) return;
-            
+
             if (other.CompareTag("Player"))
             {
-                ActivateSwitch();
+                if (!requiresKeyItem || other.transform.CompareTag(requiredItemTag))
+                {
+                    ActivateSwitch();
+                }
             }
         }
 
@@ -54,11 +65,11 @@ namespace RollABall.Environment
     {
         isActivated = true;
             
-            // Open connected gate
-            if (connectedGate)
-            {
-                connectedGate.TriggerOpen();
-            }
+        // Open connected gate
+        if (connectedGate)
+        {
+            connectedGate.TriggerOpen();
+        }
             
             // Play activation sound
             if (audioSource && activationSound)
@@ -80,7 +91,26 @@ namespace RollABall.Environment
             }
             
         Debug.Log($"Switch {gameObject.name} activated!", this);
-        // TODO: Implement reset/deactivation logic for multi-use puzzles
+
+        if (!oneTimeUse && allowDeactivation)
+        {
+            StartCoroutine(ResetRoutine());
+        }
+    }
+
+    private IEnumerator ResetRoutine()
+    {
+        yield return new WaitForSeconds(1f);
+        isActivated = false;
+        if (connectedGate)
+        {
+            connectedGate.TriggerClose();
+        }
+        var renderer = GetComponent<Renderer>();
+        if (renderer && renderer.material)
+        {
+            renderer.material.color = Color.white;
+        }
     }
         
         /// <summary>
@@ -90,7 +120,21 @@ namespace RollABall.Environment
 
         private void OnValidate()
         {
-            // TODO: Highlight object in scene view when connectedGate is null
+            if (connectedGate == null)
+            {
+                Debug.LogWarning($"[SwitchTrigger] Connected gate missing on {name}", this);
+            }
         }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            if (connectedGate == null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireCube(transform.position, Vector3.one * 0.5f);
+            }
+        }
+#endif
     }
 }

@@ -92,8 +92,24 @@ namespace RollABall.Environment
         
         void Start()
         {
+            StartCoroutine(DelayedInitialize());
+        }
+
+        private IEnumerator DelayedInitialize()
+        {
+            int waitFrames = 0;
+            while ((gameManager == null || levelManager == null) && waitFrames < 60)
+            {
+                waitFrames++;
+                yield return null;
+            }
+
+            if (gameManager == null)
+                Debug.LogWarning($"[SteampunkGateController] GameManager reference missing on {name}", this);
+            if (levelManager == null)
+                Debug.LogWarning($"[SteampunkGateController] LevelManager reference missing on {name}", this);
+
             InitializeGate();
-            // TODO: Optionally delay initialization until level managers are ready
         }
         
         /// <summary>
@@ -119,11 +135,6 @@ namespace RollABall.Environment
             if (player != null)
                 playerTransform = player.transform;
 
-            if (gameManager == null)
-                gameManager = FindFirstObjectByType<GameManager>();
-
-            if (levelManager == null)
-                levelManager = FindFirstObjectByType<LevelManager>();
             
             // Kollider setup
             gateCollider = gateModel?.GetComponent<Collider>();

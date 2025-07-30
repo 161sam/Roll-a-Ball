@@ -16,7 +16,8 @@ public class GroundMaterialController : MonoBehaviour
     [SerializeField] private float materialGroupSize = 4f; // Size of material groups
     
     [Header("Material Sources")]
-    // TODO: Move material paths to a configuration ScriptableObject for easier updates
+    [Tooltip("Optional configuration asset that defines fallback material paths.")]
+    [SerializeField] private GroundMaterialConfig materialConfig;
     [SerializeField] private string[] materialPaths = {
         "SteamGroundMaterial",
         "StandardGroundMaterial",
@@ -64,7 +65,8 @@ public class GroundMaterialController : MonoBehaviour
             }
         }
 
-        foreach (string path in materialPaths)
+        string[] pathsToCheck = materialConfig ? materialConfig.materialPaths : materialPaths;
+        foreach (string path in pathsToCheck)
         {
             if (!string.IsNullOrEmpty(path) && Resources.Load<Material>(path) == null)
             {
@@ -123,7 +125,8 @@ public class GroundMaterialController : MonoBehaviour
         }
         
         // 2. Try to load from Resources
-        foreach (string path in materialPaths)
+        string[] configPaths = materialConfig ? materialConfig.materialPaths : materialPaths;
+        foreach (string path in configPaths)
         {
             Material mat = Resources.Load<Material>(path);
             if (mat && !materials.Contains(mat))
