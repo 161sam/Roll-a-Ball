@@ -66,4 +66,10 @@
 | TODO-OPT#62 | Assets/Scripts/Map/MapGenerator.cs | AddSteampunkAtmosphere(), Zeile 1590 | Nebel-Parameter konfigurierbar machen |
 | TODO-OPT#63 | Assets/Scripts/UIController.cs | Zeile 983 | OnDestroy zum Deregistrieren der Events schreiben | **erledigt** |
 | TODO-OPT#64 | Assets/Scripts/PlayerController.cs | HandleInput(), Zeile 174 | Legacy Input System durch New Input System ersetzen |
+| TODO-OPT#65 | Assets/Scripts/AudioManager.cs | OnEnable(), Zeile 420 | PlayerController-Referenz cachen |
+| TODO-OPT#66 | Assets/Scripts/VFX/RotatingGear.cs | Start(), Zeile 27 | Range für Rotationsvarianz exponieren |
+| TODO-OPT#67 | Assets/Scripts/VFX/SteamEmitter.cs | RandomizeSettings(), Zeile 249 | Zufallsbereiche per Inspector konfigurierbar machen |
+| TODO-OPT#68 | Assets/Scripts/SceneTypeDetector.cs | Zeile 18 | Szenenlisten aus Konfiguration laden |
+| TODO-OPT#69 | Assets/Scripts/CollectibleDiagnosticTool.cs | FindAllCollectibles(), Zeile 94 | Suchergebnisse cachen, um Allokationen zu vermeiden |
+| TODO-OPT#70 | Assets/Scripts/Map/MapStartupController.cs | leipzigCoords, Zeile 53 | Fallback-Koordinaten im Inspector einstellbar machen |
 

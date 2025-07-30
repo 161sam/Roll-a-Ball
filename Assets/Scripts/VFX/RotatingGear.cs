@@ -24,6 +24,7 @@ namespace RollABall.VFX
             
             // Add slight random variation to rotation speed
             rotationSpeed += Random.Range(-5f, 5f);
+            // TODO: Expose variation range as serialized fields for designer tweaking
         }
         
         private void Update()
