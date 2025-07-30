@@ -23,11 +23,13 @@ public class CollectibleDiagnosticTool : MonoBehaviour
     [Header("Manual Controls")]
     [SerializeField] private bool runDiagnosticNow = false;
     [SerializeField] private bool forceCollectAll = false;
-    
+
     // Diagnostic results
     private List<CollectibleController> foundCollectibles = new List<CollectibleController>();
     private List<GameObject> brokenCollectibles = new List<GameObject>();
     private int repairedCount = 0;
+    [SerializeField] private bool cacheSearchResults = true;
+    private CollectibleController[] cachedControllers;
 
     private void Start()
     {
@@ -90,8 +92,18 @@ public class CollectibleDiagnosticTool : MonoBehaviour
     {
         Log("Step 1: Finding all CollectibleController components...");
 
-        CollectibleController[] controllers = FindObjectsByType<CollectibleController>(FindObjectsSortMode.None);
-        // TODO: Avoid repeated allocations by caching results when auto-running frequently
+        CollectibleController[] controllers;
+        if (cacheSearchResults && cachedControllers != null)
+        {
+            controllers = cachedControllers;
+        }
+        else
+        {
+            controllers = FindObjectsByType<CollectibleController>(FindObjectsSortMode.None);
+            if (cacheSearchResults)
+                cachedControllers = controllers;
+        }
+
         foundCollectibles.AddRange(controllers);
         
         Log($"Found {foundCollectibles.Count} CollectibleController components");

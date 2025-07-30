@@ -68,7 +68,7 @@ public class AudioManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            cachedPlayer = FindFirstObjectByType<PlayerController>();
+            CachePlayerReference();
             InitializeAudioManager();
         }
         else
@@ -428,8 +428,7 @@ public class AudioManager : MonoBehaviour
 
     void OnEnable()
     {
-        if (!cachedPlayer)
-            cachedPlayer = FindFirstObjectByType<PlayerController>();
+        CachePlayerReference();
 
         if (cachedPlayer)
         {
@@ -440,8 +439,7 @@ public class AudioManager : MonoBehaviour
 
     void OnDisable()
     {
-        if (!cachedPlayer)
-            cachedPlayer = FindFirstObjectByType<PlayerController>();
+        CachePlayerReference();
 
         if (cachedPlayer)
         {
@@ -460,6 +458,17 @@ public class AudioManager : MonoBehaviour
     {
         if (flying)
             PlaySoundAtPlayer("Fly");
+    }
+
+    /// <summary>
+    /// Find and cache the PlayerController instance if not already cached.
+    /// </summary>
+    private void CachePlayerReference()
+    {
+        if (cachedPlayer == null)
+        {
+            cachedPlayer = FindFirstObjectByType<PlayerController>();
+        }
     }
 
     // ===== Utility Methods =====
