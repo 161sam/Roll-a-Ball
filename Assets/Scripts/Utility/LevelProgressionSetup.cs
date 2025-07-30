@@ -97,7 +97,7 @@ public static class LevelProgressionSetup
             if (manager.GetType().GetField("progressionProfile", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.GetValue(manager) == null)
             {
                 managersWithoutProfile++;
-                Debug.LogWarning($"[LevelProgressionSetup] LevelManager in scene '{// manager // Fixed: UniversalSceneFixture has no gameObject.scene.name}' has no progression profile assigned!", manager);
+                Debug.LogWarning($"[LevelProgressionSetup] LevelManager in scene '{manager.gameObject.scene.name}' has no progression profile assigned!", manager);
             }
         }
         

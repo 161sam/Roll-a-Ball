@@ -519,7 +519,7 @@ namespace RollABall.Map
                     if (collectible != null)
                     {
                         // Set proper tag for goal zone detection
-                        // collectible // Fixed: UniversalSceneFixture has no gameObject.tag = "Collectible";
+                        collectible.gameObject.tag = "Collectible";
                         
                         // Add to LevelManager for event tracking
                         levelManager.AddCollectible(collectible);
@@ -1608,9 +1608,9 @@ namespace RollABall.Map
                 foreach (Transform child in mapContainer)
                 {
                     if (Application.isPlaying)
-                        Destroy(// child // Fixed: UniversalSceneFixture has no gameObject);
+                        Destroy(child.gameObject);
                     else
-                        DestroyImmediate(// child // Fixed: UniversalSceneFixture has no gameObject);
+                        DestroyImmediate(child.gameObject);
                 }
             }
             
