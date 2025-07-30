@@ -56,6 +56,7 @@ public class AudioManager : MonoBehaviour
     private List<AudioSource> allSources;
     private int currentMusicIndex = 0;
     private Coroutine musicFadeCoroutine;
+    private PlayerController cachedPlayer;
 
     // Singleton pattern
     public static AudioManager Instance { get; private set; }
@@ -67,6 +68,7 @@ public class AudioManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            cachedPlayer = FindFirstObjectByType<PlayerController>();
             InitializeAudioManager();
         }
         else
@@ -355,9 +357,18 @@ public class AudioManager : MonoBehaviour
                 return source;
         }
 
-        Debug.LogWarning("AudioManager: No available audio sources!");
-        // TODO: Expand pool size dynamically when all sources are in use
-        return null;
+        // Dynamically grow the pool when all sources are busy
+        GameObject sfxObj = new GameObject($"SFX Source {allSources.Count}");
+        sfxObj.transform.SetParent(transform);
+        AudioSource newSource = sfxObj.AddComponent<AudioSource>();
+        newSource.outputAudioMixerGroup = sfxMixer;
+        newSource.playOnAwake = false;
+
+        allSources.Add(newSource);
+        availableSources.Enqueue(newSource);
+
+        Debug.LogWarning("AudioManager: Pool exhausted, creating additional AudioSource");
+        return availableSources.Dequeue();
     }
 
     private IEnumerator ReturnSourceToPool(AudioSource source, float delay)
@@ -417,22 +428,25 @@ public class AudioManager : MonoBehaviour
 
     void OnEnable()
     {
-        // TODO: Cache player reference in Awake to avoid repeated lookups
-        PlayerController player = FindFirstObjectByType<PlayerController>();
-        if (player)
+        if (!cachedPlayer)
+            cachedPlayer = FindFirstObjectByType<PlayerController>();
+
+        if (cachedPlayer)
         {
-            player.OnGroundedChanged += OnPlayerGroundedChanged;
-            player.OnFlyingChanged += OnPlayerFlyingChanged;
+            cachedPlayer.OnGroundedChanged += OnPlayerGroundedChanged;
+            cachedPlayer.OnFlyingChanged += OnPlayerFlyingChanged;
         }
     }
 
     void OnDisable()
     {
-        PlayerController player = FindFirstObjectByType<PlayerController>();
-        if (player)
+        if (!cachedPlayer)
+            cachedPlayer = FindFirstObjectByType<PlayerController>();
+
+        if (cachedPlayer)
         {
-            player.OnGroundedChanged -= OnPlayerGroundedChanged;
-            player.OnFlyingChanged -= OnPlayerFlyingChanged;
+            cachedPlayer.OnGroundedChanged -= OnPlayerGroundedChanged;
+            cachedPlayer.OnFlyingChanged -= OnPlayerFlyingChanged;
         }
     }
 

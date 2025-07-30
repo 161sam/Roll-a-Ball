@@ -9,6 +9,7 @@ namespace RollABall.VFX
     {
         [Header("Rotation Settings")]
         [SerializeField] private float rotationSpeed = 30f; // degrees per second
+        [SerializeField] private Vector2 speedVariationRange = new Vector2(-5f, 5f);
         [SerializeField] private Vector3 rotationAxis = Vector3.up;
         [SerializeField] private bool randomizeDirection = true;
         
@@ -22,9 +23,8 @@ namespace RollABall.VFX
                 direction = Random.value > 0.5f ? 1f : -1f;
             }
             
-            // Add slight random variation to rotation speed
-            rotationSpeed += Random.Range(-5f, 5f);
-            // TODO: Expose variation range as serialized fields for designer tweaking
+            // Add configurable random variation to rotation speed
+            rotationSpeed += Random.Range(speedVariationRange.x, speedVariationRange.y);
         }
         
         private void Update()

@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     [Header("Statistics")]
     [SerializeField] private bool trackStatistics = true;
     [SerializeField] private GameStats gameStats;
+    [SerializeField] private float statisticsUpdateInterval = 0.1f;
 
     [Header("Checkpoints")]
     [SerializeField] private Transform[] checkpoints;
@@ -428,7 +429,7 @@ public class GameManager : MonoBehaviour
         while (currentState == GameState.Playing)
         {
             UpdateStatistics();
-            yield return new WaitForSeconds(0.1f); // TODO: Expose update interval in inspector
+            yield return new WaitForSeconds(statisticsUpdateInterval);
         }
     }
 

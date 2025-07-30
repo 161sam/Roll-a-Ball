@@ -9,6 +9,13 @@ namespace RollABall.Environment
     [AddComponentMenu("Roll-a-Ball/Environment/Moving Platform")]
     public class MovingPlatform : MonoBehaviour
     {
+        private const float BounceFactor = 7.5625f;
+        private const float BounceDiv = 2.75f;
+        private const float BounceStage1 = 1f / BounceDiv;
+        private const float BounceStage2 = 2f / BounceDiv;
+        private const float BounceStage3 = 2.5f / BounceDiv;
+        private const float BounceStage4 = 2.625f / BounceDiv;
+
         [Header("Bewegungseinstellungen")]
         [SerializeField] private Vector3 startPosition;
         [SerializeField] private Vector3 endPosition;
@@ -238,22 +245,21 @@ namespace RollABall.Environment
         /// </summary>
         private float BounceEaseOut(float t)
         {
-            // TODO: Replace hardcoded bounce factors with named constants
-            if (t < (1f / 2.75f))
+            if (t < BounceStage1)
             {
-                return 7.5625f * t * t;
+                return BounceFactor * t * t;
             }
-            else if (t < (2f / 2.75f))
+            else if (t < BounceStage2)
             {
-                return 7.5625f * (t -= (1.5f / 2.75f)) * t + 0.75f;
+                return BounceFactor * (t -= (1.5f / BounceDiv)) * t + 0.75f;
             }
-            else if (t < (2.5f / 2.75f))
+            else if (t < BounceStage3)
             {
-                return 7.5625f * (t -= (2.25f / 2.75f)) * t + 0.9375f;
+                return BounceFactor * (t -= (2.25f / BounceDiv)) * t + 0.9375f;
             }
             else
             {
-                return 7.5625f * (t -= (2.625f / 2.75f)) * t + 0.984375f;
+                return BounceFactor * (t -= (BounceStage4)) * t + 0.984375f;
             }
         }
         

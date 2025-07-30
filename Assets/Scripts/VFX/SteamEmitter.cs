@@ -20,8 +20,10 @@ namespace RollABall.VFX
         
         [Header("Emission-Einstellungen")]
         [SerializeField] private float baseEmissionRate = 50f;
+        [SerializeField] private Vector2 emissionRateRange = new Vector2(30f, 80f);
         [SerializeField] private bool useRandomBursts = true;
         [SerializeField] private float burstInterval = 3f;
+        [SerializeField] private Vector2 burstIntervalRange = new Vector2(2f, 6f);
         [SerializeField] private Vector2 burstCountRange = new Vector2(20, 100);
         
         [Header("Audio")]
@@ -41,6 +43,7 @@ namespace RollABall.VFX
         [SerializeField] private bool useTemperatureVariation = true;
         [SerializeField] private AnimationCurve temperatureCurve = AnimationCurve.EaseInOut(0, 0.5f, 1, 1f);
         [SerializeField] private float temperatureCycleDuration = 10f;
+        [SerializeField] private Vector2 temperatureCycleRange = new Vector2(8f, 15f);
         
         [Header("Beleuchtung")]
         [SerializeField] private Light emitterLight;
@@ -243,10 +246,9 @@ namespace RollABall.VFX
         /// </summary>
         private void RandomizeSettings()
         {
-            burstInterval = Random.Range(2f, 6f);
-            baseEmissionRate = Random.Range(30f, 80f);
-            temperatureCycleDuration = Random.Range(8f, 15f);
-            // TODO: Make random ranges configurable via serialized fields
+            burstInterval = Random.Range(burstIntervalRange.x, burstIntervalRange.y);
+            baseEmissionRate = Random.Range(emissionRateRange.x, emissionRateRange.y);
+            temperatureCycleDuration = Random.Range(temperatureCycleRange.x, temperatureCycleRange.y);
             
             // Zufällige Startzeit für Audio
             audioTimer = Random.Range(0f, audioIntervalRange.y);
