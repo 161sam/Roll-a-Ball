@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private KeyCode flyKey = KeyCode.F;
     [SerializeField] private KeyCode slideKey = KeyCode.LeftControl;
 
+    [Header("Slide")]
+    [SerializeField] private float slideImpulseMultiplier = 0.8f;
+    [SerializeField] private float slideDuration = 0.5f;
+
     [Header("Springen")]
     [SerializeField] private float jumpForce = 8f;
     [SerializeField] private float groundCheckRadius = 0.6f;
@@ -66,6 +70,7 @@ public class PlayerController : MonoBehaviour
     private float flyRegenTimer;
     private float flyEnergy;
     private Coroutine slideCoroutine;
+    private int groundLayerMaskValue;
     
     // Input states - LEGACY INPUT SYSTEM
     // TODO: Replace with new Input System integration
@@ -88,6 +93,11 @@ public class PlayerController : MonoBehaviour
     public System.Action<float, float> OnFlyEnergyChanged;
     public System.Action<bool> OnGroundedChanged;
     public System.Action<bool> OnFlyingChanged;
+
+    void Awake()
+    {
+        groundLayerMaskValue = groundLayer.value;
+    }
 
     void Start()
     {
@@ -212,14 +222,13 @@ public class PlayerController : MonoBehaviour
     {
         // Check if ball is touching ground
         Vector3 center = transform.position;
-        isGrounded = Physics.CheckSphere(center, groundCheckRadius, groundLayer);
-        // TODO: Cache layer mask query or use CharacterController for complex terrain
+        isGrounded = Physics.CheckSphere(center, groundCheckRadius, groundLayerMaskValue);
 
         // Alternative raycast method for more precise detection
         if (!isGrounded)
         {
             Vector3 rayStart = center + Vector3.up * 0.1f;
-            isGrounded = Physics.Raycast(rayStart, Vector3.down, groundCheckDistance + 0.1f, groundLayer);
+            isGrounded = Physics.Raycast(rayStart, Vector3.down, groundCheckDistance + 0.1f, groundLayerMaskValue);
         }
     }
 
@@ -436,15 +445,13 @@ public class PlayerController : MonoBehaviour
         if (slideDirection.magnitude > 0.1f)
         {
             slideDirection.y = 0f; // Keep slide horizontal
-            rb.AddForce(slideDirection * moveForce * 0.8f, ForceMode.Impulse);
-            // TODO: Make slide impulse strength configurable
+            rb.AddForce(slideDirection * moveForce * slideImpulseMultiplier, ForceMode.Impulse);
         }
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySoundAtPlayer("Slide");
 
-        // TODO: Expose slide duration as configurable field instead of magic number
-        yield return new WaitForSeconds(0.5f); // Minimum slide duration
+        yield return new WaitForSeconds(slideDuration);
         
         slideCoroutine = null;
     }
@@ -535,9 +542,14 @@ public class PlayerController : MonoBehaviour
     {
         if (slideCoroutine != null)
             StopCoroutine(slideCoroutine);
-        
+
         // CLAUDE: FIXED - PlayerController primarily sends events rather than subscribing
         // No external event subscriptions to clean up in this implementation
         // Events: OnFlyEnergyChanged, OnGroundedChanged, OnFlyingChanged are automatically cleaned up
+    }
+
+    void OnValidate()
+    {
+        groundLayerMaskValue = groundLayer.value;
     }
 }

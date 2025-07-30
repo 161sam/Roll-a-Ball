@@ -72,8 +72,8 @@ namespace RollABall.Environment
         private Coroutine buttonResetCoroutine;
         private Coroutine autoCloseCoroutine;
         private Transform playerTransform;
-        private GameManager gameManager;
-        private LevelManager levelManager;
+        [SerializeField] private GameManager gameManager;
+        [SerializeField] private LevelManager levelManager;
         private Vector3 originalGatePosition;
         private Vector3 originalButtonPosition;
         private Collider gateCollider;
@@ -116,10 +116,12 @@ namespace RollABall.Environment
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
                 playerTransform = player.transform;
-            
-            gameManager = FindFirstObjectByType<GameManager>();
-            levelManager = FindFirstObjectByType<LevelManager>();
-            // TODO: Cache manager references via serialized fields to avoid runtime lookup
+
+            if (gameManager == null)
+                gameManager = FindFirstObjectByType<GameManager>();
+
+            if (levelManager == null)
+                levelManager = FindFirstObjectByType<LevelManager>();
             
             // Kollider setup
             gateCollider = gateModel?.GetComponent<Collider>();
@@ -662,6 +664,14 @@ namespace RollABall.Environment
             bounceForce = Mathf.Max(0f, bounceForce);
         }
 
-        // TODO: Implement OnDestroy() to stop coroutines and unregister events
+        void OnDestroy()
+        {
+            if (currentAnimation != null)
+                StopCoroutine(currentAnimation);
+            if (buttonResetCoroutine != null)
+                StopCoroutine(buttonResetCoroutine);
+            if (autoCloseCoroutine != null)
+                StopCoroutine(autoCloseCoroutine);
+        }
     }
 }
