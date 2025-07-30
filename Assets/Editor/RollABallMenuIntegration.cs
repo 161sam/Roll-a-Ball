@@ -531,10 +531,11 @@ public class RollABallMenuItems
     public static void RemoveFixTools()
     {
         // Remove fix tools from current scene
-        UniversalSceneFixture[] fixtures = Object.FindObjectsByType<UniversalSceneFixture>(FindObjectsSortMode.None);
+        // Close any open UniversalSceneFixture editor windows
+        UniversalSceneFixture[] fixtures = Resources.FindObjectsOfTypeAll<UniversalSceneFixture>();
         foreach (var fixture in fixtures)
         {
-            Object.DestroyImmediate(fixture.gameObject);
+            fixture.Close();
         }
         Debug.Log("Fix tools removed from current scene.");
     }
