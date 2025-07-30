@@ -34,7 +34,7 @@
 | TODO-OPT#30 | Assets/Scripts/OSMGoalZoneTrigger.cs | SetupGoalZone(), Zeile 40 | Fallback bei fehlendem LevelManager einbauen | **erledigt** |
 | TODO-OPT#31 | Assets/Scripts/Map/MapStartupController.cs | GetCoordsFromAddress(), Zeile 403 | Geocoding-Service integrieren |
 | TODO-OPT#32 | Assets/Scripts/Map/MapGeneratorBatched.cs | CreateSeparateColliders(), Zeile 548 | Collider-Pooling zur GC-Reduktion |
-| TODO-OPT#33 | Assets/Scripts/SaveSystem.cs | SaveEncrypted()/SaveUnencrypted(), Zeile 360/348 | Async File IO verwenden |
+| TODO-OPT#33 | Assets/Scripts/SaveSystem.cs | SaveEncrypted()/SaveUnencrypted(), Zeile 360/348 | Async File IO verwenden | **erledigt** |
 | TODO-OPT#34 | Assets/Scripts/AchievementSystem.cs | OnLevelCompleted(), Zeile 332 | Levelnamen nicht per String vergleichen | **erledigt** |
 | TODO-OPT#35 | Assets/Scripts/AchievementSystem.cs | DisplayNotificationCoroutine(), Zeile 558 | Notification-Objekte poolen | **erledigt** |
 | TODO-OPT#36 | Assets/Scripts/AudioManager.cs | GetAvailableSource(), Zeile 359 | Pool dynamisch vergrößern | **erledigt** |
@@ -47,8 +47,8 @@
 | TODO-OPT#43 | Assets/Scripts/AchievementSystem.cs | CreateDefaultAchievements(), Zeile 186 | Achievements aus externer Konfiguration laden |
 | TODO-OPT#44 | Assets/Scripts/AchievementSystem.cs | SubscribeToGameEvents(), Zeile 295 | PlayerController-Referenz cachen | **erledigt** |
 | TODO-OPT#45 | Assets/Scripts/AchievementSystem.cs | OnDestroy(), Zeile 720 | Von GameEvents abmelden | **erledigt** |
-| TODO-OPT#46 | Assets/Scripts/GameManager.cs | pauseKey, Zeile 32 | Pause-Taste im Einstellungsmenü konfigurierbar machen |
-| TODO-OPT#47 | Assets/Scripts/GameManager.cs | TrackStatistics(), Zeile 406 | Update-Intervall einstellbar machen |
+| TODO-OPT#46 | Assets/Scripts/GameManager.cs | pauseKey, Zeile 32 | Pause-Taste im Einstellungsmenü konfigurierbar machen | **erledigt** |
+| TODO-OPT#47 | Assets/Scripts/GameManager.cs | TrackStatistics(), Zeile 406 | Update-Intervall einstellbar machen | **erledigt** |
 | TODO-OPT#48 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 708 | Offsetbereich als Felder exposen | **erledigt** |
 | TODO-OPT#49 | Assets/Scripts/Map/MapGenerator.cs | FindOptimalGoalPosition(), Zeile 736 | Pfadfindung zur Zielplatzierung nutzen |
 | TODO-OPT#50 | Assets/Scripts/Map/MapStartupController.cs | endlessModeAddresses, Zeile 41 | Adressliste extern speichern | **erledigt** |

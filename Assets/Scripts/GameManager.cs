@@ -52,6 +52,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameStats gameStats;
     [SerializeField] private float statisticsUpdateInterval = 0.1f;
 
+    /// <summary>
+    /// Set update interval for statistics tracking at runtime.
+    /// </summary>
+    public void SetStatisticsUpdateInterval(float interval)
+    {
+        statisticsUpdateInterval = Mathf.Max(0.02f, interval);
+        if (currentState == GameState.Playing && statisticsCoroutine != null)
+        {
+            StartStatisticsTracking();
+        }
+    }
+
     [Header("Checkpoints")]
     [SerializeField] private Transform[] checkpoints;
     [SerializeField] private float checkpointRadius = 2f;
@@ -133,12 +145,9 @@ public class GameManager : MonoBehaviour
         }
         if (InputManager.Instance != null)
         {
-            // migrate legacy key bindings if they were set in the scene
-            var mgr = InputManager.Instance;
-            var pauseField = pauseKey;
-            var restartField = restartKey;
-            typeof(InputManager).GetField("pauseKey", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(mgr, pauseField);
-            typeof(InputManager).GetField("restartKey", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(mgr, restartField);
+            // apply configured bindings
+            InputManager.Instance.SetPauseKey(pauseKey);
+            InputManager.Instance.SetRestartKey(restartKey);
         }
         
         // CLAUDE: FIXED - Use cached references instead of Find calls
