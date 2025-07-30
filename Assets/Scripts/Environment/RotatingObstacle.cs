@@ -15,6 +15,7 @@ public class RotatingObstacle : MonoBehaviour
     [SerializeField] private bool clockwise = true;
     [SerializeField] private float minRotationSpeed = 0f;
     [SerializeField] private float maxRotationSpeed = 180f;
+    [SerializeField] private float contactDamage = 1f;
     // parameters can be overridden via profile
     
     [Header("Visual")]
@@ -30,6 +31,7 @@ public class RotatingObstacle : MonoBehaviour
             clockwise = profile.clockwise;
             minRotationSpeed = profile.minRotationSpeed;
             maxRotationSpeed = profile.maxRotationSpeed;
+            contactDamage = profile.contactDamage;
         }
     }
     
@@ -48,9 +50,11 @@ public class RotatingObstacle : MonoBehaviour
         {
             minRotationSpeed = profile.minRotationSpeed;
             maxRotationSpeed = profile.maxRotationSpeed;
+            contactDamage = profile.contactDamage;
         }
 
         rotationSpeed = Mathf.Clamp(rotationSpeed, minRotationSpeed, maxRotationSpeed);
+        contactDamage = Mathf.Max(0f, contactDamage);
     }
     
     private void OnDrawGizmos()
@@ -67,14 +71,18 @@ public class RotatingObstacle : MonoBehaviour
     
         private void OnTriggerEnter(Collider other)
         {
-            // Optional: Add sound effect when player touches obstacle
             if (other.CompareTag("Player"))
             {
                 if (AudioManager.Instance)
                 {
                     AudioManager.Instance.PlaySound("MetalClank");
                 }
-                // Damage system not yet implemented but can be hooked up here
+
+                var damageable = other.GetComponent<RollABall.Gameplay.IDamageable>();
+                if (damageable != null)
+                {
+                    damageable.ApplyDamage(contactDamage);
+                }
             }
         }
 }

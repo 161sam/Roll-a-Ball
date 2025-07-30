@@ -12,5 +12,7 @@ public class RotatingObstacleProfile : ScriptableObject
     [Header("Speed Limits")]
     public float minRotationSpeed = 0f;
     public float maxRotationSpeed = 180f;
+    [Header("Damage")]
+    public float contactDamage = 1f;
 }
 

@@ -9,6 +9,8 @@ namespace RollABall.Environment
     [AddComponentMenu("Roll-a-Ball/Environment/Moving Platform")]
     public class MovingPlatform : MonoBehaviour
     {
+        [Header("Profile")]
+        [SerializeField] private MovingPlatformProfile profile;
         private const float BounceFactor = 7.5625f;
         private const float BounceDiv = 2.75f;
         private const float BounceStage1 = 1f / BounceDiv;
@@ -53,8 +55,6 @@ namespace RollABall.Environment
         private float pauseTimer = 0f;
         private Rigidbody platformRigidbody;
         private Vector3 lastPosition;
-
-        // TODO: Allow initialization from a shared ScriptableObject profile
         
         // Enums
         public enum MovementType
@@ -75,6 +75,20 @@ namespace RollABall.Environment
         /// </summary>
         private void InitializePlatform()
         {
+            if (profile)
+            {
+                startPosition = profile.startPosition;
+                endPosition = profile.endPosition;
+                moveSpeed = profile.moveSpeed;
+                movementCurve = profile.movementCurve;
+                movementType = profile.movementType;
+                useLocalSpace = profile.useLocalSpace;
+                pauseDuration = profile.pauseDuration;
+                startMovingImmediately = profile.startMovingImmediately;
+                mechanicalSound = profile.mechanicalSound;
+                playAudioOnMovement = profile.playAudioOnMovement;
+            }
+
             // Rigidbody setup für physikalische Interaktion
             platformRigidbody = GetComponent<Rigidbody>();
             if (platformRigidbody == null)
