@@ -83,10 +83,15 @@ namespace RollABall.Map
         public event System.Action OnMapGenerationCompleted;
         public event System.Action<string> OnGenerationError;
         
+        // Material categories
+        private enum RoadCategory { Motorway, Primary, Secondary, Residential, Footway, Default }
+        private enum BuildingCategory { Residential, Industrial, Commercial, Office, Default }
+        private enum AreaCategory { Park, Water, Forest, Grass, Default }
+
         // Batching Collections - organized by material for efficient combining
-        private Dictionary<string, List<CombineInstance>> roadMeshesByMaterial = new Dictionary<string, List<CombineInstance>>();
-        private Dictionary<string, List<CombineInstance>> buildingMeshesByMaterial = new Dictionary<string, List<CombineInstance>>();
-        private Dictionary<string, List<CombineInstance>> areaMeshesByMaterial = new Dictionary<string, List<CombineInstance>>();
+        private Dictionary<RoadCategory, List<CombineInstance>> roadMeshesByMaterial = new();
+        private Dictionary<BuildingCategory, List<CombineInstance>> buildingMeshesByMaterial = new();
+        private Dictionary<AreaCategory, List<CombineInstance>> areaMeshesByMaterial = new();
         
         // Separate collider collections for non-batched physics
         private List<ColliderData> roadColliders = new List<ColliderData>();
@@ -111,31 +116,20 @@ namespace RollABall.Map
         {
             // Road collections by material type
             roadMeshesByMaterial.Clear();
-            // TODO: Replace string keys with enum to avoid typos
-            roadMeshesByMaterial["motorway"] = new List<CombineInstance>();
-            roadMeshesByMaterial["primary"] = new List<CombineInstance>();
-            roadMeshesByMaterial["secondary"] = new List<CombineInstance>();
-            roadMeshesByMaterial["residential"] = new List<CombineInstance>();
-            roadMeshesByMaterial["footway"] = new List<CombineInstance>();
-            roadMeshesByMaterial["default"] = new List<CombineInstance>();
-            
+            foreach (RoadCategory cat in System.Enum.GetValues(typeof(RoadCategory)))
+                roadMeshesByMaterial[cat] = new List<CombineInstance>();
+
             // Building collections by material type
             buildingMeshesByMaterial.Clear();
-            buildingMeshesByMaterial["residential"] = new List<CombineInstance>();
-            buildingMeshesByMaterial["industrial"] = new List<CombineInstance>();
-            buildingMeshesByMaterial["commercial"] = new List<CombineInstance>();
-            buildingMeshesByMaterial["office"] = new List<CombineInstance>();
-            buildingMeshesByMaterial["default"] = new List<CombineInstance>();
-            
+            foreach (BuildingCategory cat in System.Enum.GetValues(typeof(BuildingCategory)))
+                buildingMeshesByMaterial[cat] = new List<CombineInstance>();
+
             // Area collections by material type
             if (batchAreas)
             {
                 areaMeshesByMaterial.Clear();
-                areaMeshesByMaterial["park"] = new List<CombineInstance>();
-                areaMeshesByMaterial["water"] = new List<CombineInstance>();
-                areaMeshesByMaterial["forest"] = new List<CombineInstance>();
-                areaMeshesByMaterial["grass"] = new List<CombineInstance>();
-                areaMeshesByMaterial["default"] = new List<CombineInstance>();
+                foreach (AreaCategory cat in System.Enum.GetValues(typeof(AreaCategory)))
+                    areaMeshesByMaterial[cat] = new List<CombineInstance>();
             }
             
             // Clear collider collections
@@ -314,7 +308,7 @@ namespace RollABall.Map
                     if (segmentMesh.HasValue)
                     {
                         // Add to appropriate material collection
-                        string materialKey = GetRoadMaterialKey(highwayType);
+                        RoadCategory materialKey = GetRoadMaterialKey(highwayType);
                         roadMeshesByMaterial[materialKey].Add(segmentMesh.Value);
                         
                         // Add collider data if needed
@@ -377,7 +371,7 @@ namespace RollABall.Map
                 if (buildingMesh.HasValue)
                 {
                     // Add to appropriate material collection
-                    string materialKey = GetBuildingMaterialKey(building.buildingType);
+                    BuildingCategory materialKey = GetBuildingMaterialKey(building.buildingType);
                     buildingMeshesByMaterial[materialKey].Add(buildingMesh.Value);
                     
                     // Add collider data - buildings usually need colliders
@@ -434,7 +428,7 @@ namespace RollABall.Map
                 var areaMesh = CreateAreaMesh(area);
                 if (areaMesh.HasValue)
                 {
-                    string materialKey = GetAreaMaterialKey(area.areaType);
+                    AreaCategory materialKey = GetAreaMaterialKey(area.areaType);
                     areaMeshesByMaterial[materialKey].Add(areaMesh.Value);
                 }
                 
@@ -488,15 +482,15 @@ namespace RollABall.Map
         /// <summary>
         /// Generic method to batch meshes by material type
         /// </summary>
-        private IEnumerator BatchMeshesByMaterial(
-            Dictionary<string, List<CombineInstance>> meshCollections, 
-            Transform container, 
-            System.Func<string, Material> getMaterial,
+        private IEnumerator BatchMeshesByMaterial<TKey>(
+            Dictionary<TKey, List<CombineInstance>> meshCollections,
+            Transform container,
+            System.Func<TKey, Material> getMaterial,
             string namePrefix)
         {
             foreach (var kvp in meshCollections)
             {
-                string materialKey = kvp.Key;
+                TKey materialKey = kvp.Key;
                 List<CombineInstance> meshes = kvp.Value;
                 
                 if (meshes.Count == 0) continue;
@@ -657,43 +651,76 @@ namespace RollABall.Map
             };
         }
         
-        private string GetRoadMaterialKey(string highwayType) => highwayType;
-        private string GetBuildingMaterialKey(string buildingType) => buildingType;
-        private string GetAreaMaterialKey(string areaType) => areaType ?? "default";
+        private RoadCategory GetRoadMaterialKey(string highwayType)
+        {
+            return highwayType switch
+            {
+                "motorway" => RoadCategory.Motorway,
+                "primary" => RoadCategory.Primary,
+                "secondary" => RoadCategory.Secondary,
+                "residential" => RoadCategory.Residential,
+                "footway" => RoadCategory.Footway,
+                _ => RoadCategory.Default
+            };
+        }
+
+        private BuildingCategory GetBuildingMaterialKey(string buildingType)
+        {
+            return buildingType switch
+            {
+                "industrial" => BuildingCategory.Industrial,
+                "commercial" => BuildingCategory.Commercial,
+                "office" => BuildingCategory.Office,
+                "residential" => BuildingCategory.Residential,
+                _ => BuildingCategory.Default
+            };
+        }
+
+        private AreaCategory GetAreaMaterialKey(string areaType)
+        {
+            return areaType switch
+            {
+                "park" => AreaCategory.Park,
+                "water" => AreaCategory.Water,
+                "forest" => AreaCategory.Forest,
+                "grass" => AreaCategory.Grass,
+                _ => AreaCategory.Default
+            };
+        }
         
-        private Material GetRoadMaterial(string materialKey)
+        private Material GetRoadMaterial(RoadCategory materialKey)
         {
             return materialKey switch
             {
-                "motorway" => roadMotorway ?? roadDefault,
-                "primary" => roadPrimary ?? roadDefault,
-                "secondary" => roadSecondary ?? roadDefault,
-                "residential" => roadResidential ?? roadDefault,
-                "footway" => roadFootway ?? roadDefault,
+                RoadCategory.Motorway => roadMotorway ?? roadDefault,
+                RoadCategory.Primary => roadPrimary ?? roadDefault,
+                RoadCategory.Secondary => roadSecondary ?? roadDefault,
+                RoadCategory.Residential => roadResidential ?? roadDefault,
+                RoadCategory.Footway => roadFootway ?? roadDefault,
                 _ => roadDefault
             };
         }
-        
-        private Material GetBuildingMaterial(string materialKey)
+
+        private Material GetBuildingMaterial(BuildingCategory materialKey)
         {
             return materialKey switch
             {
-                "residential" => residentialMaterial ?? defaultBuildingMaterial,
-                "industrial" => industrialMaterial ?? defaultBuildingMaterial,
-                "commercial" => commercialMaterial ?? defaultBuildingMaterial,
-                "office" => officeMaterial ?? defaultBuildingMaterial,
+                BuildingCategory.Residential => residentialMaterial ?? defaultBuildingMaterial,
+                BuildingCategory.Industrial => industrialMaterial ?? defaultBuildingMaterial,
+                BuildingCategory.Commercial => commercialMaterial ?? defaultBuildingMaterial,
+                BuildingCategory.Office => officeMaterial ?? defaultBuildingMaterial,
                 _ => defaultBuildingMaterial
             };
         }
-        
-        private Material GetAreaMaterial(string materialKey)
+
+        private Material GetAreaMaterial(AreaCategory materialKey)
         {
             return materialKey switch
             {
-                "park" => parkMaterial ?? defaultAreaMaterial,
-                "water" => waterMaterial ?? defaultAreaMaterial,
-                "forest" => forestMaterial ?? defaultAreaMaterial,
-                "grass" => grassMaterial ?? defaultAreaMaterial,
+                AreaCategory.Park => parkMaterial ?? defaultAreaMaterial,
+                AreaCategory.Water => waterMaterial ?? defaultAreaMaterial,
+                AreaCategory.Forest => forestMaterial ?? defaultAreaMaterial,
+                AreaCategory.Grass => grassMaterial ?? defaultAreaMaterial,
                 _ => defaultAreaMaterial
             };
         }
@@ -772,7 +799,7 @@ namespace RollABall.Map
             return size;
         }
         
-        private int GetTotalMeshCount(Dictionary<string, List<CombineInstance>> collections)
+        private int GetTotalMeshCount<TKey>(Dictionary<TKey, List<CombineInstance>> collections)
         {
             return collections.Values.Sum(list => list.Count);
         }

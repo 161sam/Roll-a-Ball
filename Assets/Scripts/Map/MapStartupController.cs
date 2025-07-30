@@ -127,30 +127,19 @@ namespace RollABall.Map
         private void InitializeUI()
         {
             LogDebug("Initializing UI components...");
-            
-            // Auto-find UI components if not assigned
-            // TODO: Avoid expensive FindFirstObject calls by exposing references in the scene
+
+            // Auto-find UI components if not assigned using shared utility
             if (!addressInputField)
-                addressInputField = FindFirstObjectByType<TMP_InputField>();
-            
+                addressInputField = Utility.SceneObjectUtils.FindOrCreateComponent<TMP_InputField>("AddressInputField");
+
             if (!loadMapButton)
-                loadMapButton = FindFirstObjectByType<Button>();
-                
+                loadMapButton = Utility.SceneObjectUtils.FindOrCreateComponent<Button>("LoadMapButton");
+
             if (!statusText)
-            {
-                TextMeshProUGUI[] textComponents = FindObjectsByType<TextMeshProUGUI>(FindObjectsSortMode.None);
-                foreach (var text in textComponents)
-                {
-                    if (text.name.Contains("Loading") || text.name.Contains("Status"))
-                    {
-                        statusText = text;
-                        break;
-                    }
-                }
-            }
-            
+                statusText = Utility.SceneObjectUtils.FindOrCreateComponent<TextMeshProUGUI>("StatusText");
+
             if (!loadingPanel)
-                loadingPanel = GameObject.Find("LoadingPanel");
+                loadingPanel = Utility.SceneObjectUtils.FindOrCreateComponent<RectTransform>("LoadingPanel").gameObject;
             
             // Setup button listeners
             if (loadMapButton)

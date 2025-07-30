@@ -67,10 +67,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private TMP_Dropdown achievementFilterDropdown;
     
     [Header("Notifications")]
-    [SerializeField] private GameObject notificationPanel;
-    [SerializeField] private TextMeshProUGUI notificationText;
-    [SerializeField] private Image notificationIcon;
+    [SerializeField] private GameObject notificationPanelPrefab;
+    [SerializeField] private Transform notificationRoot;
     [SerializeField] private float notificationDuration = 3f;
+    private readonly Queue<GameObject> notificationPool = new();
     
     [Header("Level Complete")]
     [SerializeField] private GameObject levelCompletePanel;
@@ -311,11 +311,11 @@ public class UIController : MonoBehaviour
             var lastSaved = SaveSystem.Instance.CurrentSave.lastSaved;
             if (lastSaved != System.DateTime.MinValue)
             {
-                lastPlayedText.text = $"Last played: {lastSaved:yyyy-MM-dd HH:mm}";
+                lastPlayedText.text = $"{RollABall.Utility.LocalizationManager.Get("LastPlayed")}: {lastSaved:yyyy-MM-dd HH:mm}";
             }
             else
             {
-                lastPlayedText.text = "New Game"; // TODO: Localize UI strings via a localization system
+                lastPlayedText.text = RollABall.Utility.LocalizationManager.Get("NewGame");
             }
         }
     }
@@ -806,26 +806,36 @@ public class UIController : MonoBehaviour
     
     public void ShowNotification(string message, float duration = 0f)
     {
-        if (!notificationPanel || !notificationText) return;
-        
+        if (!notificationPanelPrefab) return;
+
         if (notificationCoroutine != null)
         {
             StopCoroutine(notificationCoroutine);
         }
-        
-        notificationCoroutine = StartCoroutine(ShowNotificationCoroutine(message, duration > 0 ? duration : notificationDuration));
-    }
-    
-    private IEnumerator ShowNotificationCoroutine(string message, float duration)
-    {
-        notificationText.text = message;
-        notificationPanel.SetActive(true);
 
-        // TODO: Use a pooled notification panel for better performance
+        GameObject panel = GetNotificationInstance();
+        TextMeshProUGUI text = panel.GetComponentInChildren<TextMeshProUGUI>();
+        if (text) text.text = message;
+
+        notificationCoroutine = StartCoroutine(ShowNotificationCoroutine(panel, duration > 0 ? duration : notificationDuration));
+    }
+
+    private GameObject GetNotificationInstance()
+    {
+        if (notificationPool.Count > 0)
+            return notificationPool.Dequeue();
+
+        return Instantiate(notificationPanelPrefab, notificationRoot ? notificationRoot : notificationPanelPrefab.transform.parent);
+    }
+
+    private IEnumerator ShowNotificationCoroutine(GameObject panel, float duration)
+    {
+        panel.SetActive(true);
 
         yield return new WaitForSeconds(duration);
-        
-        notificationPanel.SetActive(false);
+
+        panel.SetActive(false);
+        notificationPool.Enqueue(panel);
         notificationCoroutine = null;
     }
     

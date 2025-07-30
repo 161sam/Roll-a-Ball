@@ -24,7 +24,7 @@
 | TODO-OPT#20 | Assets/Scripts/PlayerController.cs | ResetBall(), Zeile 448 | Velocity-Zurücksetzung in Hilfsmethode bündeln | **erledigt** |
 | TODO-OPT#21 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 499 | Platzierungslogik für Collectibles/Goal vereinheitlichen |
 | TODO-OPT#22 | Assets/Scripts/Map/MapGenerator_Original.cs | PlaceGoalZone(), Zeile 305 | Gemeinsame Platzierungsfunktion nutzen |
-| TODO-OPT#23 | Assets/Scripts/Map/MapStartupController.cs | InitializeUI(), Zeile 52 | Find-or-create Logik mit OSMUIConnector teilen |
+| TODO-OPT#23 | Assets/Scripts/Map/MapStartupController.cs | InitializeUI(), Zeile 52 | Find-or-create Logik mit OSMUIConnector teilen | **erledigt** |
 | TODO-OPT#24 | Assets/Scripts/Map/OSMSceneCompleter.cs | SetupUIComponents(), Zeile 67 | UI-Setup-Methoden mit generischen Buildern vereinheitlichen |
 | TODO-OPT#25 | Assets/Editor/ProjectCleanupAndFix.cs | CreateProperLevelProfiles(), Zeile 100 | Wiederholte Folder-Checks in Hilfsmethode auslagern | **erledigt** |
 | TODO-OPT#26 | Assets/Scripts/LevelManager.cs | OnDestroy(), Zeile 116 | Events vor Zerstörung abmelden | **erledigt** |
@@ -53,9 +53,9 @@
 | TODO-OPT#49 | Assets/Scripts/Map/MapGenerator.cs | FindOptimalGoalPosition(), Zeile 736 | Pfadfindung zur Zielplatzierung nutzen |
 | TODO-OPT#50 | Assets/Scripts/Map/MapStartupController.cs | endlessModeAddresses, Zeile 41 | Adressliste extern speichern | **erledigt** |
 | TODO-OPT#51 | Assets/Scripts/Map/AddressResolver.cs | ResolveAddressCoroutine(), Zeile 105 | Geocode-Cache implementieren | **erledigt** |
-| TODO-OPT#52 | Assets/Scripts/UIController.cs | UpdateMainMenuUI(), Zeile 313 | UI-Texte lokalisieren |
-| TODO-OPT#53 | Assets/Scripts/UIController.cs | ShowNotificationCoroutine(), Zeile 820 | Notification-Pool verwenden |
-| TODO-OPT#54 | Assets/Scripts/Map/MapGeneratorBatched.cs | InitializeBatchingCollections(), Zeile 114 | String-Keys durch Enum ersetzen |
+| TODO-OPT#52 | Assets/Scripts/UIController.cs | UpdateMainMenuUI(), Zeile 313 | UI-Texte lokalisieren | **erledigt** |
+| TODO-OPT#53 | Assets/Scripts/UIController.cs | ShowNotificationCoroutine(), Zeile 820 | Notification-Pool verwenden | **erledigt** |
+| TODO-OPT#54 | Assets/Scripts/Map/MapGeneratorBatched.cs | InitializeBatchingCollections(), Zeile 114 | String-Keys durch Enum ersetzen | **erledigt** |
 | TODO-OPT#55 | Assets/Scripts/Environment/SteampunkGateController.cs | InitializeGate(), Zeile 122 | Manager-Referenzen per Inspector setzen | **erledigt** |
 | TODO-OPT#56 | Assets/Scripts/Environment/SteampunkGateController.cs | Zeile 665 | OnDestroy zur Coroutine-Aufräumung einführen | **erledigt** |
 | TODO-OPT#57 | Assets/Scripts/Environment/MovingPlatform.cs | BounceEaseOut(), Zeile 241 | Magic Numbers durch Konstanten ersetzen | **erledigt** |
