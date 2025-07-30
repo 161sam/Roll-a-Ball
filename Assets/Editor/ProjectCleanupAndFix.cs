@@ -95,17 +95,9 @@ namespace RollABall.Editor
             Debug.Log("Creating proper LevelProfiles...");
             
             string folderPath = "Assets/Resources/LevelProfiles";
-            
-            // Ensure directories exist
-            if (!AssetDatabase.IsValidFolder("Assets/Resources"))
-            {
-                AssetDatabase.CreateFolder("Assets", "Resources");
-            }
-            
-            if (!AssetDatabase.IsValidFolder(folderPath))
-            {
-                AssetDatabase.CreateFolder("Assets/Resources", "LevelProfiles");
-            }
+
+            EnsureFolderExists("Assets", "Resources");
+            EnsureFolderExists("Assets/Resources", "LevelProfiles");
 
             // Create or update profiles
             CreateOrUpdateProfile("EasyProfile", "Easy", 8, 5, 0.1f, LevelGenerationMode.Simple, folderPath);
@@ -379,6 +371,14 @@ namespace RollABall.Editor
             else
             {
                 report.AppendLine($"  ❌ {folderName}: NOT FOUND at {folderPath}");
+            }
+        }
+
+        private static void EnsureFolderExists(string parent, string folderName)
+        {
+            if (!AssetDatabase.IsValidFolder(System.IO.Path.Combine(parent, folderName)))
+            {
+                AssetDatabase.CreateFolder(parent, folderName);
             }
         }
 

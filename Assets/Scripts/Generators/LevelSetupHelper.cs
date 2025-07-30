@@ -142,29 +142,37 @@ public class LevelSetupHelper
         // Verwende Reflection für private Felder
         var fields = typeof(LevelProfile).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
         
-        SetField(profile, "profileName", $"{fileName} Profile", fields);
-        SetField(profile, "displayName", displayName, fields);
-        SetField(profile, "difficultyLevel", difficulty, fields);
-        SetField(profile, "themeColor", themeColor, fields);
-        SetField(profile, "levelSize", levelSize, fields);
-        SetField(profile, "tileSize", 2f, fields);
-        SetField(profile, "minWalkableArea", minWalkableArea, fields);
-        SetField(profile, "collectibleCount", collectibleCount, fields);
-        SetField(profile, "minCollectibleDistance", difficulty == 3 ? 1 : 2, fields);
-        SetField(profile, "collectibleSpawnHeight", 0.5f, fields);
-        SetField(profile, "obstacleDensity", obstacleDensity, fields);
-        SetField(profile, "enableMovingObstacles", difficulty >= 3, fields);
-        SetField(profile, "movingObstacleChance", difficulty >= 3 ? 0.1f : 0f, fields);
-        SetField(profile, "frictionVariance", 0.1f + (difficulty - 1) * 0.1f, fields);
-        SetField(profile, "enableSlipperyTiles", enableSlipperyTiles, fields);
-        SetField(profile, "slipperyTileChance", slipperyChance, fields);
-        SetField(profile, "enableParticleEffects", true, fields);
-        SetField(profile, "playerSpawnOffset", Vector3.up, fields);
-        SetField(profile, "randomizeSpawnPosition", difficulty > 1, fields);
-        SetField(profile, "spawnSafeRadius", difficulty == 3 ? 2f : 3f, fields);
-        SetField(profile, "useTimeBasedSeed", true, fields);
-        SetField(profile, "generationMode", generationMode, fields);
-        SetField(profile, "pathComplexity", pathComplexity, fields);
+        var fieldValues = new System.Collections.Generic.Dictionary<string, object>
+        {
+            { "profileName", $"{fileName} Profile" },
+            { "displayName", displayName },
+            { "difficultyLevel", difficulty },
+            { "themeColor", themeColor },
+            { "levelSize", levelSize },
+            { "tileSize", 2f },
+            { "minWalkableArea", minWalkableArea },
+            { "collectibleCount", collectibleCount },
+            { "minCollectibleDistance", difficulty == 3 ? 1 : 2 },
+            { "collectibleSpawnHeight", 0.5f },
+            { "obstacleDensity", obstacleDensity },
+            { "enableMovingObstacles", difficulty >= 3 },
+            { "movingObstacleChance", difficulty >= 3 ? 0.1f : 0f },
+            { "frictionVariance", 0.1f + (difficulty - 1) * 0.1f },
+            { "enableSlipperyTiles", enableSlipperyTiles },
+            { "slipperyTileChance", slipperyChance },
+            { "enableParticleEffects", true },
+            { "playerSpawnOffset", Vector3.up },
+            { "randomizeSpawnPosition", difficulty > 1 },
+            { "spawnSafeRadius", difficulty == 3 ? 2f : 3f },
+            { "useTimeBasedSeed", true },
+            { "generationMode", generationMode },
+            { "pathComplexity", pathComplexity }
+        };
+
+        foreach (var kvp in fieldValues)
+        {
+            SetField(profile, kvp.Key, kvp.Value, fields);
+        }
 
         string assetPath = $"Assets/ScriptableObjects/{fileName}.asset";
         AssetDatabase.CreateAsset(profile, assetPath);

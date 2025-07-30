@@ -30,30 +30,35 @@ public class LevelProfileCreator : MonoBehaviour
     {
         LevelProfile easy = ScriptableObject.CreateInstance<LevelProfile>();
         
-        // Set private fields via reflection (since they're private)
-        SetPrivateField(easy, "profileName", "Easy Profile");
-        SetPrivateField(easy, "displayName", "Einfach");
-        SetPrivateField(easy, "difficultyLevel", 1);
-        SetPrivateField(easy, "themeColor", Color.green);
-        SetPrivateField(easy, "levelSize", 8);
-        SetPrivateField(easy, "tileSize", 2f);
-        SetPrivateField(easy, "minWalkableArea", 80);
-        SetPrivateField(easy, "collectibleCount", 5);
-        SetPrivateField(easy, "minCollectibleDistance", 2);
-        SetPrivateField(easy, "collectibleSpawnHeight", 0.5f);
-        SetPrivateField(easy, "obstacleDensity", 0.1f);
-        SetPrivateField(easy, "enableMovingObstacles", false);
-        SetPrivateField(easy, "movingObstacleChance", 0f);
-        SetPrivateField(easy, "frictionVariance", 0.1f);
-        SetPrivateField(easy, "enableSlipperyTiles", false);
-        SetPrivateField(easy, "slipperyTileChance", 0f);
-        SetPrivateField(easy, "enableParticleEffects", true);
-        SetPrivateField(easy, "playerSpawnOffset", Vector3.up);
-        SetPrivateField(easy, "randomizeSpawnPosition", false);
-        SetPrivateField(easy, "spawnSafeRadius", 3f);
-        SetPrivateField(easy, "useTimeBasedSeed", true);
-        SetPrivateField(easy, "generationMode", LevelGenerationMode.Simple);
-        SetPrivateField(easy, "pathComplexity", 0.3f);
+        var easyFields = new System.Collections.Generic.Dictionary<string, object>
+        {
+            { "profileName", "Easy Profile" },
+            { "displayName", "Einfach" },
+            { "difficultyLevel", 1 },
+            { "themeColor", Color.green },
+            { "levelSize", 8 },
+            { "tileSize", 2f },
+            { "minWalkableArea", 80 },
+            { "collectibleCount", 5 },
+            { "minCollectibleDistance", 2 },
+            { "collectibleSpawnHeight", 0.5f },
+            { "obstacleDensity", 0.1f },
+            { "enableMovingObstacles", false },
+            { "movingObstacleChance", 0f },
+            { "frictionVariance", 0.1f },
+            { "enableSlipperyTiles", false },
+            { "slipperyTileChance", 0f },
+            { "enableParticleEffects", true },
+            { "playerSpawnOffset", Vector3.up },
+            { "randomizeSpawnPosition", false },
+            { "spawnSafeRadius", 3f },
+            { "useTimeBasedSeed", true },
+            { "generationMode", LevelGenerationMode.Simple },
+            { "pathComplexity", 0.3f }
+        };
+
+        foreach (var kvp in easyFields)
+            SetPrivateField(easy, kvp.Key, kvp.Value);
         
         AssetDatabase.CreateAsset(easy, "Assets/ScriptableObjects/EasyProfile.asset");
     }
@@ -61,30 +66,36 @@ public class LevelProfileCreator : MonoBehaviour
     private void CreateMediumProfile()
     {
         LevelProfile medium = ScriptableObject.CreateInstance<LevelProfile>();
-        
-        SetPrivateField(medium, "profileName", "Medium Profile");
-        SetPrivateField(medium, "displayName", "Mittel");
-        SetPrivateField(medium, "difficultyLevel", 2);
-        SetPrivateField(medium, "themeColor", Color.yellow);
-        SetPrivateField(medium, "levelSize", 12);
-        SetPrivateField(medium, "tileSize", 2f);
-        SetPrivateField(medium, "minWalkableArea", 70);
-        SetPrivateField(medium, "collectibleCount", 8);
-        SetPrivateField(medium, "minCollectibleDistance", 2);
-        SetPrivateField(medium, "collectibleSpawnHeight", 0.5f);
-        SetPrivateField(medium, "obstacleDensity", 0.25f);
-        SetPrivateField(medium, "enableMovingObstacles", false);
-        SetPrivateField(medium, "movingObstacleChance", 0.05f);
-        SetPrivateField(medium, "frictionVariance", 0.2f);
-        SetPrivateField(medium, "enableSlipperyTiles", true);
-        SetPrivateField(medium, "slipperyTileChance", 0.1f);
-        SetPrivateField(medium, "enableParticleEffects", true);
-        SetPrivateField(medium, "playerSpawnOffset", Vector3.up);
-        SetPrivateField(medium, "randomizeSpawnPosition", true);
-        SetPrivateField(medium, "spawnSafeRadius", 3f);
-        SetPrivateField(medium, "useTimeBasedSeed", true);
-        SetPrivateField(medium, "generationMode", LevelGenerationMode.Maze);
-        SetPrivateField(medium, "pathComplexity", 0.5f);
+
+        var mediumFields = new System.Collections.Generic.Dictionary<string, object>
+        {
+            { "profileName", "Medium Profile" },
+            { "displayName", "Mittel" },
+            { "difficultyLevel", 2 },
+            { "themeColor", Color.yellow },
+            { "levelSize", 12 },
+            { "tileSize", 2f },
+            { "minWalkableArea", 70 },
+            { "collectibleCount", 8 },
+            { "minCollectibleDistance", 2 },
+            { "collectibleSpawnHeight", 0.5f },
+            { "obstacleDensity", 0.25f },
+            { "enableMovingObstacles", false },
+            { "movingObstacleChance", 0.05f },
+            { "frictionVariance", 0.2f },
+            { "enableSlipperyTiles", true },
+            { "slipperyTileChance", 0.1f },
+            { "enableParticleEffects", true },
+            { "playerSpawnOffset", Vector3.up },
+            { "randomizeSpawnPosition", true },
+            { "spawnSafeRadius", 3f },
+            { "useTimeBasedSeed", true },
+            { "generationMode", LevelGenerationMode.Maze },
+            { "pathComplexity", 0.5f }
+        };
+
+        foreach (var kvp in mediumFields)
+            SetPrivateField(medium, kvp.Key, kvp.Value);
         
         AssetDatabase.CreateAsset(medium, "Assets/ScriptableObjects/MediumProfile.asset");
     }
@@ -92,30 +103,36 @@ public class LevelProfileCreator : MonoBehaviour
     private void CreateHardProfile()
     {
         LevelProfile hard = ScriptableObject.CreateInstance<LevelProfile>();
-        
-        SetPrivateField(hard, "profileName", "Hard Profile");
-        SetPrivateField(hard, "displayName", "Schwer");
-        SetPrivateField(hard, "difficultyLevel", 3);
-        SetPrivateField(hard, "themeColor", Color.red);
-        SetPrivateField(hard, "levelSize", 16);
-        SetPrivateField(hard, "tileSize", 2f);
-        SetPrivateField(hard, "minWalkableArea", 60);
-        SetPrivateField(hard, "collectibleCount", 12);
-        SetPrivateField(hard, "minCollectibleDistance", 1);
-        SetPrivateField(hard, "collectibleSpawnHeight", 0.5f);
-        SetPrivateField(hard, "obstacleDensity", 0.4f);
-        SetPrivateField(hard, "enableMovingObstacles", true);
-        SetPrivateField(hard, "movingObstacleChance", 0.1f);
-        SetPrivateField(hard, "frictionVariance", 0.3f);
-        SetPrivateField(hard, "enableSlipperyTiles", true);
-        SetPrivateField(hard, "slipperyTileChance", 0.2f);
-        SetPrivateField(hard, "enableParticleEffects", true);
-        SetPrivateField(hard, "playerSpawnOffset", Vector3.up);
-        SetPrivateField(hard, "randomizeSpawnPosition", true);
-        SetPrivateField(hard, "spawnSafeRadius", 2f);
-        SetPrivateField(hard, "useTimeBasedSeed", true);
-        SetPrivateField(hard, "generationMode", LevelGenerationMode.Maze);
-        SetPrivateField(hard, "pathComplexity", 0.8f);
+
+        var hardFields = new System.Collections.Generic.Dictionary<string, object>
+        {
+            { "profileName", "Hard Profile" },
+            { "displayName", "Schwer" },
+            { "difficultyLevel", 3 },
+            { "themeColor", Color.red },
+            { "levelSize", 16 },
+            { "tileSize", 2f },
+            { "minWalkableArea", 60 },
+            { "collectibleCount", 12 },
+            { "minCollectibleDistance", 1 },
+            { "collectibleSpawnHeight", 0.5f },
+            { "obstacleDensity", 0.4f },
+            { "enableMovingObstacles", true },
+            { "movingObstacleChance", 0.1f },
+            { "frictionVariance", 0.3f },
+            { "enableSlipperyTiles", true },
+            { "slipperyTileChance", 0.2f },
+            { "enableParticleEffects", true },
+            { "playerSpawnOffset", Vector3.up },
+            { "randomizeSpawnPosition", true },
+            { "spawnSafeRadius", 2f },
+            { "useTimeBasedSeed", true },
+            { "generationMode", LevelGenerationMode.Maze },
+            { "pathComplexity", 0.8f }
+        };
+
+        foreach (var kvp in hardFields)
+            SetPrivateField(hard, kvp.Key, kvp.Value);
         
         AssetDatabase.CreateAsset(hard, "Assets/ScriptableObjects/HardProfile.asset");
     }
