@@ -236,16 +236,16 @@ public class CleanRollABallMenuIntegration : EditorWindow
         {
             bool needsFix = false;
             
-            if (// collectible // Fixed: UniversalSceneFixture has no gameObject.tag != "Collectible")
+            if (collectible.tag != "Collectible")
             {
-                // collectible // Fixed: UniversalSceneFixture has no gameObject.tag = "Collectible";
+                collectible.tag = "Collectible";
                 needsFix = true;
             }
             
             Collider collider = collectible.GetComponent<Collider>();
             if (collider == null)
             {
-                SphereCollider sphereCollider = // collectible // Fixed: UniversalSceneFixture has no gameObject.AddComponent<SphereCollider>();
+                SphereCollider sphereCollider = collectible.gameObject.AddComponent<SphereCollider>();
                 sphereCollider.isTrigger = true;
                 needsFix = true;
             }
@@ -278,9 +278,9 @@ public class CleanRollABallMenuIntegration : EditorWindow
         
         tagManager.CompleteTagSetup();
         
-        if (// tagManager // Fixed: UniversalSceneFixture has no gameObject.name == "TempTagManager")
+        if (tagManager.gameObject.name == "TempTagManager")
         {
-            Object.DestroyImmediate(// tagManager // Fixed: UniversalSceneFixture has no gameObject);
+            Object.DestroyImmediate(tagManager.gameObject);
         }
         
         Debug.Log("[CleanMenu] Tags and layers setup completed");
