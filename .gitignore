@@ -1,0 +1,119 @@
+# Presets
+PRESETS/*
+
+# Developer Scripts
+dev_scripts/
+_merge_backup/
+
+# Unity-spezifische Dateien
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# MemoryCaptures können extrem groß sein
+[Mm]emoryCaptures/
+
+# Asset Store Tools
+[Aa]ssets/AssetStoreTools*
+
+# Autobuild
+/[Aa]utobuild/
+
+# Generated Visual Studio files
+*.csproj
+*.unityproj
+*.sln
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity3D generated meta files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity3D generated file on crash reports
+sysinfo.txt
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Crashlytics generated file
+crashlytics-build.properties
+
+# Packed Addressables
+[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Temporary auto-generated Android Assets
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.suo
+
+# MCP und temporäre Dateien
+*.tmp
+*.bak
+*~
+*.cs.deleted
+
+# Unity PRESETS
+Assets/PRESETS
+Assets/PRESETS.meta
+
+# Steampunk Roll-a-Ball spezifisch
+Assets/StreamingAssets/
+Assets/AssetStoreTools/
+WebGL-Build/
+PC-Build/
+Mobile-Build/
+
+# Backup-Dateien
+*.backup
+*.cs.backup
+*.meta.backup
+*.inputactions.backup
+
+# Git internals - should never be tracked
+**/.git/index
+**/.git/logs/
+**/.git/refs/
+**/.git/COMMIT_EDITMSG
+
+# Unity Bee build artifacts  
+**/Library/Bee/artifacts/
+.git
+
+# Unity & Node cleanup
+node_modules/
+Library/
+Temp/
+*.csproj
+*.unityproj
+*.sln
+*.userprefs
+.DS_Store

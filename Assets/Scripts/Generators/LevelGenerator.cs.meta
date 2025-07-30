@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 645079cb535337cb5ac75e0be25fbe34
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - activeProfile: {fileID: 11400000, guid: a3ececc4edee6b74fb44f79c0edda84c, type: 2}
+  - groundPrefab: {fileID: 366523301430978328, guid: 05a79bd032d67af908c58f1d5b0ec008, type: 3}
+  - wallPrefab: {fileID: 1212140643362234136, guid: 5c482d0efaa7d9b6aae5744c4ff53009, type: 3}
+  - collectiblePrefab: {fileID: 4044417440240046019, guid: 5c967c7e30735590190a1ecefffb2f59, type: 3}
+  - goalZonePrefab: {fileID: 7897462713699335167, guid: 2b2c84eb4b01aeb2b8fe01f65241d70f, type: 3}
+  - playerPrefab: {fileID: 8554796287664602159, guid: 8e1ad3f37feab50eb8883b04878e2d3f, type: 3}
+  - levelContainer: {instanceID: 0}
+  - groundContainer: {instanceID: 0}
+  - wallContainer: {instanceID: 0}
+  - collectibleContainer: {instanceID: 0}
+  - effectsContainer: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
