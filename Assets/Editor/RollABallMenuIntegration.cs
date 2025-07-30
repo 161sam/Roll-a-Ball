@@ -376,14 +376,11 @@ public class RollABallMenuIntegration : EditorWindow
     
     private void RunUniversalSceneFixture()
     {
-        UniversalSceneFixture fixture = Object.FindFirstObjectByType<UniversalSceneFixture>();
-        if (!fixture)
-        {
-            GameObject fixtureGO = new GameObject("UniversalSceneFixture");
-            fixture = fixtureGO.AddComponent<UniversalSceneFixture>();
-        }
-        
+        // UniversalSceneFixture is an EditorWindow and cannot be added as a
+        // component. Create a temporary instance instead.
+        UniversalSceneFixture fixture = ScriptableObject.CreateInstance<UniversalSceneFixture>();
         fixture.FixCurrentScene();
+        Object.DestroyImmediate(fixture);
         EditorUtility.DisplayDialog("Universal Scene Fixture", "Scene fixture completed!", "OK");
     }
     
@@ -429,10 +426,11 @@ public class RollABallMenuIntegration : EditorWindow
     private void RemoveAllFixTools()
     {
         // Remove all fix tool components from the current scene
-        UniversalSceneFixture[] fixtures = Object.FindObjectsByType<UniversalSceneFixture>(FindObjectsSortMode.None);
-        foreach (var fixture in fixtures)
+        // Close any open UniversalSceneFixture windows
+        UniversalSceneFixture[] fixtures = Resources.FindObjectsOfTypeAll<UniversalSceneFixture>();
+        foreach (var window in fixtures)
         {
-            Object.DestroyImmediate(fixture.gameObject);
+            window.Close();
         }
         
         // Remove any other fix tools
