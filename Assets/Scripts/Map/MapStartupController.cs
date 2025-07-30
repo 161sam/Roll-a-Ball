@@ -29,7 +29,8 @@ namespace RollABall.Map
         [SerializeField] private float searchRadius = 500f;
         
         [Header("Endless Mode")]
-        [SerializeField] private string[] endlessModeAddresses = {
+        [SerializeField] private AddressList endlessAddressList;
+        private string[] endlessModeAddresses = {
             "Leipzig, Germany",
             "Berlin, Germany",
             "Munich, Germany",
@@ -38,7 +39,7 @@ namespace RollABall.Map
             "Cologne, Germany",
             "Frankfurt, Germany",
             "Stuttgart, Germany"
-        }; // TODO: Load endless mode addresses from external file
+        };
         
         [Header("Fallback System")]
         [SerializeField] private GameObject fallbackLevelPrefab;
@@ -73,6 +74,16 @@ namespace RollABall.Map
             mapGenerator = GetComponent<MapGenerator>();
             gameManager = FindFirstObjectByType<GameManager>();
             levelManager = FindFirstObjectByType<LevelManager>();
+
+            // Load endless mode addresses from configuration
+            if (endlessAddressList == null)
+            {
+                endlessAddressList = Resources.Load<AddressList>("AddressLists/EndlessAddresses");
+            }
+            if (endlessAddressList != null)
+            {
+                endlessModeAddresses = endlessAddressList.addresses;
+            }
             
             // Check for real OSM components
             if (addressResolver == null && !enableSimulationMode)
