@@ -12,10 +12,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float ballDrag = 0.98f; // Ball rolling resistance
 
     [Header("Input Einstellungen")]
-    [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
-    [SerializeField] private KeyCode jumpKey = KeyCode.Space;
-    [SerializeField] private KeyCode flyKey = KeyCode.F;
-    [SerializeField] private KeyCode slideKey = KeyCode.LeftControl;
 
     [Header("Slide")]
     [SerializeField] private float slideImpulseMultiplier = 0.8f;
@@ -73,8 +69,7 @@ public class PlayerController : MonoBehaviour
     private Coroutine slideCoroutine;
     private int groundLayerMaskValue;
     
-    // Input states - LEGACY INPUT SYSTEM
-    // TODO: Replace with new Input System integration
+    // Input states from InputManager (new Input System)
     private Vector2 movementInput;
     private bool jumpPressed;
     private bool flyPressed;
@@ -180,20 +175,6 @@ public class PlayerController : MonoBehaviour
             if (input.SlidePressed)
                 StartSlide();
             else if (input.SlideReleased)
-                StopSlide();
-        }
-        else
-        {
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-            movementInput = new Vector2(horizontal, vertical);
-            jumpPressed = Input.GetKeyDown(jumpKey);
-            flyPressed = Input.GetKey(flyKey);
-            sprintPressed = Input.GetKey(sprintKey);
-
-            if (Input.GetKeyDown(slideKey))
-                StartSlide();
-            else if (Input.GetKeyUp(slideKey))
                 StopSlide();
         }
     }

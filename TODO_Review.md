@@ -5,7 +5,6 @@ The following tasks from `TODO_Index.md` remain open due to missing files or lar
 - **TODO-OPT#32**: Collider pooling implemented in MapGeneratorBatched.
 - **TODO-OPT#42 - TODO-OPT#43**: Loading level and achievement data from external configuration needs a dedicated data format.
 - **TODO-OPT#49**: Pathfinding based goal placement is a larger feature.
-- **TODO-OPT#64**: Full migration to the new Input System is still pending.
 - **TODO-OPT#86 - TODO-OPT#87**: Sequence controller and event deregistration for
   `SteampunkGateController` need broader architecture decisions.
 - **TODO-OPT#92 - TODO-OPT#96**: Environment prefabs are missing in multiple

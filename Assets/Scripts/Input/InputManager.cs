@@ -1,4 +1,7 @@
 using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace RollABall.InputSystem
 {
@@ -15,12 +18,24 @@ namespace RollABall.InputSystem
         private const string PauseKeyPref = "PauseKey";
         private const string RestartKeyPref = "RestartKey";
 
+#if ENABLE_INPUT_SYSTEM
+        [Header("Input Actions")]
+        [SerializeField] private InputActionAsset inputActions;
+        private InputAction moveAction;
+        private InputAction jumpAction;
+        private InputAction flyAction;
+        private InputAction sprintAction;
+        private InputAction slideAction;
+        private InputAction pauseAction;
+        private InputAction restartAction;
+#else
         [SerializeField] private KeyCode pauseKey = KeyCode.Escape;
         [SerializeField] private KeyCode restartKey = KeyCode.R;
         [SerializeField] private KeyCode jumpKey = KeyCode.Space;
         [SerializeField] private KeyCode flyKey = KeyCode.F;
         [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
         [SerializeField] private KeyCode slideKey = KeyCode.LeftControl;
+#endif
         // TODO: Allow runtime key rebinding via settings menu
         // TODO: Support gamepad bindings alongside keyboard controls
 
@@ -34,9 +49,46 @@ namespace RollABall.InputSystem
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
+#if ENABLE_INPUT_SYSTEM
+            InitializeInputActions();
+#else
             LoadKeyBindings();
+#endif
         }
 
+#if ENABLE_INPUT_SYSTEM
+        private void OnEnable()
+        {
+            inputActions?.Enable();
+        }
+
+        private void OnDisable()
+        {
+            inputActions?.Disable();
+        }
+#endif
+#if ENABLE_INPUT_SYSTEM
+        private void InitializeInputActions()
+        {
+            if (inputActions == null)
+            {
+                Debug.LogWarning("[InputManager] No InputActionAsset assigned.", this);
+                return;
+            }
+
+            moveAction = inputActions.FindAction("Move");
+            jumpAction = inputActions.FindAction("Jump");
+            flyAction = inputActions.FindAction("Fly");
+            sprintAction = inputActions.FindAction("Sprint");
+            slideAction = inputActions.FindAction("Slide");
+            pauseAction = inputActions.FindAction("Pause");
+            restartAction = inputActions.FindAction("Restart");
+
+            inputActions.Enable();
+        }
+#endif
+
+#if !ENABLE_INPUT_SYSTEM
         private void LoadKeyBindings()
         {
             if (PlayerPrefs.HasKey(PauseKeyPref))
@@ -51,35 +103,86 @@ namespace RollABall.InputSystem
                     restartKey = key;
             }
         }
+#endif
 
         public void SetPauseKey(KeyCode key)
         {
+#if !ENABLE_INPUT_SYSTEM
             pauseKey = key;
             PlayerPrefs.SetString(PauseKeyPref, key.ToString());
+#else
+            pauseAction?.ApplyBindingOverride(0, key.ToString());
+#endif
         }
 
         public void SetRestartKey(KeyCode key)
         {
+#if !ENABLE_INPUT_SYSTEM
             restartKey = key;
             PlayerPrefs.SetString(RestartKeyPref, key.ToString());
+#else
+            restartAction?.ApplyBindingOverride(0, key.ToString());
+#endif
         }
 
         /// <summary>
-        /// Returns true when the pause key was pressed this frame.
+        /// Returns true when the pause command was triggered this frame.
         /// </summary>
+#if ENABLE_INPUT_SYSTEM
+        public bool PausePressed => pauseAction != null && pauseAction.WasPressedThisFrame();
+#else
         public bool PausePressed => UnityEngine.Input.GetKeyDown(pauseKey);
+#endif
 
         /// <summary>
-        /// Returns true when the restart key was pressed this frame.
+        /// Returns true when the restart command was triggered this frame.
         /// </summary>
+#if ENABLE_INPUT_SYSTEM
+        public bool RestartPressed => restartAction != null && restartAction.WasPressedThisFrame();
+#else
         public bool RestartPressed => UnityEngine.Input.GetKeyDown(restartKey);
+#endif
 
-        public Vector2 Movement => new Vector2(UnityEngine.Input.GetAxis("Horizontal"), UnityEngine.Input.GetAxis("Vertical"));
+        public Vector2 Movement
+#if ENABLE_INPUT_SYSTEM
+            => moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
+#else
+            => new Vector2(UnityEngine.Input.GetAxis("Horizontal"), UnityEngine.Input.GetAxis("Vertical"));
+#endif
 
-        public bool JumpPressed => UnityEngine.Input.GetKeyDown(jumpKey);
-        public bool FlyHeld => UnityEngine.Input.GetKey(flyKey);
-        public bool SprintHeld => UnityEngine.Input.GetKey(sprintKey);
-        public bool SlidePressed => UnityEngine.Input.GetKeyDown(slideKey);
-        public bool SlideReleased => UnityEngine.Input.GetKeyUp(slideKey);
+        public bool JumpPressed
+#if ENABLE_INPUT_SYSTEM
+            => jumpAction != null && jumpAction.WasPressedThisFrame();
+#else
+            => UnityEngine.Input.GetKeyDown(jumpKey);
+#endif
+
+        public bool FlyHeld
+#if ENABLE_INPUT_SYSTEM
+            => flyAction != null && flyAction.IsPressed();
+#else
+            => UnityEngine.Input.GetKey(flyKey);
+#endif
+
+        public bool SprintHeld
+#if ENABLE_INPUT_SYSTEM
+            => sprintAction != null && sprintAction.IsPressed();
+#else
+            => UnityEngine.Input.GetKey(sprintKey);
+#endif
+
+        public bool SlidePressed
+#if ENABLE_INPUT_SYSTEM
+            => slideAction != null && slideAction.WasPressedThisFrame();
+#else
+            => UnityEngine.Input.GetKeyDown(slideKey);
+#endif
+
+        public bool SlideReleased
+#if ENABLE_INPUT_SYSTEM
+            => slideAction != null && slideAction.WasReleasedThisFrame();
+#else
+            => UnityEngine.Input.GetKeyUp(slideKey);
+#endif
     }
 }
