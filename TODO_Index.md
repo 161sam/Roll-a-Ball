@@ -87,14 +87,14 @@
 | TODO-OPT#83 | Assets/Scripts/Environment/RotatingObstacle.cs | OnTriggerEnter(), Zeile 56 | Integrate damage system on contact | **erledigt** |
 | TODO-OPT#84 | Assets/Scripts/Environment/SteampunkGateController.cs | Zeile 80 | Replace FindFirstObjectByType with injection | **erledigt** |
 | TODO-OPT#85 | Assets/Scripts/Environment/SteampunkGateController.cs | Start(), Zeile 96 | Delay initialization until managers ready | **erledigt** |
-| TODO-OPT#86 | Assets/Scripts/Environment/SteampunkGateController.cs | CheckSequentialRequirement(), Zeile 303 | Dedicated sequence controller | |
-| TODO-OPT#87 | Assets/Scripts/Environment/SteampunkGateController.cs | OnDestroy(), Zeile 678 | Deregister from global events | |
+| TODO-OPT#86 | Assets/Scripts/Environment/SteampunkGateController.cs | CheckSequentialRequirement(), Zeile 303 | Dedicated sequence controller | **reviewed: requires new puzzle sequence system** |
+| TODO-OPT#87 | Assets/Scripts/Environment/SteampunkGateController.cs | OnDestroy(), Zeile 678 | Deregister from global events | **reviewed: no event subscriptions found** |
 | TODO-OPT#88 | Assets/Scripts/Environment/SwitchTrigger.cs | Zeile 17 | Expose activation requirements | **erledigt** |
 | TODO-OPT#89 | Assets/Scripts/Environment/SwitchTrigger.cs | Awake(), Zeile 32 | Warn if gate missing | **erledigt** |
 | TODO-OPT#90 | Assets/Scripts/Environment/SwitchTrigger.cs | ActivateSwitch(), Zeile 83 | Reset/deactivation logic | **erledigt** |
 | TODO-OPT#91 | Assets/Scripts/Environment/SwitchTrigger.cs | OnValidate(), Zeile 93 | Highlight object when gate missing | **erledigt** |
-| TODO-OPT#92 | Assets/Scenes/Level1.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
-| TODO-OPT#93 | Assets/Scenes/Level2.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
-| TODO-OPT#94 | Assets/Scenes/Level3.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
-| TODO-OPT#95 | Assets/Scenes/GeneratedLevel.unity | n/a | Environment prefabs missing in generated level | |
-| TODO-OPT#96 | Assets/Scenes/Level_OSM.unity | n/a | Environment prefabs missing in OSM level | |
+| TODO-OPT#92 | Assets/Scenes/Level1.unity | n/a | Environment prefabs (gates, switches, platforms) missing | **reviewed: requires Unity scene edits** |
+| TODO-OPT#93 | Assets/Scenes/Level2.unity | n/a | Environment prefabs (gates, switches, platforms) missing | **reviewed: requires Unity scene edits** |
+| TODO-OPT#94 | Assets/Scenes/Level3.unity | n/a | Environment prefabs (gates, switches, platforms) missing | **reviewed: requires Unity scene edits** |
+| TODO-OPT#95 | Assets/Scenes/GeneratedLevel.unity | n/a | Environment prefabs missing in generated level | **reviewed: requires Unity scene edits** |
+| TODO-OPT#96 | Assets/Scenes/Level_OSM.unity | n/a | Environment prefabs missing in OSM level | **reviewed: requires Unity scene edits** |
