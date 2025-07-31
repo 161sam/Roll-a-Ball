@@ -21,7 +21,6 @@ namespace RollABall.Map
         [SerializeField] private Font displayFont;
         [SerializeField] private int fontSize = 14;
         [SerializeField] private Color textColor = Color.white;
-        [SerializeField] private Color backgroundColor = new Color(0, 0, 0, 0.7f);
         
         // Performance metrics
         private int frameRate;
@@ -38,15 +37,12 @@ namespace RollABall.Map
         private int separateColliders;
         private float lastGenerationTime;
 
-        // Cache for color textures created for GUI backgrounds
-        private readonly System.Collections.Generic.Dictionary<Color, Texture2D> textureCache
-            = new();
-        
         // Display state
         private bool isVisible = true;
-        private GUIStyle textStyle;
-        private GUIStyle backgroundStyle;
         private StringBuilder displayText = new StringBuilder();
+
+        [Header("UI Overlay")]
+        [SerializeField] private TMPro.TextMeshProUGUI overlayLabel;
         
         // References
         private MapGeneratorBatched mapGenerator;
@@ -70,28 +66,12 @@ namespace RollABall.Map
             }
         }
         
-        // TODO: Replace OnGUI with a UI Canvas overlay to support scaling and styling
-        private void OnGUI()
+        private void LateUpdate()
         {
-            if (!showOnScreen || !isVisible) return;
-            
-            if (textStyle == null)
-            {
-                InitializeGUIStyles();
-            }
-            
+            if (!showOnScreen || !isVisible || overlayLabel == null) return;
+
             UpdateDisplayText();
-            
-            // Calculate display area
-            Vector2 textSize = textStyle.CalcSize(new GUIContent(displayText.ToString()));
-            Rect backgroundRect = new Rect(10, 10, textSize.x + 20, textSize.y + 20);
-            Rect textRect = new Rect(20, 20, textSize.x, textSize.y);
-            
-            // Draw background
-            GUI.Box(backgroundRect, "", backgroundStyle);
-            
-            // Draw text
-            GUI.Label(textRect, displayText.ToString(), textStyle);
+            overlayLabel.text = displayText.ToString();
         }
         
         private void InitializeMonitoring()
@@ -107,31 +87,6 @@ namespace RollABall.Map
             Debug.Log("[PerformanceMonitor] Initialized - Press " + toggleKey + " to toggle display");
         }
         
-        private void InitializeGUIStyles()
-        {
-            textStyle = new GUIStyle(GUI.skin.label);
-            textStyle.font = displayFont ? displayFont : GUI.skin.font;
-            textStyle.fontSize = fontSize;
-            textStyle.normal.textColor = textColor;
-            textStyle.wordWrap = false;
-            
-            backgroundStyle = new GUIStyle(GUI.skin.box);
-            backgroundStyle.normal.background = CreateColorTexture(backgroundColor);
-        }
-
-        private Texture2D CreateColorTexture(Color color)
-        {
-            if (textureCache.TryGetValue(color, out var cached))
-            {
-                return cached;
-            }
-
-            Texture2D texture = new Texture2D(1, 1);
-            texture.SetPixel(0, 0, color);
-            texture.Apply();
-            textureCache[color] = texture;
-            return texture;
-        }
         
         private void FindMapGenerator()
         {

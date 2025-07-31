@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
-# TODO: Adjust color to match overall scene lighting
+# Updated color to better match overall scene lighting
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -79,7 +79,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.2, g: 0.7, b: 0.2, a: 1}
+    - _Color: {r: 0.25, g: 0.8, b: 0.25, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -22,6 +22,10 @@ public class SceneValidator : MonoBehaviour
     [SerializeField] private bool validateGameSystems = true;
     [SerializeField] private bool validateMaterials = true;
     [SerializeField] private bool validateAudio = true;
+
+    [Header("UI")]
+    [Tooltip("Optional progress label updated during validation.")]
+    [SerializeField] private TMPro.TextMeshProUGUI progressText;
     
     [Header("Expected Counts")]
     [SerializeField] private int expectedCollectibleCount = 10;
@@ -48,8 +52,18 @@ public class SceneValidator : MonoBehaviour
     /// </summary>
     public IEnumerator ValidateSceneAsync()
     {
-        // TODO: Display progress UI while validation routines run
         LogValidation("🔍 Starting comprehensive scene validation...", true);
+
+        int totalSteps = 0;
+        if (validateCollectibles) totalSteps++;
+        if (validatePlayer) totalSteps++;
+        if (validateUI) totalSteps++;
+        if (validateGameSystems) totalSteps++;
+        if (validateMaterials) totalSteps++;
+        if (validateAudio) totalSteps++;
+        int currentStep = 0;
+
+        if (progressText) progressText.text = "Initializing...";
         
         validationReport = new ValidationReport();
         validationReport.sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
@@ -58,37 +72,50 @@ public class SceneValidator : MonoBehaviour
         // Run validation categories
         if (validateCollectibles)
         {
+            if (progressText) progressText.text = "Validating collectibles...";
             yield return StartCoroutine(ValidateCollectiblesAsync());
+            if (progressText) progressText.text = $"{++currentStep}/{totalSteps} collectibles";
         }
         
         if (validatePlayer)
         {
+            if (progressText) progressText.text = "Validating player...";
             yield return StartCoroutine(ValidatePlayerAsync());
+            if (progressText) progressText.text = $"{++currentStep}/{totalSteps} player";
         }
         
         if (validateUI)
         {
+            if (progressText) progressText.text = "Validating UI...";
             yield return StartCoroutine(ValidateUIAsync());
+            if (progressText) progressText.text = $"{++currentStep}/{totalSteps} UI";
         }
         
         if (validateGameSystems)
         {
+            if (progressText) progressText.text = "Validating systems...";
             yield return StartCoroutine(ValidateGameSystemsAsync());
+            if (progressText) progressText.text = $"{++currentStep}/{totalSteps} systems";
         }
         
         if (validateMaterials)
         {
+            if (progressText) progressText.text = "Validating materials...";
             yield return StartCoroutine(ValidateMaterialsAsync());
+            if (progressText) progressText.text = $"{++currentStep}/{totalSteps} materials";
         }
         
         if (validateAudio)
         {
+            if (progressText) progressText.text = "Validating audio...";
             yield return StartCoroutine(ValidateAudioAsync());
+            if (progressText) progressText.text = $"{++currentStep}/{totalSteps} audio";
         }
         
         // Generate final report
         GenerateValidationReport();
-        
+
+        if (progressText) progressText.text = "Validation complete";
         LogValidation("✅ Scene validation completed!", true);
     }
     
