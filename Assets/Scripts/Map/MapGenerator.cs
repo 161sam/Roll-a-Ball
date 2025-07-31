@@ -10,6 +10,7 @@ namespace RollABall.Map
     /// Enhanced MapGenerator with segment-based road generation
     /// Generates realistic road networks from OSM data with proper width and materials
     /// </summary>
+    // TODO: Add AddComponentMenu attribute for inspector clarity
     public class MapGenerator : MonoBehaviour
     {
         [Header("Prefab Configuration")]

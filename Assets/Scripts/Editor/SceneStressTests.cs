@@ -88,6 +88,7 @@ public class SceneStressTests : MonoBehaviour
         
         try
         {
+            // TODO: Inject LevelGenerator reference instead of using FindFirstObjectByType
             LevelGenerator generator = FindFirstObjectByType<LevelGenerator>();
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             

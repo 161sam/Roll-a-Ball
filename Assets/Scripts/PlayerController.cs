@@ -521,6 +521,7 @@ public class PlayerController : MonoBehaviour
     // ===== Debug Visualization =====
     void OnDrawGizmosSelected()
     {
+        // TODO: Disable gizmo drawing in production builds
         // Ground check visualization
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawWireSphere(transform.position, groundCheckRadius);
