@@ -224,7 +224,7 @@ namespace RollABall.Map
             
             if (string.IsNullOrEmpty(address))
             {
-                UpdateStatus("⚠️ Please enter a valid address.");
+                UpdateStatus("Please enter a valid address.");
                 return;
             }
             
@@ -243,7 +243,7 @@ namespace RollABall.Map
             currentRetries = 0;
             
             LogDebug($"Loading map for address: {address}");
-            UpdateStatus($"🌍 Loading map for: {address}");
+            UpdateStatus($"Loading map for: {address}");
             SetLoadingState(true);
             
             // Use real OSM system or simulation based on mode
@@ -276,7 +276,7 @@ namespace RollABall.Map
             }
             
             LogDebug($"Loading map for coordinates: {latitude}, {longitude}");
-            UpdateStatus($"🌍 Loading map for coordinates: {latitude:F4}, {longitude:F4}");
+            UpdateStatus($"Loading map for coordinates: {latitude:F4}, {longitude:F4}");
             SetLoadingState(true);
             
             // Use real OSM system or simulation based on mode
@@ -321,12 +321,12 @@ namespace RollABall.Map
             if (string.IsNullOrEmpty(currentAddress))
             {
                 LogDebug("No current address to regenerate");
-                UpdateStatus("⚠️ No map to regenerate. Load a map first.");
+                UpdateStatus("No map to regenerate. Load a map first.");
                 return;
             }
             
             LogDebug($"Regenerating map for: {currentAddress}");
-            UpdateStatus($"🔄 Regenerating map for: {currentAddress}");
+            UpdateStatus($"Regenerating map for: {currentAddress}");
             
             LoadMapFromAddress(currentAddress);
         }
@@ -349,7 +349,7 @@ namespace RollABall.Map
             currentRetries = 0;
             
             SetLoadingState(true);
-            UpdateStatus($"🎮 [SIMULATION] Loading map for: {address}");
+            UpdateStatus($"[SIMULATION] Loading map for: {address}");
             
             // Simulate OSM API call
             yield return StartCoroutine(SimulateOSMApiCall(address));
@@ -369,7 +369,7 @@ namespace RollABall.Map
             
             if (success)
             {
-                UpdateStatus($"✅ [SIMULATION] Map loaded successfully: {address}");
+                UpdateStatus($"[SIMULATION] Map loaded successfully: {address}");
                 yield return StartCoroutine(GenerateMapFromAddress(address));
                 OnMapLoadCompleted?.Invoke(true);
             }
@@ -378,13 +378,13 @@ namespace RollABall.Map
                 currentRetries++;
                 if (currentRetries <= maxRetries)
                 {
-                    UpdateStatus($"⚠️ [SIMULATION] Failed to load map. Retry {currentRetries}/{maxRetries}...");
+                    UpdateStatus($"[SIMULATION] Failed to load map. Retry {currentRetries}/{maxRetries}...");
                     yield return new WaitForSeconds(1f);
                     yield return StartCoroutine(SimulateOSMApiCall(address));
                 }
                 else
                 {
-                    UpdateStatus("❌ [SIMULATION] Failed to load map. Using fallback level.");
+                    UpdateStatus("[SIMULATION] Failed to load map. Using fallback level.");
                     yield return StartCoroutine(LoadFallbackLevel());
                     OnMapLoadCompleted?.Invoke(false);
                 }
@@ -393,7 +393,7 @@ namespace RollABall.Map
         
         private IEnumerator GenerateMapFromAddress(string address)
         {
-            UpdateStatus("🔧 Generating level from map data...");
+            UpdateStatus("Generating level from map data...");
 
             // For Leipzig or as fallback, use specific coordinates
             Vector2 coords = leipzigCoords;
@@ -412,7 +412,7 @@ namespace RollABall.Map
             // Generate a simple level based on coordinates
             yield return StartCoroutine(CreateLevelFromCoordinates(coords));
             
-            UpdateStatus($"🎯 Level ready! Explore {address}");
+            UpdateStatus($"Level ready! Explore {address}");
             
             // Hide UI after successful generation
             yield return new WaitForSeconds(2f);
@@ -469,25 +469,25 @@ namespace RollABall.Map
         
         private IEnumerator CreateLevelFromCoordinates(Vector2 coordinates)
         {
-            UpdateStatus("🏗️ Building terrain...");
+            UpdateStatus("Building terrain...");
             yield return new WaitForSeconds(0.5f);
             
             // Create a simple grid-based level inspired by coordinates
             CreateSimpleMapLevel(coordinates);
             
-            UpdateStatus("📍 Placing collectibles...");
+            UpdateStatus("Placing collectibles...");
             yield return new WaitForSeconds(0.5f);
             
             // Place collectibles
             PlaceCollectiblesOnMap();
             
-            UpdateStatus("🎮 Setting up player...");
+            UpdateStatus("Setting up player...");
             yield return new WaitForSeconds(0.3f);
             
             // Setup player start position
             SetupPlayerStart();
             
-            UpdateStatus("🎯 Level ready! Start exploring!");
+            UpdateStatus("Level ready! Start exploring!");
             SetLoadingState(false);
             
             // Hide UI after successful generation
@@ -607,7 +607,7 @@ namespace RollABall.Map
         
         private IEnumerator LoadFallbackLevel()
         {
-            UpdateStatus("🔄 Loading fallback level...");
+            UpdateStatus("Loading fallback level...");
             
             if (useLeipzigFallback)
             {
@@ -616,12 +616,12 @@ namespace RollABall.Map
             else if (fallbackLevelPrefab)
             {
                 Instantiate(fallbackLevelPrefab);
-                UpdateStatus("📦 Fallback level loaded.");
+                UpdateStatus("Fallback level loaded.");
             }
             else
             {
                 CreateMinimalLevel();
-                UpdateStatus("⚡ Minimal level created.");
+                UpdateStatus("Minimal level created.");
             }
         }
         
@@ -629,7 +629,7 @@ namespace RollABall.Map
         private void OnMapDataLoaded(OSMMapData mapData)
         {
             LogDebug($"Map data loaded successfully. Roads: {mapData.roads.Count}, Buildings: {mapData.buildings.Count}");
-            UpdateStatus("🔧 Generating level from map data...");
+            UpdateStatus("Generating level from map data...");
             
             // The mapGenerator should automatically receive this via its own event subscription
             // But we can also trigger it manually if needed
@@ -640,7 +640,7 @@ namespace RollABall.Map
             else
             {
                 LogDebug("ERROR: MapGenerator not available!");
-                UpdateStatus("❌ System error: MapGenerator not found");
+                UpdateStatus("System error: MapGenerator not found");
                 SetLoadingState(false);
             }
         }
@@ -648,7 +648,7 @@ namespace RollABall.Map
         private void OnAddressResolverError(string error)
         {
             LogDebug($"AddressResolver error: {error}");
-            UpdateStatus($"❌ {error}");
+            UpdateStatus($"Error: {error}");
             
             currentRetries++;
             if (currentRetries <= maxRetries)
@@ -667,20 +667,20 @@ namespace RollABall.Map
         private void OnMapLoadError(string error)
         {
             LogDebug($"Map load error: {error}");
-            UpdateStatus($"⚠️ {error}");
+            UpdateStatus($"Warning: {error}");
         }
         
         // Event handlers for MapGenerator
         private void OnMapGenerationStarted(OSMMapData mapData)
         {
             LogDebug("Map generation started");
-            UpdateStatus("🏗️ Building terrain and placing objects...");
+            UpdateStatus("Building terrain and placing objects...");
         }
         
         private void OnMapGenerationCompleted()
         {
             LogDebug("Map generation completed successfully!");
-            UpdateStatus("🎯 Level ready! Start exploring!");
+            UpdateStatus("Level ready! Start exploring!");
             
             SetLoadingState(false);
             
@@ -699,7 +699,7 @@ namespace RollABall.Map
         private void OnMapGenerationError(string error)
         {
             LogDebug($"Map generation error: {error}");
-            UpdateStatus($"❌ Generation failed: {error}");
+            UpdateStatus($"Generation failed: {error}");
             
             // Fallback to simulation mode on error
             LogDebug("Falling back to simulation mode due to generation error");
@@ -713,7 +713,7 @@ namespace RollABall.Map
             
             if (!string.IsNullOrEmpty(currentAddress))
             {
-                UpdateStatus($"🔄 Retrying {currentAddress}... ({currentRetries}/{maxRetries})");
+                UpdateStatus($"Retrying {currentAddress}... ({currentRetries}/{maxRetries})");
                 
                 if (addressResolver != null && !enableSimulationMode)
                 {
@@ -831,7 +831,7 @@ namespace RollABall.Map
             // Use modulo to cycle through addresses infinitely
             string selectedAddress = endlessModeAddresses[locationIndex % endlessModeAddresses.Length];
             
-            UpdateStatus($"🔄 Endless Mode Level {locationIndex + 1}: Loading {selectedAddress}...");
+            UpdateStatus($"Endless Mode Level {locationIndex + 1}: Loading {selectedAddress}...");
             
             // Auto-load the map
             LoadMapFromAddress(selectedAddress);
@@ -880,7 +880,7 @@ namespace RollABall.Map
                 addressInputField.text = defaultAddress;
                 
             SetLoadingState(false);
-            UpdateStatus("🔄 Controller reset. Ready to load map.");
+            UpdateStatus("Controller reset. Ready to load map.");
             
             // Show UI if hidden
             ShowMapUI();
