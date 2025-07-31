@@ -93,8 +93,3 @@
 | TODO-OPT#89 | Assets/Scripts/Environment/SwitchTrigger.cs | Awake(), Zeile 32 | Warn if gate missing | **erledigt** |
 | TODO-OPT#90 | Assets/Scripts/Environment/SwitchTrigger.cs | ActivateSwitch(), Zeile 83 | Reset/deactivation logic | **erledigt** |
 | TODO-OPT#91 | Assets/Scripts/Environment/SwitchTrigger.cs | OnValidate(), Zeile 93 | Highlight object when gate missing | **erledigt** |
-| TODO-OPT#92 | Assets/Scenes/Level1.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
-| TODO-OPT#93 | Assets/Scenes/Level2.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
-| TODO-OPT#94 | Assets/Scenes/Level3.unity | n/a | Environment prefabs (gates, switches, platforms) missing | |
-| TODO-OPT#95 | Assets/Scenes/GeneratedLevel.unity | n/a | Environment prefabs missing in generated level | |
-| TODO-OPT#96 | Assets/Scenes/Level_OSM.unity | n/a | Environment prefabs missing in OSM level | |
