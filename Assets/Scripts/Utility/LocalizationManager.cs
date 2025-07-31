@@ -9,20 +9,57 @@ namespace RollABall.Utility
     /// </summary>
     public static class LocalizationManager
     {
-        private static readonly Dictionary<string, string> english = new()
+        [System.Serializable]
+        private class LocalizationEntry
         {
-            {"NewGame", "New Game"},
-            {"LastPlayed", "Last played"}
-        };
+            public string key;
+            public string value;
+        }
 
-        private static readonly Dictionary<string, string> german = new()
+        [System.Serializable]
+        private class LocalizationFile
         {
-            {"NewGame", "Neues Spiel"},
-            {"LastPlayed", "Zuletzt gespielt"}
-        };
-        // TODO: Load localization data from external files to support more languages
+            public LocalizationEntry[] entries;
+        }
 
-        private static Dictionary<string, string> Current => Application.systemLanguage == SystemLanguage.German ? german : english;
+        private static readonly Dictionary<string, string> english = new();
+        private static readonly Dictionary<string, string> german = new();
+        private static bool loaded;
+
+        private static Dictionary<string, string> Current
+        {
+            get
+            {
+                LoadIfNeeded();
+                return Application.systemLanguage == SystemLanguage.German ? german : english;
+            }
+        }
+
+        private static void LoadIfNeeded()
+        {
+            if (loaded) return;
+
+            LoadLanguageFile("en", english);
+            LoadLanguageFile("de", german);
+            loaded = true;
+        }
+
+        private static void LoadLanguageFile(string code, Dictionary<string, string> target)
+        {
+            TextAsset asset = Resources.Load<TextAsset>($"Localization/{code}");
+            if (asset == null) return;
+
+            var file = JsonUtility.FromJson<LocalizationFile>(asset.text);
+            target.Clear();
+            if (file != null && file.entries != null)
+            {
+                foreach (var entry in file.entries)
+                {
+                    if (!target.ContainsKey(entry.key))
+                        target.Add(entry.key, entry.value);
+                }
+            }
+        }
 
         /// <summary>
         /// Returns the localized string for the given key. If no translation exists, returns the key.

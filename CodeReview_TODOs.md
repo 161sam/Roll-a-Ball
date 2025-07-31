@@ -30,7 +30,7 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/Map/PerformanceMonitor.cs | 116 | Cache created textures if display colors change frequently | **done** |
 | Assets/Scripts/Map/BoundingBoxTester.cs | 65 | Expose test locations via inspector to allow custom cases | **done** |
 | Assets/Scripts/Map/BoundingBoxTester.cs | 110 | Move bounding box calculation to a shared utility class | **done** |
-| Assets/Scripts/Map/MapGeneratorTester.cs | 63 | Move synthetic test data generation to a ScriptableObject |
+| Assets/Scripts/Map/MapGeneratorTester.cs | 63 | Move synthetic test data generation to a ScriptableObject | **done** |
 | Assets/Scripts/Environment/GateController.cs | 67 | Provide matching TriggerClose() logic for reversible puzzles | **done** |
 | Assets/Scripts/Environment/GroundMaterialController.cs | 19 | Move material paths to a configuration ScriptableObject | **done** |
 | Assets/Scripts/Environment/RotatingObstacle.cs | 49 | Integrate damage system to penalize the player on contact | **done** |
@@ -49,7 +49,7 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/GameManager.cs | 77 | Make respawn delay configurable per level/difficulty | **done** |
 | Assets/Scripts/PlayerController.cs | 49 | Integrate Cinemachine for camera following |
 | Assets/Scripts/Environment/MovingPlatform.cs | 21 | Expose bounce parameters in inspector for finer control | **done** |
-| Assets/Scripts/Utility/LocalizationManager.cs | 23 | Load localization data from external files to support more languages |
+| Assets/Scripts/Utility/LocalizationManager.cs | 23 | Load localization data from external files to support more languages | **done** |
 | Assets/Scripts/Utility/PrefabPooler.cs | 24 | Add maximum pool size to prevent uncontrolled growth | **done** |
 | Assets/Scripts/Map/MapGenerator.cs | 16 | Store prefab references in a configuration asset | **done** |
 | Assets/Scripts/Map/MapGeneratorBatched.cs | 45 | Move decoration prefabs to a centralized asset | **done** |

@@ -18,6 +18,8 @@ namespace RollABall.Testing
         
         [Header("Test Data")]
         [SerializeField] private MapGenerator mapGenerator;
+
+        [SerializeField] private MapGeneratorTestData testDataAsset;
         
         [Header("Test Results")]
         [SerializeField] private int totalRoadsGenerated = 0;
@@ -46,9 +48,9 @@ namespace RollABall.Testing
             }
             
             Debug.Log("[MapGeneratorTester] Starting segmented road generation test...");
-            
+
             // Create test OSM data
-            OSMMapData testData = CreateTestMapData();
+            OSMMapData testData = testDataAsset != null ? testDataAsset.ToOSMMapData() : CreateTestMapData();
             
             // Subscribe to events for monitoring
             SubscribeToEvents();
@@ -58,9 +60,9 @@ namespace RollABall.Testing
         }
         
         /// <summary>
-        /// Create synthetic test data with various road types
+        /// Create synthetic test data with various road types. Used if no
+        /// <see cref="MapGeneratorTestData"/> asset is assigned.
         /// </summary>
-        // TODO: Move synthetic test data generation to a ScriptableObject for easier tweaking
         private OSMMapData CreateTestMapData()
         {
             Debug.Log("[MapGeneratorTester] Creating test OSM data...");
