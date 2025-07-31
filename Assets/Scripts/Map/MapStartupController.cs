@@ -58,8 +58,10 @@ namespace RollABall.Map
         // Component references
         private AddressResolver addressResolver;
         private MapGenerator mapGenerator;
+        [SerializeField] private LevelGenerator levelGenerator;
         private GameManager gameManager;
-        private LevelManager levelManager;
+        [SerializeField] private LevelManager levelManager;
+        [SerializeField] private PlayerController player;
         
         // State
         private bool isLoading = false;
@@ -75,8 +77,18 @@ namespace RollABall.Map
             // Get component references
             addressResolver = GetComponent<AddressResolver>();
             mapGenerator = GetComponent<MapGenerator>();
-            gameManager = FindFirstObjectByType<GameManager>();
-            levelManager = FindFirstObjectByType<LevelManager>();
+
+            if (!gameManager)
+                gameManager = FindFirstObjectByType<GameManager>();
+
+            if (!levelManager)
+                levelManager = FindFirstObjectByType<LevelManager>();
+
+            if (!levelGenerator)
+                levelGenerator = FindFirstObjectByType<LevelGenerator>();
+
+            if (!player)
+                player = FindFirstObjectByType<PlayerController>();
 
             // Load endless mode addresses from configuration
             if (endlessAddressList == null)
@@ -489,7 +501,7 @@ namespace RollABall.Map
             // Use coordinate values to influence level generation
             int levelSize = Mathf.Clamp(8 + (int)(coords.x % 10), 8, 16);
             
-            LevelGenerator generator = FindFirstObjectByType<LevelGenerator>();
+            LevelGenerator generator = levelGenerator ? levelGenerator : FindFirstObjectByType<LevelGenerator>();
             if (generator != null)
             {
                 // Use coordinates to create a unique seed
@@ -584,7 +596,9 @@ namespace RollABall.Map
         
         private void SetupPlayerStart()
         {
-            PlayerController player = FindFirstObjectByType<PlayerController>();
+            if (!player)
+                player = FindFirstObjectByType<PlayerController>();
+
             if (player)
             {
                 player.transform.position = new Vector3(0, 2, 0);
