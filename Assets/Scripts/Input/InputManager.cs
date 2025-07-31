@@ -76,8 +76,13 @@ namespace RollABall.InputSystem
         {
             if (inputActions == null)
             {
-                Debug.LogWarning("[InputManager] No InputActionAsset assigned.", this);
-                return;
+                // Attempt to load a default asset when none is assigned
+                inputActions = Resources.Load<InputActionAsset>("Input/InputActions");
+                if (inputActions == null)
+                {
+                    Debug.LogWarning("[InputManager] No InputActionAsset assigned and none found in Resources.", this);
+                    return;
+                }
             }
 
             moveAction = inputActions.FindAction("Move");
