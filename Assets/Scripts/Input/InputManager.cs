@@ -163,35 +163,35 @@ namespace RollABall.InputSystem
 #if ENABLE_INPUT_SYSTEM
             => jumpAction != null && jumpAction.WasPressedThisFrame();
 #else
-            => UnityEngine.Input.GetKeyDown(jumpKey);
+            => UnityEngine.Input.GetKeyDown(jumpKey) || UnityEngine.Input.GetButtonDown("Jump");
 #endif
 
         public bool FlyHeld
 #if ENABLE_INPUT_SYSTEM
             => flyAction != null && flyAction.IsPressed();
 #else
-            => UnityEngine.Input.GetKey(flyKey);
+            => UnityEngine.Input.GetKey(flyKey) || UnityEngine.Input.GetButton("Fire1");
 #endif
 
         public bool SprintHeld
 #if ENABLE_INPUT_SYSTEM
             => sprintAction != null && sprintAction.IsPressed();
 #else
-            => UnityEngine.Input.GetKey(sprintKey);
+            => UnityEngine.Input.GetKey(sprintKey) || UnityEngine.Input.GetButton("Fire3");
 #endif
 
         public bool SlidePressed
 #if ENABLE_INPUT_SYSTEM
             => slideAction != null && slideAction.WasPressedThisFrame();
 #else
-            => UnityEngine.Input.GetKeyDown(slideKey);
+            => UnityEngine.Input.GetKeyDown(slideKey) || UnityEngine.Input.GetButtonDown("Fire2");
 #endif
 
         public bool SlideReleased
 #if ENABLE_INPUT_SYSTEM
             => slideAction != null && slideAction.WasReleasedThisFrame();
 #else
-            => UnityEngine.Input.GetKeyUp(slideKey);
+            => UnityEngine.Input.GetKeyUp(slideKey) || UnityEngine.Input.GetButtonUp("Fire2");
 #endif
 
         public void ListenForKey(System.Action<KeyCode> callback)
