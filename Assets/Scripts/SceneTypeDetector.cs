@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 /// <summary>
 /// Erkennt den Typ der aktuellen Szene und verhindert ungewollte Level-Generierung
 /// </summary>
 public static class SceneTypeDetector
 {
-    // Default lists used if no configuration asset is found
-    // TODO: Allow overriding scene lists at runtime via config file
+    // Default lists used if no configuration asset is found.
+    // Scene lists can be overridden at runtime via scene_config.json
     private static readonly string[] defaultProceduralScenes =
     {
         "GeneratedLevel",
@@ -23,6 +24,13 @@ public static class SceneTypeDetector
     };
 
     private static SceneTypeConfig config;
+
+    [System.Serializable]
+    private class SceneTypeConfigData
+    {
+        public string[] proceduralScenes;
+        public string[] staticScenes;
+    }
 
     /// <summary>
     /// Szenen, in denen prozedurale Generierung erlaubt ist
@@ -53,6 +61,33 @@ public static class SceneTypeDetector
         if (config == null)
         {
             config = Resources.Load<SceneTypeConfig>("DefaultSceneTypeConfig");
+            LoadOverrideConfig();
+        }
+    }
+
+    private static void LoadOverrideConfig()
+    {
+        string path = Path.Combine(Application.persistentDataPath, "scene_config.json");
+        if (!File.Exists(path))
+            return;
+
+        try
+        {
+            string json = File.ReadAllText(path);
+            SceneTypeConfigData data = JsonUtility.FromJson<SceneTypeConfigData>(json);
+            if (data != null)
+            {
+                if (config == null)
+                    config = ScriptableObject.CreateInstance<SceneTypeConfig>();
+                if (data.proceduralScenes != null && data.proceduralScenes.Length > 0)
+                    config.proceduralScenes = data.proceduralScenes;
+                if (data.staticScenes != null && data.staticScenes.Length > 0)
+                    config.staticScenes = data.staticScenes;
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[SceneTypeDetector] Failed to load override config: {e.Message}");
         }
     }
 

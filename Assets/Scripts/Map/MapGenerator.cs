@@ -12,14 +12,16 @@ namespace RollABall.Map
     /// </summary>
     public class MapGenerator : MonoBehaviour
     {
+        [Header("Prefab Configuration")]
+        [SerializeField] private MapPrefabsConfig prefabsConfig;
+
         [Header("Generation Prefabs")]
-        // TODO: Store prefab references in a configuration asset
-        [SerializeField] private GameObject roadPrefab;
-        [SerializeField] private GameObject buildingPrefab;
-        [SerializeField] private GameObject areaPrefab;
-        [SerializeField] private GameObject collectiblePrefab;
-        [SerializeField] private GameObject goalZonePrefab;
-        [SerializeField] private GameObject playerPrefab;
+        [SerializeField, HideInInspector] private GameObject roadPrefab;
+        [SerializeField, HideInInspector] private GameObject buildingPrefab;
+        [SerializeField, HideInInspector] private GameObject areaPrefab;
+        [SerializeField, HideInInspector] private GameObject collectiblePrefab;
+        [SerializeField, HideInInspector] private GameObject goalZonePrefab;
+        [SerializeField, HideInInspector] private GameObject playerPrefab;
         
         [Header("Road Materials by Type")]
         [SerializeField] private Material roadMotorway;
@@ -44,10 +46,10 @@ namespace RollABall.Map
         [SerializeField] private Material defaultAreaMaterial;
         
         [Header("Steampunk Decoration Prefabs")]
-        [SerializeField] private GameObject gearPrefab;
-        [SerializeField] private GameObject steamPipePrefab;
-        [SerializeField] private GameObject chimneySmokeParticles;
-        [SerializeField] private GameObject steamEmitterPrefab;
+        [SerializeField, HideInInspector] private GameObject gearPrefab;
+        [SerializeField, HideInInspector] private GameObject steamPipePrefab;
+        [SerializeField, HideInInspector] private GameObject chimneySmokeParticles;
+        [SerializeField, HideInInspector] private GameObject steamEmitterPrefab;
         
         [Header("Road Settings")]
         [SerializeField] private float roadHeightOffset = 0.05f; // Height above ground
@@ -98,8 +100,27 @@ namespace RollABall.Map
         
         private void Awake()
         {
+            ApplyPrefabConfig();
             CreateMapContainer();
             InitializeMeshCollections();
+        }
+
+        private void ApplyPrefabConfig()
+        {
+            if (prefabsConfig == null)
+                return;
+
+            roadPrefab = prefabsConfig.roadPrefab;
+            buildingPrefab = prefabsConfig.buildingPrefab;
+            areaPrefab = prefabsConfig.areaPrefab;
+            collectiblePrefab = prefabsConfig.collectiblePrefab;
+            goalZonePrefab = prefabsConfig.goalZonePrefab;
+            playerPrefab = prefabsConfig.playerPrefab;
+
+            gearPrefab = prefabsConfig.gearPrefab;
+            steamPipePrefab = prefabsConfig.steamPipePrefab;
+            chimneySmokeParticles = prefabsConfig.chimneySmokeParticles;
+            steamEmitterPrefab = prefabsConfig.steamEmitterPrefab;
         }
         
         /// <summary>

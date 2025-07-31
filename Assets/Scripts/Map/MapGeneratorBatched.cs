@@ -12,13 +12,16 @@ namespace RollABall.Map
     /// </summary>
     public class MapGeneratorBatched : MonoBehaviour
     {
+        [Header("Prefab Configuration")]
+        [SerializeField] private MapPrefabsConfig prefabsConfig;
+
         [Header("Generation Prefabs")]
-        [SerializeField] private GameObject roadPrefab;
-        [SerializeField] private GameObject buildingPrefab;
-        [SerializeField] private GameObject areaPrefab;
-        [SerializeField] private GameObject collectiblePrefab;
-        [SerializeField] private GameObject goalZonePrefab;
-        [SerializeField] private GameObject playerPrefab;
+        [SerializeField, HideInInspector] private GameObject roadPrefab;
+        [SerializeField, HideInInspector] private GameObject buildingPrefab;
+        [SerializeField, HideInInspector] private GameObject areaPrefab;
+        [SerializeField, HideInInspector] private GameObject collectiblePrefab;
+        [SerializeField, HideInInspector] private GameObject goalZonePrefab;
+        [SerializeField, HideInInspector] private GameObject playerPrefab;
         
         [Header("Road Materials by Type")]
         [SerializeField] private Material roadMotorway;
@@ -43,10 +46,9 @@ namespace RollABall.Map
         [SerializeField] private Material defaultAreaMaterial;
         
         [Header("Steampunk Decoration Prefabs")]
-        // TODO: Move decoration prefabs to a centralized asset
-        [SerializeField] private GameObject gearPrefab;
-        [SerializeField] private GameObject steamPipePrefab;
-        [SerializeField] private GameObject chimneySmokeParticles;
+        [SerializeField, HideInInspector] private GameObject gearPrefab;
+        [SerializeField, HideInInspector] private GameObject steamPipePrefab;
+        [SerializeField, HideInInspector] private GameObject chimneySmokeParticles;
         
         [Header("Batching Settings")]
         [SerializeField] private bool enableBatching = true;
@@ -61,7 +63,7 @@ namespace RollABall.Map
         
         [Header("Building Generation Settings")]
         [SerializeField] private float buildingHeightMultiplier = 1.0f;
-        // TODO: Support per-building height variation based on OSM tags
+        // Per-building height variation handled via OSMBuilding.CalculateHeight()
         [SerializeField] private int collectiblesPerBuilding = 2;
         [SerializeField] private bool enableSteampunkEffects = true;
         [SerializeField] private LayerMask groundLayer = 1;
@@ -107,8 +109,26 @@ namespace RollABall.Map
         
         private void Awake()
         {
+            ApplyPrefabConfig();
             CreateMapContainer();
             InitializeBatchingCollections();
+        }
+
+        private void ApplyPrefabConfig()
+        {
+            if (prefabsConfig == null)
+                return;
+
+            roadPrefab = prefabsConfig.roadPrefab;
+            buildingPrefab = prefabsConfig.buildingPrefab;
+            areaPrefab = prefabsConfig.areaPrefab;
+            collectiblePrefab = prefabsConfig.collectiblePrefab;
+            goalZonePrefab = prefabsConfig.goalZonePrefab;
+            playerPrefab = prefabsConfig.playerPrefab;
+
+            gearPrefab = prefabsConfig.gearPrefab;
+            steamPipePrefab = prefabsConfig.steamPipePrefab;
+            chimneySmokeParticles = prefabsConfig.chimneySmokeParticles;
         }
         
         /// <summary>

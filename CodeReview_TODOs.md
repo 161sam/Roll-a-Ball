@@ -8,7 +8,7 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/GameManager.cs | 175 | Expose restartKey in settings menu |
 | Assets/Scripts/PlayerController.cs | 434 | Expose slide duration as configurable field | **done** |
 | Assets/Scripts/Map/MapStartupController.cs | 121 | Avoid expensive FindFirstObject calls | **done** |
-| Assets/Scripts/Map/MapGeneratorBatched.cs | 62 | Support per-building height variation based on OSM tags |
+| Assets/Scripts/Map/MapGeneratorBatched.cs | 62 | Support per-building height variation based on OSM tags | **done** |
 | Assets/Scripts/Map/MapGeneratorBatched.cs | 469 | Consider performing batching in a job |
 | Assets/Scripts/Map/OSMUIConnector.cs | 109 | Cache controller references instead of recreating | **done** |
 | Assets/Scripts/Map/OSMUIConnector.cs | 420 | Use prefabs for quick buttons | **done** |
@@ -50,8 +50,8 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/Environment/MovingPlatform.cs | 21 | Expose bounce parameters in inspector for finer control | **done** |
 | Assets/Scripts/Utility/LocalizationManager.cs | 23 | Load localization data from external files to support more languages |
 | Assets/Scripts/Utility/PrefabPooler.cs | 24 | Add maximum pool size to prevent uncontrolled growth | **done** |
-| Assets/Scripts/Map/MapGenerator.cs | 16 | Store prefab references in a configuration asset |
-| Assets/Scripts/Map/MapGeneratorBatched.cs | 45 | Move decoration prefabs to a centralized asset |
-| Assets/Scripts/SceneTypeDetector.cs | 10 | Allow overriding scene lists at runtime via config file |
+| Assets/Scripts/Map/MapGenerator.cs | 16 | Store prefab references in a configuration asset | **done** |
+| Assets/Scripts/Map/MapGeneratorBatched.cs | 45 | Move decoration prefabs to a centralized asset | **done** |
+| Assets/Scripts/SceneTypeDetector.cs | 10 | Allow overriding scene lists at runtime via config file | **done** |
 | Assets/Scripts/Input/InputManager.cs | 25 | Support gamepad bindings alongside keyboard controls |
 | Assets/Scripts/SaveSystem.cs | 667 | Create incremental backup before uploading to cloud | **done** |
