@@ -345,7 +345,10 @@ namespace RollABall.Map
             query.AppendLine($"  way[building]({bbox});");
             
             query.AppendLine(");");
-            query.AppendLine("out geom;");
+            // Request body of ways followed by all referenced nodes
+            query.AppendLine("out body;");
+            query.AppendLine(">;");
+            query.AppendLine("out skel qt;");
             
             return query.ToString();
         }
@@ -410,7 +413,10 @@ namespace RollABall.Map
             query.AppendLine($"  way[building]({bbox});");
             
             query.AppendLine(");");
-            query.AppendLine("out geom;");
+            // Request body of ways and points, then fetch referenced nodes
+            query.AppendLine("out body;");
+            query.AppendLine(">;");
+            query.AppendLine("out skel qt;");
             
             return query.ToString();
         }
@@ -444,7 +450,10 @@ namespace RollABall.Map
             query.AppendLine($"  node[amenity~\"^(restaurant|cafe|school|hospital|bank|fuel|parking)$\"]({bbox});");
             
             query.AppendLine(");");
-            query.AppendLine("out geom;");
+            // Request body for ways and POIs, then fetch referenced nodes
+            query.AppendLine("out body;");
+            query.AppendLine(">;");
+            query.AppendLine("out skel qt;");
             
             return query.ToString();
         }
