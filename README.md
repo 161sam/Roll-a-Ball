@@ -189,6 +189,9 @@ public bool enableSteamEmitters = true;
 public float steamEmitterDensity = 0.06f;
 public SteamEmitterProfile steamSettings;
 
+[Header("Maze Settings")]
+public MazeAlgorithm mazeAlgorithm = MazeAlgorithm.RecursiveBacktracker; // Prim optional
+
 [Header("🎨 Steampunk-Thema")]
 public SteampunkTheme steampunkTheme = SteampunkTheme.Industrial;
 public Color ambientLightColor = new Color(1f, 0.9f, 0.7f);

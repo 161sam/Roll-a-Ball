@@ -96,3 +96,4 @@
 | TODO-OPT#92 | Assets/Scripts/Map/MapStartupController.cs | ClearExistingLevel(), Zeile 758 | Replace destructive cleanup with pooled map objects |
 | TODO-OPT#93 | Assets/Scripts/Map/MapStartupController.cs | HideMapUI(), Zeile 789 | Ensure UI references are serialized rather than searched |
 | TODO-OPT#94 | Assets/Scripts/Map/AddressResolver.cs | ParseOSMResponse(), Zeile 567 | Make map scale configurable via ScriptableObject |
+| TODO-OPT#95 | Assets/Scripts/Generators/LevelTerrainGenerator.cs | GeneratePrimMaze(), Zeile 358 | Evaluate Prim algorithm performance for large level sizes |
