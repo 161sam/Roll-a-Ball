@@ -9,3 +9,13 @@ The following tasks from `TODO_Index.md` remain open due to missing files or lar
 - **TODO-OPT#86**: Sequence controller for `SteampunkGateController` requires a broader design. Event deregistration (TODO-OPT#87) was deemed unnecessary as no global events are subscribed.
 - **TODO-OPT#92 - TODO-OPT#96**: Environment prefabs are missing in multiple
   scenes and require Unity Editor adjustments.
+
+Additional unresolved items from `CodeReview_TODOs.md`:
+- `MapGeneratorBatched.cs` line 469 - batching in a job would require a more
+  extensive Job System setup.
+- `Level1.unity` and `Level_OSM.unity` require scene-specific adjustments that
+  cannot be edited without the Unity editor.
+- `HardProfile.asset` needs moving platform prefabs which are absent from the
+  repository.
+- `GeneratedLevel.unity` is a placeholder scene and should be regenerated via
+  the level generator once available.

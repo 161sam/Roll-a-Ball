@@ -1,6 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
-# TODO: Separate player stats into dedicated ScriptableObject
 --- !u!1 &8554796287664602159
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,8 +148,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 974af19694509e8319c399a75587b6b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
+  playerStats: {fileID: 11400000, guid: ff58bddf1a004e30b0c5106965c02c80, type: 2}
   moveSpeed: 5
   sprintMultiplier: 1.5
   jumpForce: 5
