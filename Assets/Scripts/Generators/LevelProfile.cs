@@ -80,6 +80,10 @@ public class LevelProfile : ScriptableObject
     [SerializeField] private LevelGenerationMode generationMode = LevelGenerationMode.Maze;
     [SerializeField] private float pathComplexity = 0.5f; // 0 = einfache Wege, 1 = komplexe Labyrinthe
 
+    [Header("Maze Settings")]
+    [Tooltip("Algorithmus für Maze-Generierung")]
+    [SerializeField] private MazeAlgorithm mazeAlgorithm = MazeAlgorithm.RecursiveBacktracker;
+
     // Properties für externen Zugriff (Bestehende)
     public string ProfileName => profileName;
     public string DisplayName => displayName;
@@ -137,6 +141,7 @@ public class LevelProfile : ScriptableObject
     public bool UseTimeBasedSeed => useTimeBasedSeed;
     public LevelGenerationMode GenerationMode => generationMode;
     public float PathComplexity => pathComplexity;
+    public MazeAlgorithm MazeAlgorithmType => mazeAlgorithm;
     public Vector3 PlayerSpawnOffset => playerSpawnOffset;
     public bool RandomizeSpawnPosition => randomizeSpawnPosition;
     public float SpawnSafeRadius => spawnSafeRadius;
@@ -305,6 +310,15 @@ public enum LevelGenerationMode
     Platforms,   // Plattform-basiertes Level
     Organic,     // Organische, unregelmäßige Strukturen
     Hybrid       // Mischung verschiedener Modi
+}
+
+/// <summary>
+/// Auswahl verschiedener Maze-Algorithmen
+/// </summary>
+public enum MazeAlgorithm
+{
+    RecursiveBacktracker,
+    Prim
 }
 
 /// <summary>

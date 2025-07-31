@@ -257,6 +257,23 @@ namespace RollABall.Generators
     
     private IEnumerator GenerateMazeLayout(LevelProfile profile)
     {
+        switch (profile.MazeAlgorithmType)
+        {
+            case MazeAlgorithm.Prim:
+                yield return GeneratePrimMaze(profile);
+                break;
+            case MazeAlgorithm.RecursiveBacktracker:
+            default:
+                yield return GenerateRecursiveMaze(profile);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Maze generation using recursive backtracker algorithm
+    /// </summary>
+    private IEnumerator GenerateRecursiveMaze(LevelProfile profile)
+    {
         int size = profile.LevelSize;
         
         // Start with all walls (except perimeter)
@@ -320,6 +337,87 @@ namespace RollABall.Generators
         }
         
         yield return null;
+    }
+
+    /// <summary>
+    /// Maze generation using Prim's algorithm for natural branching
+    /// </summary>
+    // TODO-OPT#95: Evaluate Prim algorithm performance for large level sizes
+    private IEnumerator GeneratePrimMaze(LevelProfile profile)
+    {
+        int size = profile.LevelSize;
+
+        // Initialize grid with walls
+        for (int x = 1; x < size - 1; x++)
+        {
+            for (int z = 1; z < size - 1; z++)
+            {
+                levelGrid[x, z] = 1;
+            }
+        }
+
+        Vector2Int start = new Vector2Int(1, 1);
+        levelGrid[start.x, start.y] = 0;
+
+        List<Vector2Int> frontier = new List<Vector2Int>();
+        AddFrontier(start, frontier, size);
+
+        int iterations = 0;
+        const int maxIterations = 10000;
+
+        while (frontier.Count > 0 && iterations < maxIterations)
+        {
+            iterations++;
+            Vector2Int cell = frontier[random.Next(frontier.Count)];
+            frontier.Remove(cell);
+
+            List<Vector2Int> neighbors = GetVisitedNeighbors(cell, size);
+            if (neighbors.Count > 0)
+            {
+                Vector2Int neighbor = neighbors[random.Next(neighbors.Count)];
+
+                Vector2Int between = cell + ((neighbor - cell) / 2);
+                levelGrid[between.x, between.y] = 0;
+                levelGrid[cell.x, cell.y] = 0;
+            }
+
+            AddFrontier(cell, frontier, size);
+
+            if (iterations % 100 == 0)
+                yield return null;
+        }
+
+        yield return null;
+    }
+
+    private void AddFrontier(Vector2Int cell, List<Vector2Int> frontier, int size)
+    {
+        Vector2Int[] directions = { Vector2Int.up * 2, Vector2Int.down * 2, Vector2Int.left * 2, Vector2Int.right * 2 };
+        foreach (Vector2Int dir in directions)
+        {
+            Vector2Int next = cell + dir;
+            if (next.x >= 1 && next.x < size - 1 && next.y >= 1 && next.y < size - 1)
+            {
+                if (levelGrid[next.x, next.y] == 1 && !frontier.Contains(next))
+                    frontier.Add(next);
+            }
+        }
+    }
+
+    private List<Vector2Int> GetVisitedNeighbors(Vector2Int pos, int size)
+    {
+        List<Vector2Int> neighbors = new List<Vector2Int>();
+        Vector2Int[] directions = { Vector2Int.up * 2, Vector2Int.down * 2, Vector2Int.left * 2, Vector2Int.right * 2 };
+        foreach (Vector2Int dir in directions)
+        {
+            Vector2Int neighbor = pos + dir;
+            if (neighbor.x >= 1 && neighbor.x < size - 1 && neighbor.y >= 1 && neighbor.y < size - 1)
+            {
+                if (levelGrid[neighbor.x, neighbor.y] == 0)
+                    neighbors.Add(neighbor);
+            }
+        }
+        return neighbors;
     }
     
     private IEnumerator GeneratePlatformLayout(LevelProfile profile)
