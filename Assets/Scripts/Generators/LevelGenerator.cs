@@ -390,22 +390,13 @@ public class LevelGenerator : MonoBehaviour
         random = new System.Random(seed);
 
         // MERGED: Advanced mode selection from REMOTE (with fallback)
-        try
+        IAdaptiveGenerationModeProvider adaptive = activeProfile as IAdaptiveGenerationModeProvider;
+        if (adaptive != null)
         {
-            var methodInfo = activeProfile.GetType().GetMethod("GetAdaptiveGenerationMode");
-            // TODO: Replace reflection with an interface for adaptive mode selection
-            if (methodInfo != null)
-            {
-                usedGenerationMode = (LevelGenerationMode)methodInfo.Invoke(activeProfile, new object[] { seed });
-            }
-            else
-            {
-                usedGenerationMode = activeProfile.GenerationMode;
-            }
+            usedGenerationMode = adaptive.GetAdaptiveGenerationMode(seed);
         }
-        catch (Exception e)
+        else
         {
-            Debug.LogWarning($"Adaptive generation mode not available: {e.Message}");
             usedGenerationMode = activeProfile.GenerationMode;
         }
 
