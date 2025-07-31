@@ -1640,6 +1640,7 @@ namespace RollABall.Map
         {
             if (mapContainer != null)
             {
+                // TODO: Consider pooling map elements instead of destroying them here
                 foreach (Transform child in mapContainer)
                 {
                     if (Application.isPlaying)

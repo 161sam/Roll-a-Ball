@@ -214,6 +214,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundAtPlayer(string soundName)
     {
+        // TODO: Cache player reference instead of using FindFirstObjectByType each call
         PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player)
             PlaySound(soundName, player.transform.position, player.transform);
@@ -223,9 +224,10 @@ public class AudioManager : MonoBehaviour
 
     public void StopSound(string soundName)
     {
+        // TODO: Track playing sources in a dictionary to avoid full scan here
         foreach (var source in allSources)
         {
-            if (source.isPlaying && soundDictionary.ContainsKey(soundName) && 
+            if (source.isPlaying && soundDictionary.ContainsKey(soundName) &&
                 source.clip == soundDictionary[soundName].clip)
             {
                 source.Stop();
