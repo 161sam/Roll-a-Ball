@@ -23,19 +23,19 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/Map/MapGenerator.cs | 1510 | Make gear decoration ranges configurable in LevelProfile | **done** |
 | Assets/Scripts/Generators/LevelGenerator.cs | 396 | Replace reflection with an interface for adaptive mode selection |
 | Assets/Scripts/Generators/LevelTerrainGenerator.cs | 162 | Refactor to interface-based lookup instead of reflection |
-| Assets/Scripts/Map/BatchingPerformanceTest.cs | 174 | Cache object list to avoid allocations during testing |
+| Assets/Scripts/Map/BatchingPerformanceTest.cs | 174 | Cache object list to avoid allocations during testing | **done** |
 | Assets/Scripts/EGPUPerformanceOptimizer.cs | 81 | Replace OnGUI debug overlay with a Canvas-based UI |
 | Assets/Scripts/Map/PerformanceMonitor.cs | 69 | Replace OnGUI with a UI Canvas overlay |
-| Assets/Scripts/Map/PerformanceMonitor.cs | 116 | Cache created textures if display colors change frequently |
-| Assets/Scripts/Map/BoundingBoxTester.cs | 65 | Expose test locations via inspector to allow custom cases |
-| Assets/Scripts/Map/BoundingBoxTester.cs | 110 | Move bounding box calculation to a shared utility class |
+| Assets/Scripts/Map/PerformanceMonitor.cs | 116 | Cache created textures if display colors change frequently | **done** |
+| Assets/Scripts/Map/BoundingBoxTester.cs | 65 | Expose test locations via inspector to allow custom cases | **done** |
+| Assets/Scripts/Map/BoundingBoxTester.cs | 110 | Move bounding box calculation to a shared utility class | **done** |
 | Assets/Scripts/Map/MapGeneratorTester.cs | 63 | Move synthetic test data generation to a ScriptableObject |
 | Assets/Scripts/Environment/GateController.cs | 67 | Provide matching TriggerClose() logic for reversible puzzles | **done** |
 | Assets/Scripts/Environment/GroundMaterialController.cs | 19 | Move material paths to a configuration ScriptableObject | **done** |
 | Assets/Scripts/Environment/RotatingObstacle.cs | 49 | Integrate damage system to penalize the player on contact | **done** |
 | Assets/Scripts/TagManager.cs | 16 | Load required tags from a central config file | **done** |
 | Assets/Scripts/SceneValidator.cs | 51 | Display progress UI while validation routines run |
-| Assets/Scripts/OSMGoalZoneTrigger.cs | 163 | Use an event from UIController instead of direct lookup |
+| Assets/Scripts/OSMGoalZoneTrigger.cs | 163 | Use an event from UIController instead of direct lookup | **done** |
 | Assets/Material/CollectibleMaterial | 3 | Verify metallic/smoothness values for PBR consistency |
 | Assets/OSMAssets/Materials/OSM_Park_Material.mat | 3 | Adjust color to match overall scene lighting |
 | Assets/Prefabs/Player.prefab | 3 | Separate player stats into dedicated ScriptableObject |

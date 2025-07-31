@@ -22,7 +22,7 @@
 | TODO-OPT#18 | Assets/Scripts/Generators/LevelSetupHelper.cs | CreateLevelProfile(), Zeile 144 | Reflection-Assignments via Dictionary bündeln | **erledigt** |
 | TODO-OPT#19 | Assets/Scripts/Generators/LevelProfileCreator.cs | CreateEasyProfile(), Zeile 34 | Mehrfaches SetPrivateField vereinheitlichen | **erledigt** |
 | TODO-OPT#20 | Assets/Scripts/PlayerController.cs | ResetBall(), Zeile 448 | Velocity-Zurücksetzung in Hilfsmethode bündeln | **erledigt** |
-| TODO-OPT#21 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 499 | Platzierungslogik für Collectibles/Goal vereinheitlichen |
+| TODO-OPT#21 | Assets/Scripts/Map/MapGenerator.cs | GenerateCollectiblePositions(), Zeile 499 | Platzierungslogik für Collectibles/Goal vereinheitlichen | **erledigt** |
 | TODO-OPT#22 | Assets/Scripts/Map/MapGenerator_Original.cs | PlaceGoalZone(), Zeile 305 | Gemeinsame Platzierungsfunktion nutzen |
 | TODO-OPT#23 | Assets/Scripts/Map/MapStartupController.cs | InitializeUI(), Zeile 52 | Find-or-create Logik mit OSMUIConnector teilen | **erledigt** |
 | TODO-OPT#24 | Assets/Scripts/Map/OSMSceneCompleter.cs | SetupUIComponents(), Zeile 67 | UI-Setup-Methoden mit generischen Buildern vereinheitlichen | **erledigt** |
