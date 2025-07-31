@@ -151,6 +151,7 @@ public class PlayerController : MonoBehaviour
         // Find camera automatically if needed
         if (findCameraAutomatically && !cameraTransform)
         {
+            // TODO: Inject camera reference via initializer to avoid scene search
             Camera mainCam = Camera.main;
             if (mainCam)
                 cameraTransform = mainCam.transform;
