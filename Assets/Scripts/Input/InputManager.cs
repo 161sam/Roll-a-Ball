@@ -2,6 +2,7 @@ using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
+using System.Collections;
 
 namespace RollABall.InputSystem
 {
@@ -13,6 +14,9 @@ namespace RollABall.InputSystem
     public class InputManager : MonoBehaviour
     {
         public static InputManager Instance { get; private set; }
+
+        private bool waitingForKey;
+        private System.Action<KeyCode> onKeyCaptured;
 
         [Header("Key Bindings")]
         private const string PauseKeyPref = "PauseKey";
@@ -125,6 +129,11 @@ namespace RollABall.InputSystem
 #endif
         }
 
+#if !ENABLE_INPUT_SYSTEM
+        public KeyCode PauseKey => pauseKey;
+        public KeyCode RestartKey => restartKey;
+#endif
+
         /// <summary>
         /// Returns true when the pause command was triggered this frame.
         /// </summary>
@@ -184,5 +193,30 @@ namespace RollABall.InputSystem
 #else
             => UnityEngine.Input.GetKeyUp(slideKey);
 #endif
+
+        public void ListenForKey(System.Action<KeyCode> callback)
+        {
+            if (waitingForKey) return;
+            onKeyCaptured = callback;
+            StartCoroutine(WaitForKey());
+        }
+
+        private IEnumerator WaitForKey()
+        {
+            waitingForKey = true;
+            while (!UnityEngine.Input.anyKeyDown)
+            {
+                yield return null;
+            }
+            foreach (KeyCode code in System.Enum.GetValues(typeof(KeyCode)))
+            {
+                if (UnityEngine.Input.GetKeyDown(code))
+                {
+                    onKeyCaptured?.Invoke(code);
+                    break;
+                }
+            }
+            waitingForKey = false;
+        }
     }
 }

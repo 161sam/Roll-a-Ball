@@ -21,8 +21,8 @@ MonoBehaviour:
   minWalkableArea: 60
   collectibleCount: 5
   minCollectibleDistance: 2
-  collectibleSpawnHeight: 0.5
-# TODO: Balance collectible spawn height for easier levels
+  collectibleSpawnHeight: 0.3
+# Balanced collectible spawn height for easier levels
   obstacleDensity: 0.1
   enableMovingObstacles: 0
   movingObstacleChance: 0.05

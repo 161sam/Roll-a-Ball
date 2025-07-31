@@ -21,7 +21,8 @@ namespace RollABall.Performance
         [SerializeField] private int antiAliasing = 8;
         
         [Header("Debug")]
-        [SerializeField] private bool showPerformanceStats = true;
+    [SerializeField] private bool showPerformanceStats = true;
+    [SerializeField] private TMPro.TextMeshProUGUI statsText;
         
         private void Start()
         {
@@ -78,19 +79,14 @@ namespace RollABall.Performance
             Debug.Log("========================");
         }
         
-        // TODO: Replace OnGUI debug overlay with a Canvas-based UI for better performance
-        private void OnGUI()
+        private void Update()
         {
-            if (!showPerformanceStats) return;
-            
-            GUI.color = Color.yellow;
-            GUILayout.BeginArea(new Rect(10, 10, 300, 150));
-            GUILayout.Label($"FPS: {(1.0f / Time.deltaTime):F1}");
-            GUILayout.Label($"GPU: {SystemInfo.graphicsDeviceName}");
-            GUILayout.Label($"VRAM: {SystemInfo.graphicsMemorySize} MB");
-            GUILayout.Label($"Quality: {QualitySettings.names[QualitySettings.GetQualityLevel()]}");
-            GUILayout.EndArea();
-            GUI.color = Color.white;
+            if (!showPerformanceStats || statsText == null) return;
+
+            statsText.text = $"FPS: {(1.0f / Time.deltaTime):F1}\n" +
+                             $"GPU: {SystemInfo.graphicsDeviceName}\n" +
+                             $"VRAM: {SystemInfo.graphicsMemorySize} MB\n" +
+                             $"Quality: {QualitySettings.names[QualitySettings.GetQualityLevel()]}";
         }
         
         [ContextMenu("Force GPU Detection")]

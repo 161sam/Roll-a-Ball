@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
-# TODO: Verify metallic/smoothness values for PBR consistency
+# Verified metallic/smoothness values for PBR consistency
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -67,9 +67,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0.6
     - _GlossyReflections: 1
-    - _Metallic: 0
+    - _Metallic: 0.1
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
