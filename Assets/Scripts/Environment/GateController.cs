@@ -51,6 +51,7 @@ namespace RollABall.Environment
         /// </summary>
         public void TriggerOpen()
         {
+            // TODO: Trigger opening animation instead of instantly disabling objects
             if (isOpened) return;
             
             isOpened = true;

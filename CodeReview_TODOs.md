@@ -85,3 +85,12 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/EGPUPerformanceOptimizer.cs | 11 | Add AddComponentMenu attribute for inspector clarity | |
 | Assets/Scenes/current.unity | 3 | Confirm this scene is only used for temporary editing | |
 | Assets/Resources/LevelProfiles/HardProfile.asset | 34 | Assign default moving platform prefabs for hard difficulty | |
+| Assets/Material/StandardGroundMaterial.mat | 6 | Verify normal and roughness textures for consistent shading | |
+| Assets/OSMAssets/Materials/OSM_Building_Material.mat | 11 | Verify specular and normal maps for improved realism | |
+| Assets/Prefabs/Player.prefab | 22 | Assign "Player" tag for consistent collision checks | |
+| Assets/ScriptableObjects/DefaultPlayerStats.asset | 5 | Expose default stats via balancing config asset | |
+| Assets/Scripts/PlayerController.cs | 210 | Use InputManager events to avoid polling every frame | |
+| Assets/Scripts/AudioManager.cs | 252 | Implement crossfade between tracks instead of abrupt switch | |
+| Assets/Scripts/Environment/GateController.cs | 54 | Trigger opening animation instead of instantly disabling objects | |
+| Assets/Scripts/OSMGoalZoneTrigger.cs | 71 | Replace Debug.Log with structured logging | |
+| Assets/Scenes/Level2.unity | 99 | Set up scene-specific lighting settings before release | |
