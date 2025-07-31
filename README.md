@@ -48,7 +48,7 @@ cd Roll-a-Ball
 
 ### **Erste Schritte**
 1. **Unity-Projekt öffnen**: Unity Hub → Add Project → Roll-a-Ball
-2. **Haupt-Szene laden**: `Assets/Scenes/GeneratedLevel.unity`
+2. **Haupt-Szene laden**: `Assets/Scenes/Level1.unity`
 3. **Spielen**: Play-Button ▶️ drücken
 4. **Level regenerieren**: R-Taste im Debug-Modus
 
