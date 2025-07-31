@@ -249,6 +249,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(AudioClip clip, bool fadeIn = true)
     {
+        // TODO: Implement crossfade between tracks instead of abrupt switch
         if (musicFadeCoroutine != null)
             StopCoroutine(musicFadeCoroutine);
 

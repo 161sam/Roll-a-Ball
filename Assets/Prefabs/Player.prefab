@@ -19,6 +19,7 @@ GameObject:
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
+  # TODO: Assign "Player" tag for consistent collision checks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

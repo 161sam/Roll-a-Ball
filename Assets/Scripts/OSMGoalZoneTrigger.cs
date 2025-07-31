@@ -68,6 +68,7 @@ public class OSMGoalZoneTrigger : MonoBehaviour
             audioSource.playOnAwake = false;
         }
         
+        // TODO: Replace Debug.Log with structured logging
         Debug.Log("[OSMGoalZone] Goal zone setup complete");
     }
     
