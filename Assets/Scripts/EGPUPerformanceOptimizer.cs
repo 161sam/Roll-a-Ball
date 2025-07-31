@@ -8,6 +8,7 @@ namespace RollABall.Performance
     /// Optimiert Unity-Einstellungen für dedizierte Grafikkarten
     /// </summary>
     [System.Serializable]
+    // TODO: Add AddComponentMenu attribute for inspector clarity
     public class EGPUPerformanceOptimizer : MonoBehaviour
     {
         [Header("eGPU Detection & Settings")]

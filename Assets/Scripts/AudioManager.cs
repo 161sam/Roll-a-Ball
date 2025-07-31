@@ -14,6 +14,7 @@ public class SoundEffect
     [Range(0f, 0.5f)] public float pitchVariation = 0.1f;
 }
 
+// TODO: Add AddComponentMenu attribute for inspector organization
 public class AudioManager : MonoBehaviour
 {
     [Header("Audio Mixer")]

@@ -31,6 +31,7 @@ MonoBehaviour:
   movingPlatformDensity: 0.05
   rotatingObstaclePrefabs: []
   movingPlatformPrefabs: []
+# TODO: Assign default moving platform prefabs for hard difficulty
   enableSteamEmitters: 1
   steamEmitterDensity: 0.06
   steamEmitterPrefabs: []

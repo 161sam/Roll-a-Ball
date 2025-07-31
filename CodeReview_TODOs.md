@@ -76,3 +76,12 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scenes/MiniGame.unity | 3 | Ensure mini-game scene uses shared UI prefab setup | |
 | Assets/Prefabs/CollectiblePrefab.prefab | 3 | Add LODGroup component for distant rendering | |
 | Assets/OSMAssets/Materials/OSM_Road_Material.mat | 3 | Adjust texture tiling for consistent road scale | |
+| Assets/Scripts/AudioManager.cs | 17 | Add AddComponentMenu attribute for inspector organization | |
+| Assets/Scripts/Map/MapGenerator.cs | 13 | Add AddComponentMenu attribute for inspector clarity | |
+| Assets/Scripts/Map/MapGeneratorBatched.cs | 13 | Add AddComponentMenu attribute for inspector clarity | |
+| Assets/Scripts/Map/AddressResolver.cs | 16 | Add AddComponentMenu attribute for inspector clarity | |
+| Assets/Scripts/PlayerController.cs | 524 | Disable gizmo drawing in production builds | |
+| Assets/Scripts/Editor/SceneStressTests.cs | 91 | Inject LevelGenerator reference instead of using FindFirstObjectByType | |
+| Assets/Scripts/EGPUPerformanceOptimizer.cs | 11 | Add AddComponentMenu attribute for inspector clarity | |
+| Assets/Scenes/current.unity | 3 | Confirm this scene is only used for temporary editing | |
+| Assets/Resources/LevelProfiles/HardProfile.asset | 34 | Assign default moving platform prefabs for hard difficulty | |

@@ -10,6 +10,7 @@ namespace RollABall.Map
     /// Performance-optimized MapGenerator with mesh batching
     /// Combines road segments and buildings by material to reduce Draw Calls
     /// </summary>
+    // TODO: Add AddComponentMenu attribute for inspector clarity
     public class MapGeneratorBatched : MonoBehaviour
     {
         [Header("Prefab Configuration")]

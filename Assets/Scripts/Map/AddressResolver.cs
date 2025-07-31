@@ -13,6 +13,7 @@ namespace RollABall.Map
     /// Handles address geocoding and OSM data fetching
     /// Converts user-entered addresses to coordinates and retrieves map data
     /// </summary>
+    // TODO: Add AddComponentMenu attribute for inspector clarity
     public class AddressResolver : MonoBehaviour
     {
         [Header("API Configuration")]
