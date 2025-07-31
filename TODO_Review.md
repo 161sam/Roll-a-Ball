@@ -5,7 +5,6 @@ The following tasks from `TODO_Index.md` remain open due to missing files or lar
 - **TODO-OPT#32**: Collider pooling implemented in MapGeneratorBatched.
 - **TODO-OPT#42 - TODO-OPT#43**: Loading level and achievement data from external configuration needs a dedicated data format.
 - **TODO-OPT#43** additionally requires default moving platform prefabs for `HardProfile.asset`, which are not present in the repository.
-- **TODO-OPT#49**: Pathfinding based goal placement is a larger feature.
 - **TODO-OPT#86**: Sequence controller for `SteampunkGateController` requires a broader design. Event deregistration (TODO-OPT#87) was deemed unnecessary as no global events are subscribed.
 - **TODO-OPT#92 - TODO-OPT#96**: Environment prefabs are missing in multiple
   scenes and require Unity Editor adjustments.
