@@ -91,6 +91,7 @@ public class AchievementSystem : MonoBehaviour
 {
     [Header("Achievement Configuration")]
     [SerializeField] private List<Achievement> allAchievements = new List<Achievement>();
+    [SerializeField] private AchievementDatabase achievementDatabase;
     [SerializeField] private bool enableNotifications = true;
     [SerializeField] private float notificationDuration = 3f;
     [SerializeField] private bool enableSounds = true;
@@ -163,10 +164,17 @@ public class AchievementSystem : MonoBehaviour
             ResetAllAchievements();
         }
         
-        // Create default achievements if list is empty
+        // Load achievements from external database if assigned
         if (allAchievements.Count == 0)
         {
-            CreateDefaultAchievements();
+            if (achievementDatabase && achievementDatabase.achievements.Count > 0)
+            {
+                allAchievements = new List<Achievement>(achievementDatabase.achievements);
+            }
+            else
+            {
+                CreateDefaultAchievements();
+            }
         }
         
         // Build lookup dictionary
@@ -185,7 +193,7 @@ public class AchievementSystem : MonoBehaviour
     
     private void CreateDefaultAchievements()
     {
-        // TODO: Load achievement definitions from external config or ScriptableObject
+        // Fallback definitions when no external database is assigned
         allAchievements.Clear();
         
         // General Achievements

@@ -43,8 +43,8 @@
 | TODO-OPT#39 | Assets/Scripts/CollectibleController.cs | ResetCollectible(), Zeile 359 | Collectible in Pool zurücklegen | **erledigt** |
 | TODO-OPT#40 | Assets/Scripts/SaveSystem.cs | encryptionKey, Zeile 84 | Schlüssel aus externer Konfiguration laden | **erledigt** |
 | TODO-OPT#41 | Assets/Scripts/Map/MapStartupController.cs | LoadMapFromAddress(), Zeile 244 | Adressauflösung asynchron ausführen | **erledigt** |
-| TODO-OPT#42 | Assets/Scripts/ProgressionManager.cs | CreateDefaultLevels(), Zeile 203 | Leveldaten extern speichern |
-| TODO-OPT#43 | Assets/Scripts/AchievementSystem.cs | CreateDefaultAchievements(), Zeile 186 | Achievements aus externer Konfiguration laden |
+| TODO-OPT#42 | Assets/Scripts/ProgressionManager.cs | CreateDefaultLevels(), Zeile 203 | Leveldaten extern speichern | **erledigt** |
+| TODO-OPT#43 | Assets/Scripts/AchievementSystem.cs | CreateDefaultAchievements(), Zeile 186 | Achievements aus externer Konfiguration laden | **erledigt** |
 | TODO-OPT#44 | Assets/Scripts/AchievementSystem.cs | SubscribeToGameEvents(), Zeile 295 | PlayerController-Referenz cachen | **erledigt** |
 | TODO-OPT#45 | Assets/Scripts/AchievementSystem.cs | OnDestroy(), Zeile 720 | Von GameEvents abmelden | **erledigt** |
 | TODO-OPT#46 | Assets/Scripts/GameManager.cs | pauseKey, Zeile 32 | Pause-Taste im Einstellungsmenü konfigurierbar machen | **erledigt** |

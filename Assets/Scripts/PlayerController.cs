@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cinemachine;
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
     [Header("Kamera Referenz")]
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private bool findCameraAutomatically = true;
-    // TODO: Integrate Cinemachine for camera following
+    [SerializeField] private Cinemachine.CinemachineVirtualCamera followCamera;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -123,6 +124,15 @@ public class PlayerController : MonoBehaviour
                 cameraTransform = mainCam.transform;
             else
                 cameraTransform = FindFirstObjectByType<Camera>()?.transform;
+        }
+
+        if (followCamera)
+        {
+            if (followCamera.Follow == null)
+                followCamera.Follow = transform;
+            if (followCamera.LookAt == null)
+                followCamera.LookAt = transform;
+            cameraTransform = followCamera.transform;
         }
 
         if (!audioSource)

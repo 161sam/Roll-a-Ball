@@ -108,6 +108,9 @@ public class ProgressionManager : MonoBehaviour
     [SerializeField] private bool hintNextRequirements = true;
     [SerializeField] private float unlockAnimationDuration = 1f;
 #pragma warning restore 0414
+
+    [Header("External Data")]
+    [SerializeField] private LevelDatabase levelDatabase;
     
     [Header("Debug")]
     [SerializeField] private bool unlockAllLevels = false;
@@ -172,7 +175,14 @@ public class ProgressionManager : MonoBehaviour
         // Create default levels if none exist
         if (allLevels.Count == 0)
         {
-            CreateDefaultLevels();
+            if (levelDatabase && levelDatabase.levels.Count > 0)
+            {
+                allLevels = new List<LevelInfo>(levelDatabase.levels);
+            }
+            else
+            {
+                CreateDefaultLevels();
+            }
         }
         
         // Build lookup dictionary
@@ -200,7 +210,7 @@ public class ProgressionManager : MonoBehaviour
     private void CreateDefaultLevels()
     {
         allLevels.Clear();
-        // TODO: Load level configurations from external data instead of hardcoding
+        // Fallback definitions when no external database is assigned
         
         // Tutorial Level
         var tutorial = new LevelInfo
