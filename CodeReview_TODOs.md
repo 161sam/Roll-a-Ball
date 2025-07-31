@@ -104,3 +104,13 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/EndlessModeTester.cs | 53 | Replace Debug.Log with structured logging | |
 | Assets/Scripts/EndlessModeTester.cs | 69 | Replace Debug.Log with structured logging | |
 | Assets/Scenes/TestScenes/TEST_GeneratedLevel.unity | 3 | Remove test scene before release or convert to automated test | |
+| Assets/Scripts/GameManager.cs | 376 | Replace Debug.Log with structured logging for production builds | |
+| Assets/Scripts/Map/MapGenerator.cs | 807 | Cache player reference to avoid repeated lookups | |
+| Assets/Scripts/SaveSystem.cs | 230 | Provide progress callbacks for large save files | |
+| Assets/Scripts/AchievementSystem.cs | 749 | Replace Debug.Log calls with a dedicated logging service | |
+| Assets/Material/Player.mat | 3 | Review metallic and smoothness values for consistent shading | |
+| Assets/OSMAssets/Materials/OSM_Water_Material.mat | 3 | Consider adding foam and wave animation for realism | |
+| Assets/Prefabs/Steampunk/MovingPlatform.prefab | 3 | Test new movement patterns before finalizing prefab | |
+| Assets/Resources/AddressLists/EndlessAddresses.asset | 3 | Support dynamic address sets loaded from server | |
+| Assets/Scenes/GeneratedLevel.unity | 4 | Remove scene once runtime generator is stable | |
+| Assets/ScriptableObjects/DefaultTagConfig.asset | 3 | Allow runtime extension of tags for mods | |

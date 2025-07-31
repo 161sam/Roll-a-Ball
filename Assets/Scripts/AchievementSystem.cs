@@ -746,6 +746,7 @@ public class AchievementSystem : MonoBehaviour
             Debug.LogError($"[AchievementSystem] {message}");
         else
             Debug.Log($"[AchievementSystem] {message}");
+        // TODO: Replace Debug.Log calls with a dedicated logging service
     }
     
     #endregion

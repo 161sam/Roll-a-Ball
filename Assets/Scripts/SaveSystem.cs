@@ -227,6 +227,7 @@ public class SaveSystem : MonoBehaviour
             else
             {
                 await SaveUnencrypted(filePath, currentSave);
+                // TODO: Provide progress callbacks for large save files
             }
             
             isDirty = false;
