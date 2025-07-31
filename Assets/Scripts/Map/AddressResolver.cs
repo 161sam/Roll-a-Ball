@@ -562,7 +562,11 @@ namespace RollABall.Map
                 
                 // Validate and set appropriate scale based on area size
                 double areaWidth = maxLon - minLon;
-                mapData.scaleMultiplier = (float)(1000.0 / (areaWidth * 111320.0)); // Scale to reasonable Unity size
+                double areaHeight = maxLat - minLat;
+                double maxExtent = System.Math.Max(areaWidth, areaHeight);
+                const float unityScale = 1000f; // Target size in Unity units
+                // TODO-OPT#94: make map scale configurable via ScriptableObject
+                mapData.scaleMultiplier = (float)(unityScale / (maxExtent * 111320.0)); // Scale to reasonable Unity size
                 
                 Debug.Log($"[AddressResolver] Successfully parsed OSM data: {mapData.roads.Count} roads, {mapData.buildings.Count} buildings, {mapData.areas.Count} areas, {mapData.pointsOfInterest.Count} POIs");
                 

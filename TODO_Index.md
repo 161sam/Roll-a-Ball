@@ -93,3 +93,6 @@
 | TODO-OPT#89 | Assets/Scripts/Environment/SwitchTrigger.cs | Awake(), Zeile 32 | Warn if gate missing | **erledigt** |
 | TODO-OPT#90 | Assets/Scripts/Environment/SwitchTrigger.cs | ActivateSwitch(), Zeile 83 | Reset/deactivation logic | **erledigt** |
 | TODO-OPT#91 | Assets/Scripts/Environment/SwitchTrigger.cs | OnValidate(), Zeile 93 | Highlight object when gate missing | **erledigt** |
+| TODO-OPT#92 | Assets/Scripts/Map/MapStartupController.cs | ClearExistingLevel(), Zeile 758 | Replace destructive cleanup with pooled map objects |
+| TODO-OPT#93 | Assets/Scripts/Map/MapStartupController.cs | HideMapUI(), Zeile 789 | Ensure UI references are serialized rather than searched |
+| TODO-OPT#94 | Assets/Scripts/Map/AddressResolver.cs | ParseOSMResponse(), Zeile 567 | Make map scale configurable via ScriptableObject |

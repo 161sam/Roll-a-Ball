@@ -238,7 +238,9 @@ namespace RollABall.Map
                 LogDebug("Already loading, ignoring request");
                 return;
             }
-            
+
+            ClearExistingLevel();
+
             currentAddress = address;
             currentRetries = 0;
             
@@ -274,6 +276,8 @@ namespace RollABall.Map
                 LogDebug("Already loading, ignoring request");
                 return;
             }
+
+            ClearExistingLevel();
             
             LogDebug($"Loading map for coordinates: {latitude}, {longitude}");
             UpdateStatus($"Loading map for coordinates: {latitude:F4}, {longitude:F4}");
@@ -756,9 +760,28 @@ namespace RollABall.Map
         {
             if (statusText)
                 statusText.text = message;
-            
+
             LogDebug($"Status: {message}");
             OnStatusUpdate?.Invoke(message);
+        }
+
+        // TODO-OPT#92: Replace destructive cleanup with pooled map objects
+        private void ClearExistingLevel()
+        {
+            GameObject existingMap = GameObject.Find("GeneratedMap");
+            if (existingMap)
+            {
+                Destroy(existingMap);
+            }
+
+            GameObject[] fallbackObjects = GameObject.FindObjectsOfType<GameObject>();
+            foreach (var obj in fallbackObjects)
+            {
+                if (obj.name.StartsWith("OSM_"))
+                {
+                    Destroy(obj);
+                }
+            }
         }
         
         private void HideMapUI()
@@ -770,7 +793,25 @@ namespace RollABall.Map
                 inputPanel.SetActive(false);
                 LogDebug("Hidden AddressInputPanel");
             }
-            
+
+            if (addressInputField)
+                addressInputField.gameObject.SetActive(false);
+
+            if (loadMapButton)
+                loadMapButton.gameObject.SetActive(false);
+
+            if (useCurrentLocationButton)
+                useCurrentLocationButton.gameObject.SetActive(false);
+
+            if (regenerateMapButton)
+                regenerateMapButton.gameObject.SetActive(false);
+
+            if (loadingPanel)
+                loadingPanel.SetActive(false);
+
+            if (statusText)
+                statusText.gameObject.SetActive(false);
+
             // Also try the canvas approach (from remote)
             Canvas canvas = GetComponentInParent<Canvas>();
             if (canvas && inputPanel == null)
@@ -797,7 +838,25 @@ namespace RollABall.Map
                 inputPanel.SetActive(true);
                 LogDebug("Shown AddressInputPanel");
             }
-            
+
+            if (addressInputField)
+                addressInputField.gameObject.SetActive(true);
+
+            if (loadMapButton)
+                loadMapButton.gameObject.SetActive(true);
+
+            if (useCurrentLocationButton)
+                useCurrentLocationButton.gameObject.SetActive(true);
+
+            if (regenerateMapButton)
+                regenerateMapButton.gameObject.SetActive(true);
+
+            if (loadingPanel)
+                loadingPanel.SetActive(false);
+
+            if (statusText)
+                statusText.gameObject.SetActive(true);
+
             // Also try the canvas approach
             Canvas canvas = GetComponentInParent<Canvas>();
             if (canvas && !canvas.gameObject.activeInHierarchy)
