@@ -241,8 +241,9 @@ namespace RollABall.Testing
         private bool IsPositionReasonable(Vector3 position)
         {
             // Consider positions reasonable if they're within -100 to +100 in each axis
-            return Mathf.Abs(position.x) <= 100f && 
-                   Mathf.Abs(position.y) <= 100f && 
+            // TODO: Replace magic value with configurable boundary constant
+            return Mathf.Abs(position.x) <= 100f &&
+                   Mathf.Abs(position.y) <= 100f &&
                    Mathf.Abs(position.z) <= 100f;
         }
         

@@ -184,6 +184,7 @@ public class SaveSystem : MonoBehaviour
     /// </summary>
     public async void SaveCurrentGame()
     {
+        // TODO: Return Task instead of async void to allow awaiting errors
         if (currentSave == null)
         {
             LogSave("No save data to save!", true);

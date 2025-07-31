@@ -55,3 +55,10 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/SceneTypeDetector.cs | 10 | Allow overriding scene lists at runtime via config file | **done** |
 | Assets/Scripts/Input/InputManager.cs | 25 | Support gamepad bindings alongside keyboard controls | **done** |
 | Assets/Scripts/SaveSystem.cs | 667 | Create incremental backup before uploading to cloud | **done** |
+| Assets/Scripts/GameManager.cs | 36 | Remove legacy key fields once InputManager fully manages bindings | |
+| Assets/Scripts/SaveSystem.cs | 187 | Return Task instead of async void to allow awaiting errors | |
+| Assets/Scripts/Map/AddressResolver.cs | 20 | Move API URLs to a configuration asset for easier editing | |
+| Assets/Scripts/Environment/MovingPlatform.cs | 21 | Move bounce parameters into MovingPlatformProfile for consistency | |
+| Assets/Scripts/Testing/OSMTestController.cs | 244 | Replace magic value with configurable boundary constant | |
+| Assets/Scripts/Input/InputManager.cs | 225 | Switch to Input System events to capture keys without polling | |
+| Assets/Scripts/AudioManager.cs | 265 | Preload next track for seamless transition in shuffle mode | |

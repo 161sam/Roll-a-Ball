@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     private float gameTimeScale = 1f;
     [SerializeField, HideInInspector] private KeyCode pauseKey = KeyCode.Escape; // moved to InputManager
     [SerializeField, HideInInspector] private KeyCode restartKey = KeyCode.R;
+    // TODO: Remove legacy key fields once InputManager fully manages bindings
 
     [Header("Player Reference")]
     [SerializeField] private PlayerController player;

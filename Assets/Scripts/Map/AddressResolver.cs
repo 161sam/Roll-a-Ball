@@ -17,6 +17,7 @@ namespace RollABall.Map
         [Header("API Configuration")]
         [SerializeField] private string nominatimBaseUrl = "https://nominatim.openstreetmap.org";
         [SerializeField] private string overpassBaseUrl = "https://overpass-api.de/api/interpreter";
+        // TODO: Move API URLs to a configuration asset for easier editing
         [SerializeField] private float searchRadius = 500.0f; // meters
         
         [Header("Request Settings")]
