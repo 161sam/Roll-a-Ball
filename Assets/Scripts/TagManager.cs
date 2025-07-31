@@ -12,8 +12,11 @@ using UnityEditor;
 [AddComponentMenu("Roll-a-Ball/Tag Manager")]
 public class TagManager : MonoBehaviour
 {
+    [Header("Configuration")]
+    [Tooltip("Optional configuration asset containing required tags and layers.")]
+    [SerializeField] private TagConfig tagConfig;
+
     [Header("Required Tags")]
-    // TODO: Load required tags from a central config file instead of hardcoding
     [SerializeField] private string[] requiredTags = {
         "Player",
         "Collectible",
@@ -47,6 +50,15 @@ public class TagManager : MonoBehaviour
     [SerializeField] private int layersCreated = 0;
     [SerializeField] private List<string> missingTags = new List<string>();
     [SerializeField] private List<string> missingLayers = new List<string>();
+
+    private void Awake()
+    {
+        if (tagConfig)
+        {
+            requiredTags = tagConfig.tags;
+            requiredLayers = tagConfig.layers;
+        }
+    }
 
     private void Start()
     {

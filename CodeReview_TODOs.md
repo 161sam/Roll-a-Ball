@@ -33,7 +33,7 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/Environment/GateController.cs | 67 | Provide matching TriggerClose() logic for reversible puzzles |
 | Assets/Scripts/Environment/GroundMaterialController.cs | 19 | Move material paths to a configuration ScriptableObject |
 | Assets/Scripts/Environment/RotatingObstacle.cs | 49 | Integrate damage system to penalize the player on contact |
-| Assets/Scripts/TagManager.cs | 16 | Load required tags from a central config file |
+| Assets/Scripts/TagManager.cs | 16 | Load required tags from a central config file | **done** |
 | Assets/Scripts/SceneValidator.cs | 51 | Display progress UI while validation routines run |
 | Assets/Scripts/OSMGoalZoneTrigger.cs | 163 | Use an event from UIController instead of direct lookup |
 | Assets/Material/CollectibleMaterial | 3 | Verify metallic/smoothness values for PBR consistency |
