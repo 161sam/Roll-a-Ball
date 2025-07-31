@@ -38,7 +38,7 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/OSMGoalZoneTrigger.cs | 163 | Use an event from UIController instead of direct lookup | **done** |
 | Assets/Material/CollectibleMaterial | 3 | Verify metallic/smoothness values for PBR consistency | **done** |
 | Assets/OSMAssets/Materials/OSM_Park_Material.mat | 3 | Adjust color to match overall scene lighting | **done** |
-| Assets/Prefabs/Player.prefab | 3 | Separate player stats into dedicated ScriptableObject |
+| Assets/Prefabs/Player.prefab | 3 | Separate player stats into dedicated ScriptableObject | **done** |
 | Assets/Scenes/Level1.unity | 3 | Review occlusion and lighting settings for optimized performance |
 | Assets/Scenes/Level_OSM.unity | 3 | Ensure map generation uses prefabs from OSMAssets folder |
 | Assets/Resources/LevelProfiles/EasyProfile.asset | 25 | Balance collectible spawn height for easier levels | **done** |

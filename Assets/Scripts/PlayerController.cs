@@ -5,6 +5,8 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("Stats")]
+    [SerializeField] private PlayerStats playerStats;
     [Header("Ball Bewegung")]
     [SerializeField] private float moveForce = 10f;
     [SerializeField] private float maxSpeed = 8f;
@@ -93,6 +95,36 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        if (playerStats != null)
+        {
+            moveForce = playerStats.moveForce;
+            maxSpeed = playerStats.maxSpeed;
+            sprintMultiplier = playerStats.sprintMultiplier;
+            airControlMultiplier = playerStats.airControlMultiplier;
+            ballDrag = playerStats.ballDrag;
+
+            slideImpulseMultiplier = playerStats.slideImpulseMultiplier;
+            slideDuration = playerStats.slideDuration;
+
+            jumpForce = playerStats.jumpForce;
+            groundCheckRadius = playerStats.groundCheckRadius;
+            groundCheckDistance = playerStats.groundCheckDistance;
+            groundLayer = playerStats.groundLayer;
+            coyoteTime = playerStats.coyoteTime;
+
+            enableDoubleJump = playerStats.enableDoubleJump;
+            doubleJumpForce = playerStats.doubleJumpForce;
+
+            flyForce = playerStats.flyForce;
+            maxFlyHeight = playerStats.maxFlyHeight;
+            flyHorizontalDamping = playerStats.flyHorizontalDamping;
+
+            maxFlyEnergy = playerStats.maxFlyEnergy;
+            flyDepletionRate = playerStats.flyDepletionRate;
+            flyRegenRate = playerStats.flyRegenRate;
+            flyRegenDelay = playerStats.flyRegenDelay;
+        }
+
         groundLayerMaskValue = groundLayer.value;
     }
 
@@ -542,6 +574,36 @@ public class PlayerController : MonoBehaviour
 
     void OnValidate()
     {
+        if (playerStats != null)
+        {
+            moveForce = playerStats.moveForce;
+            maxSpeed = playerStats.maxSpeed;
+            sprintMultiplier = playerStats.sprintMultiplier;
+            airControlMultiplier = playerStats.airControlMultiplier;
+            ballDrag = playerStats.ballDrag;
+
+            slideImpulseMultiplier = playerStats.slideImpulseMultiplier;
+            slideDuration = playerStats.slideDuration;
+
+            jumpForce = playerStats.jumpForce;
+            groundCheckRadius = playerStats.groundCheckRadius;
+            groundCheckDistance = playerStats.groundCheckDistance;
+            groundLayer = playerStats.groundLayer;
+            coyoteTime = playerStats.coyoteTime;
+
+            enableDoubleJump = playerStats.enableDoubleJump;
+            doubleJumpForce = playerStats.doubleJumpForce;
+
+            flyForce = playerStats.flyForce;
+            maxFlyHeight = playerStats.maxFlyHeight;
+            flyHorizontalDamping = playerStats.flyHorizontalDamping;
+
+            maxFlyEnergy = playerStats.maxFlyEnergy;
+            flyDepletionRate = playerStats.flyDepletionRate;
+            flyRegenRate = playerStats.flyRegenRate;
+            flyRegenDelay = playerStats.flyRegenDelay;
+        }
+
         groundLayerMaskValue = groundLayer.value;
     }
 }
