@@ -804,7 +804,7 @@ namespace RollABall.Map
             // Spawn player if prefab is assigned
             if (playerPrefab != null)
             {
-                GameObject existingPlayer = GameObject.FindGameObjectWithTag("Player");
+                GameObject existingPlayer = GameObject.FindGameObjectWithTag("Player"); // TODO: Cache player reference to avoid repeated lookups
                 if (existingPlayer != null)
                 {
                     existingPlayer.transform.position = playerSpawnPosition;

@@ -373,6 +373,7 @@ public class GameManager : MonoBehaviour
         ChangeGameState(GameState.Playing);
         
         Debug.Log("[GameManager] Game reset completed");
+        // TODO: Replace Debug.Log with structured logging for production builds
     }
 
     /// <summary>

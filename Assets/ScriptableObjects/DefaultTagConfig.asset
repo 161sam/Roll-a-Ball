@@ -1,5 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+# TODO: Allow runtime extension of tags for mods
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
