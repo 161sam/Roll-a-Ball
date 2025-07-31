@@ -38,17 +38,6 @@
       "source": "builtin",
       "dependencies": {}
     },
-    "com.unity.test-framework": {
-      "version": "1.1.31",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ext.nunit": "1.0.6",
-        "com.unity.modules.imgui": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.feature.development": {
       "version": "1.0.2",
       "depth": 0,
