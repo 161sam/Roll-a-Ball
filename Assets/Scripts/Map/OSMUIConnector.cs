@@ -24,10 +24,13 @@ namespace RollABall.Map
         [Header("Default Addresses")]
         [SerializeField] private string[] defaultAddresses = {
             "Leipzig, Markt",
-            "Berlin, Brandenburger Tor", 
+            "Berlin, Brandenburger Tor",
             "München, Marienplatz",
             "Hamburg, Speicherstadt"
         };
+
+        [Header("Prefabs")]
+        [SerializeField] private Button quickButtonPrefab;
         
         // UI References (auto-discovered)
         private TMP_InputField addressInputField;
@@ -404,18 +407,29 @@ namespace RollABall.Map
         private void CreateQuickAccessButtons()
         {
             Log("Creating quick access buttons...");
-            // TODO: Use prefabs for quick buttons instead of runtime geometry
-            
+
             Canvas canvas = FindFirstObjectByType<Canvas>();
             if (!canvas || defaultAddresses.Length == 0) return;
-            
+
             for (int i = 0; i < defaultAddresses.Length && i < 4; i++)
             {
                 string address = defaultAddresses[i];
                 Vector2 position = new Vector2(-200 + (i * 100), -150);
-                
-                Button quickButton = CreateButton(canvas.transform, $"QuickButton_{i}", 
-                    address.Split(',')[0], position);
+
+                Button quickButton;
+                if (quickButtonPrefab)
+                {
+                    quickButton = Instantiate(quickButtonPrefab, canvas.transform);
+                    quickButton.name = $"QuickButton_{i}";
+                    RectTransform rect = quickButton.GetComponent<RectTransform>();
+                    rect.anchoredPosition = position;
+                    quickButton.GetComponentInChildren<TextMeshProUGUI>().text = address.Split(',')[0];
+                }
+                else
+                {
+                    quickButton = CreateButton(canvas.transform, $"QuickButton_{i}",
+                        address.Split(',')[0], position);
+                }
                     
                 // Create closure for the address
                 string capturedAddress = address;
