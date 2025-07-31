@@ -21,6 +21,8 @@ namespace RollABall.Environment
         [SerializeField] private bool requireAllCollectibles = false;
         [SerializeField] private string requiredTag = "Player";
         [SerializeField] private float activationRange = 3f;
+        [SerializeField] private GateSequenceController sequenceController;
+        [SerializeField] private int sequenceIndex = 0;
         
         [Header("⚙️ Bewegungs-Animation")]
         [SerializeField] private Vector3 openPosition = Vector3.up * 3f;
@@ -305,15 +307,15 @@ namespace RollABall.Environment
         }
         
         /// <summary>
-        /// Prüft sequenzielle Anforderungen (Platzhalter für komplexere Logik)
+        /// Checks whether this gate is the next one to open in the sequence.
         /// </summary>
-    private bool CheckSequentialRequirement()
-    {
-        // Hier könnte eine komplexere Sequenz-Logik implementiert werden
-        // Z.B. Prüfung anderer Tore, Switches, etc.
-        // TODO: Use dedicated sequence controller for complex puzzles
-        return CheckCollectibleRequirement();
-    }
+        private bool CheckSequentialRequirement()
+        {
+            if (sequenceController == null)
+                return false;
+
+            return sequenceController.IsStepActive(sequenceIndex);
+        }
         
         /// <summary>
         /// Öffnet das Tor
@@ -349,6 +351,12 @@ namespace RollABall.Environment
                 if (autoCloseCoroutine != null)
                     StopCoroutine(autoCloseCoroutine);
                 autoCloseCoroutine = StartCoroutine(AutoCloseAfterDelay());
+            }
+
+            // Inform sequence controller
+            if (sequenceController != null && !hasBeenUsed)
+            {
+                sequenceController.NotifyGateOpened(sequenceIndex);
             }
         }
         
