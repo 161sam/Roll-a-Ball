@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 using RollABall.Utility;
+using RollABall.Environment;
 
 namespace RollABall.Map
 {
@@ -51,6 +52,12 @@ namespace RollABall.Map
         [SerializeField, HideInInspector] private GameObject steamPipePrefab;
         [SerializeField, HideInInspector] private GameObject chimneySmokeParticles;
         [SerializeField, HideInInspector] private GameObject steamEmitterPrefab;
+
+        [Header("Steampunk Gameplay Prefabs")]
+        [SerializeField] private GameObject movingPlatformPrefab;
+        [SerializeField] private GameObject rotatingObstaclePrefab;
+        [SerializeField] private GameObject gatePrefab;
+        [SerializeField] private bool enableSteampunkGameplay = true;
         
         [Header("Road Settings")]
         [SerializeField] private float roadHeightOffset = 0.05f; // Height above ground
@@ -236,6 +243,8 @@ namespace RollABall.Map
                 {
                     yield return StartCoroutine(AddSteampunkAtmosphere());
                 }
+
+                yield return StartCoroutine(AddSteampunkGameplayElements());
                 
                 Debug.Log("[MapGenerator] Segmented map generation completed successfully");
                 OnMapGenerationCompleted?.Invoke();
@@ -1624,6 +1633,54 @@ namespace RollABall.Map
             RenderSettings.fog = enableFog;
             RenderSettings.fogStartDistance = fogStartDistance;
             RenderSettings.fogEndDistance = fogEndDistance;
+
+            yield return null;
+        }
+
+        // Steampunk Integration
+        private IEnumerator AddSteampunkGameplayElements()
+        {
+            if (!enableSteampunkGameplay || mapContainer == null)
+                yield break;
+
+            Vector3 center = currentMapData.GetWorldCenter();
+            float offset = currentMapData.scaleMultiplier * 0.1f;
+            int placed = 0;
+
+            if (movingPlatformPrefab)
+            {
+                Instantiate(movingPlatformPrefab, center + Vector3.forward * offset, Quaternion.identity, mapContainer);
+                placed++;
+            }
+
+            if (rotatingObstaclePrefab)
+            {
+                Instantiate(rotatingObstaclePrefab, center + Vector3.right * offset, Quaternion.identity, mapContainer);
+                placed++;
+            }
+
+            if (gatePrefab)
+            {
+                Vector3 gatePos = center - Vector3.forward * offset;
+                GameObject gateObj = Instantiate(gatePrefab, gatePos, Quaternion.identity, mapContainer);
+                Vector3 switchPos = gatePos - Vector3.forward * 1.5f;
+                GameObject switchObj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                switchObj.transform.SetParent(mapContainer);
+                switchObj.transform.position = switchPos;
+                switchObj.transform.localScale = Vector3.one * 0.5f;
+                Collider col = switchObj.GetComponent<Collider>();
+                if (col) col.isTrigger = true;
+                var trigger = switchObj.AddComponent<RollABall.Environment.SwitchTrigger>();
+                var steamCtrl = gateObj.GetComponent<RollABall.Environment.SteampunkGateController>();
+                if (steamCtrl)
+                    trigger.SetGate(steamCtrl);
+                else if (gateObj.GetComponent<RollABall.Environment.GateController>() is RollABall.Environment.GateController g)
+                    trigger.SetGate(g);
+                placed++;
+            }
+
+            if (placed > 0)
+                Debug.Log($"[MapGenerator] Added {placed} Steampunk gameplay elements");
 
             yield return null;
         }

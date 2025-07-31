@@ -398,6 +398,7 @@ namespace RollABall.Generators
             OnDynamicElementsCreated?.Invoke(dynamicObjectsCreated);
         }
 
+        // Steampunk Integration
         private IEnumerator CreateMovingPlatforms()
         {
             if (activeProfile.MovingPlatformPrefabs == null || activeProfile.MovingPlatformPrefabs.Length == 0)
@@ -426,6 +427,7 @@ namespace RollABall.Generators
             }
         }
 
+        // Steampunk Integration
         private IEnumerator CreateRotatingObstacles()
         {
             if (activeProfile.RotatingObstaclePrefabs == null || activeProfile.RotatingObstaclePrefabs.Length == 0)
@@ -454,6 +456,7 @@ namespace RollABall.Generators
             }
         }
 
+        // Steampunk Integration
         private IEnumerator CreateInteractiveGates()
         {
             if (activeProfile.InteractiveGatePrefabs == null || activeProfile.InteractiveGatePrefabs.Length == 0)
@@ -490,7 +493,8 @@ namespace RollABall.Generators
                 GameObject gateObj = InstantiateObject(gatePrefab, gatePos, Quaternion.identity, levelContainer);
                 
                 var gateCtrl = gateObj.GetComponent<GateController>();
-                if (!gateCtrl)
+                var steampunkCtrl = gateObj.GetComponent<SteampunkGateController>();
+                if (!gateCtrl && !steampunkCtrl)
                     gateCtrl = gateObj.AddComponent<GateController>();
 
                 // Create switch
@@ -507,7 +511,10 @@ namespace RollABall.Generators
                     c.isTrigger = true;
 
                 var trigger = switchObj.AddComponent<SwitchTrigger>();
-                trigger.SetGate(gateCtrl);
+                if (steampunkCtrl)
+                    trigger.SetGate(steampunkCtrl);
+                else
+                    trigger.SetGate(gateCtrl);
 
                 gatesCreated++;
 
