@@ -155,19 +155,10 @@ namespace RollABall.Generators
     
     private LevelGenerationMode DetermineGenerationMode(LevelProfile profile)
     {
-        // Try adaptive mode selection if available
-        try
+        IAdaptiveGenerationModeProvider adaptive = profile as IAdaptiveGenerationModeProvider;
+        if (adaptive != null)
         {
-            var methodInfo = profile.GetType().GetMethod("GetAdaptiveGenerationMode");
-            // TODO: Refactor to interface-based lookup instead of reflection
-            if (methodInfo != null)
-            {
-                return (LevelGenerationMode)methodInfo.Invoke(profile, new object[] { random.Next() });
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning($"Adaptive generation mode not available: {e.Message}");
+            return adaptive.GetAdaptiveGenerationMode(random.Next());
         }
         
         return profile.GenerationMode;
