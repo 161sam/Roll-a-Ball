@@ -43,7 +43,7 @@ git clone https://github.com/161sam/Roll-a-Ball.git
 cd Roll-a-Ball
 
 # Unity 6.0 öffnen und Projekt laden
-# Szene "GeneratedLevel" → Play ▶️
+# Szene "Level1" → Play ▶️
 ```
 
 ### **Erste Schritte**
