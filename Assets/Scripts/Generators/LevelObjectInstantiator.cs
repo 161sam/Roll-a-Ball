@@ -144,7 +144,7 @@ namespace RollABall.Generators
             // Clear existing objects (use pooling if enabled)
             ClearExistingObjects();
 
-            // Instantiate terrain objects
+            // Instantiate terrain objects (ground, collectibles, goal zones)
             for (int x = 0; x < size; x++)
             {
                 for (int z = 0; z < size; z++)
@@ -157,8 +157,7 @@ namespace RollABall.Generators
                             CreateGroundTile(worldPos, x, z);
                             break;
 
-                        case 1: // Wall
-                            CreateWallTile(worldPos, x, z);
+                        case 1: // Wall - handled later by segment placement
                             break;
 
                         case 2: // Collectible spawn (create ground + collectible)
@@ -178,6 +177,9 @@ namespace RollABall.Generators
                         yield return null;
                 }
             }
+
+            // Place walls in optimized segments
+            CreateWallSegments(levelGrid, tileSize);
 
             // Create dynamic elements (moving platforms, gates, etc.)
             yield return CreateDynamicElements();
@@ -236,15 +238,107 @@ namespace RollABall.Generators
             }
         }
 
+        // DEPRECATED: replaced by CreateWallSegment for optimized placement
         private void CreateWallTile(Vector3 position, int gx, int gz)
         {
             GameObject wall = InstantiateObject(wallPrefab, position, Quaternion.identity, wallContainer);
-            
-            // Apply materials if available
+
             if (activeProfile.WallMaterials != null && activeProfile.WallMaterials.Length > 0)
             {
                 Material material = GetWallMaterial(gx, gz);
                 ApplyMaterial(wall, material);
+            }
+        }
+
+        /// <summary>
+        /// Place a single wall segment scaled between start and end.
+        /// </summary>
+        private void CreateWallSegment(Vector3 start, Vector3 end, bool horizontal, int gx, int gz)
+        {
+            Vector3 center = (start + end) * 0.5f;
+            Quaternion rotation = horizontal ? Quaternion.identity : Quaternion.Euler(0f, 90f, 0f);
+
+            GameObject wall = InstantiateObject(wallPrefab, center, rotation, wallContainer);
+
+            float tiles = horizontal
+                ? Mathf.Abs(end.x - start.x) / activeProfile.TileSize + 1f
+                : Mathf.Abs(end.z - start.z) / activeProfile.TileSize + 1f;
+
+            Vector3 scale = wall.transform.localScale;
+            scale.x *= tiles;
+            wall.transform.localScale = scale;
+
+            if (activeProfile.WallMaterials != null && activeProfile.WallMaterials.Length > 0)
+            {
+                Material material = GetWallMaterial(gx, gz);
+                ApplyMaterial(wall, material);
+            }
+        }
+
+        /// <summary>
+        /// Create wall segments for all contiguous wall tiles.
+        /// </summary>
+        private void CreateWallSegments(int[,] grid, float tileSize)
+        {
+            int size = grid.GetLength(0);
+            bool[,] used = new bool[size, size];
+
+            // horizontal segments
+            for (int z = 0; z < size; z++)
+            {
+                int x = 0;
+                while (x < size)
+                {
+                    if (grid[x, z] == 1 && !used[x, z])
+                    {
+                        int startX = x;
+                        int endX = x;
+                        while (endX + 1 < size && grid[endX + 1, z] == 1 && !used[endX + 1, z])
+                            endX++;
+
+                        Vector3 startPos = new Vector3(startX * tileSize, 0, z * tileSize);
+                        Vector3 endPos = new Vector3(endX * tileSize, 0, z * tileSize);
+                        CreateWallSegment(startPos, endPos, true, startX, z);
+
+                        for (int i = startX; i <= endX; i++)
+                            used[i, z] = true;
+
+                        x = endX + 1;
+                    }
+                    else
+                    {
+                        x++;
+                    }
+                }
+            }
+
+            // vertical segments
+            for (int x = 0; x < size; x++)
+            {
+                int z = 0;
+                while (z < size)
+                {
+                    if (grid[x, z] == 1 && !used[x, z])
+                    {
+                        int startZ = z;
+                        int endZ = z;
+                        while (endZ + 1 < size && grid[x, endZ + 1] == 1 && !used[x, endZ + 1])
+                            endZ++;
+
+                        Vector3 startPos = new Vector3(x * tileSize, 0, startZ * tileSize);
+                        Vector3 endPos = new Vector3(x * tileSize, 0, endZ * tileSize);
+                        CreateWallSegment(startPos, endPos, false, x, startZ);
+
+                        for (int j = startZ; j <= endZ; j++)
+                            used[x, j] = true;
+
+                        z = endZ + 1;
+                    }
+                    else
+                    {
+                        z++;
+                    }
+                }
             }
         }
 
