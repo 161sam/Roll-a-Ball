@@ -46,7 +46,7 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scenes/GeneratedLevel.unity | 3 | Replace sample level with procedurally generated layout |
 | Assets/Scripts/GameManager.cs | 33 | Move basic game settings to a ScriptableObject for easier tuning | **done** |
 | Assets/Scripts/GameManager.cs | 77 | Make respawn delay configurable per level/difficulty | **done** |
-| Assets/Scripts/PlayerController.cs | 49 | Integrate Cinemachine for camera following |
+| Assets/Scripts/PlayerController.cs | 49 | Integrate Cinemachine for camera following | **done** |
 | Assets/Scripts/Environment/MovingPlatform.cs | 21 | Expose bounce parameters in inspector for finer control | **done** |
 | Assets/Scripts/Utility/LocalizationManager.cs | 23 | Load localization data from external files to support more languages | **done** |
 | Assets/Scripts/Utility/PrefabPooler.cs | 24 | Add maximum pool size to prevent uncontrolled growth | **done** |
