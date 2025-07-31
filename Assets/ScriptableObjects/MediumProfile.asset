@@ -29,8 +29,10 @@ MonoBehaviour:
   rotatingObstacleDensity: 0.08
   enableMovingPlatforms: 1
   movingPlatformDensity: 0.05
-  rotatingObstaclePrefabs: []
-  movingPlatformPrefabs: []
+  rotatingObstaclePrefabs:
+  - {fileID: 100000, guid: 51be41b0906347c99756dbfe404be6d1, type: 3}
+  movingPlatformPrefabs:
+  - {fileID: 100000, guid: 4d0fde58d84b4181b5af5362735073cd, type: 3}
   enableSteamEmitters: 1
   steamEmitterDensity: 0.06
   steamEmitterPrefabs: []
@@ -41,9 +43,10 @@ MonoBehaviour:
     windForce: 2
     steamSounds: []
     mechanicalSounds: []
-  enableInteractiveGates: 0
+  enableInteractiveGates: 1
   interactiveGateDensity: 0.02
-  interactiveGatePrefabs: []
+  interactiveGatePrefabs:
+  - {fileID: 100000, guid: f331217ca1344b12aa732508e942a7a3, type: 3}
   frictionVariance: 0.2
   enableSlipperyTiles: 1
   slipperyTileChance: 0.1
