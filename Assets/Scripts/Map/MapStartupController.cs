@@ -33,6 +33,7 @@ namespace RollABall.Map
         
         [Header("Endless Mode")]
         [SerializeField] private AddressList endlessAddressList;
+        // TODO: Load endless mode addresses from AddressList asset
         private string[] endlessModeAddresses = {
             "Leipzig, Germany",
             "Berlin, Germany",

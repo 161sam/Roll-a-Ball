@@ -110,6 +110,7 @@ namespace RollABall.Utility
                 }
             }
             pools.Clear();
+            // TODO: Invoke Clear on application quit to prevent leftover objects
         }
 
         private class PooledMarker : MonoBehaviour

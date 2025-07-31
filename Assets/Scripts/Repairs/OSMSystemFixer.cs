@@ -48,6 +48,7 @@ namespace RollABall.Repairs
             LogDebug("Fixing UI connections...");
             
             // Find components
+            // TODO: Inject MapStartupController reference instead of using FindFirstObjectByType
             MapStartupController startupController = FindFirstObjectByType<MapStartupController>();
             if (startupController == null)
             {
@@ -68,6 +69,7 @@ namespace RollABall.Repairs
             }
             
             // Use reflection to set private fields in MapStartupController
+            // TODO: Expose these fields or provide public methods to remove reflection
             var startupControllerType = typeof(MapStartupController);
             
             // Set addressInputField
@@ -218,6 +220,7 @@ namespace RollABall.Repairs
             }
             
             // Check if prefabs are assigned using reflection
+            // TODO: Refactor to use serialized fields instead of reflection
             var mapGeneratorType = typeof(MapGenerator);
             
             // List of prefab fields to check

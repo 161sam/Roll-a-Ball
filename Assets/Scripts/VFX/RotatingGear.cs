@@ -9,6 +9,7 @@ namespace RollABall.VFX
     {
         [Header("Rotation Settings")]
         [SerializeField] private float rotationSpeed = 30f; // degrees per second
+        // TODO: Expose rotation settings via ScriptableObject for consistency
         [SerializeField] private Vector2 speedVariationRange = new Vector2(-5f, 5f);
         [SerializeField] private Vector3 rotationAxis = Vector3.up;
         [SerializeField] private bool randomizeDirection = true;
