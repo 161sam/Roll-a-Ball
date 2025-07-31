@@ -713,17 +713,7 @@ namespace RollABall.Map
                 {
                     if (building.nodes.Count > 0)
                     {
-                        OSMNode randomNode = building.nodes[Random.Range(0, building.nodes.Count)];
-                        Vector3 buildingPos = currentMapData.LatLonToWorldPosition(randomNode.lat, randomNode.lon);
-                        
-                        // Offset randomly around the building
-                        Vector3 offset = new Vector3(
-                            Random.Range(collectibleOffsetRange.x, collectibleOffsetRange.y),
-                            collectibleHeight,
-                            Random.Range(collectibleOffsetRange.x, collectibleOffsetRange.y)
-                        );
-                        
-                        positions.Add(buildingPos + offset);
+                        positions.Add(GetRandomBuildingOffsetPosition(building, collectibleHeight));
                     }
                 }
             }
@@ -756,7 +746,7 @@ namespace RollABall.Map
             {
                 OSMBuilding largestBuilding = currentMapData.buildings[0];
                 float largestArea = 0f;
-                
+
                 foreach (OSMBuilding building in currentMapData.buildings)
                 {
                     float area = CalculateBuildingArea(building);
@@ -766,16 +756,13 @@ namespace RollABall.Map
                         largestBuilding = building;
                     }
                 }
-                
-                // Get center of largest building
+
                 if (largestBuilding.nodes.Count > 0)
                 {
-                    OSMNode centerNode = largestBuilding.nodes[largestBuilding.nodes.Count / 2];
-                    goalPos = currentMapData.LatLonToWorldPosition(centerNode.lat, centerNode.lon);
+                    goalPos = GetRandomBuildingOffsetPosition(largestBuilding, 0.5f);
                 }
             }
-            
-            goalPos.y = 0.5f; // Place slightly above ground
+
             return goalPos;
         }
         
@@ -1178,6 +1165,24 @@ namespace RollABall.Map
         {
             // Simplified area calculation
             return building.nodes.Count * 10f; // Rough approximation
+        }
+
+        /// <summary>
+        /// Returns a random position near the given building using the collectible offset range.
+        /// </summary>
+        private Vector3 GetRandomBuildingOffsetPosition(OSMBuilding building, float height)
+        {
+            if (building.nodes.Count == 0)
+                return currentMapData.GetWorldCenter();
+
+            OSMNode randomNode = building.nodes[Random.Range(0, building.nodes.Count)];
+            Vector3 basePos = currentMapData.LatLonToWorldPosition(randomNode.lat, randomNode.lon);
+            Vector3 offset = new Vector3(
+                Random.Range(collectibleOffsetRange.x, collectibleOffsetRange.y),
+                height,
+                Random.Range(collectibleOffsetRange.x, collectibleOffsetRange.y)
+            );
+            return basePos + offset;
         }
         
         /// <summary>

@@ -12,6 +12,8 @@ using System.Linq;
 [AddComponentMenu("UI/UI Controller")]
 public class UIController : MonoBehaviour
 {
+    public static UIController Instance { get; private set; }
+    public static System.Action<string, float> NotificationRequested;
     [Header("Game UI")]
     [SerializeField] private GameObject gameUIPanel;
     [SerializeField] private TextMeshProUGUI collectibleCountText;
@@ -105,8 +107,34 @@ public class UIController : MonoBehaviour
     private bool isTransitioning = false;
     
     // Properties
-    public UIState CurrentState => currentState;
-    public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
+public UIState CurrentState => currentState;
+public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
+
+    void Awake()
+    {
+        if (Instance && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void OnEnable()
+    {
+        NotificationRequested += OnNotificationRequested;
+    }
+
+    void OnDisable()
+    {
+        NotificationRequested -= OnNotificationRequested;
+    }
+
+    private void OnNotificationRequested(string message, float duration)
+    {
+        ShowNotification(message, duration);
+    }
     
     void Start()
     {

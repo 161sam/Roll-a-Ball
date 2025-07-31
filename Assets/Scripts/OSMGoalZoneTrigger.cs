@@ -157,12 +157,7 @@ public class OSMGoalZoneTrigger : MonoBehaviour
             $"Collect {remaining} more items to unlock the goal!";
             
         // Show message via UI if available
-        UIController uiController = FindFirstObjectByType<UIController>();
-        if (uiController != null)
-        {
-            // TODO: Use an event from UIController instead of direct lookup
-            uiController.ShowNotification(message, 3f);
-        }
+        UIController.NotificationRequested?.Invoke(message, 3f);
         
         Debug.Log($"[OSMGoalZone] {message}");
     }
