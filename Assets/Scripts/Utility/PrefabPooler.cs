@@ -13,15 +13,17 @@ namespace RollABall.Utility
         {
             public readonly GameObject prefab;
             public readonly Queue<GameObject> objects = new Queue<GameObject>();
+            public int maxSize;
 
-            public Pool(GameObject prefab)
+            public Pool(GameObject prefab, int maxSize)
             {
                 this.prefab = prefab;
+                this.maxSize = maxSize;
             }
         }
 
         private static readonly Dictionary<GameObject, Pool> pools = new Dictionary<GameObject, Pool>();
-        // TODO: Add maximum pool size to prevent uncontrolled growth
+        private const int DefaultMaxPoolSize = 20;
 
         /// <summary>
         /// Get a pooled instance of the given prefab.
@@ -29,10 +31,10 @@ namespace RollABall.Utility
         public static GameObject Get(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
         {
             if (!prefab) return null;
-            
+
             if (!pools.TryGetValue(prefab, out Pool pool))
             {
-                pool = new Pool(prefab);
+                pool = new Pool(prefab, DefaultMaxPoolSize);
                 pools[prefab] = pool;
             }
 
@@ -63,11 +65,35 @@ namespace RollABall.Utility
             {
                 obj.SetActive(false);
                 obj.transform.SetParent(null);
-                pool.objects.Enqueue(obj);
+                if (pool.objects.Count < pool.maxSize)
+                {
+                    pool.objects.Enqueue(obj);
+                }
+                else
+                {
+                    Object.Destroy(obj);
+                }
             }
             else
             {
                 Object.Destroy(obj);
+            }
+        }
+
+        /// <summary>
+        /// Set a custom maximum pool size for the specified prefab.
+        /// </summary>
+        public static void SetMaxPoolSize(GameObject prefab, int size)
+        {
+            if (!prefab || size < 0) return;
+            if (!pools.TryGetValue(prefab, out Pool pool))
+            {
+                pool = new Pool(prefab, size);
+                pools[prefab] = pool;
+            }
+            else
+            {
+                pool.maxSize = size;
             }
         }
 
