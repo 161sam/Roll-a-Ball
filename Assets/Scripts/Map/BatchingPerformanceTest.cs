@@ -32,6 +32,8 @@ namespace RollABall.Map
         private MapGenerator originalGenerator;
         private MapGeneratorBatched batchedGenerator;
         private PerformanceMonitor performanceMonitor;
+        // Cached list to avoid allocations when counting objects
+        private readonly List<GameObject> objectCache = new();
         
         private void Start()
         {
@@ -170,8 +172,9 @@ namespace RollABall.Map
             int finalGameObjects = 0;
 
             // Take baseline measurements
-            initialGameObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None).Length;
-            // TODO: Cache object list to avoid allocations during testing
+            objectCache.Clear();
+            objectCache.AddRange(FindObjectsByType<GameObject>(FindObjectsSortMode.None));
+            initialGameObjects = objectCache.Count;
             
             // Generate map and measure time
             float startTime = Time.realtimeSinceStartup;
@@ -195,7 +198,9 @@ namespace RollABall.Map
             totalTime = endTime - startTime;
             
             // Take post-generation measurements
-            finalGameObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None).Length;
+            objectCache.Clear();
+            objectCache.AddRange(FindObjectsByType<GameObject>(FindObjectsSortMode.None));
+            finalGameObjects = objectCache.Count;
             
             // Warmup period
             yield return new WaitForSeconds(warmupTime);

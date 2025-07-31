@@ -37,6 +37,10 @@ namespace RollABall.Map
         private int batchedObjects;
         private int separateColliders;
         private float lastGenerationTime;
+
+        // Cache for color textures created for GUI backgrounds
+        private readonly System.Collections.Generic.Dictionary<Color, Texture2D> textureCache
+            = new();
         
         // Display state
         private bool isVisible = true;
@@ -113,14 +117,19 @@ namespace RollABall.Map
             
             backgroundStyle = new GUIStyle(GUI.skin.box);
             backgroundStyle.normal.background = CreateColorTexture(backgroundColor);
-            // TODO: Cache created textures if display colors change frequently
         }
-        
+
         private Texture2D CreateColorTexture(Color color)
         {
+            if (textureCache.TryGetValue(color, out var cached))
+            {
+                return cached;
+            }
+
             Texture2D texture = new Texture2D(1, 1);
             texture.SetPixel(0, 0, color);
             texture.Apply();
+            textureCache[color] = texture;
             return texture;
         }
         
