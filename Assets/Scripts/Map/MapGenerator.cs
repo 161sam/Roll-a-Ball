@@ -217,12 +217,12 @@ namespace RollABall.Map
                 
                 // Place collectibles
                 yield return StartCoroutine(PlaceCollectibles());
-                
+
+                // Set player spawn position first to allow path-based goal placement
+                SetPlayerSpawnPosition();
+
                 // Place goal zone
                 yield return StartCoroutine(PlaceGoalZone());
-                
-                // Set player spawn position
-                SetPlayerSpawnPosition();
                 
                 // Apply batching for performance
                 if (useBatching)
@@ -759,29 +759,13 @@ namespace RollABall.Map
         /// </summary>
         private Vector3 FindOptimalGoalPosition()
         {
-            // Place goal at the center of the largest building or at map center
-            // TODO: Consider using pathfinding analysis to choose a challenging location
-            Vector3 goalPos = currentMapData.GetWorldCenter();
-            
-            if (currentMapData.buildings.Count > 0)
+            // Determine goal position using road network pathfinding relative to the player spawn
+            Vector3 goalPos = MapPathfindingUtility.GetFarthestRoadPosition(currentMapData, playerSpawnPosition);
+
+            // Fallback to map center when pathfinding yields no result
+            if (goalPos == playerSpawnPosition)
             {
-                OSMBuilding largestBuilding = currentMapData.buildings[0];
-                float largestArea = 0f;
-
-                foreach (OSMBuilding building in currentMapData.buildings)
-                {
-                    float area = CalculateBuildingArea(building);
-                    if (area > largestArea)
-                    {
-                        largestArea = area;
-                        largestBuilding = building;
-                    }
-                }
-
-                if (largestBuilding.nodes.Count > 0)
-                {
-                    goalPos = GetRandomBuildingOffsetPosition(largestBuilding, 0.5f);
-                }
+                goalPos = currentMapData.GetWorldCenter();
             }
 
             return goalPos;
