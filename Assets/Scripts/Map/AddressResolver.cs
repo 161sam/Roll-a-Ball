@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json.Linq;
@@ -335,7 +336,9 @@ namespace RollABall.Map
             query.AppendLine("(");
             
             // Use exactly these coordinates: Leipzig city center, very small area
-            string bbox = $"{minLat:F3},{minLon:F3},{maxLat:F3},{maxLon:F3}";
+            string bbox = string.Format(CultureInfo.InvariantCulture,
+                "{0:F3},{1:F3},{2:F3},{3:F3}",
+                minLat, minLon, maxLat, maxLon);
             
             // Just get buildings in this tiny area
             query.AppendLine($"  way[building]({bbox});");
@@ -398,7 +401,9 @@ namespace RollABall.Map
             query.AppendLine("(");
             
             // Format: (minLat,minLon,maxLat,maxLon) 
-            string bbox = $"{minLat:F6},{minLon:F6},{maxLat:F6},{maxLon:F6}";
+            string bbox = string.Format(CultureInfo.InvariantCulture,
+                "{0:F6},{1:F6},{2:F6},{3:F6}",
+                minLat, minLon, maxLat, maxLon);
             
             // Just get a few buildings for testing
             query.AppendLine($"  way[building]({bbox});");
@@ -419,7 +424,9 @@ namespace RollABall.Map
             query.AppendLine("(");
             
             // Format: (minLat,minLon,maxLat,maxLon)
-            string bbox = $"{minLat:F6},{minLon:F6},{maxLat:F6},{maxLon:F6}";
+            string bbox = string.Format(CultureInfo.InvariantCulture,
+                "{0:F6},{1:F6},{2:F6},{3:F6}",
+                minLat, minLon, maxLat, maxLon);
             
             // Major roads and highways only to avoid too much data - FIXED REGEX
             query.AppendLine($"  way[highway~\"^(motorway|trunk|primary|secondary|tertiary|residential|pedestrian|footway)$\"]({bbox});");
