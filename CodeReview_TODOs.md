@@ -62,3 +62,9 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/Testing/OSMTestController.cs | 244 | Replace magic value with configurable boundary constant | |
 | Assets/Scripts/Input/InputManager.cs | 225 | Switch to Input System events to capture keys without polling | |
 | Assets/Scripts/AudioManager.cs | 265 | Preload next track for seamless transition in shuffle mode | |
+| Assets/Scripts/AudioManager.cs | 217 | Cache player reference instead of using FindFirstObjectByType | |
+| Assets/Scripts/AudioManager.cs | 224 | Maintain map of playing sources for efficient StopSound lookup | |
+| Assets/Scripts/PlayerController.cs | 485 | Replace Debug.Log spam with debug overlay | |
+| Assets/Prefabs/Player.prefab | 2 | Consolidate duplicate player prefabs | |
+| Assets/Scenes/Level2.unity | 2 | Ensure all objects are prefab instances | |
+| Assets/Scripts/Map/MapGenerator.cs | 1643 | Pool map elements instead of destroying them each regeneration | |

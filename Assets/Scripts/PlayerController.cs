@@ -482,6 +482,7 @@ public class PlayerController : MonoBehaviour
 
     private void ShowDebugInfo()
     {
+        // TODO: Replace Debug.Log spam with a dedicated debug overlay
         Debug.Log($"Ball Status - Grounded: {isGrounded}, Flying: {IsFlying}, Speed: {rb.linearVelocity.magnitude:F2}");
         Debug.Log($"Input: {movementInput}, Jump: {jumpPressed}, Fly: {flyPressed}");
         Debug.Log($"Fly Energy: {flyEnergy:F2}/{maxFlyEnergy}");
