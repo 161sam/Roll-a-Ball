@@ -9,7 +9,7 @@ Ein Open-Source 3D-Spiel entwickelt in Unity 6.0 mit prozedural generierten Leve
 
 ## ✨ **Phase 3 - Steampunk-Erweiterungen**   
 
-STATUS: in Arbeit
+**STATUS: in Arbeit**
 
 ### 🆕 **Neue Steampunk-Features**
 - ✅ **Bewegliche Plattformen** (`MovingPlatform.cs`) - 4 Bewegungstypen mit Physik-Integration
