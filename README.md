@@ -3,7 +3,6 @@
 Ein Open-Source 3D-Spiel entwickelt in Unity 6.0 mit prozedural generierten Leveln, steampunk-inspiriertem Design und wachsendem Schwierigkeitsgrad. Der Spieler steuert eine Kugel durch atmosphärische Steampunk-Welten, sammelt Fundstücke ein und meistert komplexe Level.
 
 ![Unity Version](https://img.shields.io/badge/Unity-6.0%2B-000000?logo=unity)
-![License](https://img.shields.io/badge/License-MIT-green)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)
 
 ---
