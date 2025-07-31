@@ -28,9 +28,9 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
     [Header("Game Settings")]
-    [SerializeField] private bool debugMode = false;
-    [SerializeField] private float gameTimeScale = 1f;
-    // TODO: Move basic game settings to a ScriptableObject for easier tuning
+    [SerializeField] private GameSettings gameSettings;
+    private bool debugMode = false;
+    private float gameTimeScale = 1f;
     [SerializeField, HideInInspector] private KeyCode pauseKey = KeyCode.Escape; // moved to InputManager
     [SerializeField, HideInInspector] private KeyCode restartKey = KeyCode.R;
 
@@ -71,10 +71,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LayerMask checkpointLayer = 1;
 
     [Header("Game Rules")]
-    [SerializeField] private float fallDeathHeight = -50f;
-    [SerializeField] private bool enableRespawn = true;
-    [SerializeField] private float respawnDelay = 2f;
-    // TODO: Make respawn delay configurable per level/difficulty
+    private float fallDeathHeight = -50f;
+    private bool enableRespawn = true;
+    private float respawnDelay = 2f;
 
     // Private fields
     private GameState currentState = GameState.Playing;
@@ -133,6 +132,16 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGameManager()
     {
+        if (gameSettings)
+        {
+            debugMode = gameSettings.debugMode;
+            gameTimeScale = gameSettings.gameTimeScale;
+            fallDeathHeight = gameSettings.fallDeathHeight;
+            enableRespawn = gameSettings.enableRespawn;
+            float difficultyMult = LevelManager.Instance ? LevelManager.Instance.Config.difficultyMultiplier : 1f;
+            respawnDelay = gameSettings.GetRespawnDelay(LevelDifficulty.Easy) * difficultyMult;
+        }
+
         gameStats = new GameStats();
         gameStartTime = Time.time;
         
