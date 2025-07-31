@@ -94,3 +94,13 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/Environment/GateController.cs | 54 | Trigger opening animation instead of instantly disabling objects | |
 | Assets/Scripts/OSMGoalZoneTrigger.cs | 71 | Replace Debug.Log with structured logging | |
 | Assets/Scenes/Level2.unity | 99 | Set up scene-specific lighting settings before release | |
+| Assets/Scripts/CameraController.cs | 75 | Cache player reference to avoid repeated searches | |
+| Assets/Scripts/Map/MapStartupController.cs | 36 | Load endless mode addresses from AddressList asset | |
+| Assets/Scripts/Repairs/OSMSystemFixer.cs | 51 | Inject MapStartupController reference instead of using FindFirstObjectByType | |
+| Assets/Scripts/Repairs/OSMSystemFixer.cs | 72 | Expose fields or provide methods to remove reflection | |
+| Assets/Scripts/Repairs/OSMSystemFixer.cs | 223 | Refactor to use serialized fields instead of reflection | |
+| Assets/Scripts/Utility/PrefabPooler.cs | 113 | Invoke Clear on application quit to prevent leftover objects | |
+| Assets/Scripts/VFX/RotatingGear.cs | 12 | Expose rotation settings via ScriptableObject for consistency | |
+| Assets/Scripts/EndlessModeTester.cs | 53 | Replace Debug.Log with structured logging | |
+| Assets/Scripts/EndlessModeTester.cs | 69 | Replace Debug.Log with structured logging | |
+| Assets/Scenes/TestScenes/TEST_GeneratedLevel.unity | 3 | Remove test scene before release or convert to automated test | |

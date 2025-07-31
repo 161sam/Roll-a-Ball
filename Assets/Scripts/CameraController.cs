@@ -72,6 +72,7 @@ public class CameraController : MonoBehaviour
 
     private void FindPlayerTarget()
     {
+        // TODO: Cache player reference to avoid repeated searches
         GameObject player = GameObject.FindGameObjectWithTag(playerTag);
         if (player != null)
         {

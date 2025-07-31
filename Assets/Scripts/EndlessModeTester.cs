@@ -50,6 +50,7 @@ public class EndlessModeTester : MonoBehaviour
         PlayerPrefs.SetInt("OSMLocationIndex", 0);
         PlayerPrefs.Save();
         
+        // TODO: Replace Debug.Log with structured logging
         Debug.Log("[EndlessModeTester] Endless mode activated!");
         
         if (logDetailedInfo)
@@ -65,6 +66,7 @@ public class EndlessModeTester : MonoBehaviour
         PlayerPrefs.DeleteKey("OSMLocationIndex");
         PlayerPrefs.Save();
         
+        // TODO: Replace Debug.Log with structured logging
         Debug.Log("[EndlessModeTester] Endless mode reset!");
         
         if (logDetailedInfo)
