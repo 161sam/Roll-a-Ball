@@ -774,7 +774,7 @@ namespace RollABall.Map
                 Destroy(existingMap);
             }
 
-            GameObject[] fallbackObjects = GameObject.FindObjectsOfType<GameObject>();
+            GameObject[] fallbackObjects = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
             foreach (var obj in fallbackObjects)
             {
                 if (obj.name.StartsWith("OSM_"))
