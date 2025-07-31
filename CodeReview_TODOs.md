@@ -2,8 +2,8 @@
 
 The following TODO comments were added during code review to highlight potential improvements.
 
-| File | Line | Comment |
-|------|------|---------|
+| File | Line | Comment | Status |
+|------|------|---------|---------|
 | Assets/Scripts/GameManager.cs | 164 | Delegate input handling to a centralized InputManager | **done** |
 | Assets/Scripts/GameManager.cs | 175 | Expose restartKey in settings menu | **done** |
 | Assets/Scripts/PlayerController.cs | 434 | Expose slide duration as configurable field | **done** |
@@ -53,5 +53,5 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/Map/MapGenerator.cs | 16 | Store prefab references in a configuration asset | **done** |
 | Assets/Scripts/Map/MapGeneratorBatched.cs | 45 | Move decoration prefabs to a centralized asset | **done** |
 | Assets/Scripts/SceneTypeDetector.cs | 10 | Allow overriding scene lists at runtime via config file | **done** |
-| Assets/Scripts/Input/InputManager.cs | 25 | Support gamepad bindings alongside keyboard controls |
+| Assets/Scripts/Input/InputManager.cs | 25 | Support gamepad bindings alongside keyboard controls | **done** |
 | Assets/Scripts/SaveSystem.cs | 667 | Create incremental backup before uploading to cloud | **done** |
