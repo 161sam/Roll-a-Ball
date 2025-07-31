@@ -18,6 +18,7 @@ namespace RollABall.Environment
         [SerializeField] private float bounceReturn1 = 0.75f;
         [SerializeField] private float bounceReturn2 = 0.9375f;
         [SerializeField] private float bounceReturn3 = 0.984375f;
+        // TODO: Move bounce parameters into MovingPlatformProfile for consistency
 
         [Header("Bewegungseinstellungen")]
         [SerializeField] private Vector3 startPosition;

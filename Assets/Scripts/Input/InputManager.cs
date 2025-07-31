@@ -222,6 +222,7 @@ namespace RollABall.InputSystem
                 }
             }
             waitingForKey = false;
+            // TODO: Switch to Input System events to capture keys without polling
         }
     }
 }

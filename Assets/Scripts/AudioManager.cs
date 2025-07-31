@@ -262,6 +262,7 @@ public class AudioManager : MonoBehaviour
     {
         if (backgroundMusic.Length == 0) return;
 
+        // TODO: Preload next track for seamless transition in shuffle mode
         if (shuffleMusic)
             currentMusicIndex = Random.Range(0, backgroundMusic.Length);
         
