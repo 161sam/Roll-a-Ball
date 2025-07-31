@@ -63,6 +63,10 @@ namespace RollABall.Map
         [SerializeField] private bool enablePolygonalBuildings = true;
         [SerializeField] private Vector2 collectibleOffsetRange = new Vector2(-5f, 5f);
         [SerializeField] private float collectibleHeight = 1f;
+        [SerializeField] private float chimneyOffsetFactor = 0.3f;
+        [SerializeField] private float chimneyVerticalOffset = 0.5f;
+        [SerializeField] private float gearOffsetFactor = 0.4f;
+        [SerializeField] private Vector2 gearYOffsetRange = new Vector2(-0.2f, 0.5f);
         
         [Header("Performance Settings")]
         [SerializeField] private bool useBatching = true;
@@ -1495,11 +1499,10 @@ namespace RollABall.Map
             if (building.buildingType == "industrial" && chimneySmokeParticles != null)
             {
                 Vector3 chimneyPos = roofCenter + new Vector3(
-                    Random.Range(-buildingSize.x * 0.3f, buildingSize.x * 0.3f),
-                    0.5f,
-                    Random.Range(-buildingSize.z * 0.3f, buildingSize.z * 0.3f)
+                    Random.Range(-buildingSize.x * chimneyOffsetFactor, buildingSize.x * chimneyOffsetFactor),
+                    chimneyVerticalOffset,
+                    Random.Range(-buildingSize.z * chimneyOffsetFactor, buildingSize.z * chimneyOffsetFactor)
                 );
-                // TODO: Expose chimney offset factors via inspector fields
 
                 GameObject steamEmitter = Instantiate(chimneySmokeParticles, chimneyPos, Quaternion.identity);
                 steamEmitter.transform.SetParent(buildingObject.transform);
@@ -1513,13 +1516,12 @@ namespace RollABall.Map
                 for (int i = 0; i < gearCount; i++)
                 {
                     Vector3 gearPos = roofCenter + new Vector3(
-                        Random.Range(-buildingSize.x * 0.4f, buildingSize.x * 0.4f),
-                        Random.Range(-0.2f, 0.5f),
-                        Random.Range(-buildingSize.z * 0.4f, buildingSize.z * 0.4f)
+                        Random.Range(-buildingSize.x * gearOffsetFactor, buildingSize.x * gearOffsetFactor),
+                        Random.Range(gearYOffsetRange.x, gearYOffsetRange.y),
+                        Random.Range(-buildingSize.z * gearOffsetFactor, buildingSize.z * gearOffsetFactor)
                     );
-                    // TODO: Make gear decoration ranges configurable in LevelProfile
-                    
-                    GameObject gear = Instantiate(gearPrefab, gearPos, 
+
+                    GameObject gear = Instantiate(gearPrefab, gearPos,
                         Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)));
                     gear.transform.SetParent(buildingObject.transform);
                     gear.transform.localScale = Vector3.one * Random.Range(0.5f, 1.5f);

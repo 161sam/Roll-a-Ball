@@ -12,6 +12,15 @@ namespace RollABall.Map
         [SerializeField] private double testLat = 51.3397;  // Leipzig
         [SerializeField] private double testLon = 12.3731;  // Leipzig
         [SerializeField] private float testRadius = 500.0f; // meters
+        [SerializeField] private TestLocation[] customTestLocations;
+
+        [Serializable]
+        public class TestLocation
+        {
+            public string name;
+            public double latitude;
+            public double longitude;
+        }
         
         [Header("Test Results")]
         [SerializeField] private bool lastTestPassed = false;
@@ -62,25 +71,29 @@ namespace RollABall.Map
         [ContextMenu("Test Multiple Locations")]
         public void TestMultipleLocations()
         {
-            // TODO: Expose test locations via inspector to allow custom cases
-            var testLocations = new[]
-            {
-                ("Leipzig", 51.3397, 12.3731),
-                ("Berlin", 52.5200, 13.4050),
-                ("Hamburg", 53.5511, 9.9937),
-                ("Munich", 48.1351, 11.5820),
-                ("Reykjavik", 64.1466, -21.9426), // High latitude test
-                ("Singapore", 1.3521, 103.8198), // Near equator
-                ("Sydney", -33.8688, 151.2093)   // Southern hemisphere
-            };
+            var testLocations = customTestLocations != null && customTestLocations.Length > 0
+                ? customTestLocations
+                : new[]
+                {
+                    new TestLocation { name = "Leipzig", latitude = 51.3397, longitude = 12.3731 },
+                    new TestLocation { name = "Berlin", latitude = 52.5200, longitude = 13.4050 },
+                    new TestLocation { name = "Hamburg", latitude = 53.5511, longitude = 9.9937 },
+                    new TestLocation { name = "Munich", latitude = 48.1351, longitude = 11.5820 },
+                    new TestLocation { name = "Reykjavik", latitude = 64.1466, longitude = -21.9426 },
+                    new TestLocation { name = "Singapore", latitude = 1.3521, longitude = 103.8198 },
+                    new TestLocation { name = "Sydney", latitude = -33.8688, longitude = 151.2093 }
+                };
             
             Debug.Log($"[BoundingBoxTester] === TESTING MULTIPLE LOCATIONS ===");
             
             int passed = 0;
             int total = testLocations.Length;
             
-            foreach (var (name, lat, lon) in testLocations)
+            foreach (var location in testLocations)
             {
+                string name = location.name;
+                double lat = location.latitude;
+                double lon = location.longitude;
                 Debug.Log($"[BoundingBoxTester] Testing {name} ({lat:F4}, {lon:F4})");
                 
                 try
@@ -107,42 +120,10 @@ namespace RollABall.Map
             Debug.Log($"[BoundingBoxTester] === RESULTS: {passed}/{total} tests passed ===");
         }
         
-        // TODO: Move bounding box calculation to a shared utility class for reuse
         private (double minLat, double maxLat, double minLon, double maxLon) CalculateBoundingBox(double lat, double lon, float radius)
         {
-            // Same algorithm as in AddressResolver (improved version)
-            double radiusInDegrees = radius / 111320.0; // meters to degrees (at equator)
-            double latRadius = radiusInDegrees;
-            
-            // Correct longitude calculation based on latitude (cosine correction)
-            double latRadians = lat * Math.PI / 180.0;
-            double cosLat = Math.Cos(latRadians);
-            double lonRadius = cosLat > 0.001 ? radiusInDegrees / cosLat : radiusInDegrees; // Avoid division by zero
-            
-            double minLat = lat - latRadius;
-            double maxLat = lat + latRadius;
-            double minLon = lon - lonRadius;
-            double maxLon = lon + lonRadius;
-            
-            // STRICT bounds checking with proper limits
-            minLat = Math.Max(minLat, -89.9);
-            maxLat = Math.Min(maxLat, 89.9);
-            minLon = Math.Max(minLon, -179.9);
-            maxLon = Math.Min(maxLon, 179.9);
-            
-            // Additional safety: ensure bounding box doesn't wrap around
-            if (maxLon - minLon > 180.0)
-            {
-                Debug.LogWarning($"[BoundingBoxTester] Bounding box too wide, reducing radius");
-                double safeRadius = 90.0 * cosLat; // Max safe radius in degrees
-                lonRadius = Math.Min(lonRadius, safeRadius);
-                minLon = lon - lonRadius;
-                maxLon = lon + lonRadius;
-                minLon = Math.Max(minLon, -179.9);
-                maxLon = Math.Min(maxLon, 179.9);
-            }
-            
-            return (minLat, maxLat, minLon, maxLon);
+            var bounds = CoordinateValidator.CalculateSafeBoundingBox(lat, lon, radius);
+            return (bounds.minLat, bounds.maxLat, bounds.minLon, bounds.maxLon);
         }
         
         private bool ValidateResult((double minLat, double maxLat, double minLon, double maxLon) result, double centerLat, double centerLon)
