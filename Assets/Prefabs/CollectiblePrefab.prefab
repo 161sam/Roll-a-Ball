@@ -1,5 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+# TODO: Add LODGroup component for distant rendering
 --- !u!1 &4044417440240046019
 GameObject:
   m_ObjectHideFlags: 0

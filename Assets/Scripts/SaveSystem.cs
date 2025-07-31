@@ -383,6 +383,7 @@ public class SaveSystem : MonoBehaviour
     }
     
     // Simple XOR encryption (for basic save protection)
+    // TODO: Replace with a stronger encryption algorithm for real deployments
     private string EncryptString(string plainText, string key)
     {
         System.Text.StringBuilder encrypted = new System.Text.StringBuilder();

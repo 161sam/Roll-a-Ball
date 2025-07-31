@@ -302,6 +302,7 @@ public class AchievementSystem : MonoBehaviour
         }
         
         // Subscribe to player events
+        // TODO: Inject PlayerController dependency instead of using FindFirstObjectByType
         cachedPlayer = FindFirstObjectByType<PlayerController>();
         if (cachedPlayer)
         {

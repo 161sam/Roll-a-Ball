@@ -68,3 +68,11 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Prefabs/Player.prefab | 2 | Consolidate duplicate player prefabs | |
 | Assets/Scenes/Level2.unity | 2 | Ensure all objects are prefab instances | |
 | Assets/Scripts/Map/MapGenerator.cs | 1643 | Pool map elements instead of destroying them each regeneration | |
+| Assets/Scripts/PlayerController.cs | 154 | Inject camera reference via initializer to avoid scene search | |
+| Assets/Scripts/SaveSystem.cs | 386 | Replace with a stronger encryption algorithm for real deployments | |
+| Assets/Scripts/AchievementSystem.cs | 305 | Inject PlayerController dependency instead of using FindFirstObjectByType | |
+| Assets/Scripts/Map/AddressResolver.cs | 263 | Throttle requests and cache results to avoid API rate limits | |
+| Assets/Scenes/Level3.unity | 3 | Verify all environment objects use prefab instances | |
+| Assets/Scenes/MiniGame.unity | 3 | Ensure mini-game scene uses shared UI prefab setup | |
+| Assets/Prefabs/CollectiblePrefab.prefab | 3 | Add LODGroup component for distant rendering | |
+| Assets/OSMAssets/Materials/OSM_Road_Material.mat | 3 | Adjust texture tiling for consistent road scale | |

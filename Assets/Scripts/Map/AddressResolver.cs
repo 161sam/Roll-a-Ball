@@ -260,6 +260,7 @@ namespace RollABall.Map
         private IEnumerator ExecuteOverpassQuery(string overpassQuery, double minLat, double maxLat, double minLon, double maxLon)
         {
             Debug.Log($"[AddressResolver] Executing Overpass query");
+            // TODO: Throttle requests and cache results to avoid API rate limits
             Debug.Log($"[AddressResolver] Query:\n{overpassQuery}");
             
             // Use proper form data format for Overpass API
