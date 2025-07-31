@@ -87,7 +87,7 @@
 | TODO-OPT#83 | Assets/Scripts/Environment/RotatingObstacle.cs | OnTriggerEnter(), Zeile 56 | Integrate damage system on contact | **erledigt** |
 | TODO-OPT#84 | Assets/Scripts/Environment/SteampunkGateController.cs | Zeile 80 | Replace FindFirstObjectByType with injection | **erledigt** |
 | TODO-OPT#85 | Assets/Scripts/Environment/SteampunkGateController.cs | Start(), Zeile 96 | Delay initialization until managers ready | **erledigt** |
-| TODO-OPT#86 | Assets/Scripts/Environment/SteampunkGateController.cs | CheckSequentialRequirement(), Zeile 303 | Dedicated sequence controller | open |
+| TODO-OPT#86 | Assets/Scripts/Environment/SteampunkGateController.cs | CheckSequentialRequirement(), Zeile 303 | Dedicated sequence controller | **erledigt** |
 | TODO-OPT#87 | Assets/Scripts/Environment/SteampunkGateController.cs | OnDestroy(), Zeile 678 | Deregister from global events | reviewed |
 | TODO-OPT#88 | Assets/Scripts/Environment/SwitchTrigger.cs | Zeile 17 | Expose activation requirements | **erledigt** |
 | TODO-OPT#89 | Assets/Scripts/Environment/SwitchTrigger.cs | Awake(), Zeile 32 | Warn if gate missing | **erledigt** |
