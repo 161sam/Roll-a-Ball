@@ -51,6 +51,20 @@ namespace RollABall.Map
         {
             InitializeMonitoring();
             FindMapGenerator();
+            ApplyDisplaySettings();
+        }
+
+        private void ApplyDisplaySettings()
+        {
+            if (overlayLabel == null) return;
+
+            overlayLabel.fontSize = fontSize;
+            overlayLabel.color = textColor;
+
+            if (displayFont != null)
+            {
+                overlayLabel.font = TMPro.TMP_FontAsset.CreateFontAsset(displayFont);
+            }
         }
         
         private void Update()
