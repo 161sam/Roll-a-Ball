@@ -1,0 +1,6 @@
+{
+  "entries": [
+    {"key": "NewGame", "value": "New Game"},
+    {"key": "LastPlayed", "value": "Last played"}
+  ]
+}
