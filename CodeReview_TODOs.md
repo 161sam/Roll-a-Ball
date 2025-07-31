@@ -47,11 +47,11 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Scripts/GameManager.cs | 33 | Move basic game settings to a ScriptableObject for easier tuning |
 | Assets/Scripts/GameManager.cs | 77 | Make respawn delay configurable per level/difficulty |
 | Assets/Scripts/PlayerController.cs | 49 | Integrate Cinemachine for camera following |
-| Assets/Scripts/Environment/MovingPlatform.cs | 21 | Expose bounce parameters in inspector for finer control |
+| Assets/Scripts/Environment/MovingPlatform.cs | 21 | Expose bounce parameters in inspector for finer control | **done** |
 | Assets/Scripts/Utility/LocalizationManager.cs | 23 | Load localization data from external files to support more languages |
-| Assets/Scripts/Utility/PrefabPooler.cs | 24 | Add maximum pool size to prevent uncontrolled growth |
+| Assets/Scripts/Utility/PrefabPooler.cs | 24 | Add maximum pool size to prevent uncontrolled growth | **done** |
 | Assets/Scripts/Map/MapGenerator.cs | 16 | Store prefab references in a configuration asset |
 | Assets/Scripts/Map/MapGeneratorBatched.cs | 45 | Move decoration prefabs to a centralized asset |
 | Assets/Scripts/SceneTypeDetector.cs | 10 | Allow overriding scene lists at runtime via config file |
 | Assets/Scripts/Input/InputManager.cs | 25 | Support gamepad bindings alongside keyboard controls |
-| Assets/Scripts/SaveSystem.cs | 667 | Create incremental backup before uploading to cloud |
+| Assets/Scripts/SaveSystem.cs | 667 | Create incremental backup before uploading to cloud | **done** |

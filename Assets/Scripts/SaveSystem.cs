@@ -664,8 +664,8 @@ public class SaveSystem : MonoBehaviour
     private System.Collections.IEnumerator SyncToCloud(SaveData saveData)
     {
         if (!enableCloudSync && !simulateCloudSync) yield break;
-        // TODO: Create incremental backup before uploading to cloud
-        
+        CreateIncrementalBackup(saveData);
+
         LogSave("Starting cloud sync...");
         
         // Simulate cloud upload delay
@@ -684,6 +684,31 @@ public class SaveSystem : MonoBehaviour
             // - Apple Game Center
             // - Custom cloud service
             LogSave("Cloud sync not yet implemented");
+        }
+    }
+
+    /// <summary>
+    /// Create a timestamped backup of the save file before uploading.
+    /// </summary>
+    private void CreateIncrementalBackup(SaveData data)
+    {
+        try
+        {
+            string backupDir = Path.Combine(savePath, "Backups");
+            if (!Directory.Exists(backupDir))
+                Directory.CreateDirectory(backupDir);
+
+            string sourceFile = Path.Combine(savePath, $"save_slot_{data.saveSlot:D2}.dat");
+            if (!File.Exists(sourceFile)) return;
+
+            string fileName = $"backup_slot_{data.saveSlot:D2}_{System.DateTime.Now:yyyyMMddHHmmss}.dat";
+            string destFile = Path.Combine(backupDir, fileName);
+            File.Copy(sourceFile, destFile, true);
+            LogSave($"Created backup: {destFile}");
+        }
+        catch (System.Exception e)
+        {
+            LogSave($"Failed to create backup: {e.Message}", true);
         }
     }
     

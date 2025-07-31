@@ -11,16 +11,13 @@ namespace RollABall.Environment
     {
         [Header("Profile")]
         [SerializeField] private MovingPlatformProfile profile;
-        private const float BounceFactor = 7.5625f;
-        private const float BounceDiv = 2.75f;
-        private const float BounceStage1 = 1f / BounceDiv;
-        private const float BounceStage2 = 2f / BounceDiv;
-        private const float BounceStage3 = 2.5f / BounceDiv;
-        private const float BounceStage4 = 2.625f / BounceDiv;
-        private const float BounceReturn1 = 0.75f;
-        private const float BounceReturn2 = 0.9375f;
-        private const float BounceReturn3 = 0.984375f;
-        // TODO: Expose bounce parameters in inspector for finer control
+
+        [Header("Bounce Settings")]
+        [SerializeField] private float bounceFactor = 7.5625f;
+        [SerializeField] private float bounceDiv = 2.75f;
+        [SerializeField] private float bounceReturn1 = 0.75f;
+        [SerializeField] private float bounceReturn2 = 0.9375f;
+        [SerializeField] private float bounceReturn3 = 0.984375f;
 
         [Header("Bewegungseinstellungen")]
         [SerializeField] private Vector3 startPosition;
@@ -266,21 +263,26 @@ namespace RollABall.Environment
         /// </summary>
         private float BounceEaseOut(float t)
         {
-            if (t < BounceStage1)
+            float stage1 = 1f / bounceDiv;
+            float stage2 = 2f / bounceDiv;
+            float stage3 = 2.5f / bounceDiv;
+            float stage4 = 2.625f / bounceDiv;
+
+            if (t < stage1)
             {
-                return BounceFactor * t * t;
+                return bounceFactor * t * t;
             }
-            else if (t < BounceStage2)
+            else if (t < stage2)
             {
-                return BounceFactor * (t -= (1.5f / BounceDiv)) * t + BounceReturn1;
+                return bounceFactor * (t -= (1.5f / bounceDiv)) * t + bounceReturn1;
             }
-            else if (t < BounceStage3)
+            else if (t < stage3)
             {
-                return BounceFactor * (t -= (2.25f / BounceDiv)) * t + BounceReturn2;
+                return bounceFactor * (t -= (2.25f / bounceDiv)) * t + bounceReturn2;
             }
             else
             {
-                return BounceFactor * (t -= (BounceStage4)) * t + BounceReturn3;
+                return bounceFactor * (t -= stage4) * t + bounceReturn3;
             }
         }
         
@@ -365,6 +367,8 @@ namespace RollABall.Environment
             // Automatische Korrektur ungültiger Werte
             moveSpeed = Mathf.Max(0.1f, moveSpeed);
             pauseDuration = Mathf.Max(0f, pauseDuration);
+            bounceFactor = Mathf.Max(0f, bounceFactor);
+            bounceDiv = Mathf.Max(0.1f, bounceDiv);
             if (startPosition == endPosition)
             {
                 Debug.LogWarning($"[MovingPlatform] Start and End positions are identical on {name}", this);
