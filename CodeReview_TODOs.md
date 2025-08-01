@@ -114,3 +114,11 @@ The following TODO comments were added during code review to highlight potential
 | Assets/Resources/AddressLists/EndlessAddresses.asset | 3 | Support dynamic address sets loaded from server | |
 | Assets/Scenes/GeneratedLevel.unity | 4 | Remove scene once runtime generator is stable | |
 | Assets/ScriptableObjects/DefaultTagConfig.asset | 3 | Allow runtime extension of tags for mods | |
+| Assets/Scripts/LevelDatabase.cs | 11 | Add OnValidate to check for duplicate scene names | |
+| Assets/Scripts/Utility/ColliderPooler.cs | 14 | Add maximum pool size and prewarm option to control memory usage | |
+| Assets/Scripts/Utility/SceneObjectUtils.cs | 20 | Allow optional parent transform to avoid cluttering scene root | |
+| Assets/Scripts/Utility/LevelProgressionSetup.cs | 84 | Automatically add new profile to build settings if scenes missing | |
+| Assets/Scripts/SceneValidator.cs | 55 | Split validation categories into modular validator classes | |
+| Assets/Scripts/SceneValidator.cs | 565 | Allow configuring output directory via ScriptableObject | |
+| Assets/Scenes/Level1_backup.unity | 3 | Archive or delete this backup scene before release | |
+| Assets/Scenes/GeneratedLevel_backup.unity | 3 | Archive or delete this backup scene before release | |

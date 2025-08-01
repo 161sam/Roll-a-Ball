@@ -11,6 +11,7 @@ namespace RollABall.Utility
     {
         private static readonly Queue<GameObject> meshPool = new();
         private static readonly Queue<GameObject> boxPool = new();
+        // TODO: Add maximum pool size and prewarm option to control memory usage
 
         /// <summary>
         /// Get a pooled collider object. If <paramref name="useMeshCollider"/> is

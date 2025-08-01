@@ -52,6 +52,7 @@ public class SceneValidator : MonoBehaviour
     /// </summary>
     public IEnumerator ValidateSceneAsync()
     {
+        // TODO: Split validation categories into separate modular validator classes
         LogValidation("🔍 Starting comprehensive scene validation...", true);
 
         int totalSteps = 0;
@@ -561,8 +562,9 @@ public class SceneValidator : MonoBehaviour
     
     private void SaveValidationReport()
     {
-        string reportPath = "/home/saschi/Games/Roll-a-Ball/Reports/ValidationReport_" + 
-                           validationReport.sceneName + "_" + 
+        // TODO: Allow configuring output directory via ScriptableObject
+        string reportPath = "/home/saschi/Games/Roll-a-Ball/Reports/ValidationReport_" +
+                           validationReport.sceneName + "_" +
                            System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".md";
         
         string report = GenerateMarkdownReport();
