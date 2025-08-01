@@ -8,4 +8,5 @@ using UnityEngine;
 public class LevelDatabase : ScriptableObject
 {
     public List<LevelInfo> levels = new();
+    // TODO: Add OnValidate to check for duplicate scene names in levels list
 }

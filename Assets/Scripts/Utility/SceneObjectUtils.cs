@@ -17,6 +17,7 @@ namespace RollABall.Utility
                 return existing;
 
             var go = new GameObject(string.IsNullOrEmpty(objectName) ? typeof(T).Name : objectName);
+            // TODO: Allow optional parent transform to avoid cluttering scene root
             return go.AddComponent<T>();
         }
     }

@@ -81,6 +81,7 @@ public static class LevelProgressionSetup
     private static void CreateLevelProgressionProfileMenu()
     {
         CreateDefaultLevelProgression();
+        // TODO: Automatically add new profile to build settings if scenes missing
     }
     
     /// <summary>
