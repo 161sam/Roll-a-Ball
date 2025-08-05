@@ -5,6 +5,7 @@ using RollABall.Utility;
 /// <summary>
 /// Controller für sammelbare Objekte im Roll-a-Ball Spiel
 /// Handles collection logic, audio feedback, and visual effects
+/// FIXED: Improved event handling and state management
 /// </summary>
 [System.Serializable]
 public class CollectibleData
@@ -54,15 +55,16 @@ public class CollectibleController : MonoBehaviour
     private bool isCollecting = false;
     private bool isCollected = false;
     private float pulseTimer = 0f;
+    private readonly object lockObject = new object(); // Thread safety for collection state
 
-    // Public Events für GameManager Integration
+    // Public Events für GameManager/LevelManager Integration
     public System.Action<CollectibleController> OnCollectiblePickedUp;
 
     // Properties
     public CollectibleData Data => collectibleData;
     public bool IsCollected => isCollected;
-    public string ItemName => collectibleData.itemName;
-    public int PointValue => collectibleData.pointValue;
+    public string ItemName => collectibleData?.itemName ?? gameObject.name;
+    public int PointValue => collectibleData?.pointValue ?? 1;
 
     void Awake()
     {
@@ -73,6 +75,12 @@ public class CollectibleController : MonoBehaviour
     {
         ValidateSetup();
         originalScale = transform.localScale;
+        
+        // Register with LevelManager if available
+        if (LevelManager.Instance != null && !IsCollected)
+        {
+            LevelManager.Instance.AddCollectible(this);
+        }
     }
 
     void Update()
@@ -81,6 +89,15 @@ public class CollectibleController : MonoBehaviour
         {
             RotateLocally();
             HandlePulseEffect();
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Clean unregister from LevelManager
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.RemoveCollectible(this);
         }
     }
 
@@ -160,7 +177,7 @@ public class CollectibleController : MonoBehaviour
 
     private void RotateLocally()
     {
-        if (!collectibleData.rotateObject) return;
+        if (collectibleData?.rotateObject != true) return;
 
         // Rotate around this object's local Y-axis
         float angle = collectibleData.rotationSpeed * Time.deltaTime;
@@ -169,7 +186,7 @@ public class CollectibleController : MonoBehaviour
 
     private void HandlePulseEffect()
     {
-        if (!collectibleData.enablePulseEffect) return;
+        if (collectibleData?.enablePulseEffect != true) return;
 
         pulseTimer += Time.deltaTime * collectibleData.pulseSpeed;
         float pulseValue = 1f + Mathf.Sin(pulseTimer) * collectibleData.pulseIntensity;
@@ -189,12 +206,22 @@ public class CollectibleController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Main collection method - THREAD SAFE
+    /// </summary>
     public void CollectItem()
     {
-        if (isCollecting || isCollected) return;
+        lock (lockObject)
+        {
+            if (isCollecting || isCollected) 
+            {
+                Debug.LogWarning($"[CollectibleController] {gameObject.name} already collecting/collected, ignoring...");
+                return;
+            }
 
-        isCollecting = true;
-        isCollected = true;
+            isCollecting = true;
+            isCollected = true;
+        }
 
         // Play sound effect
         PlayCollectionSound();
@@ -202,12 +229,20 @@ public class CollectibleController : MonoBehaviour
         // Trigger particle effect
         TriggerCollectionEffect();
 
-        // Invoke events
+        // Invoke Unity events
         OnCollected?.Invoke();
         OnCollectedWithData?.Invoke(collectibleData);
-        OnCollectiblePickedUp?.Invoke(this);
 
-        // COLLECTIBLE FIX: rely on event system to notify LevelManager
+        // Fire main event for LevelManager (SINGLE EVENT FIRE)
+        try
+        {
+            OnCollectiblePickedUp?.Invoke(this);
+            Debug.Log($"[CollectibleController] Event fired for {gameObject.name}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[CollectibleController] Error firing collection event for {gameObject.name}: {e.Message}");
+        }
 
         // Visual feedback and destruction
         StartCoroutine(CollectionSequence());
@@ -215,7 +250,7 @@ public class CollectibleController : MonoBehaviour
 
     private void PlayCollectionSound()
     {
-        if (collectibleData.collectSound && audioSource)
+        if (collectibleData?.collectSound && audioSource)
         {
             audioSource.clip = collectibleData.collectSound;
             audioSource.volume = collectibleData.soundVolume;
@@ -334,10 +369,16 @@ public class CollectibleController : MonoBehaviour
         CollectItem();
     }
 
+    /// <summary>
+    /// Reset collectible for object pooling - THREAD SAFE
+    /// </summary>
     public void ResetCollectible()
     {
-        isCollected = false;
-        isCollecting = false;
+        lock (lockObject)
+        {
+            isCollected = false;
+            isCollecting = false;
+        }
         
         if (triggerCollider)
             triggerCollider.enabled = true;
@@ -355,11 +396,14 @@ public class CollectibleController : MonoBehaviour
             }
         }
 
-        // Return collectible to pool to reuse later
-        PrefabPooler.Release(gameObject);
+        // Reregister with LevelManager if available
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.AddCollectible(this);
+        }
     }
 
-    // Debug
+    // Debug visualization
     void OnDrawGizmosSelected()
     {
         if (triggerCollider)
@@ -376,5 +420,15 @@ public class CollectibleController : MonoBehaviour
                 Gizmos.DrawWireCube(box.center, box.size);
             }
         }
+    }
+
+    // Debug info
+    public string GetDebugInfo()
+    {
+        return $"Collected: {isCollected}\n" +
+               $"Collecting: {isCollecting}\n" +
+               $"Item Name: {ItemName}\n" +
+               $"Point Value: {PointValue}\n" +
+               $"Event Subscribers: {OnCollectiblePickedUp?.GetInvocationList()?.Length ?? 0}";
     }
 }
