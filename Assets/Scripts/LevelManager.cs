@@ -476,52 +476,51 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private string DetermineNextScene(string currentScene)
     {
+        // After Level3 always switch to procedurally generated levels
+        if (currentScene.StartsWith("Level3"))
+            return "GeneratedLevel";
+
         // Use progression profile if available
         if (progressionProfile && progressionProfile.ValidateProgression())
         {
             string nextScene = progressionProfile.GetNextScene(currentScene);
-            
-            // Handle special endless mode setup
-            if (nextScene == "Level_OSM" && currentScene == "Level3")
+
+            if (!string.IsNullOrEmpty(nextScene))
             {
-                // MERGED: OSM integration - Activate endless OSM mode after Level 3
-                PlayerPrefs.SetInt("AutoGenerateOSMMode", 1);
-                PlayerPrefs.SetInt("OSMLocationIndex", 0);
-                PlayerPrefs.Save();
+                // Handle special endless mode setup
+                if (nextScene == "Level_OSM" && currentScene == "Level3")
+                {
+                    // MERGED: OSM integration - Activate endless OSM mode after Level 3
+                    PlayerPrefs.SetInt("AutoGenerateOSMMode", 1);
+                    PlayerPrefs.SetInt("OSMLocationIndex", 0);
+                    PlayerPrefs.Save();
+                }
+                else if (nextScene == "Level_OSM" && currentScene == "Level_OSM")
+                {
+                    // MERGED: Continue endless OSM mode with next location
+                    int currentIndex = PlayerPrefs.GetInt("OSMLocationIndex", 0);
+                    PlayerPrefs.SetInt("OSMLocationIndex", currentIndex + 1);
+                    PlayerPrefs.Save();
+                }
+
+                return nextScene;
             }
-            else if (nextScene == "Level_OSM" && currentScene == "Level_OSM")
-            {
-                // MERGED: Continue endless OSM mode with next location
-                int currentIndex = PlayerPrefs.GetInt("OSMLocationIndex", 0);
-                PlayerPrefs.SetInt("OSMLocationIndex", currentIndex + 1);
-                PlayerPrefs.Save();
-            }
-            
-            return nextScene;
         }
-        
+
         // FALLBACK: Hardcoded progression for backward compatibility
         if (debugMode)
-            Debug.LogWarning("[LevelManager] No progression profile assigned, using fallback logic");
-            
+            Debug.LogWarning("[LevelManager] Using fallback level progression");
+
         if (currentScene == "Level1" || currentScene == "Level_1")
             return "Level2";
         else if (currentScene == "Level2" || currentScene == "Level_2")
             return "Level3";
-        else if (currentScene.StartsWith("Level3"))
-        {
-            return "GeneratedLevel"; // LEVEL PROGRESSION FIX
-        }
         else if (currentScene.StartsWith("GeneratedLevel"))
-        {
-            return "GeneratedLevel"; // LEVEL PROGRESSION FIX: loop generated levels
-        }
+            return "GeneratedLevel"; // Loop generated levels
         else if (currentScene == "Level_OSM")
-        {
-            return "Level_OSM"; // LEVEL PROGRESSION FIX: stay in OSM mode
-        }
+            return "Level_OSM"; // Stay in OSM mode
 
-        return "";
+        return string.Empty;
     }
 
     private void UpdateUI()
