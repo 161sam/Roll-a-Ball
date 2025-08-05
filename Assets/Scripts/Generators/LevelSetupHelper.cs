@@ -1,28 +1,26 @@
-using UnityEngine;
-
 #if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using System.IO;
-#endif
 
 /// <summary>
-/// Helper-Klasse zum automatischen Setup des prozeduralen Levelgenerierungssystems
-/// Wird beim ersten Unity-Start nach dem Hinzufügen der Scripts ausgeführt
+/// Helper-Klasse zum automatischen Setup des prozeduralen Levelgenerierungssystems.
+/// Wird beim ersten Unity-Start nach dem Hinzufügen der Scripts ausgeführt.
 /// </summary>
 [InitializeOnLoad]
 public class LevelSetupHelper
 {
     static LevelSetupHelper()
     {
-        #if UNITY_EDITOR
-        EditorApplication.delayCall += SetupProcedualSystem;
-        #endif
+        EditorApplication.delayCall += SetupProceduralSystem;
     }
 
-    #if UNITY_EDITOR
+    /// <summary>
+    /// Richtet das prozedurale Levelgenerierungssystem ein, indem benötigte Assets und Szenen erstellt werden.
+    /// </summary>
     [MenuItem("Roll-a-Ball/Setup Procedural Generation System")]
-    public static void SetupProcedualSystem()
+    public static void SetupProceduralSystem()
     {
         bool setupRequired = false;
 
@@ -240,5 +238,5 @@ public class LevelSetupHelper
         // Öffne die Szene
         EditorSceneManager.OpenScene(scenePath);
     }
-    #endif
 }
+#endif
