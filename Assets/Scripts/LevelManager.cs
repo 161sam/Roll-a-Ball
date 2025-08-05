@@ -119,13 +119,13 @@ public class LevelManager : MonoBehaviour
 
     void OnDisable()
     {
-        UnsubscribeFromCollectibleEvents(); // EVENT DOUBLE-FIRE FIX
+        UnsubscribeFromCollectibleEvents(); // EVENT HANDLING CONSOLIDATION
     }
 
     void OnDestroy()
     {
         // CLAUDE: FIXED - Unsubscribe from collectible events to avoid memory leaks
-        UnsubscribeFromCollectibleEvents();
+        UnsubscribeFromCollectibleEvents(); // EVENT HANDLING CONSOLIDATION
 
         if (collectedCollectibles != null)
             ReturnHashSetToPool(collectedCollectibles);
@@ -295,27 +295,46 @@ public class LevelManager : MonoBehaviour
 
     private void SubscribeToCollectibleEvents()
     {
-        ToggleCollectibleEvents(true);
+        ToggleCollectibleEvents(true); // EVENT HANDLING CONSOLIDATION
     }
 
     private void UnsubscribeFromCollectibleEvents()
     {
-        ToggleCollectibleEvents(false);
+        ToggleCollectibleEvents(false); // EVENT HANDLING CONSOLIDATION
     }
 
+    // EVENT HANDLING CONSOLIDATION
+    public void RegisterCollectibleEvents(CollectibleController collectible)
+    {
+        if (!collectible) return;
+        collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
+        Debug.Log($"Unregistered OnCollectibleCollected for {collectible.name}");
+        collectible.OnCollectiblePickedUp += OnCollectibleCollected;
+        Debug.Log($"Registered OnCollectibleCollected for {collectible.name}");
+    }
+
+    // EVENT HANDLING CONSOLIDATION
+    public void UnregisterCollectibleEvents(CollectibleController collectible)
+    {
+        if (!collectible) return;
+        collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
+        Debug.Log($"Unregistered OnCollectibleCollected for {collectible.name}");
+    }
+
+    // EVENT HANDLING CONSOLIDATION
     private void ToggleCollectibleEvents(bool subscribe)
     {
         if (levelCollectibles == null) return;
 
         foreach (var collectible in levelCollectibles)
         {
-            if (!collectible) continue;
-            collectible.OnCollectiblePickedUp -= OnCollectibleCollected; // COLLECTIBLE COUNTER FIX: avoid duplicate handlers
-            Debug.Log("Unregistered OnCollectibleCollected"); // EVENT DOUBLE-FIRE FIX
             if (subscribe)
             {
-                collectible.OnCollectiblePickedUp += OnCollectibleCollected; // EVENT DOUBLE-FIRE FIX
-                Debug.Log("Registered OnCollectibleCollected"); // EVENT DOUBLE-FIRE FIX
+                RegisterCollectibleEvents(collectible);
+            }
+            else
+            {
+                UnregisterCollectibleEvents(collectible);
             }
         }
     }
@@ -326,6 +345,7 @@ public class LevelManager : MonoBehaviour
 
         if (!collectedCollectibles.Add(collectible)) return; // COLLECTIBLE COUNTER FIX: process each collectible once
 
+        Debug.Log($"[Event Fired] {collectible.name}"); // EVENT HANDLING CONSOLIDATION
         collectedCountCache++;
         UpdateCollectibleCount();
         Debug.Log($"[Collectible Collected] {collectedCountCache}/{levelConfig.totalCollectibles}"); // COLLECTIBLE COUNT FIX
@@ -537,10 +557,8 @@ public class LevelManager : MonoBehaviour
         if (levelCollectibles.Add(collectible))
         {
             collectedCollectibles.Remove(collectible); // COLLECTIBLE COUNTER FIX: reset collected state for pooled objects
-            collectible.OnCollectiblePickedUp -= OnCollectibleCollected; // COLLECTIBLE COUNTER FIX: prevent double subscription
-            collectible.OnCollectiblePickedUp += OnCollectibleCollected;
-            UpdateCollectibleCount();
-            UpdateUI();
+            UpdateCollectibleCount(); // EVENT HANDLING CONSOLIDATION
+            UpdateUI(); // EVENT HANDLING CONSOLIDATION
         }
     }
 
@@ -549,7 +567,7 @@ public class LevelManager : MonoBehaviour
         if (levelCollectibles.Remove(collectible))
         {
             collectedCollectibles.Remove(collectible); // COLLECTIBLE COUNTER FIX: maintain tracking
-            collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
+            UnregisterCollectibleEvents(collectible); // EVENT HANDLING CONSOLIDATION
             UpdateCollectibleCount();
             UpdateUI();
         }

@@ -338,6 +338,7 @@ public class CollectibleDiagnosticTool : MonoBehaviour
             if (levelManager)
             {
                 levelManager.AddCollectible(collectible);
+                levelManager.RegisterCollectibleEvents(collectible); // EVENT HANDLING CONSOLIDATION
                 Log($"Reconnected '{collectible.name}' to LevelManager");
             }
         }
