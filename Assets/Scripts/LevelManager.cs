@@ -126,7 +126,7 @@ public class LevelManager : MonoBehaviour
     private void FindAllCollectibles()
     {
         var foundCollectibles = FindObjectsByType<CollectibleController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
-            .Where(c => c != null && !c.IsCollected)
+            .Where(c => c != null && c.isActiveAndEnabled && !c.IsCollected)
             .ToArray();
 
         levelCollectibles.Clear();
@@ -141,7 +141,7 @@ public class LevelManager : MonoBehaviour
         // Eindeutige Liste erzwingen - alle null-Referenzen und doppelt referenzierte
         // GameObjects entfernen
         levelCollectibles = levelCollectibles
-            .Where(c => c != null && c.gameObject.activeInHierarchy && !c.IsCollected)
+            .Where(c => c != null && c.isActiveAndEnabled && !c.IsCollected)
             .GroupBy(c => c.gameObject)
             .Select(g => g.First())
             .ToList();
