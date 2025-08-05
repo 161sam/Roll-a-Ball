@@ -7,10 +7,10 @@ using RollABall.Utility;
 namespace RollABall.Map
 {
     /// <summary>
-    /// Performance-optimized MapGenerator with mesh batching
-    /// Combines road segments and buildings by material to reduce Draw Calls
+    /// Performance-optimized OSM map generator with mesh batching.
+    /// Combines roads, buildings, and areas by material to reduce draw calls.
     /// </summary>
-    // TODO: Add AddComponentMenu attribute for inspector clarity
+    [AddComponentMenu("Roll-a-Ball/Map Generator Batched")]
     public class MapGeneratorBatched : MonoBehaviour
     {
         [Header("Prefab Configuration")]
@@ -23,7 +23,7 @@ namespace RollABall.Map
         [SerializeField, HideInInspector] private GameObject collectiblePrefab;
         [SerializeField, HideInInspector] private GameObject goalZonePrefab;
         [SerializeField, HideInInspector] private GameObject playerPrefab;
-        
+
         [Header("Road Materials by Type")]
         [SerializeField] private Material roadMotorway;
         [SerializeField] private Material roadPrimary;
@@ -31,83 +31,83 @@ namespace RollABall.Map
         [SerializeField] private Material roadResidential;
         [SerializeField] private Material roadFootway;
         [SerializeField] private Material roadDefault;
-        
+
         [Header("Building Materials by Type")]
         [SerializeField] private Material residentialMaterial;
         [SerializeField] private Material industrialMaterial;
         [SerializeField] private Material commercialMaterial;
         [SerializeField] private Material officeMaterial;
         [SerializeField] private Material defaultBuildingMaterial;
-        
+
         [Header("Area Materials")]
         [SerializeField] private Material parkMaterial;
         [SerializeField] private Material waterMaterial;
         [SerializeField] private Material forestMaterial;
         [SerializeField] private Material grassMaterial;
         [SerializeField] private Material defaultAreaMaterial;
-        
+
         [Header("Steampunk Decoration Prefabs")]
         [SerializeField, HideInInspector] private GameObject gearPrefab;
         [SerializeField, HideInInspector] private GameObject steamPipePrefab;
         [SerializeField, HideInInspector] private GameObject chimneySmokeParticles;
-        
+
         [Header("Batching Settings")]
         [SerializeField] private bool enableBatching = true;
         [SerializeField] private bool enableStaticBatching = true;
         [SerializeField] private bool separateColliders = true;
         [SerializeField] private bool batchAreas = true;
-        
+
         [Header("Road Settings")]
         [SerializeField] private float roadHeightOffset = 0.05f;
-        [SerializeField] private bool enableRoadColliders = false; // Usually better for gameplay
+        [SerializeField] private bool enableRoadColliders = false;
         [SerializeField] private bool enableFootwayColliders = false;
-        
+
         [Header("Building Generation Settings")]
         [SerializeField] private float buildingHeightMultiplier = 1.0f;
-        // Per-building height variation handled via OSMBuilding.CalculateHeight()
         [SerializeField] private int collectiblesPerBuilding = 2;
         [SerializeField] private bool enableSteampunkEffects = true;
         [SerializeField] private LayerMask groundLayer = 1;
         [SerializeField] private float minimumBuildingSize = 2.0f;
-        // TODO: Implement polygonal building generation using OSM building outlines
-        // [SerializeField] private bool enablePolygonalBuildings = true;
-        
+
         [Header("Performance Settings")]
         [SerializeField] private int maxBuildingsPerFrame = 5;
         [SerializeField] private int maxRoadSegmentsPerFrame = 10;
-        
+
+        [Header("Debug")]
+        [SerializeField] private bool debugMode = true;
+
         // Generation state
         private Transform mapContainer;
         private OSMMapData currentMapData;
         private Vector3 playerSpawnPosition;
-        private bool isGenerating = false;
-        
+        private bool isGenerating;
+
         // Events
         public event System.Action<OSMMapData> OnMapGenerationStarted;
         public event System.Action<Vector3> OnPlayerSpawnPositionSet;
         public event System.Action OnMapGenerationCompleted;
         public event System.Action<string> OnGenerationError;
-        
+
         // Material categories
         private enum RoadCategory { Motorway, Primary, Secondary, Residential, Footway, Default }
         private enum BuildingCategory { Residential, Industrial, Commercial, Office, Default }
         private enum AreaCategory { Park, Water, Forest, Grass, Default }
 
-        // Batching Collections - organized by material for efficient combining
+        // Mesh collections for batching
         private Dictionary<RoadCategory, List<CombineInstance>> roadMeshesByMaterial = new();
         private Dictionary<BuildingCategory, List<CombineInstance>> buildingMeshesByMaterial = new();
         private Dictionary<AreaCategory, List<CombineInstance>> areaMeshesByMaterial = new();
-        
-        // Separate collider collections for non-batched physics
-        private List<ColliderData> roadColliders = new List<ColliderData>();
-        private List<ColliderData> buildingColliders = new List<ColliderData>();
-        
-        // Container references for batched objects
+
+        // Colliders
+        private List<ColliderData> roadColliders = new();
+        private List<ColliderData> buildingColliders = new();
+
+        // Containers
         private Transform batchedRoadsContainer;
         private Transform batchedBuildingsContainer;
         private Transform batchedAreasContainer;
         private Transform collidersContainer;
-        
+
         private void Awake()
         {
             ApplyPrefabConfig();
@@ -117,8 +117,7 @@ namespace RollABall.Map
 
         private void ApplyPrefabConfig()
         {
-            if (prefabsConfig == null)
-                return;
+            if (!prefabsConfig) return;
 
             roadPrefab = prefabsConfig.roadPrefab;
             buildingPrefab = prefabsConfig.buildingPrefab;
@@ -131,220 +130,128 @@ namespace RollABall.Map
             steamPipePrefab = prefabsConfig.steamPipePrefab;
             chimneySmokeParticles = prefabsConfig.chimneySmokeParticles;
         }
-        
-        /// <summary>
-        /// Initialize collections for mesh batching by material type
-        /// </summary>
+
         private void InitializeBatchingCollections()
         {
-            // Road collections by material type
             roadMeshesByMaterial.Clear();
             foreach (RoadCategory cat in System.Enum.GetValues(typeof(RoadCategory)))
                 roadMeshesByMaterial[cat] = new List<CombineInstance>();
 
-            // Building collections by material type
             buildingMeshesByMaterial.Clear();
             foreach (BuildingCategory cat in System.Enum.GetValues(typeof(BuildingCategory)))
                 buildingMeshesByMaterial[cat] = new List<CombineInstance>();
 
-            // Area collections by material type
             if (batchAreas)
             {
                 areaMeshesByMaterial.Clear();
                 foreach (AreaCategory cat in System.Enum.GetValues(typeof(AreaCategory)))
                     areaMeshesByMaterial[cat] = new List<CombineInstance>();
             }
-            
-            // Clear collider collections
+
             roadColliders.Clear();
             buildingColliders.Clear();
         }
-        
-        /// <summary>
-        /// Generate Unity world from OSM map data with performance optimization
-        /// </summary>
+
         public void GenerateMap(OSMMapData mapData)
         {
-            if (isGenerating)
-            {
-                Debug.LogWarning("[MapGeneratorBatched] Generation already in progress");
-                return;
-            }
-            
-            if (mapData == null || !mapData.IsValid())
-            {
-                OnGenerationError?.Invoke("Invalid map data provided");
-                return;
-            }
-            
+            if (isGenerating) { Debug.LogWarning("[MapGen] Already generating."); return; }
+            if (mapData == null || !mapData.IsValid()) { OnGenerationError?.Invoke("Invalid map data"); return; }
+
             currentMapData = mapData;
             StartCoroutine(GenerateMapCoroutine());
         }
-        
-        /// <summary>
-        /// Clear existing map and generate new one
-        /// </summary>
+
         public void RegenerateMap(OSMMapData mapData)
         {
             ClearExistingMap();
             GenerateMap(mapData);
         }
-        
-        /// <summary>
-        /// Main generation coroutine with batching optimization
-        /// </summary>
+
         private IEnumerator GenerateMapCoroutine()
         {
             isGenerating = true;
             OnMapGenerationStarted?.Invoke(currentMapData);
-            
-            Debug.Log("[MapGeneratorBatched] Starting batched map generation...");
-            
-            bool hasError = false;
-            string errorMessage = "";
-            
+
+            Log("Starting batched map generation");
+
             try
             {
-                // Clear existing content and prepare containers
                 ClearExistingMap();
                 CreateBatchingContainers();
                 InitializeBatchingCollections();
             }
             catch (System.Exception e)
             {
-                hasError = true;
-                errorMessage = $"Failed to clear existing map: {e.Message}";
+                FailGeneration($"Failed to clear map: {e.Message}");
+                yield break;
             }
-            
-            if (!hasError)
-            {
-                yield return null;
-                
-                // Generate ground plane
-                yield return StartCoroutine(GenerateGroundPlane());
-                
-                // Generate road meshes (collect, don't instantiate yet)
-                yield return StartCoroutine(CollectRoadMeshes());
-                
-                // Generate building meshes (collect, don't instantiate yet) 
-                yield return StartCoroutine(CollectBuildingMeshes());
-                
-                // Generate area meshes (collect, don't instantiate yet)
-                if (batchAreas)
-                {
-                    yield return StartCoroutine(CollectAreaMeshes());
-                }
-                else
-                {
-                    yield return StartCoroutine(GenerateAreas());
-                }
-                
-                // Apply batching - combine all collected meshes
-                if (enableBatching)
-                {
-                    yield return StartCoroutine(ApplyMeshBatching());
-                }
-                
-                // Create separate colliders if needed
-                if (separateColliders)
-                {
-                    yield return StartCoroutine(CreateSeparateColliders());
-                }
-                
-                // Place dynamic objects (non-batched)
-                yield return StartCoroutine(PlaceCollectibles());
-                yield return StartCoroutine(PlaceGoalZone());
-                
-                // Set player spawn position
-                SetPlayerSpawnPosition();
-                
-                // Add Steampunk atmosphere
-                if (enableSteampunkEffects)
-                {
-                    yield return StartCoroutine(AddSteampunkAtmosphere());
-                }
-                
-                Debug.Log("[MapGeneratorBatched] Batched map generation completed successfully");
-                LogPerformanceStats();
-                OnMapGenerationCompleted?.Invoke();
-            }
-            else
-            {
-                Debug.LogError($"[MapGeneratorBatched] Generation failed: {errorMessage}");
-                OnGenerationError?.Invoke($"Generation failed: {errorMessage}");
-            }
-            
+
+            yield return GenerateGroundPlane();
+            yield return CollectRoadMeshes();
+            yield return CollectBuildingMeshes();
+            if (batchAreas) yield return CollectAreaMeshes(); else yield return GenerateAreas();
+
+            if (enableBatching) yield return ApplyMeshBatching();
+            if (separateColliders) yield return CreateSeparateColliders();
+
+            yield return PlaceCollectibles();
+            yield return PlaceGoalZone();
+
+            SetPlayerSpawnPosition();
+            if (enableSteampunkEffects) yield return AddSteampunkAtmosphere();
+
+            LogPerformanceStats();
+            OnMapGenerationCompleted?.Invoke();
             isGenerating = false;
         }
-        
-        /// <summary>
-        /// Create container objects for organized batching
-        /// </summary>
+
         private void CreateBatchingContainers()
         {
-            // Create main containers
-            GameObject batchedRoadsGO = new GameObject("BatchedRoads");
-            batchedRoadsContainer = batchedRoadsGO.transform;
+            batchedRoadsContainer = new GameObject("BatchedRoads").transform;
             batchedRoadsContainer.SetParent(mapContainer);
-            
-            GameObject batchedBuildingsGO = new GameObject("BatchedBuildings");
-            batchedBuildingsContainer = batchedBuildingsGO.transform;
+
+            batchedBuildingsContainer = new GameObject("BatchedBuildings").transform;
             batchedBuildingsContainer.SetParent(mapContainer);
-            
+
             if (batchAreas)
             {
-                GameObject batchedAreasGO = new GameObject("BatchedAreas");
-                batchedAreasContainer = batchedAreasGO.transform;
+                batchedAreasContainer = new GameObject("BatchedAreas").transform;
                 batchedAreasContainer.SetParent(mapContainer);
             }
-            
+
             if (separateColliders)
             {
-                GameObject collidersGO = new GameObject("Colliders");
-                collidersContainer = collidersGO.transform;
+                collidersContainer = new GameObject("Colliders").transform;
                 collidersContainer.SetParent(mapContainer);
             }
         }
-        
-        /// <summary>
-        /// Collect road meshes for batching instead of creating individual GameObjects
-        /// </summary>
         private IEnumerator CollectRoadMeshes()
         {
-            Debug.Log($"[MapGeneratorBatched] Collecting {currentMapData.roads.Count} roads for batching...");
-            
+            Log($"Collecting {currentMapData.roads.Count} roads");
             int processedSegments = 0;
-            
-            for (int roadIndex = 0; roadIndex < currentMapData.roads.Count; roadIndex++)
+
+            foreach (var road in currentMapData.roads)
             {
-                OSMWay road = currentMapData.roads[roadIndex];
                 string highwayType = GetHighwayType(road);
-                
-                // Process each segment of the road
-                for (int nodeIndex = 0; nodeIndex < road.nodes.Count - 1; nodeIndex++)
+
+                for (int i = 0; i < road.nodes.Count - 1; i++)
                 {
-                    OSMNode startNode = road.nodes[nodeIndex];
-                    OSMNode endNode = road.nodes[nodeIndex + 1];
-                    
-                    // Create mesh data for this segment
-                    var segmentMesh = CreateRoadSegmentMesh(startNode, endNode, highwayType, roadIndex, nodeIndex);
+                    var segmentMesh = CreateRoadSegmentMesh(
+                        road.nodes[i], road.nodes[i + 1], highwayType);
+
                     if (segmentMesh.HasValue)
                     {
-                        // Add to appropriate material collection
-                        RoadCategory materialKey = GetRoadMaterialKey(highwayType);
-                        roadMeshesByMaterial[materialKey].Add(segmentMesh.Value);
-                        
-                        // Add collider data if needed
-                        if ((enableRoadColliders && highwayType != "footway") || 
+                        var key = GetRoadMaterialKey(highwayType);
+                        roadMeshesByMaterial[key].Add(segmentMesh.Value);
+
+                        if ((enableRoadColliders && highwayType != "footway") ||
                             (enableFootwayColliders && highwayType == "footway"))
                         {
                             roadColliders.Add(CreateColliderData(segmentMesh.Value, "Road"));
                         }
                     }
-                    
+
                     processedSegments++;
-                    
-                    // Yield periodically to prevent frame drops
                     if (processedSegments >= maxRoadSegmentsPerFrame)
                     {
                         processedSegments = 0;
@@ -352,55 +259,38 @@ namespace RollABall.Map
                     }
                 }
             }
-            
-            Debug.Log($"[MapGeneratorBatched] Collected {GetTotalMeshCount(roadMeshesByMaterial)} road meshes for batching");
-            yield return null;
         }
-        
-        /// <summary>
-        /// Create mesh data for a single road segment
-        /// </summary>
-        private CombineInstance? CreateRoadSegmentMesh(OSMNode startNode, OSMNode endNode, string highwayType, int roadIndex, int segmentIndex)
+
+        private CombineInstance? CreateRoadSegmentMesh(OSMNode start, OSMNode end, string highwayType)
         {
-            Vector3 startPos = currentMapData.LatLonToWorldPosition(startNode.lat, startNode.lon);
-            Vector3 endPos = currentMapData.LatLonToWorldPosition(endNode.lat, endNode.lon);
-            
-            float segmentLength = Vector3.Distance(startPos, endPos);
-            if (segmentLength < 0.1f) return null; // Skip very short segments
-            
+            Vector3 startPos = currentMapData.LatLonToWorldPosition(start.lat, start.lon);
+            Vector3 endPos = currentMapData.LatLonToWorldPosition(end.lat, end.lon);
+            if (Vector3.Distance(startPos, endPos) < 0.1f) return null;
+
             startPos.y = roadHeightOffset;
             endPos.y = roadHeightOffset;
-            
-            float segmentWidth = GetRoadWidth(highwayType);
-            
-            // Use optimized mesh utilities
-            return MeshUtilities.CreateRoadSegmentMesh(startPos, endPos, segmentWidth, 0.1f);
+            float width = GetRoadWidth(highwayType);
+
+            return MeshUtilities.CreateRoadSegmentMesh(startPos, endPos, width, 0.1f);
         }
-        
-        /// <summary>
-        /// Collect building meshes for batching
-        /// </summary>
+
         private IEnumerator CollectBuildingMeshes()
         {
-            Debug.Log($"[MapGeneratorBatched] Collecting {currentMapData.buildings.Count} buildings for batching...");
-            
+            Log($"Collecting {currentMapData.buildings.Count} buildings");
             int processed = 0;
-            for (int i = 0; i < currentMapData.buildings.Count; i++)
+
+            foreach (var building in currentMapData.buildings)
             {
-                OSMBuilding building = currentMapData.buildings[i];
                 building.CalculateHeight();
-                
-                var buildingMesh = CreateBuildingMesh(building);
-                if (buildingMesh.HasValue)
+                var mesh = CreateBuildingMesh(building);
+
+                if (mesh.HasValue)
                 {
-                    // Add to appropriate material collection
-                    BuildingCategory materialKey = GetBuildingMaterialKey(building.buildingType);
-                    buildingMeshesByMaterial[materialKey].Add(buildingMesh.Value);
-                    
-                    // Add collider data - buildings usually need colliders
-                    buildingColliders.Add(CreateColliderData(buildingMesh.Value, "Building"));
+                    var key = GetBuildingMaterialKey(building.buildingType);
+                    buildingMeshesByMaterial[key].Add(mesh.Value);
+                    buildingColliders.Add(CreateColliderData(mesh.Value, "Building"));
                 }
-                
+
                 processed++;
                 if (processed >= maxBuildingsPerFrame)
                 {
@@ -408,746 +298,345 @@ namespace RollABall.Map
                     yield return null;
                 }
             }
-            
-            Debug.Log($"[MapGeneratorBatched] Collected {GetTotalMeshCount(buildingMeshesByMaterial)} building meshes for batching");
-            yield return null;
         }
-        
-        /// <summary>
-        /// Create mesh data for a building
-        /// </summary>
-        private CombineInstance? CreateBuildingMesh(OSMBuilding building)
+
+        private CombineInstance? CreateBuildingMesh(OSMBuilding b)
         {
-            if (building.nodes.Count < 3) return null;
-            
-            // Calculate building properties
-            Vector3 center = CalculateBuildingCenter(building);
-            Vector3 size = CalculateBuildingSize(building);
-            Quaternion rotation = CalculateBuildingRotation(building);
-            
-            // Ensure minimum size
+            if (b.nodes.Count < 3) return null;
+            Vector3 size = CalculateBuildingSize(b);
             size.x = Mathf.Max(size.x, minimumBuildingSize);
             size.z = Mathf.Max(size.z, minimumBuildingSize);
-            size.y = building.height * buildingHeightMultiplier;
-            
-            // Use optimized mesh utilities
-            return MeshUtilities.CreateBuildingMesh(center, size, rotation);
+            size.y = b.height * buildingHeightMultiplier;
+
+            return MeshUtilities.CreateBuildingMesh(
+                CalculateBuildingCenter(b), size, CalculateBuildingRotation(b));
         }
-        
-        /// <summary>
-        /// Collect area meshes for batching (if enabled)
-        /// </summary>
+
         private IEnumerator CollectAreaMeshes()
         {
-            Debug.Log($"[MapGeneratorBatched] Collecting {currentMapData.areas.Count} areas for batching...");
-            
-            for (int i = 0; i < currentMapData.areas.Count; i++)
+            Log($"Collecting {currentMapData.areas.Count} areas");
+            int processed = 0;
+
+            foreach (var area in currentMapData.areas)
             {
-                OSMArea area = currentMapData.areas[i];
                 if (area.nodes.Count < 3) continue;
-                
                 area.DetermineAreaType();
-                
-                var areaMesh = CreateAreaMesh(area);
-                if (areaMesh.HasValue)
+
+                var mesh = CreateAreaMesh(area);
+                if (mesh.HasValue)
                 {
-                    AreaCategory materialKey = GetAreaMaterialKey(area.areaType);
-                    areaMeshesByMaterial[materialKey].Add(areaMesh.Value);
+                    var key = GetAreaMaterialKey(area.areaType);
+                    areaMeshesByMaterial[key].Add(mesh.Value);
                 }
-                
-                if (i % 3 == 0)
-                    yield return null;
+
+                if (++processed % 3 == 0) yield return null;
             }
-            
-            Debug.Log($"[MapGeneratorBatched] Collected {GetTotalMeshCount(areaMeshesByMaterial)} area meshes for batching");
-            yield return null;
         }
-        
-        /// <summary>
-        /// Create mesh data for an area
-        /// </summary>
-        private CombineInstance? CreateAreaMesh(OSMArea area)
+
+        private CombineInstance? CreateAreaMesh(OSMArea a)
         {
-            // Calculate area center and size
-            Vector3 center = CalculateAreaCenter(area);
-            Vector3 size = CalculateAreaSize(area);
-            
-            size.y = 0.02f; // Thin plane
-            
-            // Use optimized mesh utilities
+            Vector3 center = CalculateAreaCenter(a);
+            Vector3 size = CalculateAreaSize(a);
+            size.y = 0.02f;
             return MeshUtilities.CreateAreaMesh(center, size);
         }
-        
-        /// <summary>
-        /// Apply mesh batching - combine all collected meshes by material
-        /// </summary>
+
         private IEnumerator ApplyMeshBatching()
         {
-            Debug.Log("[MapGeneratorBatched] Applying mesh batching...");
-            // TODO: Consider performing batching in a job to avoid frame hitches
-            
-            // Batch roads by material
-            yield return StartCoroutine(BatchMeshesByMaterial(roadMeshesByMaterial, batchedRoadsContainer, GetRoadMaterial, "AllRoads"));
-            
-            // Batch buildings by material  
-            yield return StartCoroutine(BatchMeshesByMaterial(buildingMeshesByMaterial, batchedBuildingsContainer, GetBuildingMaterial, "AllBuildings"));
-            
-            // Batch areas by material (if enabled)
-            if (batchAreas && batchedAreasContainer != null)
-            {
-                yield return StartCoroutine(BatchMeshesByMaterial(areaMeshesByMaterial, batchedAreasContainer, GetAreaMaterial, "AllAreas"));
-            }
-            
-            Debug.Log("[MapGeneratorBatched] Mesh batching completed");
-            yield return null;
+            yield return BatchMeshesByMaterial(roadMeshesByMaterial, batchedRoadsContainer, GetRoadMaterial, "Roads");
+            yield return BatchMeshesByMaterial(buildingMeshesByMaterial, batchedBuildingsContainer, GetBuildingMaterial, "Buildings");
+            if (batchAreas) yield return BatchMeshesByMaterial(areaMeshesByMaterial, batchedAreasContainer, GetAreaMaterial, "Areas");
         }
-        
-        /// <summary>
-        /// Generic method to batch meshes by material type
-        /// </summary>
+
         private IEnumerator BatchMeshesByMaterial<TKey>(
-            Dictionary<TKey, List<CombineInstance>> meshCollections,
+            Dictionary<TKey, List<CombineInstance>> collections,
             Transform container,
-            System.Func<TKey, Material> getMaterial,
-            string namePrefix)
+            System.Func<TKey, Material> getMat,
+            string prefix)
         {
-            foreach (var kvp in meshCollections)
+            foreach (var kvp in collections)
             {
-                TKey materialKey = kvp.Key;
-                List<CombineInstance> meshes = kvp.Value;
-                
-                if (meshes.Count == 0) continue;
-                
-                // Create combined mesh
-                Mesh combinedMesh = new Mesh();
-                combinedMesh.name = $"{namePrefix}_{materialKey}_Combined";
-                
-                try
-                {
-                    combinedMesh.CombineMeshes(meshes.ToArray(), true, true);
-                    combinedMesh.RecalculateNormals();
-                    combinedMesh.RecalculateBounds();
-                }
-                catch (System.Exception e)
-                {
-                    Debug.LogError($"[MapGeneratorBatched] Failed to combine meshes for {materialKey}: {e.Message}");
-                    continue;
-                }
-                
-                // Create GameObject for batched mesh
-                GameObject batchedObject = new GameObject($"{namePrefix}_{materialKey}");
-                batchedObject.transform.SetParent(container);
-                
-                // Add components
-                MeshFilter meshFilter = batchedObject.AddComponent<MeshFilter>();
-                MeshRenderer meshRenderer = batchedObject.AddComponent<MeshRenderer>();
-                
-                meshFilter.mesh = combinedMesh;
-                meshRenderer.material = getMaterial(materialKey);
-                
-                // Mark as static for additional Unity batching
-                if (enableStaticBatching)
-                {
-                    batchedObject.isStatic = true;
-                }
-                
-                Debug.Log($"[MapGeneratorBatched] Batched {meshes.Count} {materialKey} meshes into single object");
-                
-                yield return null; // Yield after each material to spread the work
+                if (kvp.Value.Count == 0) continue;
+
+                Mesh mesh = new Mesh();
+                mesh.CombineMeshes(kvp.Value.ToArray(), true, true);
+                mesh.RecalculateNormals();
+
+                GameObject go = new GameObject($"{prefix}_{kvp.Key}");
+                go.transform.SetParent(container);
+                go.AddComponent<MeshFilter>().mesh = mesh;
+                go.AddComponent<MeshRenderer>().material = getMat(kvp.Key);
+                if (enableStaticBatching) go.isStatic = true;
+
+                yield return null;
             }
         }
-        
-        /// <summary>
-        /// Create separate colliders for physics interactions
-        /// </summary>
+
         private IEnumerator CreateSeparateColliders()
         {
-            Debug.Log("[MapGeneratorBatched] Creating separate colliders...");
+            foreach (var data in roadColliders.Concat(buildingColliders))
+            {
+                GameObject obj = new GameObject($"{data.name}_Collider");
+                obj.transform.SetParent(collidersContainer);
+                obj.transform.SetPositionAndRotation(data.position, data.rotation);
+                obj.transform.localScale = data.scale;
 
-            // TODO: Reuse collider objects via pooling to reduce GC pressure
+                if (data.mesh != null)
+                    obj.AddComponent<MeshCollider>().sharedMesh = data.mesh;
+                else
+                    obj.AddComponent<BoxCollider>();
 
-            int colliderCount = 0;
-            
-            // Create road colliders
-            foreach (var colliderData in roadColliders)
-            {
-                CreateColliderObject(colliderData, collidersContainer);
-                colliderCount++;
-                
-                if (colliderCount % 10 == 0)
-                    yield return null;
+                if (enableStaticBatching) obj.isStatic = true;
+                yield return null;
             }
-            
-            // Create building colliders
-            foreach (var colliderData in buildingColliders)
-            {
-                CreateColliderObject(colliderData, collidersContainer);
-                colliderCount++;
-                
-                if (colliderCount % 5 == 0)
-                    yield return null;
-            }
-            
-            Debug.Log($"[MapGeneratorBatched] Created {colliderCount} separate colliders");
-            yield return null;
-        }
-        
-        /// <summary>
-        /// Create individual collider GameObject from collider data
-        /// </summary>
-        private void CreateColliderObject(ColliderData data, Transform parent)
-        {
-            GameObject colliderObj = ColliderPooler.Get(data.mesh != null, parent, $"{data.name}_Collider");
-            
-            // Apply transform from the original mesh
-            colliderObj.transform.position = data.position;
-            colliderObj.transform.rotation = data.rotation;
-            colliderObj.transform.localScale = data.scale;
-            
-            // Add or reuse collider component
-            if (data.mesh != null)
-            {
-                MeshCollider meshCollider = colliderObj.GetComponent<MeshCollider>();
-                if (!meshCollider)
-                    meshCollider = colliderObj.AddComponent<MeshCollider>();
-                meshCollider.sharedMesh = data.mesh;
-            }
-            else
-            {
-                // Use BoxCollider for simple shapes
-                if (!colliderObj.TryGetComponent<BoxCollider>(out _))
-                    colliderObj.AddComponent<BoxCollider>();
-            }
-            
-            // Mark as static for performance
-            if (enableStaticBatching)
-            {
-                colliderObj.isStatic = true;
-            }
-        }
-        
-        // Helper Methods
-        
-        // Removed: Using MeshUtilities instead of temporary GameObject creation
-        
-        private ColliderData CreateColliderData(CombineInstance combineInstance, string name)
-        {
-            // Extract transform data from the CombineInstance matrix
-            Matrix4x4 matrix = combineInstance.transform;
-            
-            return new ColliderData
-            {
-                name = name,
-                mesh = combineInstance.mesh,
-                position = matrix.GetColumn(3), // Position from matrix
-                rotation = matrix.rotation,
-                scale = matrix.lossyScale
-            };
-        }
-        
-        private string GetHighwayType(OSMWay road)
-        {
-            if (road.tags.ContainsKey("highway"))
-            {
-                string highway = road.tags["highway"];
-                return highway switch
-                {
-                    "motorway" or "trunk" => "motorway",
-                    "primary" or "primary_link" => "primary", 
-                    "secondary" or "secondary_link" => "secondary",
-                    "residential" or "tertiary" or "unclassified" => "residential",
-                    "footway" or "cycleway" or "path" or "pedestrian" => "footway",
-                    _ => "default"
-                };
-            }
-            return "default";
-        }
-        
-        private float GetRoadWidth(string highwayType)
-        {
-            return highwayType switch
-            {
-                "motorway" => 5.5f,
-                "primary" => 4.0f,
-                "secondary" => 3.0f,
-                "residential" => 2.0f,
-                "footway" => 1.0f,
-                _ => 2.0f
-            };
-        }
-        
-        private RoadCategory GetRoadMaterialKey(string highwayType)
-        {
-            return highwayType switch
-            {
-                "motorway" => RoadCategory.Motorway,
-                "primary" => RoadCategory.Primary,
-                "secondary" => RoadCategory.Secondary,
-                "residential" => RoadCategory.Residential,
-                "footway" => RoadCategory.Footway,
-                _ => RoadCategory.Default
-            };
         }
 
-        private BuildingCategory GetBuildingMaterialKey(string buildingType)
-        {
-            return buildingType switch
-            {
-                "industrial" => BuildingCategory.Industrial,
-                "commercial" => BuildingCategory.Commercial,
-                "office" => BuildingCategory.Office,
-                "residential" => BuildingCategory.Residential,
-                _ => BuildingCategory.Default
-            };
-        }
-
-        private AreaCategory GetAreaMaterialKey(string areaType)
-        {
-            return areaType switch
-            {
-                "park" => AreaCategory.Park,
-                "water" => AreaCategory.Water,
-                "forest" => AreaCategory.Forest,
-                "grass" => AreaCategory.Grass,
-                _ => AreaCategory.Default
-            };
-        }
-        
-        private Material GetRoadMaterial(RoadCategory materialKey)
-        {
-            return materialKey switch
-            {
-                RoadCategory.Motorway => roadMotorway ?? roadDefault,
-                RoadCategory.Primary => roadPrimary ?? roadDefault,
-                RoadCategory.Secondary => roadSecondary ?? roadDefault,
-                RoadCategory.Residential => roadResidential ?? roadDefault,
-                RoadCategory.Footway => roadFootway ?? roadDefault,
-                _ => roadDefault
-            };
-        }
-
-        private Material GetBuildingMaterial(BuildingCategory materialKey)
-        {
-            return materialKey switch
-            {
-                BuildingCategory.Residential => residentialMaterial ?? defaultBuildingMaterial,
-                BuildingCategory.Industrial => industrialMaterial ?? defaultBuildingMaterial,
-                BuildingCategory.Commercial => commercialMaterial ?? defaultBuildingMaterial,
-                BuildingCategory.Office => officeMaterial ?? defaultBuildingMaterial,
-                _ => defaultBuildingMaterial
-            };
-        }
-
-        private Material GetAreaMaterial(AreaCategory materialKey)
-        {
-            return materialKey switch
-            {
-                AreaCategory.Park => parkMaterial ?? defaultAreaMaterial,
-                AreaCategory.Water => waterMaterial ?? defaultAreaMaterial,
-                AreaCategory.Forest => forestMaterial ?? defaultAreaMaterial,
-                AreaCategory.Grass => grassMaterial ?? defaultAreaMaterial,
-                _ => defaultAreaMaterial
-            };
-        }
-        
-        private Vector3 CalculateBuildingCenter(OSMBuilding building)
-        {
-            Vector3 center = Vector3.zero;
-            foreach (OSMNode node in building.nodes)
-            {
-                center += currentMapData.LatLonToWorldPosition(node.lat, node.lon);
-            }
-            return center / building.nodes.Count;
-        }
-        
-        private Vector3 CalculateBuildingSize(OSMBuilding building)
-        {
-            Vector3 min = Vector3.positiveInfinity;
-            Vector3 max = Vector3.negativeInfinity;
-            
-            foreach (OSMNode node in building.nodes)
-            {
-                Vector3 worldPos = currentMapData.LatLonToWorldPosition(node.lat, node.lon);
-                min = Vector3.Min(min, worldPos);
-                max = Vector3.Max(max, worldPos);
-            }
-            
-            return max - min;
-        }
-        
-        private Quaternion CalculateBuildingRotation(OSMBuilding building)
-        {
-            if (building.nodes.Count >= 2)
-            {
-                Vector3 firstPos = currentMapData.LatLonToWorldPosition(building.nodes[0].lat, building.nodes[0].lon);
-                Vector3 secondPos = currentMapData.LatLonToWorldPosition(building.nodes[1].lat, building.nodes[1].lon);
-                Vector3 direction = (secondPos - firstPos).normalized;
-                
-                if (direction.magnitude > 0.1f)
-                {
-                    float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-                    return Quaternion.Euler(0, angle, 0);
-                }
-            }
-            return Quaternion.identity;
-        }
-        
-        private Vector3 CalculateAreaCenter(OSMArea area)
-        {
-            Vector3 center = Vector3.zero;
-            int nodesToProcess = area.IsClosed() ? area.nodes.Count - 1 : area.nodes.Count;
-            
-            for (int i = 0; i < nodesToProcess; i++)
-            {
-                center += currentMapData.LatLonToWorldPosition(area.nodes[i].lat, area.nodes[i].lon);
-            }
-            return center / nodesToProcess;
-        }
-        
-        private Vector3 CalculateAreaSize(OSMArea area)
-        {
-            Vector3 min = Vector3.positiveInfinity;
-            Vector3 max = Vector3.negativeInfinity;
-            
-            int nodesToProcess = area.IsClosed() ? area.nodes.Count - 1 : area.nodes.Count;
-            for (int i = 0; i < nodesToProcess; i++)
-            {
-                Vector3 worldPos = currentMapData.LatLonToWorldPosition(area.nodes[i].lat, area.nodes[i].lon);
-                min = Vector3.Min(min, worldPos);
-                max = Vector3.Max(max, worldPos);
-            }
-            
-            Vector3 size = max - min;
-            size.x = Mathf.Max(size.x, 2f);
-            size.z = Mathf.Max(size.z, 2f);
-            
-            return size;
-        }
-        
-        private int GetTotalMeshCount<TKey>(Dictionary<TKey, List<CombineInstance>> collections)
-        {
-            return collections.Values.Sum(list => list.Count);
-        }
-        
-        private void LogPerformanceStats()
-        {
-            int totalRoadMeshes = GetTotalMeshCount(roadMeshesByMaterial);
-            int totalBuildingMeshes = GetTotalMeshCount(buildingMeshesByMaterial);
-            int totalAreaMeshes = batchAreas ? GetTotalMeshCount(areaMeshesByMaterial) : 0;
-            
-            int batchedRoadObjects = roadMeshesByMaterial.Count(kvp => kvp.Value.Count > 0);
-            int batchedBuildingObjects = buildingMeshesByMaterial.Count(kvp => kvp.Value.Count > 0);
-            int batchedAreaObjects = batchAreas ? areaMeshesByMaterial.Count(kvp => kvp.Value.Count > 0) : 0;
-            
-            Debug.Log($"[MapGeneratorBatched] Performance Stats:\n" +
-                     $"Roads: {totalRoadMeshes} meshes → {batchedRoadObjects} batched objects\n" +
-                     $"Buildings: {totalBuildingMeshes} meshes → {batchedBuildingObjects} batched objects\n" +
-                     $"Areas: {totalAreaMeshes} meshes → {batchedAreaObjects} batched objects\n" +
-                     $"Separate Colliders: {roadColliders.Count + buildingColliders.Count}\n" +
-                     $"Draw Call Reduction: ~{(totalRoadMeshes + totalBuildingMeshes + totalAreaMeshes) - (batchedRoadObjects + batchedBuildingObjects + batchedAreaObjects)} fewer draw calls");
-        }
-        
-        // Standard generation methods (simplified versions for non-batched objects)
-        
         private IEnumerator GenerateGroundPlane()
         {
-            Debug.Log("[MapGeneratorBatched] Generating ground plane...");
-            
-            Vector3 mapCenter = currentMapData.GetWorldCenter();
-            float mapSize = Mathf.Max(
+            Vector3 center = currentMapData.GetWorldCenter();
+            float size = Mathf.Max(
                 (float)(currentMapData.bounds.GetWidth() * currentMapData.scaleMultiplier),
                 (float)(currentMapData.bounds.GetHeight() * currentMapData.scaleMultiplier)
             );
-            
-            GameObject groundPlane = CreateGroundPlane(mapCenter, mapSize);
-            groundPlane.transform.SetParent(mapContainer);
-            
-            if (enableStaticBatching)
-            {
-                groundPlane.isStatic = true;
-            }
-            
-            yield return null;
-        }
-        
-        private GameObject CreateGroundPlane(Vector3 center, float size)
-        {
+
             GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.transform.position = center;
             ground.transform.localScale = Vector3.one * (size / 10f);
-            ground.name = "GroundPlane";
             ground.layer = groundLayer;
-            return ground;
+            ground.name = "GroundPlane";
+            ground.transform.SetParent(mapContainer);
+            if (enableStaticBatching) ground.isStatic = true;
+            yield return null;
         }
-        
+
         private IEnumerator GenerateAreas()
         {
-            // Non-batched area generation (fallback when batching is disabled)
-            Debug.Log($"[MapGeneratorBatched] Generating {currentMapData.areas.Count} areas (non-batched)...");
-            
-            Transform areaContainer = new GameObject("Areas").transform;
-            areaContainer.SetParent(mapContainer);
-            
-            for (int i = 0; i < currentMapData.areas.Count; i++)
+            Transform container = new GameObject("Areas").transform;
+            container.SetParent(mapContainer);
+
+            foreach (var area in currentMapData.areas)
             {
-                OSMArea area = currentMapData.areas[i];
                 area.DetermineAreaType();
-                
                 Vector3 center = CalculateAreaCenter(area);
                 Vector3 size = CalculateAreaSize(area);
-                center.y = 0.01f;
-                size.y = 0.02f;
-                
-                GameObject areaObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                areaObject.transform.position = center;
-                areaObject.transform.localScale = size;
-                areaObject.transform.SetParent(areaContainer);
-                areaObject.name = $"Area_{area.areaType}_{area.id}";
-                
-                MeshRenderer renderer = areaObject.GetComponent<MeshRenderer>();
-                AreaCategory materialKey = GetAreaMaterialKey(area.areaType);
-                renderer.material = GetAreaMaterial(materialKey);
-                
-                if (enableStaticBatching)
-                {
-                    areaObject.isStatic = true;
-                }
-                
-                if (i % 3 == 0)
-                    yield return null;
+
+                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                cube.transform.SetParent(container);
+                cube.transform.position = center;
+                cube.transform.localScale = size;
+                cube.GetComponent<MeshRenderer>().material = GetAreaMaterial(GetAreaMaterialKey(area.areaType));
+                if (enableStaticBatching) cube.isStatic = true;
+
+                yield return null;
             }
-            
-            yield return null;
         }
-        
+
         private IEnumerator PlaceCollectibles()
         {
-            if (collectiblePrefab == null)
+            if (!collectiblePrefab) yield break;
+            Transform container = new GameObject("Collectibles").transform;
+            container.SetParent(mapContainer);
+
+            foreach (var pos in GenerateCollectiblePositions())
             {
-                Debug.LogWarning("[MapGeneratorBatched] No collectible prefab assigned");
-                yield break;
+                Instantiate(collectiblePrefab, pos, Quaternion.identity, container);
+                yield return null;
             }
-            
-            Debug.Log("[MapGeneratorBatched] Placing collectibles...");
-            
-            Transform collectibleContainer = new GameObject("Collectibles").transform;
-            collectibleContainer.SetParent(mapContainer);
-            
-            List<Vector3> collectiblePositions = GenerateCollectiblePositions();
-            
-            for (int i = 0; i < collectiblePositions.Count; i++)
-            {
-                GameObject collectible = Instantiate(collectiblePrefab, collectiblePositions[i], Quaternion.identity);
-                collectible.transform.SetParent(collectibleContainer);
-                collectible.name = $"Collectible_{i}";
-                
-                if (i % 5 == 0)
-                    yield return null;
-            }
-            
-            // COLLECTIBLE COUNTER SYNC: update LevelManager with spawned collectibles
-            LevelManager levelManager = FindFirstObjectByType<LevelManager>();
-            if (levelManager != null)
-            {
-                levelManager.RescanCollectibles();
-            }
-            
-            yield return null;
+
+            FindFirstObjectByType<LevelManager>()?.RescanCollectibles();
         }
-        
+
         private List<Vector3> GenerateCollectiblePositions()
         {
-            List<Vector3> positions = new List<Vector3>();
-            
-            // Place collectibles near buildings
-            foreach (OSMBuilding building in currentMapData.buildings)
+            List<Vector3> list = new();
+            foreach (var b in currentMapData.buildings)
             {
                 for (int i = 0; i < collectiblesPerBuilding; i++)
                 {
-                    if (building.nodes.Count > 0)
-                    {
-                        OSMNode randomNode = building.nodes[Random.Range(0, building.nodes.Count)];
-                        Vector3 buildingPos = currentMapData.LatLonToWorldPosition(randomNode.lat, randomNode.lon);
-                        
-                        Vector3 offset = new Vector3(
-                            Random.Range(-5f, 5f),
-                            1f,
-                            Random.Range(-5f, 5f)
-                        );
-                        
-                        positions.Add(buildingPos + offset);
-                    }
+                    var node = b.nodes[Random.Range(0, b.nodes.Count)];
+                    Vector3 pos = currentMapData.LatLonToWorldPosition(node.lat, node.lon);
+                    pos += new Vector3(Random.Range(-5f, 5f), 1f, Random.Range(-5f, 5f));
+                    list.Add(pos);
                 }
             }
-            
-            return positions;
+            return list;
         }
-        
+
         private IEnumerator PlaceGoalZone()
         {
-            if (goalZonePrefab == null)
-            {
-                Debug.LogWarning("[MapGeneratorBatched] No goal zone prefab assigned");
-                yield break;
-            }
-            
-            Debug.Log("[MapGeneratorBatched] Placing goal zone...");
-            
-            Vector3 goalPosition = FindOptimalGoalPosition();
-            GameObject goalZone = Instantiate(goalZonePrefab, goalPosition, Quaternion.identity);
-            goalZone.transform.SetParent(mapContainer);
-            goalZone.name = "GoalZone";
-            
+            if (!goalZonePrefab) yield break;
+            Vector3 pos = FindOptimalGoalPosition();
+            Instantiate(goalZonePrefab, pos, Quaternion.identity, mapContainer).name = "GoalZone";
             yield return null;
         }
-        
+
         private Vector3 FindOptimalGoalPosition()
         {
-            Vector3 goalPos = currentMapData.GetWorldCenter();
-            
+            Vector3 pos = currentMapData.GetWorldCenter();
             if (currentMapData.buildings.Count > 0)
-            {
-                OSMBuilding largestBuilding = currentMapData.buildings[0];
-                Vector3 largestCenter = CalculateBuildingCenter(largestBuilding);
-                Vector3 largestSize = CalculateBuildingSize(largestBuilding);
-                float largestArea = largestSize.x * largestSize.z;
-                
-                foreach (OSMBuilding building in currentMapData.buildings)
-                {
-                    Vector3 buildingSize = CalculateBuildingSize(building);
-                    float area = buildingSize.x * buildingSize.z;
-                    if (area > largestArea)
-                    {
-                        largestArea = area;
-                        largestBuilding = building;
-                        largestCenter = CalculateBuildingCenter(building);
-                    }
-                }
-                
-                goalPos = largestCenter;
-            }
-            
-            goalPos.y = 0.5f;
-            return goalPos;
+                pos = CalculateBuildingCenter(currentMapData.buildings.OrderByDescending(b => CalculateBuildingSize(b).x * CalculateBuildingSize(b).z).First());
+            pos.y = 0.5f;
+            return pos;
         }
-        
+
         private void SetPlayerSpawnPosition()
         {
             playerSpawnPosition = currentMapData.GetWorldCenter();
-            
             if (currentMapData.roads.Count > 0)
-            {
-                OSMWay firstRoad = currentMapData.roads[0];
-                if (firstRoad.nodes.Count > 0)
-                {
-                    playerSpawnPosition = currentMapData.LatLonToWorldPosition(firstRoad.nodes[0].lat, firstRoad.nodes[0].lon);
-                }
-            }
-            
+                playerSpawnPosition = currentMapData.LatLonToWorldPosition(currentMapData.roads[0].nodes[0].lat, currentMapData.roads[0].nodes[0].lon);
+
             playerSpawnPosition.y = 1f;
             OnPlayerSpawnPositionSet?.Invoke(playerSpawnPosition);
-            
-            if (playerPrefab != null)
-            {
-                GameObject existingPlayer = GameObject.FindGameObjectWithTag("Player");
-                if (existingPlayer != null)
-                {
-                    existingPlayer.transform.position = playerSpawnPosition;
-                }
-                else
-                {
-                    GameObject player = Instantiate(playerPrefab, playerSpawnPosition, Quaternion.identity);
-                    player.name = "Player";
-                }
-            }
+
+            GameObject player = GameObject.FindGameObjectWithTag("Player") ??
+                                Instantiate(playerPrefab, playerSpawnPosition, Quaternion.identity);
+            player.transform.position = playerSpawnPosition;
         }
-        
+
         private IEnumerator AddSteampunkAtmosphere()
         {
-            Debug.Log("[MapGeneratorBatched] Adding Steampunk atmosphere...");
-            
             RenderSettings.ambientLight = new Color(0.4f, 0.35f, 0.25f);
             RenderSettings.fogColor = new Color(0.5f, 0.4f, 0.3f);
             RenderSettings.fog = true;
             RenderSettings.fogStartDistance = 20f;
             RenderSettings.fogEndDistance = 80f;
-            
             yield return null;
         }
-        
+
         private void CreateMapContainer()
         {
-            if (mapContainer == null)
-            {
-                GameObject containerGO = new GameObject("GeneratedMapBatched");
-                mapContainer = containerGO.transform;
-            }
+            if (!mapContainer)
+                mapContainer = new GameObject("GeneratedMapBatched").transform;
         }
-        
+
         private void ClearExistingMap()
         {
-            if (collidersContainer != null)
-            {
-                foreach (Transform child in collidersContainer)
-                {
-                    ColliderPooler.Release(child.gameObject);
-                }
-            }
+            foreach (Transform child in mapContainer)
+                Destroy(child.gameObject);
 
-            if (mapContainer != null)
-            {
-                foreach (Transform child in mapContainer)
-                {
-                    if (Application.isPlaying)
-                        Destroy(child.gameObject);
-                    else
-                        DestroyImmediate(child.gameObject);
-                }
-            }
-            
-            // Clear mesh utilities cache if needed
-            MeshUtilities.ClearCache();
-            
+            roadColliders.Clear();
+            buildingColliders.Clear();
             InitializeBatchingCollections();
         }
-        
-        // Public Interface
-        
-        public Vector3 GetPlayerSpawnPosition() => playerSpawnPosition;
-        public OSMMapData GetCurrentMapData() => currentMapData;
-        public bool IsGenerating() => isGenerating;
-        
-        public string GetMapStatistics()
+
+        // === Utility & Helpers ===
+        private string GetHighwayType(OSMWay r) => r.tags.TryGetValue("highway", out var h) ? h : "default";
+        private float GetRoadWidth(string type) => type switch
         {
-            if (currentMapData == null)
-                return "No map data available";
-                
-            int totalRoadMeshes = GetTotalMeshCount(roadMeshesByMaterial);
-            int totalBuildingMeshes = GetTotalMeshCount(buildingMeshesByMaterial);
-            int batchedObjects = roadMeshesByMaterial.Count(kvp => kvp.Value.Count > 0) + 
-                               buildingMeshesByMaterial.Count(kvp => kvp.Value.Count > 0);
-            
-            return $"Batched Map Statistics:\n" +
-                   $"- Roads: {currentMapData.roads.Count} ({totalRoadMeshes} segments)\n" +
-                   $"- Buildings: {currentMapData.buildings.Count} ({totalBuildingMeshes} meshes)\n" +
-                   $"- Areas: {currentMapData.areas.Count}\n" +
-                   $"- POIs: {currentMapData.pointsOfInterest.Count}\n" +
-                   $"- Batched Objects: {batchedObjects}\n" +
-                   $"- Separate Colliders: {roadColliders.Count + buildingColliders.Count}\n" +
-                   $"- Scale: {currentMapData.scaleMultiplier:F2}";
+            "motorway" => 5.5f,
+            "primary" => 4f,
+            "secondary" => 3f,
+            "residential" => 2f,
+            "footway" => 1f,
+            _ => 2f
+        };
+        private RoadCategory GetRoadMaterialKey(string type) => type switch
+        {
+            "motorway" => RoadCategory.Motorway,
+            "primary" => RoadCategory.Primary,
+            "secondary" => RoadCategory.Secondary,
+            "residential" => RoadCategory.Residential,
+            "footway" => RoadCategory.Footway,
+            _ => RoadCategory.Default
+        };
+        private BuildingCategory GetBuildingMaterialKey(string type) => type switch
+        {
+            "industrial" => BuildingCategory.Industrial,
+            "commercial" => BuildingCategory.Commercial,
+            "office" => BuildingCategory.Office,
+            "residential" => BuildingCategory.Residential,
+            _ => BuildingCategory.Default
+        };
+        private AreaCategory GetAreaMaterialKey(string type) => type switch
+        {
+            "park" => AreaCategory.Park,
+            "water" => AreaCategory.Water,
+            "forest" => AreaCategory.Forest,
+            "grass" => AreaCategory.Grass,
+            _ => AreaCategory.Default
+        };
+        private Material GetRoadMaterial(RoadCategory key) => key switch
+        {
+            RoadCategory.Motorway => roadMotorway ?? roadDefault,
+            RoadCategory.Primary => roadPrimary ?? roadDefault,
+            RoadCategory.Secondary => roadSecondary ?? roadDefault,
+            RoadCategory.Residential => roadResidential ?? roadDefault,
+            RoadCategory.Footway => roadFootway ?? roadDefault,
+            _ => roadDefault
+        };
+        private Material GetBuildingMaterial(BuildingCategory key) => key switch
+        {
+            BuildingCategory.Residential => residentialMaterial ?? defaultBuildingMaterial,
+            BuildingCategory.Industrial => industrialMaterial ?? defaultBuildingMaterial,
+            BuildingCategory.Commercial => commercialMaterial ?? defaultBuildingMaterial,
+            BuildingCategory.Office => officeMaterial ?? defaultBuildingMaterial,
+            _ => defaultBuildingMaterial
+        };
+        private Material GetAreaMaterial(AreaCategory key) => key switch
+        {
+            AreaCategory.Park => parkMaterial ?? defaultAreaMaterial,
+            AreaCategory.Water => waterMaterial ?? defaultAreaMaterial,
+            AreaCategory.Forest => forestMaterial ?? defaultAreaMaterial,
+            AreaCategory.Grass => grassMaterial ?? defaultAreaMaterial,
+            _ => defaultAreaMaterial
+        };
+
+        private Vector3 CalculateBuildingCenter(OSMBuilding b) => b.nodes.Select(n => currentMapData.LatLonToWorldPosition(n.lat, n.lon)).Aggregate(Vector3.zero, (sum, v) => sum + v) / b.nodes.Count;
+        private Vector3 CalculateBuildingSize(OSMBuilding b)
+        {
+            var pts = b.nodes.Select(n => currentMapData.LatLonToWorldPosition(n.lat, n.lon)).ToList();
+            Vector3 min = pts.Aggregate(Vector3.positiveInfinity, Vector3.Min);
+            Vector3 max = pts.Aggregate(Vector3.negativeInfinity, Vector3.Max);
+            return max - min;
         }
-    }
-    
-    /// <summary>
-    /// Data structure for storing collider information separately from visual meshes
-    /// </summary>
-    [System.Serializable]
-    public struct ColliderData
-    {
-        public string name;
-        public Mesh mesh;
-        public Vector3 position;
-        public Quaternion rotation;
-        public Vector3 scale;
+        private Quaternion CalculateBuildingRotation(OSMBuilding b)
+        {
+            if (b.nodes.Count < 2) return Quaternion.identity;
+            var p1 = currentMapData.LatLonToWorldPosition(b.nodes[0].lat, b.nodes[0].lon);
+            var p2 = currentMapData.LatLonToWorldPosition(b.nodes[1].lat, b.nodes[1].lon);
+            var dir = (p2 - p1).normalized;
+            return dir.magnitude > 0.1f ? Quaternion.Euler(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0) : Quaternion.identity;
+        }
+        private Vector3 CalculateAreaCenter(OSMArea a)
+        {
+            int count = a.IsClosed() ? a.nodes.Count - 1 : a.nodes.Count;
+            return a.nodes.Take(count).Select(n => currentMapData.LatLonToWorldPosition(n.lat, n.lon)).Aggregate(Vector3.zero, (sum, v) => sum + v) / count;
+        }
+        private Vector3 CalculateAreaSize(OSMArea a)
+        {
+            int count = a.IsClosed() ? a.nodes.Count - 1 : a.nodes.Count;
+            var pts = a.nodes.Take(count).Select(n => currentMapData.LatLonToWorldPosition(n.lat, n.lon)).ToList();
+            Vector3 min = pts.Aggregate(Vector3.positiveInfinity, Vector3.Min);
+            Vector3 max = pts.Aggregate(Vector3.negativeInfinity, Vector3.Max);
+            Vector3 size = max - min;
+            size.x = Mathf.Max(size.x, 2f);
+            size.z = Mathf.Max(size.z, 2f);
+            return size;
+        }
+
+        private ColliderData CreateColliderData(CombineInstance ci, string name) =>
+            new ColliderData { name = name, mesh = ci.mesh, position = ci.transform.GetColumn(3), rotation = ci.transform.rotation, scale = ci.transform.lossyScale };
+
+        private void LogPerformanceStats()
+        {
+            Log($"Road meshes: {roadMeshesByMaterial.Sum(k => k.Value.Count)} | Building meshes: {buildingMeshesByMaterial.Sum(k => k.Value.Count)}");
+        }
+        private void FailGeneration(string msg)
+        {
+            Debug.LogError(msg);
+            OnGenerationError?.Invoke(msg);
+            isGenerating = false;
+        }
+        private void Log(string msg) { if (debugMode) Debug.Log("[MapGen] " + msg); }
+
+        [System.Serializable]
+        public struct ColliderData
+        {
+            public string name;
+            public Mesh mesh;
+            public Vector3 position;
+            public Quaternion rotation;
+            public Vector3 scale;
+        }
     }
 }
