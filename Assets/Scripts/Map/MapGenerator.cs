@@ -572,8 +572,8 @@ namespace RollABall.Map
                         levelManager.AddCollectible(collectible);
                     }
                 }
-                // COLLECTIBLE FIX: ensure counts reflect all spawned collectibles
-                levelManager.UpdateCollectibleCount();
+                // COLLECTIBLE COUNTER SYNC: refresh LevelManager with spawned collectibles
+                levelManager.RescanCollectibles();
 
                 Debug.Log($"[MapGenerator] Added {collectibles.Length} collectibles to LevelManager");
             }

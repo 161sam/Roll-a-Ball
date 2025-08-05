@@ -872,6 +872,10 @@ public class LevelGenerator : MonoBehaviour
             {
                 Debug.Log($"[LevelGenerator] Updated LevelManager configuration");
             }
+
+            levelManager.RescanCollectibles(); // COLLECTIBLE COUNTER SYNC
+            if (showGenerationDebug)
+                Debug.Log("[LevelGenerator] Rescanned LevelManager collectibles");
         }
 
         // Update UI if necessary
