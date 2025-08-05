@@ -99,6 +99,6 @@
 | TODO-OPT#95 | Assets/Scripts/Generators/LevelTerrainGenerator.cs | GeneratePrimMaze(), Zeile 358 | Evaluate Prim algorithm performance for large level sizes | **erledigt** |
 | TODO-OPT#96 | Assets/Scripts/UIController.cs | EnsureCollectibleCounter(), Zeile 193 | UI prefab should load via Addressables instead of Resources | **erledigt** |
 | TODO-OPT#97 | Assets/Scripts/CollectibleController.cs | CollectibleData.isCollected, Zeile 16 | Merge duplicate collection flags into single source of truth | **erledigt** |
-| TODO-OPT#98 | Assets/Scripts/LevelManager.cs | InitializeLevelManager(), Zeile 143 | Load UI prefab via Addressables instead of Resources | |
-| TODO-OPT#99 | Assets/Scripts/LevelManager.cs | UpdateCollectibleCount(), Zeile 223 | Cache counts to avoid repeated HashSet scans | |
-| TODO-OPT#100 | Assets/Scripts/LevelManager.cs | collectedCollectibles, Zeile 55 | Pool HashSet to minimize allocations when resetting levels | |
+| TODO-OPT#98 | Assets/Scripts/LevelManager.cs | InitializeLevelManager(), Zeile 143 | Load UI prefab via Addressables instead of Resources | **erledigt** |
+| TODO-OPT#99 | Assets/Scripts/LevelManager.cs | UpdateCollectibleCount(), Zeile 223 | Cache counts to avoid repeated HashSet scans | **erledigt** |
+| TODO-OPT#100 | Assets/Scripts/LevelManager.cs | collectedCollectibles, Zeile 55 | Pool HashSet to minimize allocations when resetting levels | **erledigt** |
