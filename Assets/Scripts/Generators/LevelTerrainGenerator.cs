@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System;
-using System.Diagnostics;
 
 namespace RollABall.Generators
 {
@@ -348,9 +347,9 @@ namespace RollABall.Generators
     {
         int size = profile.LevelSize;
 
-        Stopwatch stopwatch = null;
+        System.Diagnostics.Stopwatch stopwatch = null;
         if (size >= 50)
-            stopwatch = Stopwatch.StartNew();
+            stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
         // Initialize grid with walls
         for (int x = 1; x < size - 1; x++)
