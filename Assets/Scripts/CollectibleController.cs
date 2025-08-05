@@ -50,7 +50,7 @@ public class CollectibleController : MonoBehaviour
     private bool isCollecting = false;
     private bool isCollected = false;
     private float pulseTimer = 0f;
-    private readonly object lockObject = new object();
+    private readonly object lockObject = new();
 
     public System.Action<CollectibleController> OnCollectiblePickedUp;
 
@@ -59,23 +59,17 @@ public class CollectibleController : MonoBehaviour
     public string ItemName => collectibleData?.itemName ?? gameObject.name;
     public int PointValue => collectibleData?.pointValue ?? 1;
 
-    void Awake()
-    {
-        InitializeComponents();
-    }
+    private void Awake() => InitializeComponents();
 
-    void Start()
+    private void Start()
     {
         ValidateSetup();
         originalScale = transform.localScale;
-
-        if (LevelManager.Instance != null && !IsCollected && !LevelManager.Instance.ContainsCollectible(this))
-        {
+        if (LevelManager.Instance && !IsCollected && !LevelManager.Instance.ContainsCollectible(this))
             LevelManager.Instance.AddCollectible(this);
-        }
     }
 
-    void Update()
+    private void Update()
     {
         if (!isCollected)
         {
@@ -86,38 +80,25 @@ public class CollectibleController : MonoBehaviour
 
     private void InitializeComponents()
     {
-        // Renderer
         if (renderers == null || renderers.Length == 0)
             renderers = GetComponentsInChildren<Renderer>();
 
-        // Partikeleffekt
         if (!collectEffect)
             collectEffect = GetComponentInChildren<ParticleSystem>();
 
-        // Licht
         if (!itemLight)
             itemLight = GetComponentInChildren<Light>();
 
-        // AudioSource automatisch hinzufügen
-        audioSource = GetComponent<AudioSource>();
-        if (!audioSource)
-            audioSource = gameObject.AddComponent<AudioSource>();
-
+        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 1f;
         audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
         audioSource.maxDistance = 20f;
 
-        // Collider automatisch hinzufügen
         if (autoSetupCollider)
         {
-            triggerCollider = GetComponent<Collider>();
-            if (!triggerCollider)
-            {
-                SphereCollider sphere = gameObject.AddComponent<SphereCollider>();
-                sphere.radius = 0.5f;
-                triggerCollider = sphere;
-            }
+            triggerCollider = GetComponent<Collider>() ?? gameObject.AddComponent<SphereCollider>();
+            if (triggerCollider is SphereCollider sphere) sphere.radius = 0.5f;
             triggerCollider.isTrigger = true;
         }
     }
@@ -148,10 +129,10 @@ public class CollectibleController : MonoBehaviour
         transform.localScale = originalScale * pulseValue;
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (isCollecting || isCollected) return;
-        if (other.GetComponent<PlayerController>() != null)
+        if (other.GetComponent<PlayerController>())
             CollectItem();
     }
 
@@ -168,15 +149,7 @@ public class CollectibleController : MonoBehaviour
         TriggerCollectionEffect();
         OnCollected?.Invoke();
         OnCollectedWithData?.Invoke(collectibleData);
-
-        try
-        {
-            OnCollectiblePickedUp?.Invoke(this);
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"[CollectibleController] Error firing event for {gameObject.name}: {e.Message}");
-        }
+        OnCollectiblePickedUp?.Invoke(this);
 
         StartCoroutine(CollectionSequence());
     }
@@ -203,11 +176,8 @@ public class CollectibleController : MonoBehaviour
 
     private IEnumerator FlashLight()
     {
-        if (!itemLight) yield break;
-
         float originalIntensity = itemLight.intensity;
         itemLight.intensity = originalIntensity * flashMultiplier;
-
         yield return new WaitForSeconds(flashHoldTime);
 
         float elapsed = 0f;
@@ -217,7 +187,6 @@ public class CollectibleController : MonoBehaviour
             itemLight.intensity = Mathf.Lerp(originalIntensity * flashMultiplier, 0f, elapsed / flashDuration);
             yield return null;
         }
-
         itemLight.intensity = 0f;
     }
 
@@ -282,9 +251,7 @@ public class CollectibleController : MonoBehaviour
             }
         }
 
-        if (LevelManager.Instance != null && !LevelManager.Instance.ContainsCollectible(this))
-        {
+        if (LevelManager.Instance && !LevelManager.Instance.ContainsCollectible(this))
             LevelManager.Instance.AddCollectible(this);
-        }
     }
 }
