@@ -4,7 +4,6 @@ using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-
 [AddComponentMenu("UI/UI Controller")]
 public class UIController : MonoBehaviour
 {
@@ -103,14 +102,14 @@ public class UIController : MonoBehaviour
 
         UpdateUIFromSaveData();
 
-        // Position fixieren (optional)
+        // Position fixieren
         if (collectibleCountText != null)
         {
             RectTransform rt = collectibleCountText.GetComponent<RectTransform>();
             rt.anchorMin = new Vector2(0, 1); // oben links
             rt.anchorMax = new Vector2(0, 1);
             rt.pivot = new Vector2(0, 1);
-            rt.anchoredPosition = new Vector2(20, -20); // 20px vom Rand
+            rt.anchoredPosition = new Vector2(20, -20); // Abstand vom Rand
         }
     }
 
@@ -132,7 +131,7 @@ public class UIController : MonoBehaviour
             LevelManager.Instance.OnLevelCompleted += OnLevelCompleted;
             LevelManager.Instance.OnCollectibleCountChanged += OnCollectibleCountChanged;
 
-            // Direkt beim Start aktuelle Werte anzeigen
+            // Startwerte setzen
             var cfg = LevelManager.Instance.GetLevelConfiguration();
             OnCollectibleCountChanged(cfg.collectiblesRemaining, cfg.totalCollectibles);
         }
@@ -140,7 +139,6 @@ public class UIController : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Bei neuem Level neu verbinden
         ConnectToLevelManager();
     }
     #endregion
@@ -192,23 +190,18 @@ public class UIController : MonoBehaviour
     #region Collectible & Score
     private void OnLevelCompleted(LevelConfiguration levelConfig) =>
         ShowLevelComplete(levelConfig);
-    
+
     private void OnCollectibleCountChanged(int remaining, int total) =>
         UpdateCollectibleDisplay(total - remaining, total);
-    
+
+    // Kernmethode
     public void UpdateCollectibleDisplay(int collected, int total)
     {
         if (collectibleCountText)
             collectibleCountText.text = $"Collectibles: {collected}/{total}";
     }
-    
-    // Overload: GameManager kann collected ohne total aufrufen
-    public void UpdateCollectibleDisplay(int collected)
-    {
-        int total = LevelManager.Instance != null ? LevelManager.Instance.TotalCollectibles : 0;
-        UpdateCollectibleDisplay(collected, total);
-    }
-    
+
+    // Variante für GameManager mit remaining
     public void UpdateCollectibleDisplay(int remaining)
     {
         var config = LevelManager.Instance?.Config;
@@ -219,14 +212,13 @@ public class UIController : MonoBehaviour
             UpdateCollectibleDisplay(collected, total);
         }
     }
-    
+
     public void UpdateScore(int score)
     {
         if (scoreText)
             scoreText.text = $"Score: {score:N0}";
     }
     #endregion
-
 
     #region Notifications
     private void OnNotificationRequested(string message, float duration) =>
