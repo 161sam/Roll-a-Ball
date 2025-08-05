@@ -587,8 +587,18 @@ public class LevelManager : MonoBehaviour
                 Debug.LogWarning($"RecordLevelPerformance method not available: {e.Message}");
             }
         }
+        StartCoroutine(LoadNextLevelRoutine());
+    }
 
-        Invoke(nameof(LoadNextLevel), 0.2f);
+    /// <summary>
+    /// Wartet die konfigurierte Anzeigedauer ab und lädt anschließend den nächsten Level.
+    /// Verwendet echte Zeit, damit auch bei pausiertem Spiel fortgefahren wird.
+    /// </summary>
+    private System.Collections.IEnumerator LoadNextLevelRoutine()
+    {
+        float delay = Mathf.Max(0.1f, levelCompleteDisplayTime);
+        yield return new WaitForSecondsRealtime(delay);
+        LoadNextLevel();
     }
 
     private void LoadNextLevel()
@@ -629,7 +639,7 @@ public class LevelManager : MonoBehaviour
     private string DetermineNextScene(string currentScene)
     {
         // After Level3 always switch to procedurally generated levels
-        if (currentScene.StartsWith("Level3"))
+        if (currentScene == "Level3" || currentScene == "Level_3")
             return "GeneratedLevel";
 
         // Use progression profile if available
