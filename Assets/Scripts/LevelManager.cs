@@ -43,9 +43,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private bool autoFindCollectibles = true;
     public bool AutoFindCollectibles => autoFindCollectibles;
 
-    [Header("UI References")]
-    [SerializeField] private UIController uiController;
-
     [Header("Level Progression")]
     [SerializeField] private LevelProgressionProfile progressionProfile;
 
@@ -102,9 +99,6 @@ public class LevelManager : MonoBehaviour
         levelCollectibles.Clear();
         collectedCollectibles.Clear();
         registeredCollectibles.Clear();
-
-        if (!uiController)
-            uiController = FindFirstObjectByType<UIController>();
 
         levelStartTime = Time.time;
     }
@@ -341,7 +335,6 @@ public class LevelManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (!uiController) return;
         OnCollectibleCountChanged?.Invoke(levelConfig.collectiblesRemaining, levelConfig.totalCollectibles);
     }
 
