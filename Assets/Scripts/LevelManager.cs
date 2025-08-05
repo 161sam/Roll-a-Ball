@@ -1,277 +1,291 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections.Generic;
+using UnityEngine.Events;
+using System.Collections;
+using RollABall.Utility;
 
 [System.Serializable]
-public class LevelConfiguration
+public class CollectibleData
 {
-    [Header("Level Info")]
-    public string levelName = "Level";
-    public int levelIndex = 1;
-    public string nextSceneName = "";
+    [Header("Collectible Properties")]
+    public string itemName = "Collectible";
+    public string itemType = "standard";
+    public int pointValue = 1;
 
-    [Header("Collectibles")]
-    public int totalCollectibles = 0;
-    public int collectiblesRemaining = 0;
+    [Header("Visual Effects")]
+    public bool rotateObject = true;
+    public float rotationSpeed = 90f;
+    public bool enablePulseEffect = true;
+    public float pulseIntensity = 0.1f;
+    public float pulseSpeed = 2f;
 
-    [Header("Difficulty")]
-    public float difficultyMultiplier = 1f;
-    public bool hasTimeLimit = false;
-    public float timeLimit = 120f;
-
-    [Header("Visual Theme")]
-    public string themeName = "Steampunk";
-    public Color themeColor = Color.cyan;
+    [Header("Audio")]
+    public AudioClip collectSound;
+    public float soundVolume = 1f;
 }
 
-[AddComponentMenu("Game/LevelManager")]
-public class LevelManager : MonoBehaviour
+[AddComponentMenu("Game/CollectibleController")]
+public class CollectibleController : MonoBehaviour
 {
-    [Header("Level Configuration")]
-    [SerializeField] private LevelConfiguration levelConfig;
+    [Header("Collectible Configuration")]
+    [SerializeField] private CollectibleData collectibleData;
 
-    [Header("Goal Zone")]
-    [SerializeField] private GameObject goalZone;
-    [SerializeField] private bool autoFindGoalZone = true;
+    [Header("Visual Components")]
+    [SerializeField] private Renderer[] renderers;
+    [SerializeField] private ParticleSystem collectEffect;
+    [SerializeField] private Light itemLight;
+    [SerializeField] private float flashMultiplier = 3f;
+    [SerializeField] private float flashDuration = 0.3f;
+    [SerializeField] private float flashHoldTime = 0.1f;
 
-    [Header("Collectibles")]
-    [SerializeField] private List<CollectibleController> levelCollectibles = new();
-    private readonly HashSet<CollectibleController> collectedCollectibles = new();
-    [SerializeField] private bool autoFindCollectibles = true;
+    [Header("Physics")]
+    [SerializeField] private Collider triggerCollider;
+    [SerializeField] private bool autoSetupCollider = true;
 
-    [Header("UI References")]
-    [SerializeField] private UIController uiController;
+    [Header("Events")]
+    [SerializeField] private UnityEvent OnCollected;
+    [SerializeField] private UnityEvent<CollectibleData> OnCollectedWithData;
 
-    [Header("Level Progression")]
-    [SerializeField] private LevelProgressionProfile progressionProfile;
+    private AudioSource audioSource;
+    private Vector3 originalScale;
+    private bool isCollecting = false;
+    private bool isCollected = false;
+    private float pulseTimer = 0f;
+    private readonly object lockObject = new object();
 
-    [Header("Debug")]
-    [SerializeField] private bool debugMode = false;
+    public System.Action<CollectibleController> OnCollectiblePickedUp;
 
-    private bool levelCompleted = false;
-    private bool eventsRegistered = false;
-    private float levelStartTime;
-    private readonly object lockObject = new();
-
-    public static LevelManager Instance { get; private set; }
-
-    public int CollectiblesRemaining => levelConfig.collectiblesRemaining;
-    public int TotalCollectibles => levelConfig.totalCollectibles;
-    public bool IsLevelCompleted => levelCompleted;
-    
-    // Kompatibilität für älteren Code:
-    public LevelConfiguration Config
-    {
-        get => levelConfig;
-        set => levelConfig = value;
-    }
-    
-    public event System.Action<int, int> OnCollectibleCountChanged;
-    public event System.Action<LevelConfiguration> OnLevelCompleted;
-    public event System.Action<LevelConfiguration> OnLevelStarted;
-    public event System.Action<float> OnTimeLimitUpdate;
+    public CollectibleData Data => collectibleData;
+    public bool IsCollected => isCollected;
+    public string ItemName => collectibleData?.itemName ?? gameObject.name;
+    public int PointValue => collectibleData?.pointValue ?? 1;
 
     private void Awake()
     {
-        if (Instance && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        InitializeLevelManager();
+        InitializeComponents();
     }
 
-    private void Start() => StartLevel();
+    private void Start()
+    {
+        ValidateSetup();
+        originalScale = transform.localScale;
+
+        // Registrierung beim LevelManager verzögert ausführen
+        StartCoroutine(RegisterWithLevelManager());
+    }
 
     private void Update()
     {
-        if (levelConfig.hasTimeLimit && !levelCompleted)
-            CheckTimeLimit();
-    }
-
-    /// <summary> Liefert die aktuelle Level-Konfiguration zurück. </summary>
-    public LevelConfiguration GetLevelConfiguration() => levelConfig;
-
-    private void InitializeLevelManager()
-    {
-        if (levelConfig == null)
-            levelConfig = new LevelConfiguration { levelName = SceneManager.GetActiveScene().name };
-
-        levelCollectibles.Clear();
-        collectedCollectibles.Clear();
-
-        if (!uiController)
-            uiController = FindFirstObjectByType<UIController>();
-
-        levelStartTime = Time.time;
-    }
-
-    private void StartLevel()
-    {
-        if (autoFindCollectibles) FindAllCollectibles();
-        InitializeCollectibleCounts();
-        if (autoFindGoalZone && !goalZone) FindGoalZone();
-        SetGoalZoneActive(false);
-        SafeSubscribeToAllEvents();
-        UpdateUI();
-        OnLevelStarted?.Invoke(levelConfig);
-    }
-
-    private void FindAllCollectibles()
-    {
-        levelCollectibles.Clear();
-        collectedCollectibles.Clear();
-
-        foreach (var collectible in FindObjectsByType<CollectibleController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
-            if (collectible && !collectible.IsCollected)
-                levelCollectibles.Add(collectible);
-    }
-
-    private void InitializeCollectibleCounts()
-    {
-        levelConfig.totalCollectibles = levelCollectibles.Count;
-        levelConfig.collectiblesRemaining = levelConfig.totalCollectibles;
-    }
-
-    private void FindGoalZone()
-    {
-        var candidates = GameObject.FindGameObjectsWithTag("Finish");
-        goalZone = candidates.Length > 0 ? candidates[0] : GameObject.Find("GoalZone");
-    }
-
-    private void SetGoalZoneActive(bool active)
-    {
-        if (!goalZone) return;
-        goalZone.SetActive(active);
-        var col = goalZone.GetComponent<Collider>();
-        if (col) col.enabled = active;
-    }
-
-    private void SafeSubscribeToAllEvents()
-    {
-        lock (lockObject)
+        if (!isCollected)
         {
-            if (eventsRegistered) return;
-            foreach (var collectible in levelCollectibles)
+            RotateLocally();
+            HandlePulseEffect();
+        }
+    }
+
+    private void InitializeComponents()
+    {
+        if (renderers == null || renderers.Length == 0)
+            renderers = GetComponentsInChildren<Renderer>();
+
+        if (!collectEffect)
+            collectEffect = GetComponentInChildren<ParticleSystem>();
+
+        if (!itemLight)
+            itemLight = GetComponentInChildren<Light>();
+
+        // AudioSource automatisch hinzufügen
+        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f;
+        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        audioSource.maxDistance = 20f;
+
+        // Collider automatisch hinzufügen
+        if (autoSetupCollider && !triggerCollider)
+        {
+            triggerCollider = GetComponent<Collider>();
+            if (!triggerCollider)
             {
-                collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
-                collectible.OnCollectiblePickedUp += OnCollectibleCollected;
+                var sphere = gameObject.AddComponent<SphereCollider>();
+                sphere.radius = 0.5f;
+                triggerCollider = sphere;
             }
-            eventsRegistered = true;
+        }
+
+        if (triggerCollider)
+            triggerCollider.isTrigger = true;
+    }
+
+    private void ValidateSetup()
+    {
+        if (collectibleData == null)
+            collectibleData = new CollectibleData { itemName = gameObject.name };
+
+        if (!gameObject.CompareTag("Collectible"))
+            gameObject.tag = "Collectible";
+    }
+
+    private IEnumerator RegisterWithLevelManager()
+    {
+        // Warten bis LevelManager existiert
+        yield return new WaitUntil(() => LevelManager.Instance != null);
+
+        if (!IsCollected && !LevelManager.Instance.ContainsCollectible(this))
+        {
+            LevelManager.Instance.AddCollectible(this);
+            Debug.Log($"[CollectibleController] {ItemName} beim LevelManager registriert");
         }
     }
 
-    public void OnCollectibleCollected(CollectibleController collectible)
+    private void RotateLocally()
     {
-        if (levelCompleted || collectible == null) return;
+        if (collectibleData?.rotateObject != true) return;
+        transform.localRotation *= Quaternion.Euler(0f, collectibleData.rotationSpeed * Time.deltaTime, 0f);
+    }
 
+    private void HandlePulseEffect()
+    {
+        if (collectibleData?.enablePulseEffect != true) return;
+        pulseTimer += Time.deltaTime * collectibleData.pulseSpeed;
+        float pulseValue = 1f + Mathf.Sin(pulseTimer) * collectibleData.pulseIntensity;
+        transform.localScale = originalScale * pulseValue;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isCollecting || isCollected) return;
+
+        if (other.GetComponent<PlayerController>() != null)
+            CollectItem();
+    }
+
+    public void CollectItem()
+    {
         lock (lockObject)
         {
-            if (!collectedCollectibles.Add(collectible)) return;
-            levelConfig.collectiblesRemaining = Mathf.Max(0, levelConfig.totalCollectibles - collectedCollectibles.Count);
+            if (isCollecting || isCollected) return;
+            isCollecting = true;
+            isCollected = true;
         }
 
-        UpdateUI();
+        PlayCollectionSound();
+        TriggerCollectionEffect();
+        OnCollected?.Invoke();
+        OnCollectedWithData?.Invoke(collectibleData);
 
-        if (levelConfig.collectiblesRemaining <= 0)
-            CompleteLevel();
-    }
-
-    public void AddCollectible(CollectibleController collectible)
-    {
-        if (collectible == null || levelCollectibles.Contains(collectible)) return;
-        levelCollectibles.Add(collectible);
-        InitializeCollectibleCounts();
-        SafeSubscribeToAllEvents();
-        UpdateUI();
-    }
-
-    public void AddCollectiblesBulk(CollectibleController[] collectibles)
-    {
-        if (collectibles == null) return;
-        foreach (var c in collectibles)
-            if (c != null && !levelCollectibles.Contains(c))
-                levelCollectibles.Add(c);
-
-        InitializeCollectibleCounts();
-        SafeSubscribeToAllEvents();
-        UpdateUI();
-    }
-
-    public bool ContainsCollectible(CollectibleController collectible) =>
-        levelCollectibles.Contains(collectible);
-
-    /// <summary> Normales Level-Abschlussverfahren. </summary>
-    private void CompleteLevel()
-    {
-        if (levelCompleted) return;
-        levelCompleted = true;
-        SetGoalZoneActive(true);
-        OnLevelCompleted?.Invoke(levelConfig);
-        Invoke(nameof(LoadNextLevel), 0.2f);
-    }
-
-    /// <summary> Erzwingt sofort den Levelabschluss (z. B. für Trigger). </summary>
-    public void ForceCompleteLevel()
-    {
-        if (levelCompleted) return;
-        levelCompleted = true;
-        SetGoalZoneActive(true);
-        OnLevelCompleted?.Invoke(levelConfig);
-        LoadNextLevel();
-    }
-
-    private void LoadNextLevel()
-    {
-        string nextScene = !string.IsNullOrEmpty(levelConfig.nextSceneName)
-            ? levelConfig.nextSceneName
-            : DetermineNextScene(SceneManager.GetActiveScene().name);
-
-        if (!string.IsNullOrEmpty(nextScene))
-            SceneManager.LoadScene(nextScene);
-        else
-            GameManager.Instance?.GameOver();
-    }
-
-    private string DetermineNextScene(string currentScene)
-    {
-        if (currentScene.StartsWith("Level3")) return "GeneratedLevel";
-        if (progressionProfile && progressionProfile.ValidateProgression())
-            return progressionProfile.GetNextScene(currentScene);
-
-        return currentScene switch
+        try
         {
-            "Level1" => "Level2",
-            "Level2" => "Level3",
-            _ when currentScene.StartsWith("GeneratedLevel") => "GeneratedLevel",
-            "Level_OSM" => "Level_OSM",
-            _ => string.Empty
-        };
+            OnCollectiblePickedUp?.Invoke(this);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[CollectibleController] Error firing event for {gameObject.name}: {e.Message}");
+        }
+
+        StartCoroutine(CollectionSequence());
     }
 
-    private void CheckTimeLimit()
+    private void PlayCollectionSound()
     {
-        float timeRemaining = levelConfig.timeLimit - (Time.time - levelStartTime);
-        OnTimeLimitUpdate?.Invoke(Mathf.Max(0, timeRemaining));
-        if (timeRemaining <= 0f) GameManager.Instance?.GameOver();
+        if (collectibleData?.collectSound && audioSource)
+        {
+            audioSource.clip = collectibleData.collectSound;
+            audioSource.volume = collectibleData.soundVolume;
+            audioSource.Play();
+        }
+        else if (AudioManager.Instance)
+        {
+            AudioManager.Instance.PlaySound("Collect");
+        }
     }
 
-    private void UpdateUI()
+    private void TriggerCollectionEffect()
     {
-        if (!uiController) return;
-        OnCollectibleCountChanged?.Invoke(levelConfig.collectiblesRemaining, levelConfig.totalCollectibles);
-
-        if (debugMode)
-            Debug.Log($"[LevelManager] {levelConfig.levelName}: {levelConfig.collectiblesRemaining}/{levelConfig.totalCollectibles} verbleibend");
+        if (collectEffect) collectEffect.Play();
+        if (itemLight) StartCoroutine(FlashLight());
     }
 
-    /// <summary> Sucht Collectibles neu und aktualisiert die UI. </summary>
-    public void RescanCollectibles()
+    private IEnumerator FlashLight()
     {
-        FindAllCollectibles();
-        InitializeCollectibleCounts();
-        SafeSubscribeToAllEvents();
-        UpdateUI();
+        if (!itemLight) yield break;
+
+        float originalIntensity = itemLight.intensity;
+        itemLight.intensity = originalIntensity * flashMultiplier;
+
+        yield return new WaitForSeconds(flashHoldTime);
+
+        float elapsed = 0f;
+        while (elapsed < flashDuration)
+        {
+            elapsed += Time.deltaTime;
+            itemLight.intensity = Mathf.Lerp(originalIntensity * flashMultiplier, 0f, elapsed / flashDuration);
+            yield return null;
+        }
+
+        itemLight.intensity = 0f;
+    }
+
+    private IEnumerator CollectionSequence()
+    {
+        if (triggerCollider) triggerCollider.enabled = false;
+
+        float scaleTime = 0.2f;
+        float elapsed = 0f;
+        Vector3 targetScale = originalScale * 1.3f;
+
+        while (elapsed < scaleTime)
+        {
+            elapsed += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / scaleTime);
+            yield return null;
+        }
+
+        elapsed = 0f;
+        float fadeTime = 0.3f;
+        while (elapsed < fadeTime)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / fadeTime;
+            transform.localScale = Vector3.Lerp(targetScale, Vector3.zero, t);
+            foreach (Renderer renderer in renderers)
+            {
+                if (renderer && renderer.material)
+                {
+                    Color color = renderer.material.color;
+                    color.a = Mathf.Lerp(1f, 0f, t);
+                    renderer.material.color = color;
+                }
+            }
+            yield return null;
+        }
+
+        if (audioSource && audioSource.isPlaying)
+            yield return new WaitWhile(() => audioSource.isPlaying);
+
+        PrefabPooler.Release(gameObject);
+    }
+
+    public void ResetCollectible()
+    {
+        lock (lockObject)
+        {
+            isCollected = false;
+            isCollecting = false;
+        }
+
+        if (triggerCollider) triggerCollider.enabled = true;
+        transform.localScale = originalScale;
+
+        foreach (Renderer renderer in renderers)
+        {
+            if (renderer && renderer.material)
+            {
+                Color color = renderer.material.color;
+                color.a = 1f;
+                renderer.material.color = color;
+            }
+        }
+
+        StartCoroutine(RegisterWithLevelManager());
     }
 }
