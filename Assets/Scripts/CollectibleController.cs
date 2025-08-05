@@ -50,7 +50,7 @@ public class CollectibleController : MonoBehaviour
     private bool isCollecting = false;
     private bool isCollected = false;
     private float pulseTimer = 0f;
-    private readonly object lockObject = new();
+    private readonly object lockObject = new object();
 
     public System.Action<CollectibleController> OnCollectiblePickedUp;
 
@@ -59,14 +59,21 @@ public class CollectibleController : MonoBehaviour
     public string ItemName => collectibleData?.itemName ?? gameObject.name;
     public int PointValue => collectibleData?.pointValue ?? 1;
 
-    private void Awake() => InitializeComponents();
+    private void Awake()
+    {
+        InitializeComponents();
+    }
 
     private void Start()
     {
         ValidateSetup();
         originalScale = transform.localScale;
-        if (LevelManager.Instance && !IsCollected && !LevelManager.Instance.ContainsCollectible(this))
+
+        // Automatisch beim LevelManager registrieren
+        if (LevelManager.Instance != null && !IsCollected && !LevelManager.Instance.ContainsCollectible(this))
+        {
             LevelManager.Instance.AddCollectible(this);
+        }
     }
 
     private void Update()
@@ -80,25 +87,41 @@ public class CollectibleController : MonoBehaviour
 
     private void InitializeComponents()
     {
+        // Renderer finden
         if (renderers == null || renderers.Length == 0)
             renderers = GetComponentsInChildren<Renderer>();
 
+        // Partikel-Effekt finden
         if (!collectEffect)
             collectEffect = GetComponentInChildren<ParticleSystem>();
 
+        // Licht finden
         if (!itemLight)
             itemLight = GetComponentInChildren<Light>();
 
-        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
-        audioSource.playOnAwake = false;
-        audioSource.spatialBlend = 1f;
-        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
-        audioSource.maxDistance = 20f;
+        // AudioSource sicherstellen
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
 
+        if (audioSource != null)
+        {
+            audioSource.playOnAwake = false;
+            audioSource.spatialBlend = 1f;
+            audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+            audioSource.maxDistance = 20f;
+        }
+
+        // Collider sicherstellen
         if (autoSetupCollider)
         {
-            triggerCollider = GetComponent<Collider>() ?? gameObject.AddComponent<SphereCollider>();
-            if (triggerCollider is SphereCollider sphere) sphere.radius = 0.5f;
+            triggerCollider = GetComponent<Collider>();
+            if (!triggerCollider)
+            {
+                SphereCollider sphere = gameObject.AddComponent<SphereCollider>();
+                sphere.radius = 0.5f;
+                triggerCollider = sphere;
+            }
             triggerCollider.isTrigger = true;
         }
     }
@@ -132,7 +155,7 @@ public class CollectibleController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (isCollecting || isCollected) return;
-        if (other.GetComponent<PlayerController>())
+        if (other.GetComponent<PlayerController>() != null)
             CollectItem();
     }
 
@@ -149,7 +172,16 @@ public class CollectibleController : MonoBehaviour
         TriggerCollectionEffect();
         OnCollected?.Invoke();
         OnCollectedWithData?.Invoke(collectibleData);
-        OnCollectiblePickedUp?.Invoke(this);
+
+        try
+        {
+            OnCollectiblePickedUp?.Invoke(this);
+            LevelManager.Instance?.OnCollectibleCollected(this);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[CollectibleController] Error firing event for {gameObject.name}: {e.Message}");
+        }
 
         StartCoroutine(CollectionSequence());
     }
@@ -176,8 +208,11 @@ public class CollectibleController : MonoBehaviour
 
     private IEnumerator FlashLight()
     {
+        if (!itemLight) yield break;
+
         float originalIntensity = itemLight.intensity;
         itemLight.intensity = originalIntensity * flashMultiplier;
+
         yield return new WaitForSeconds(flashHoldTime);
 
         float elapsed = 0f;
@@ -187,6 +222,7 @@ public class CollectibleController : MonoBehaviour
             itemLight.intensity = Mathf.Lerp(originalIntensity * flashMultiplier, 0f, elapsed / flashDuration);
             yield return null;
         }
+
         itemLight.intensity = 0f;
     }
 
@@ -251,7 +287,9 @@ public class CollectibleController : MonoBehaviour
             }
         }
 
-        if (LevelManager.Instance && !LevelManager.Instance.ContainsCollectible(this))
+        if (LevelManager.Instance != null && !LevelManager.Instance.ContainsCollectible(this))
+        {
             LevelManager.Instance.AddCollectible(this);
+        }
     }
 }
