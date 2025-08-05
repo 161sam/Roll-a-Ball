@@ -70,6 +70,21 @@ public class LevelManager : MonoBehaviour
     public int TotalCollectibles => levelConfig.totalCollectibles;
     public float LevelElapsedTime => Time.time - levelStartTime;
 
+    /// <summary>
+    /// Provides read-only access to the active level configuration.
+    /// </summary>
+    public LevelConfiguration Config => levelConfig;
+
+    /// <summary>
+    /// Gets the progression profile used to determine level sequence.
+    /// </summary>
+    public LevelProgressionProfile ProgressionProfile => progressionProfile;
+
+    /// <summary>
+    /// Indicates whether the current level has been completed.
+    /// </summary>
+    public bool IsLevelCompleted => levelCompleted;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -235,6 +250,21 @@ public class LevelManager : MonoBehaviour
         UpdateUI();
     }
 
+    /// <summary>
+    /// Removes a collectible from tracking and updates counters accordingly.
+    /// </summary>
+    /// <param name="collectible">Collectible to remove.</param>
+    public void RemoveCollectible(CollectibleController collectible)
+    {
+        if (collectible == null) return;
+        levelCollectibles.Remove(collectible);
+        collectedCollectibles.Remove(collectible);
+        InitializeCollectibleCounts();
+        eventsRegistered = false;
+        SafeSubscribeToAllEvents();
+        UpdateUI();
+    }
+
     public void RescanCollectibles()
     {
         SafeUnsubscribeFromAllEvents();
@@ -243,6 +273,17 @@ public class LevelManager : MonoBehaviour
         SafeSubscribeToAllEvents();
         UpdateUI();
     }
+
+    /// <summary>
+    /// Sets the name of the scene to load after this level completes.
+    /// </summary>
+    /// <param name="sceneName">Name of the next scene.</param>
+    public void SetNextScene(string sceneName) => levelConfig.nextSceneName = sceneName;
+
+    /// <summary>
+    /// Forces immediate completion of the level regardless of current state.
+    /// </summary>
+    public void ForceCompleteLevel() => CompleteLevel();
 
     private void CompleteLevel()
     {
