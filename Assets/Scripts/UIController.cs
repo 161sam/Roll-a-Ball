@@ -190,23 +190,43 @@ public class UIController : MonoBehaviour
     #endregion
 
     #region Collectible & Score
-    private void OnLevelCompleted(LevelConfiguration levelConfig) => ShowLevelComplete(levelConfig);
-
+    private void OnLevelCompleted(LevelConfiguration levelConfig) =>
+        ShowLevelComplete(levelConfig);
+    
     private void OnCollectibleCountChanged(int remaining, int total) =>
         UpdateCollectibleDisplay(total - remaining, total);
-
+    
     public void UpdateCollectibleDisplay(int collected, int total)
     {
         if (collectibleCountText)
             collectibleCountText.text = $"Collectibles: {collected}/{total}";
     }
-
+    
+    // Overload: GameManager kann collected ohne total aufrufen
+    public void UpdateCollectibleDisplay(int collected)
+    {
+        int total = LevelManager.Instance != null ? LevelManager.Instance.TotalCollectibles : 0;
+        UpdateCollectibleDisplay(collected, total);
+    }
+    
+    public void UpdateCollectibleDisplay(int remaining)
+    {
+        var config = LevelManager.Instance?.Config;
+        if (config != null)
+        {
+            int total = config.totalCollectibles;
+            int collected = total - remaining;
+            UpdateCollectibleDisplay(collected, total);
+        }
+    }
+    
     public void UpdateScore(int score)
     {
         if (scoreText)
             scoreText.text = $"Score: {score:N0}";
     }
     #endregion
+
 
     #region Notifications
     private void OnNotificationRequested(string message, float duration) =>
