@@ -457,6 +457,61 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Add multiple collectibles at once and refresh central event registration
+    /// Optimized for bulk additions (e.g., from MapGenerator)
+    /// </summary>
+    public void AddCollectiblesBulk(CollectibleController[] collectibles)
+    {
+        if (collectibles == null || collectibles.Length == 0)
+            return;
+
+        lock (lockObject)
+        {
+            int addedCount = 0;
+            foreach (var collectible in collectibles)
+            {
+                if (collectible != null && !levelCollectibles.Contains(collectible))
+                {
+                    levelCollectibles.Add(collectible);
+                    collectedCollectibles.Remove(collectible); // Reset collected state
+                    addedCount++;
+                }
+            }
+
+            if (addedCount > 0)
+            {
+                // Update counts
+                levelConfig.totalCollectibles = levelCollectibles.Count;
+                levelConfig.collectiblesRemaining = levelConfig.totalCollectibles - collectedCollectibles.Count;
+
+                // Refresh CENTRAL event registration for all collectibles
+                SafeUnsubscribeFromAllEvents();
+                SafeSubscribeToAllEvents();
+            }
+
+            if (debugMode)
+                Debug.Log($"[LevelManager] Bulk added {addedCount} collectibles. Total: {levelConfig.totalCollectibles}");
+        }
+
+        UpdateUI();
+    }
+
+    /// <summary>
+    /// Force refresh of all event registrations - use sparingly
+    /// </summary>
+    public void RefreshEventRegistrations()
+    {
+        lock (lockObject)
+        {
+            SafeUnsubscribeFromAllEvents();
+            SafeSubscribeToAllEvents();
+        }
+
+        if (debugMode)
+            Debug.Log("[LevelManager] Force refreshed all event registrations");
+    }
+
+    /// <summary>
     /// Unregister events for a specific collectible - for compatibility with tool scripts
     /// </summary>
     public void UnregisterCollectibleEvents(CollectibleController collectible)
@@ -501,17 +556,30 @@ public class LevelManager : MonoBehaviour
 
     /// <summary>
     /// Rebuilds collectible tracking and synchronizes counts.
+    /// Uses CENTRAL event registration to prevent doubles
     /// </summary>
     public void RescanCollectibles()
     {
-        SafeUnsubscribeFromAllEvents();
-        FindAllCollectibles();
-        InitializeCollectibleCounts();
-        SafeSubscribeToAllEvents();
+        lock (lockObject)
+        {
+            // Step 1: Clean unregister all events first
+            SafeUnsubscribeFromAllEvents();
+            
+            // Step 2: Find all collectibles fresh
+            FindAllCollectibles();
+            
+            // Step 3: Initialize counts
+            InitializeCollectibleCounts();
+            
+            // Step 4: CENTRAL event registration (only once)
+            SafeSubscribeToAllEvents();
+        }
+        
+        // Step 5: Update UI (outside lock)
         UpdateUI();
 
         if (debugMode)
-            Debug.Log($"[LevelManager] Rescanned collectibles: {levelConfig.collectiblesRemaining}/{levelConfig.totalCollectibles}");
+            Debug.Log($"[LevelManager] Rescan completed: {levelConfig.collectiblesRemaining}/{levelConfig.totalCollectibles} collectibles");
     }
 
     private void CheckTimeLimit()
@@ -587,18 +655,8 @@ public class LevelManager : MonoBehaviour
                 Debug.LogWarning($"RecordLevelPerformance method not available: {e.Message}");
             }
         }
-        StartCoroutine(LoadNextLevelRoutine());
-    }
 
-    /// <summary>
-    /// Wartet die konfigurierte Anzeigedauer ab und lädt anschließend den nächsten Level.
-    /// Verwendet echte Zeit, damit auch bei pausiertem Spiel fortgefahren wird.
-    /// </summary>
-    private System.Collections.IEnumerator LoadNextLevelRoutine()
-    {
-        float delay = Mathf.Max(0.1f, levelCompleteDisplayTime);
-        yield return new WaitForSecondsRealtime(delay);
-        LoadNextLevel();
+        Invoke(nameof(LoadNextLevel), 0.2f);
     }
 
     private void LoadNextLevel()
@@ -639,7 +697,7 @@ public class LevelManager : MonoBehaviour
     private string DetermineNextScene(string currentScene)
     {
         // After Level3 always switch to procedurally generated levels
-        if (currentScene == "Level3" || currentScene == "Level_3")
+        if (currentScene.StartsWith("Level3"))
             return "GeneratedLevel";
 
         // Use progression profile if available
