@@ -4,8 +4,6 @@ using TMPro;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 /// <summary>
 /// UI Controller for Roll-a-Ball with progression features
@@ -195,9 +193,7 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
             GameObject prefab = gameUIPrefab;
             if (!prefab)
             {
-                AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>("GameUI");
-                prefab = handle.WaitForCompletion();
-                Addressables.Release(handle);
+                prefab = Resources.Load<GameObject>("Prefabs/UI/GameUI");
             }
             if (prefab)
             {
