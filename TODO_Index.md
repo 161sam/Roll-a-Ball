@@ -93,12 +93,12 @@
 | TODO-OPT#89 | Assets/Scripts/Environment/SwitchTrigger.cs | Awake(), Zeile 32 | Warn if gate missing | **erledigt** |
 | TODO-OPT#90 | Assets/Scripts/Environment/SwitchTrigger.cs | ActivateSwitch(), Zeile 83 | Reset/deactivation logic | **erledigt** |
 | TODO-OPT#91 | Assets/Scripts/Environment/SwitchTrigger.cs | OnValidate(), Zeile 93 | Highlight object when gate missing | **erledigt** |
-| TODO-OPT#92 | Assets/Scripts/Map/MapStartupController.cs | ClearExistingLevel(), Zeile 758 | Replace destructive cleanup with pooled map objects | |
-| TODO-OPT#93 | Assets/Scripts/Map/MapStartupController.cs | HideMapUI(), Zeile 789 | Ensure UI references are serialized rather than searched | |
-| TODO-OPT#94 | Assets/Scripts/Map/AddressResolver.cs | ParseOSMResponse(), Zeile 567 | Make map scale configurable via ScriptableObject | |
-| TODO-OPT#95 | Assets/Scripts/Generators/LevelTerrainGenerator.cs | GeneratePrimMaze(), Zeile 358 | Evaluate Prim algorithm performance for large level sizes | |
-| TODO-OPT#96 | Assets/Scripts/UIController.cs | EnsureCollectibleCounter(), Zeile 193 | UI prefab should load via Addressables instead of Resources | |
-| TODO-OPT#97 | Assets/Scripts/CollectibleController.cs | CollectibleData.isCollected, Zeile 16 | Merge duplicate collection flags into single source of truth | |
+| TODO-OPT#92 | Assets/Scripts/Map/MapStartupController.cs | ClearExistingLevel(), Zeile 758 | Replace destructive cleanup with pooled map objects | **erledigt** |
+| TODO-OPT#93 | Assets/Scripts/Map/MapStartupController.cs | HideMapUI(), Zeile 789 | Ensure UI references are serialized rather than searched | **erledigt** |
+| TODO-OPT#94 | Assets/Scripts/Map/AddressResolver.cs | ParseOSMResponse(), Zeile 567 | Make map scale configurable via ScriptableObject | **erledigt** |
+| TODO-OPT#95 | Assets/Scripts/Generators/LevelTerrainGenerator.cs | GeneratePrimMaze(), Zeile 358 | Evaluate Prim algorithm performance for large level sizes | **erledigt** |
+| TODO-OPT#96 | Assets/Scripts/UIController.cs | EnsureCollectibleCounter(), Zeile 193 | UI prefab should load via Addressables instead of Resources | **erledigt** |
+| TODO-OPT#97 | Assets/Scripts/CollectibleController.cs | CollectibleData.isCollected, Zeile 16 | Merge duplicate collection flags into single source of truth | **erledigt** |
 | TODO-OPT#98 | Assets/Scripts/LevelManager.cs | InitializeLevelManager(), Zeile 143 | Load UI prefab via Addressables instead of Resources | |
 | TODO-OPT#99 | Assets/Scripts/LevelManager.cs | UpdateCollectibleCount(), Zeile 223 | Cache counts to avoid repeated HashSet scans | |
 | TODO-OPT#100 | Assets/Scripts/LevelManager.cs | collectedCollectibles, Zeile 55 | Pool HashSet to minimize allocations when resetting levels | |

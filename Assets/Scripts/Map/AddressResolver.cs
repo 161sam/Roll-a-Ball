@@ -30,6 +30,9 @@ namespace RollABall.Map
         [SerializeField] private bool enableFallbackMode = true;
         [SerializeField] private double fallbackLat = 52.5217; // Berlin - Brandenburger Tor
         [SerializeField] private double fallbackLon = 13.4132;
+
+        [Header("Scaling")]
+        [SerializeField] private MapScaleConfig scaleConfig;
         
         [Header("Debug Settings")]
         [SerializeField] private bool useSimpleQuery = false; // Use full query for production
@@ -564,9 +567,8 @@ namespace RollABall.Map
                 double areaWidth = maxLon - minLon;
                 double areaHeight = maxLat - minLat;
                 double maxExtent = System.Math.Max(areaWidth, areaHeight);
-                const float unityScale = 1000f; // Target size in Unity units
-                // TODO-OPT#94: make map scale configurable via ScriptableObject
-                mapData.scaleMultiplier = (float)(unityScale / (maxExtent * 111320.0)); // Scale to reasonable Unity size
+                float unityScale = scaleConfig ? scaleConfig.unityScale : 1000f;
+                mapData.scaleMultiplier = (float)(unityScale / (maxExtent * 111320.0));
                 
                 Debug.Log($"[AddressResolver] Successfully parsed OSM data: {mapData.roads.Count} roads, {mapData.buildings.Count} buildings, {mapData.areas.Count} areas, {mapData.pointsOfInterest.Count} POIs");
                 
