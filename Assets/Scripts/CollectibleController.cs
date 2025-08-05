@@ -69,8 +69,11 @@ public class CollectibleController : MonoBehaviour
         ValidateSetup();
         originalScale = transform.localScale;
 
-        // Automatisch beim LevelManager registrieren
-        if (LevelManager.Instance != null && !IsCollected && !LevelManager.Instance.ContainsCollectible(this))
+        // Fix: keine doppelte Registrierung, nur falls AutoFindCollectibles deaktiviert ist
+        if (LevelManager.Instance != null
+            && !IsCollected
+            && !LevelManager.Instance.ContainsCollectible(this)
+            && !LevelManager.Instance.AutoFindCollectibles)
         {
             LevelManager.Instance.AddCollectible(this);
         }
@@ -87,19 +90,15 @@ public class CollectibleController : MonoBehaviour
 
     private void InitializeComponents()
     {
-        // Renderer finden
         if (renderers == null || renderers.Length == 0)
             renderers = GetComponentsInChildren<Renderer>();
 
-        // Partikel-Effekt finden
         if (!collectEffect)
             collectEffect = GetComponentInChildren<ParticleSystem>();
 
-        // Licht finden
         if (!itemLight)
             itemLight = GetComponentInChildren<Light>();
 
-        // AudioSource sicherstellen
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -112,7 +111,6 @@ public class CollectibleController : MonoBehaviour
             audioSource.maxDistance = 20f;
         }
 
-        // Collider sicherstellen
         if (autoSetupCollider)
         {
             triggerCollider = GetComponent<Collider>();
@@ -173,7 +171,6 @@ public class CollectibleController : MonoBehaviour
         OnCollected?.Invoke();
         OnCollectedWithData?.Invoke(collectibleData);
 
-        // Direkt den LevelManager informieren (garantiert Zählen & Levelwechsel)
         if (LevelManager.Instance != null)
         {
             LevelManager.Instance.OnCollectibleCollected(this);
