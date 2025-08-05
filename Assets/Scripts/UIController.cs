@@ -181,31 +181,50 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
     }
 
     /// <summary>
-    /// Ensures the collectible counter text exists and is positioned correctly.
+    /// Ensures the Canvas, GameUIPanel and collectible counter text exist and are positioned correctly.
     /// </summary>
     private void EnsureCollectibleCounter()
     {
-        if (!collectibleCountText)
+        // Find or create canvas
+        var canvas = gameUIPanel ? gameUIPanel.GetComponentInParent<Canvas>() : FindFirstObjectByType<Canvas>();
+        if (!canvas)
         {
-            var existing = GameObject.Find("CollectibleText");
-            if (existing)
-                collectibleCountText = existing.GetComponent<TextMeshProUGUI>();
+            var canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            canvas = canvasObject.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         }
 
+        // Ensure GameUIPanel exists
+        if (!gameUIPanel)
+        {
+            var panelTransform = canvas.transform.Find("GameUIPanel");
+            if (!panelTransform)
+            {
+                var panelObject = new GameObject("GameUIPanel");
+                panelObject.transform.SetParent(canvas.transform, false);
+                gameUIPanel = panelObject;
+            }
+            else
+            {
+                gameUIPanel = panelTransform.gameObject;
+            }
+        }
+
+        // Ensure CollectibleText exists
         if (!collectibleCountText)
         {
-            var canvas = FindFirstObjectByType<Canvas>();
-            if (!canvas)
+            var textTransform = gameUIPanel.transform.Find("CollectibleText");
+            if (textTransform)
             {
-                var canvasObject = new GameObject("GameUICanvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-                canvas = canvasObject.GetComponent<Canvas>();
-                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                collectibleCountText = textTransform.GetComponent<TextMeshProUGUI>();
             }
-
-            var textObject = new GameObject("CollectibleText", typeof(TextMeshProUGUI));
-            textObject.transform.SetParent(canvas.transform, false);
-            collectibleCountText = textObject.GetComponent<TextMeshProUGUI>();
-            collectibleCountText.text = "Collectibles: 0/0";
+            else
+            {
+                var textObject = new GameObject("CollectibleText", typeof(TextMeshProUGUI));
+                textObject.transform.SetParent(gameUIPanel.transform, false);
+                collectibleCountText = textObject.GetComponent<TextMeshProUGUI>();
+                collectibleCountText.text = "Collectibles: 0/0";
+            }
         }
 
         var rect = collectibleCountText.rectTransform;
