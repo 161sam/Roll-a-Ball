@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
-using RollABall.Utility;
 using System.Collections;
-
+using RollABall.Utility;
 
 [System.Serializable]
 public class CollectibleData
@@ -71,7 +70,9 @@ public class CollectibleController : MonoBehaviour
         originalScale = transform.localScale;
 
         if (LevelManager.Instance != null && !IsCollected && !LevelManager.Instance.ContainsCollectible(this))
+        {
             LevelManager.Instance.AddCollectible(this);
+        }
     }
 
     void Update()
@@ -85,32 +86,39 @@ public class CollectibleController : MonoBehaviour
 
     private void InitializeComponents()
     {
+        // Renderer
         if (renderers == null || renderers.Length == 0)
             renderers = GetComponentsInChildren<Renderer>();
 
+        // Partikeleffekt
         if (!collectEffect)
             collectEffect = GetComponentInChildren<ParticleSystem>();
 
+        // Licht
         if (!itemLight)
             itemLight = GetComponentInChildren<Light>();
 
-        // AudioSource immer vorhanden machen
+        // AudioSource automatisch hinzufügen
         audioSource = GetComponent<AudioSource>();
         if (!audioSource)
-        {
             audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.playOnAwake = false;
-            audioSource.spatialBlend = 1f;
-            audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
-            audioSource.maxDistance = 20f;
-        }
 
-        if (autoSetupCollider && !triggerCollider)
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f;
+        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        audioSource.maxDistance = 20f;
+
+        // Collider automatisch hinzufügen
+        if (autoSetupCollider)
         {
-            triggerCollider = GetComponent<Collider>() ?? gameObject.AddComponent<SphereCollider>();
-            triggerCollider.isTrigger = true;
-            if (triggerCollider is SphereCollider sphere)
+            triggerCollider = GetComponent<Collider>();
+            if (!triggerCollider)
+            {
+                SphereCollider sphere = gameObject.AddComponent<SphereCollider>();
                 sphere.radius = 0.5f;
+                triggerCollider = sphere;
+            }
+            triggerCollider.isTrigger = true;
         }
     }
 
@@ -122,7 +130,7 @@ public class CollectibleController : MonoBehaviour
         if (triggerCollider && !triggerCollider.isTrigger)
             triggerCollider.isTrigger = true;
 
-        if (!CompareTag("Collectible"))
+        if (!gameObject.CompareTag("Collectible"))
             gameObject.tag = "Collectible";
     }
 
@@ -199,6 +207,7 @@ public class CollectibleController : MonoBehaviour
 
         float originalIntensity = itemLight.intensity;
         itemLight.intensity = originalIntensity * flashMultiplier;
+
         yield return new WaitForSeconds(flashHoldTime);
 
         float elapsed = 0f;
@@ -208,6 +217,7 @@ public class CollectibleController : MonoBehaviour
             itemLight.intensity = Mathf.Lerp(originalIntensity * flashMultiplier, 0f, elapsed / flashDuration);
             yield return null;
         }
+
         itemLight.intensity = 0f;
     }
 
@@ -273,6 +283,8 @@ public class CollectibleController : MonoBehaviour
         }
 
         if (LevelManager.Instance != null && !LevelManager.Instance.ContainsCollectible(this))
+        {
             LevelManager.Instance.AddCollectible(this);
+        }
     }
 }
