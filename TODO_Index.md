@@ -101,3 +101,4 @@
 | TODO-OPT#97 | Assets/Scripts/CollectibleController.cs | CollectibleData.isCollected, Zeile 16 | Merge duplicate collection flags into single source of truth | |
 | TODO-OPT#98 | Assets/Scripts/LevelManager.cs | InitializeLevelManager(), Zeile 143 | Load UI prefab via Addressables instead of Resources | |
 | TODO-OPT#99 | Assets/Scripts/LevelManager.cs | UpdateCollectibleCount(), Zeile 223 | Cache counts to avoid repeated HashSet scans | |
+| TODO-OPT#100 | Assets/Scripts/LevelManager.cs | collectedCollectibles, Zeile 55 | Pool HashSet to minimize allocations when resetting levels | |
