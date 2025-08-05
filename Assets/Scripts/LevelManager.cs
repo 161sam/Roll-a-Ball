@@ -259,6 +259,25 @@ public class LevelManager : MonoBehaviour
         UpdateUI();
     }
 
+    /// <summary>
+    /// Sets the scene name to load once the current level is completed.
+    /// </summary>
+    /// <param name="sceneName">Name of the next scene.</param>
+    public void SetNextScene(string sceneName)
+    {
+        levelConfig.nextSceneName = string.IsNullOrWhiteSpace(sceneName) ? string.Empty : sceneName;
+    }
+
+    /// <summary>
+    /// Completes the level immediately, bypassing collectible requirements.
+    /// </summary>
+    public void ForceCompleteLevel()
+    {
+        levelConfig.collectiblesRemaining = 0;
+        UpdateUI();
+        CompleteLevel();
+    }
+
     private void CompleteLevel()
     {
         if (levelCompleted) return;
