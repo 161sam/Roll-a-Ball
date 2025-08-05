@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 /// <summary>
 /// Manages level progression, collectible tracking, and scene transitions
@@ -162,9 +160,7 @@ public class LevelManager : MonoBehaviour
             uiController = FindFirstObjectByType<UIController>();
             if (!uiController)
             {
-                AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>("GameUI");
-                GameObject uiPrefab = handle.WaitForCompletion();
-                Addressables.Release(handle);
+                GameObject uiPrefab = Resources.Load<GameObject>("Prefabs/UI/GameUI");
                 if (uiPrefab)
                 {
                     var uiInstance = Instantiate(uiPrefab); // UI FIX: centralize UI via prefab
