@@ -236,14 +236,19 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
                 var textObject = new GameObject("CollectibleText", typeof(TextMeshProUGUI));
                 textObject.transform.SetParent(gameUIPanel.transform, false);
                 collectibleCountText = textObject.GetComponent<TextMeshProUGUI>();
-                collectibleCountText.text = "Collectibles: 0/0";
             }
         }
 
-        var rect = collectibleCountText.rectTransform;
-        rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
-        rect.pivot = new Vector2(0f, 1f);
-        rect.anchoredPosition = new Vector2(20f, -20f);
+        if (collectibleCountText)
+        {
+            if (string.IsNullOrEmpty(collectibleCountText.text))
+                collectibleCountText.text = "Collectibles: 0/0"; // UI FIX: consistent default text
+
+            var rect = collectibleCountText.rectTransform;
+            rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
+            rect.pivot = new Vector2(0f, 1f);
+            rect.anchoredPosition = new Vector2(20f, -20f);
+        }
     }
     
     private void SetupEventListeners()
@@ -306,9 +311,11 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
             GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
             GameManager.Instance.OnStatisticsUpdated += OnStatisticsUpdated;
         }
-        
+
         if (LevelManager.Instance)
         {
+            LevelManager.Instance.OnLevelCompleted -= OnLevelCompleted; // UI FIX: prevent double subscription
+            LevelManager.Instance.OnCollectibleCountChanged -= OnCollectibleCountChanged; // UI FIX
             LevelManager.Instance.OnLevelCompleted += OnLevelCompleted;
             LevelManager.Instance.OnCollectibleCountChanged += OnCollectibleCountChanged;
         }
