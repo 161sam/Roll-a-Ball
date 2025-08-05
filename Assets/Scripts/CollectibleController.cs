@@ -68,11 +68,8 @@ public class CollectibleController : MonoBehaviour
         ValidateSetup();
         originalScale = transform.localScale;
 
-        // Nur registrieren, wenn LevelManager existiert und Collectible nicht schon dort ist
         if (LevelManager.Instance != null && !IsCollected && !LevelManager.Instance.ContainsCollectible(this))
-        {
             LevelManager.Instance.AddCollectible(this);
-        }
     }
 
     void Update()
@@ -95,11 +92,16 @@ public class CollectibleController : MonoBehaviour
         if (!itemLight)
             itemLight = GetComponentInChildren<Light>();
 
-        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
-        audioSource.playOnAwake = false;
-        audioSource.spatialBlend = 1f;
-        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
-        audioSource.maxDistance = 20f;
+        // AudioSource immer vorhanden machen
+        audioSource = GetComponent<AudioSource>();
+        if (!audioSource)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+            audioSource.spatialBlend = 1f;
+            audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+            audioSource.maxDistance = 20f;
+        }
 
         if (autoSetupCollider && !triggerCollider)
         {
@@ -118,7 +120,7 @@ public class CollectibleController : MonoBehaviour
         if (triggerCollider && !triggerCollider.isTrigger)
             triggerCollider.isTrigger = true;
 
-        if (!gameObject.CompareTag("Collectible"))
+        if (!CompareTag("Collectible"))
             gameObject.tag = "Collectible";
     }
 
@@ -139,7 +141,6 @@ public class CollectibleController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (isCollecting || isCollected) return;
-
         if (other.GetComponent<PlayerController>() != null)
             CollectItem();
     }
@@ -190,13 +191,12 @@ public class CollectibleController : MonoBehaviour
         if (itemLight) StartCoroutine(FlashLight());
     }
 
-    private System.Collections.IEnumerator FlashLight()
+    private IEnumerator FlashLight()
     {
         if (!itemLight) yield break;
 
         float originalIntensity = itemLight.intensity;
         itemLight.intensity = originalIntensity * flashMultiplier;
-
         yield return new WaitForSeconds(flashHoldTime);
 
         float elapsed = 0f;
@@ -206,11 +206,10 @@ public class CollectibleController : MonoBehaviour
             itemLight.intensity = Mathf.Lerp(originalIntensity * flashMultiplier, 0f, elapsed / flashDuration);
             yield return null;
         }
-
         itemLight.intensity = 0f;
     }
 
-    private System.Collections.IEnumerator CollectionSequence()
+    private IEnumerator CollectionSequence()
     {
         if (triggerCollider) triggerCollider.enabled = false;
 
@@ -272,8 +271,6 @@ public class CollectibleController : MonoBehaviour
         }
 
         if (LevelManager.Instance != null && !LevelManager.Instance.ContainsCollectible(this))
-        {
             LevelManager.Instance.AddCollectible(this);
-        }
     }
 }
