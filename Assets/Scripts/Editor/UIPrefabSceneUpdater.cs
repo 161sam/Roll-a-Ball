@@ -4,45 +4,54 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public static class UIPrefabSceneUpdater
+namespace RollABall.Editor
 {
-    private const string uiPrefabPath = "Assets/Prefabs/UI/GameUI.prefab";
-
-    [MenuItem("Tools/Update UI Prefab In Scenes")]
-    public static void UpdateUIPrefabInAllScenes()
+    /// <summary>
+    /// Provides a menu action to replace scene UI objects with the GameUI prefab.
+    /// </summary>
+    public static class UIPrefabSceneUpdater
     {
-        GameObject uiPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(uiPrefabPath);
-        if (!uiPrefab)
+        private const string uiPrefabPath = "Assets/Prefabs/UI/GameUI.prefab";
+
+        /// <summary>
+        /// Replaces existing UI objects in all scenes under <c>Assets/Scenes</c> with the GameUI prefab.
+        /// </summary>
+        [MenuItem("Tools/Update UI Prefab In Scenes")]
+        public static void UpdateUIPrefabInAllScenes()
         {
-            Debug.LogError($"UI prefab not found at {uiPrefabPath}");
-            return;
-        }
-
-        string[] sceneGuids = AssetDatabase.FindAssets("t:Scene", new[] {"Assets/Scenes"});
-        foreach (string guid in sceneGuids)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            if (path.Contains("_backup")) continue;
-
-            var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
-
-            // UI PREFAB INTEGRATION: remove existing UI objects
-            foreach (Canvas canvas in Object.FindObjectsOfType<Canvas>())
+            GameObject uiPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(uiPrefabPath);
+            if (!uiPrefab)
             {
-                Object.DestroyImmediate(canvas.gameObject);
-            }
-            foreach (EventSystem evt in Object.FindObjectsOfType<EventSystem>())
-            {
-                Object.DestroyImmediate(evt.gameObject);
+                Debug.LogError($"UI prefab not found at {uiPrefabPath}");
+                return;
             }
 
-            PrefabUtility.InstantiatePrefab(uiPrefab);
+            string[] sceneGuids = AssetDatabase.FindAssets("t:Scene", new[] {"Assets/Scenes"});
+            foreach (string guid in sceneGuids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (path.Contains("_backup")) continue;
 
-            EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene);
+                var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+
+                // UI PREFAB INTEGRATION: remove existing UI objects
+                foreach (Canvas canvas in Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None))
+                {
+                    Object.DestroyImmediate(canvas.gameObject);
+                }
+                foreach (EventSystem evt in Object.FindObjectsByType<EventSystem>(FindObjectsSortMode.None))
+                {
+                    Object.DestroyImmediate(evt.gameObject);
+                }
+
+                PrefabUtility.InstantiatePrefab(uiPrefab);
+
+                EditorSceneManager.MarkSceneDirty(scene);
+                EditorSceneManager.SaveScene(scene);
+            }
+
+            Debug.Log("Updated UI prefabs in all scenes");
         }
-
-        Debug.Log("Updated UI prefabs in all scenes");
     }
 }
 #endif
