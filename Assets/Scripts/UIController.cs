@@ -12,7 +12,6 @@ public class UIController : MonoBehaviour
     public static System.Action<string, float> NotificationRequested;
 
     [Header("Game UI")]
-    [SerializeField] private GameObject gameUIPrefab;
     [SerializeField] private GameObject gameUIPanel;
     [SerializeField] private TextMeshProUGUI collectibleCountText;
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -40,72 +39,25 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button pauseSettingsButton;
     [SerializeField] private Button restartLevelButton;
 
-    [Header("Save/Load UI")]
-    [SerializeField] private GameObject saveLoadPanel;
-    [SerializeField] private Transform saveSlotContainer;
-    [SerializeField] private GameObject saveSlotPrefab;
-    [SerializeField] private Button saveLoadBackButton;
-    [SerializeField] private TextMeshProUGUI saveLoadTitleText;
-
-    [Header("Settings UI")]
-    [SerializeField] private GameObject settingsPanel;
-    [SerializeField] private Slider masterVolumeSlider;
-    [SerializeField] private Slider musicVolumeSlider;
-    [SerializeField] private Slider sfxVolumeSlider;
-    [SerializeField] private TMP_Dropdown qualityDropdown;
-    [SerializeField] private TMP_Dropdown languageDropdown;
-    [SerializeField] private Toggle particleEffectsToggle;
-    [SerializeField] private Button settingsBackButton;
-    [SerializeField] private Button resetSettingsButton;
-
-    [Header("Achievement UI")]
-    [SerializeField] private GameObject achievementPanel;
-    [SerializeField] private Transform achievementContainer;
-    [SerializeField] private GameObject achievementItemPrefab;
-    [SerializeField] private Button achievementBackButton;
-    [SerializeField] private TextMeshProUGUI achievementProgressText;
-    [SerializeField] private TMP_Dropdown achievementFilterDropdown;
-
     [Header("Notifications")]
     [SerializeField] private GameObject notificationPanelPrefab;
     [SerializeField] private Transform notificationRoot;
     [SerializeField] private float notificationDuration = 3f;
-    private readonly Queue<GameObject> notificationPool = new();
 
     [Header("Level Complete")]
     [SerializeField] private GameObject levelCompletePanel;
     [SerializeField] private TextMeshProUGUI levelCompleteText;
-    [SerializeField] private TextMeshProUGUI finalScoreText;
-    [SerializeField] private TextMeshProUGUI completionTimeText;
-    [SerializeField] private TextMeshProUGUI bonusText;
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button levelSelectButton;
     [SerializeField] private Button levelCompleteMainMenuButton;
 
-    [Header("Statistics")]
-    [SerializeField] private GameObject statisticsPanel;
-    [SerializeField] private TextMeshProUGUI totalPlayTimeText;
-    [SerializeField] private TextMeshProUGUI totalCollectiblesText;
-    [SerializeField] private TextMeshProUGUI totalJumpsText;
-    [SerializeField] private TextMeshProUGUI maxSpeedText;
-    [SerializeField] private TextMeshProUGUI maxHeightText;
-    [SerializeField] private Button statisticsBackButton;
-
-    [Header("Loading")]
-    [SerializeField] private GameObject loadingPanel;
-    [SerializeField] private Slider loadingProgressBar;
-    [SerializeField] private TextMeshProUGUI loadingText;
-    [SerializeField] private Image loadingIcon;
-
     private UIState currentState = UIState.MainMenu;
-    private Coroutine notificationCoroutine;
-    private List<GameObject> saveSlotItems = new();
-    private List<GameObject> achievementItems = new();
     private bool isTransitioning = false;
 
     public UIState CurrentState => currentState;
     public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
 
+    #region Unity Lifecycle
     void Awake()
     {
         if (Instance && Instance != this)
@@ -120,9 +72,6 @@ public class UIController : MonoBehaviour
     void OnEnable() => NotificationRequested += OnNotificationRequested;
     void OnDisable() => NotificationRequested -= OnNotificationRequested;
 
-    private void OnNotificationRequested(string message, float duration) =>
-        ShowNotification(message, duration);
-
     void Start()
     {
         EnsureCollectibleCounter();
@@ -133,32 +82,15 @@ public class UIController : MonoBehaviour
         if (GameManager.Instance && GameManager.Instance.CurrentState == GameState.Playing)
             ChangeUIState(UIState.GamePlay);
     }
+    #endregion
 
+    #region Init & Setup
     private void InitializeUI()
     {
         SetAllPanelsInactive();
-        if (versionText) versionText.text = $"v{Application.version}";
 
-        if (qualityDropdown)
-        {
-            qualityDropdown.ClearOptions();
-            qualityDropdown.AddOptions(QualitySettings.names.ToList());
-            qualityDropdown.value = QualitySettings.GetQualityLevel();
-        }
-
-        if (languageDropdown)
-        {
-            languageDropdown.ClearOptions();
-            languageDropdown.AddOptions(new List<string> { "English", "Deutsch" });
-        }
-
-        if (achievementFilterDropdown)
-        {
-            achievementFilterDropdown.ClearOptions();
-            var categories = System.Enum.GetNames(typeof(AchievementCategory)).ToList();
-            categories.Insert(0, "All");
-            achievementFilterDropdown.AddOptions(categories);
-        }
+        if (versionText)
+            versionText.text = $"v{Application.version}";
 
         UpdateUIFromSaveData();
     }
@@ -182,43 +114,30 @@ public class UIController : MonoBehaviour
             LevelManager.Instance.OnCollectibleCountChanged += OnCollectibleCountChanged;
         }
     }
+    #endregion
 
-    public void UpdateCollectibleDisplay(int collected, int total)
+    #region UI State Management
+    public void ShowMainMenu()
     {
-        if (collectibleCountText)
-            collectibleCountText.text = $"Collectibles: {collected}/{total}";
+        ChangeUIState(UIState.MainMenu);
     }
 
-    public void UpdateCollectibleDisplay(int remaining)
+    public void ShowGameUI()
     {
-        var config = LevelManager.Instance?.GetLevelConfiguration();
-        if (config != null)
-        {
-            int total = config.totalCollectibles;
-            int collected = total - remaining;
-            UpdateCollectibleDisplay(collected, total);
-        }
+        ChangeUIState(UIState.GamePlay);
     }
 
-    public void ShowLevelCompletePanel(LevelConfiguration levelConfig)
+    public void ShowPauseMenu()
+    {
+        ChangeUIState(UIState.PauseMenu);
+    }
+
+    public void ShowLevelComplete(LevelConfiguration levelConfig)
     {
         ChangeUIState(UIState.LevelComplete);
         if (levelCompleteText)
             levelCompleteText.text = $"{levelConfig.levelName} Complete!";
     }
-
-    private void LoadNextLevel()
-    {
-        var config = LevelManager.Instance?.GetLevelConfiguration();
-        if (config != null && !string.IsNullOrEmpty(config.nextSceneName))
-            UnityEngine.SceneManagement.SceneManager.LoadScene(config.nextSceneName);
-    }
-
-    private void OnLevelCompleted(LevelConfiguration levelConfig) =>
-        ShowLevelCompletePanel(levelConfig);
-
-    private void OnCollectibleCountChanged(int remaining, int total) =>
-        UpdateCollectibleDisplay(total - remaining, total);
 
     private void ChangeUIState(UIState newState)
     {
@@ -234,6 +153,9 @@ public class UIController : MonoBehaviour
             case UIState.GamePlay:
                 if (gameUIPanel) gameUIPanel.SetActive(true);
                 break;
+            case UIState.PauseMenu:
+                if (pauseMenuPanel) pauseMenuPanel.SetActive(true);
+                break;
             case UIState.LevelComplete:
                 if (levelCompletePanel) levelCompletePanel.SetActive(true);
                 break;
@@ -244,12 +166,50 @@ public class UIController : MonoBehaviour
     {
         if (mainMenuPanel) mainMenuPanel.SetActive(false);
         if (gameUIPanel) gameUIPanel.SetActive(false);
+        if (pauseMenuPanel) pauseMenuPanel.SetActive(false);
         if (levelCompletePanel) levelCompletePanel.SetActive(false);
     }
+    #endregion
+
+    #region Collectible & Score
+    private void OnLevelCompleted(LevelConfiguration levelConfig) =>
+        ShowLevelComplete(levelConfig);
+
+    private void OnCollectibleCountChanged(int remaining, int total) =>
+        UpdateCollectibleDisplay(total - remaining, total);
+
+    public void UpdateCollectibleDisplay(int collected, int total)
+    {
+        if (collectibleCountText)
+            collectibleCountText.text = $"Collectibles: {collected}/{total}";
+    }
+
+    public void UpdateCollectibleDisplay(int remaining)
+    {
+        var config = LevelManager.Instance?.Config;
+        if (config != null)
+        {
+            int total = config.totalCollectibles;
+            int collected = total - remaining;
+            UpdateCollectibleDisplay(collected, total);
+        }
+    }
+
+    public void UpdateScore(int score)
+    {
+        if (scoreText)
+            scoreText.text = $"Score: {score:N0}";
+    }
+    #endregion
+
+    #region Notifications
+    private void OnNotificationRequested(string message, float duration) =>
+        ShowNotification(message, duration);
 
     public void ShowNotification(string message, float duration = 0f)
     {
-        if (!notificationPanelPrefab) return;
+        if (!notificationPanelPrefab || !notificationRoot) return;
+
         GameObject panel = Instantiate(notificationPanelPrefab, notificationRoot);
         TextMeshProUGUI text = panel.GetComponentInChildren<TextMeshProUGUI>();
         if (text) text.text = message;
@@ -262,18 +222,15 @@ public class UIController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         Destroy(panel);
     }
+    #endregion
 
+    #region Save Data
     private void UpdateUIFromSaveData()
     {
         if (SaveSystem.Instance?.CurrentSave == null) return;
         UpdateScore(SaveSystem.Instance.CurrentSave.totalScore);
     }
-
-    public void UpdateScore(int score)
-    {
-        if (scoreText)
-            scoreText.text = $"Score: {score:N0}";
-    }
+    #endregion
 }
 
 public enum UIState
@@ -281,9 +238,5 @@ public enum UIState
     MainMenu,
     GamePlay,
     PauseMenu,
-    Settings,
-    SaveLoad,
-    Achievements,
-    LevelComplete,
-    Loading
+    LevelComplete
 }
