@@ -68,15 +68,7 @@ public class CollectibleController : MonoBehaviour
     {
         ValidateSetup();
         originalScale = transform.localScale;
-
-        // Fix: keine doppelte Registrierung, nur falls AutoFindCollectibles deaktiviert ist
-        if (LevelManager.Instance != null
-            && !IsCollected
-            && !LevelManager.Instance.ContainsCollectible(this)
-            && !LevelManager.Instance.AutoFindCollectibles)
-        {
-            LevelManager.Instance.AddCollectible(this);
-        }
+        // Keine Selbstregistrierung mehr - nur LevelManager verwaltet die Liste
     }
 
     private void Update()
@@ -171,11 +163,7 @@ public class CollectibleController : MonoBehaviour
         OnCollected?.Invoke();
         OnCollectedWithData?.Invoke(collectibleData);
 
-        if (LevelManager.Instance != null)
-        {
-            LevelManager.Instance.OnCollectibleCollected(this);
-        }
-
+        // Nur Event feuern - LevelManager behandelt die Zählung
         try
         {
             OnCollectiblePickedUp?.Invoke(this);
@@ -289,9 +277,6 @@ public class CollectibleController : MonoBehaviour
             }
         }
 
-        if (LevelManager.Instance != null && !LevelManager.Instance.ContainsCollectible(this))
-        {
-            LevelManager.Instance.AddCollectible(this);
-        }
+        // Keine automatische Neu-Registrierung - LevelManager macht das beim Rescan
     }
 }
