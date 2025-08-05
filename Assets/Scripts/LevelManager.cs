@@ -137,10 +137,12 @@ public class LevelManager : MonoBehaviour
 
     private void InitializeCollectibleCounts()
     {
-        // Eindeutige Liste erzwingen - alle null-Referenzen und Duplikate entfernen
+        // Eindeutige Liste erzwingen - alle null-Referenzen und doppelt referenzierte
+        // GameObjects entfernen
         levelCollectibles = levelCollectibles
             .Where(c => c != null && !c.IsCollected)
-            .Distinct()
+            .GroupBy(c => c.gameObject)
+            .Select(g => g.First())
             .ToList();
 
         levelConfig.totalCollectibles = levelCollectibles.Count;
@@ -221,19 +223,20 @@ public class LevelManager : MonoBehaviour
 
         lock (lockObject)
         {
-            // Nur hinzufügen wenn noch nicht in der Liste
-            if (!levelCollectibles.Contains(collectible))
+            // Nur hinzufügen wenn GameObject noch nicht vorhanden
+            bool exists = levelCollectibles.Any(c => c != null && c.gameObject == collectible.gameObject);
+            if (!exists)
             {
                 levelCollectibles.Add(collectible);
                 InitializeCollectibleCounts();
-                
+
                 // Event für neues Collectible registrieren
                 if (registeredCollectibles.Add(collectible))
                 {
                     collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
                     collectible.OnCollectiblePickedUp += OnCollectibleCollected;
                 }
-                
+
                 UpdateUI();
 
                 if (debugMode)
@@ -245,13 +248,14 @@ public class LevelManager : MonoBehaviour
     public void AddCollectiblesBulk(CollectibleController[] collectibles)
     {
         if (collectibles == null) return;
-        
+
         lock (lockObject)
         {
+            var existing = new HashSet<GameObject>(levelCollectibles.Where(c => c != null).Select(c => c.gameObject));
             bool anyAdded = false;
             foreach (var collectible in collectibles)
             {
-                if (collectible != null && !levelCollectibles.Contains(collectible))
+                if (collectible != null && existing.Add(collectible.gameObject))
                 {
                     levelCollectibles.Add(collectible);
                     anyAdded = true;
@@ -268,7 +272,7 @@ public class LevelManager : MonoBehaviour
     }
 
     public bool ContainsCollectible(CollectibleController collectible) =>
-        collectible != null && levelCollectibles.Contains(collectible);
+        collectible != null && levelCollectibles.Any(c => c != null && c.gameObject == collectible.gameObject);
 
     private void CompleteLevel()
     {
