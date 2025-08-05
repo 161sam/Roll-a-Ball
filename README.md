@@ -301,14 +301,6 @@ public float CalculateDifficultyScore()
 
 ---
 
-## 📈 **Performance-Metriken**
-
-### **Generierungszeiten**
-| Level-Größe | Objekte | Generierungszeit | RAM-Nutzung |
-|-------------|---------|------------------|-------------|
-| 8x8 (Easy) | 15-25 | 0.1-0.3s | ~15 MB |
-| 12x12 (Medium) | 35-50 | 0.3-0.7s | ~25 MB |  
-| 16x16 (Hard) | 60-90 | 0.7-1.5s | ~40 MB |
 
 ### **Systemanforderungen**
 - **Minimum**: Unity 6.0, 4GB RAM, DirectX 11
@@ -330,12 +322,6 @@ public float CalculateDifficultyScore()
 - **Namespace-Organisation**: `RollABall.[Bereich]`
 - **Kommentierung**: XML-Dokumentation für alle public APIs
 - **Unity Integration**: AddComponentMenu, Custom Inspector
-
----
-
-## 📝 **Lizenz**
-
-Dieses Projekt steht unter der **MIT-Lizenz** - siehe [LICENSE](LICENSE) für Details.
 
 ---
 
@@ -364,11 +350,9 @@ Beiträge sind willkommen!
 **Lead Developer**: [161sam](https://github.com/161sam)  
 **Engine**: Unity 6.0  
 **Development Timeline**: 2024-2025  
-**Current Status**: Phase 3 Complete - Steampunk Features Fully Implemented
-
+**Current Status**: Phase 3 in arbeit
 ### **Danksagungen**
 - **Unity Technologies** für die ausgezeichnete Game Engine
-- **Steampunk Community** für Design-Inspiration und Feedback
 - **OpenStreetMap Contributors** für zukünftige Karten-Integration
 - **School for Games** für den ursprünglichen Entwicklungsauftrag
 
