@@ -945,11 +945,11 @@ namespace RollABall.Map
                     yield return null;
             }
             
-            // Update UI if LevelManager exists
+            // COLLECTIBLE COUNTER SYNC: update LevelManager with spawned collectibles
             LevelManager levelManager = FindFirstObjectByType<LevelManager>();
             if (levelManager != null)
             {
-                levelManager.UpdateCollectibleCount();
+                levelManager.RescanCollectibles();
             }
             
             yield return null;

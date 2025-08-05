@@ -193,6 +193,8 @@ public class LevelManager : MonoBehaviour
 
         // Update collectible count
         UpdateCollectibleCount();
+        if (debugMode)
+            Debug.Log($"[LevelManager] Counters reset: {levelConfig.collectiblesRemaining}/{levelConfig.totalCollectibles}"); // COLLECTIBLE COUNTER SYNC
 
         // Subscribe to collectible events
         SubscribeToCollectibleEvents();
@@ -269,9 +271,27 @@ public class LevelManager : MonoBehaviour
         {
             levelConfig.totalCollectibles = levelCollectibles.Count;
             initialCollectibleCount = levelConfig.totalCollectibles;
+            if (debugMode)
+                Debug.Log($"[LevelManager] Total collectibles set to {levelConfig.totalCollectibles}"); // COLLECTIBLE COUNTER SYNC
         }
 
         levelConfig.collectiblesRemaining = Mathf.Max(0, levelConfig.totalCollectibles - collectedCountCache);
+        if (debugMode)
+            Debug.Log($"[LevelManager] Collectibles remaining: {levelConfig.collectiblesRemaining}/{levelConfig.totalCollectibles}"); // COLLECTIBLE COUNTER SYNC
+    }
+
+    /// <summary>
+    /// Rebuilds collectible tracking and synchronizes counts.
+    /// </summary>
+    public void RescanCollectibles()
+    {
+        UnsubscribeFromCollectibleEvents();
+        FindAllCollectibles();
+        UpdateCollectibleCount();
+        SubscribeToCollectibleEvents();
+        UpdateUI();
+        if (debugMode)
+            Debug.Log($"[LevelManager] Rescanned collectibles: {levelConfig.collectiblesRemaining}/{levelConfig.totalCollectibles}"); // COLLECTIBLE COUNTER SYNC
     }
 
     private void SubscribeToCollectibleEvents()
@@ -443,6 +463,8 @@ public class LevelManager : MonoBehaviour
         if (!string.IsNullOrEmpty(levelConfig.nextSceneName))
         {
             // Load specific next scene
+            if (debugMode)
+                Debug.Log($"[LevelManager] Loading next level: {levelConfig.nextSceneName}"); // LEVEL PROGRESSION FIX
             SceneManager.LoadScene(levelConfig.nextSceneName);
         }
         else
@@ -453,6 +475,8 @@ public class LevelManager : MonoBehaviour
             
             if (!string.IsNullOrEmpty(nextScene))
             {
+                if (debugMode)
+                    Debug.Log($"[LevelManager] Loading next level: {nextScene}"); // LEVEL PROGRESSION FIX
                 SceneManager.LoadScene(nextScene);
             }
             else
