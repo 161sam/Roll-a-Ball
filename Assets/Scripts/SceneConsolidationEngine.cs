@@ -1,3 +1,5 @@
+// SceneConsolidationEngine.cs - angepasst für GetLevelConfiguration()
+
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,10 +14,6 @@ using RollABall.Utility;
 using UnityEditor;
 #endif
 
-/// <summary>
-/// Scene Consolidation Engine - Systematic repair of all Roll-a-Ball scenes based on SceneReports
-/// Automatically fixes prefab inconsistencies, UI defects, manager references, and gameplay issues
-/// </summary>
 [AddComponentMenu("Roll-a-Ball/Scene Consolidation Engine")]
 public class SceneConsolidationEngine : MonoBehaviour
 {
@@ -23,35 +21,31 @@ public class SceneConsolidationEngine : MonoBehaviour
     [SerializeField] private bool autoConsolidateOnStart = true;
     [SerializeField] private bool debugMode = true;
     [SerializeField] private bool generateRepairReport = true;
-    
+
     [Header("🔧 Scene Processing Options")]
     [SerializeField] private bool consolidateCurrentSceneOnly = false;
     [SerializeField] private bool validateAfterRepair = true;
-    
+
     [Header("📊 Repair Statistics")]
     [SerializeField] private int _totalScenesProcessed = 0;
     [SerializeField] private int _totalIssuesFound = 0;
     [SerializeField] private int _totalIssuesFixed = 0;
     [SerializeField] private List<string> processedScenes = new List<string>();
-    
-    // Public properties for external access
+
     public int totalScenesProcessed { get { return _totalScenesProcessed; } set { _totalScenesProcessed = value; } }
     public int totalIssuesFound { get { return _totalIssuesFound; } set { _totalIssuesFound = value; } }
     public int totalIssuesFixed { get { return _totalIssuesFixed; } set { _totalIssuesFixed = value; } }
-    
+
     [Header("🎮 Prefab References (Auto-assigned)")]
     [SerializeField] private GameObject groundPrefab;
     [SerializeField] private GameObject wallPrefab;
     [SerializeField] private GameObject collectiblePrefab;
     [SerializeField] private GameObject goalZonePrefab;
     [SerializeField] private GameObject playerPrefab;
-    
+
     private Dictionary<string, SceneRepairProfile> sceneRepairProfiles;
     private List<string> repairLog = new List<string>();
-    
-    /// <summary>
-    /// Scene-specific repair configuration based on SceneReports
-    /// </summary>
+
     [System.Serializable]
     public class SceneRepairProfile
     {
@@ -64,7 +58,7 @@ public class SceneConsolidationEngine : MonoBehaviour
         public float difficultyMultiplier;
         public List<string> specialRequirements;
     }
-    
+
     private void Start()
     {
         if (autoConsolidateOnStart)
@@ -72,24 +66,21 @@ public class SceneConsolidationEngine : MonoBehaviour
             StartCoroutine(ConsolidateAllScenesAsync());
         }
     }
-    
+
     private void OnValidate()
     {
         LoadPrefabReferences();
     }
-    
-    /// <summary>
-    /// Main consolidation entry point - processes all scenes systematically
-    /// </summary>
+
     public IEnumerator ConsolidateAllScenesAsync()
     {
         LogRepair("🚀 Starting Scene Consolidation Engine");
         LogRepair($"Unity Version: {Application.unityVersion}");
         LogRepair($"Processing Mode: {(consolidateCurrentSceneOnly ? "Current Scene Only" : "All Scenes")}");
-        
+
         InitializeRepairProfiles();
         LoadPrefabReferences();
-        
+
         if (consolidateCurrentSceneOnly)
         {
             yield return ConsolidateCurrentScene();
@@ -98,53 +89,37 @@ public class SceneConsolidationEngine : MonoBehaviour
         {
             yield return ConsolidateAllScenes();
         }
-        
+
         if (generateRepairReport)
         {
             GenerateFinalRepairReport();
         }
-        
+
         LogRepair("✅ Scene Consolidation Engine Complete");
     }
-    
-    /// <summary>
-    /// Consolidates current scene only
-    /// </summary>
+
     public IEnumerator ConsolidateCurrentScene()
     {
         string currentScene = SceneManager.GetActiveScene().name;
         LogRepair($"🔧 Consolidating Current Scene: {currentScene}");
-        
+
         yield return ConsolidateScene(currentScene);
-        
+
         LogRepair($"✅ Current Scene Consolidation Complete: {currentScene}");
     }
-    
-    /// <summary>
-    /// Consolidates all Roll-a-Ball scenes in sequence
-    /// </summary>
+
     public IEnumerator ConsolidateAllScenes()
     {
-        string[] sceneNames = {
-            "Level1",
-            "Level2", 
-            "Level3",
-            "GeneratedLevel",
-            "Level_OSM",
-            "MiniGame"
-        };
-        
+        string[] sceneNames = { "Level1", "Level2", "Level3", "GeneratedLevel", "Level_OSM", "MiniGame" };
+
         foreach (string sceneName in sceneNames)
         {
             LogRepair($"🔄 Processing Scene: {sceneName}");
             yield return ConsolidateScene(sceneName);
-            yield return new WaitForSeconds(0.5f); // Small delay between scenes
+            yield return new WaitForSeconds(0.5f);
         }
     }
-    
-    /// <summary>
-    /// Consolidates a specific scene with comprehensive repairs
-    /// </summary>
+
     public IEnumerator ConsolidateScene(string sceneName)
     {
         if (!SceneExists(sceneName))
@@ -152,27 +127,121 @@ public class SceneConsolidationEngine : MonoBehaviour
             LogRepair($"⚠️ Scene not found: {sceneName}");
             yield break;
         }
-        
+
         _totalScenesProcessed++;
         processedScenes.Add(sceneName);
-        
-        // Phase 1: Load Scene (if not current)
+
         if (SceneManager.GetActiveScene().name != sceneName)
         {
             LogRepair($"📁 Loading Scene: {sceneName}");
             SceneManager.LoadScene(sceneName);
-            yield return new WaitForSeconds(1f); // Wait for scene load
+            yield return new WaitForSeconds(1f);
         }
-        
-        // Phase 2: Scene-Specific Repairs
+
         SceneRepairProfile profile = GetRepairProfile(sceneName);
         if (profile != null)
         {
             yield return ApplySceneRepairProfile(profile);
         }
-        
-        // Phase 3: Universal Repairs (apply to all scenes)
+
         yield return ApplyUniversalRepairs();
+
+        if (validateAfterRepair)
+        {
+            yield return ValidateSceneAfterRepair(sceneName);
+        }
+
+        LogRepair($"✅ Scene Consolidation Complete: {sceneName}");
+    }
+
+    private IEnumerator ApplySceneRepairProfile(SceneRepairProfile profile)
+    {
+        LogRepair($"🔧 Applying scene-specific repairs for: {profile.sceneName}");
+
+        switch (profile.sceneName)
+        {
+            case "Level1":
+                yield return RepairLevel1();
+                break;
+            case "Level2":
+                yield return RepairLevel2();
+                break;
+            case "Level3":
+                yield return RepairLevel3();
+                break;
+            case "GeneratedLevel":
+                yield return RepairGeneratedLevel();
+                break;
+            case "Level_OSM":
+                yield return RepairLevelOSM();
+                break;
+            case "MiniGame":
+                yield return RepairMiniGame();
+                break;
+        }
+    }
+
+    #region Scene-specific repair methods (mit GetLevelConfiguration)
+
+    private IEnumerator RepairLevel1()
+    {
+        LogRepair("🎮 Repairing Level1 - Tutorial Level");
+
+        var levelManager = GetOrCreateManager<LevelManager>();
+        var config = levelManager.GetLevelConfiguration();
+        if (config != null)
+        {
+            config.totalCollectibles = 5;
+            config.difficultyMultiplier = 1.0f;
+        }
+        levelManager.SetNextScene("Level2");
+
+        LogRepair("✅ Level1 LevelManager configured");
+        _totalIssuesFixed++;
+
+        yield return EnsureSimpleLayout();
+    }
+
+    private IEnumerator RepairLevel2()
+    {
+        LogRepair("⚙️ Repairing Level2 - Medium Difficulty + Steampunk Theme");
+
+        var levelManager = GetOrCreateManager<LevelManager>();
+        var config = levelManager.GetLevelConfiguration();
+        if (config != null)
+        {
+            config.totalCollectibles = 8;
+            config.difficultyMultiplier = 1.5f;
+        }
+        levelManager.SetNextScene("Level3");
+
+        LogRepair("✅ Level2 LevelManager configured");
+        _totalIssuesFixed++;
+
+        yield return AddSteampunkElements();
+        yield return AddMovingObstacles();
+    }
+
+    private IEnumerator RepairLevel3()
+    {
+        LogRepair("🏭 Repairing Level3 - Hard Difficulty + Full Steampunk Factory");
+
+        var levelManager = GetOrCreateManager<LevelManager>();
+        var config = levelManager.GetLevelConfiguration();
+        if (config != null)
+        {
+            config.totalCollectibles = 12;
+            config.difficultyMultiplier = 2.0f;
+        }
+        levelManager.SetNextScene("GeneratedLevel");
+
+        LogRepair("✅ Level3 LevelManager configured");
+        _totalIssuesFixed++;
+
+        yield return TransformToSteampunkFactory();
+    }
+
+    #endregion
         
         // Phase 4: Validation
         if (validateAfterRepair)
