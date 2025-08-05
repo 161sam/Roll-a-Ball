@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using System.Globalization;
 using Newtonsoft.Json.Linq;
 using RollABall.Map;
+using RollABall.Utility;
 
 namespace RollABall.Map
 {
@@ -25,6 +26,8 @@ namespace RollABall.Map
         [SerializeField] private Button regenerateMapButton;
         [SerializeField] private TextMeshProUGUI statusText;
         [SerializeField] private GameObject loadingPanel;
+        [SerializeField] private GameObject addressInputPanel;
+        [SerializeField] private GameObject gameUIPanel;
         
         [Header("Map Settings")]
         [SerializeField] private string defaultAddress = "Leipzig, Germany";
@@ -769,10 +772,13 @@ namespace RollABall.Map
         // TODO-OPT#92: Replace destructive cleanup with pooled map objects
         private void ClearExistingLevel()
         {
-            GameObject existingMap = GameObject.Find("GeneratedMap");
+            Transform existingMap = GameObject.Find("GeneratedMap")?.transform;
             if (existingMap)
             {
-                Destroy(existingMap);
+                foreach (Transform child in existingMap)
+                {
+                    PrefabPooler.Release(child.gameObject);
+                }
             }
 
             GameObject[] fallbackObjects = Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None);
@@ -780,7 +786,7 @@ namespace RollABall.Map
             {
                 if (obj.name.StartsWith("OSM_"))
                 {
-                    Destroy(obj);
+                    PrefabPooler.Release(obj);
                 }
             }
         }
@@ -788,10 +794,9 @@ namespace RollABall.Map
         private void HideMapUI()
         {
             // Hide the input UI after successful map generation
-            GameObject inputPanel = GameObject.Find("AddressInputPanel");
-            if (inputPanel)
+            if (addressInputPanel)
             {
-                inputPanel.SetActive(false);
+                addressInputPanel.SetActive(false);
                 LogDebug("Hidden AddressInputPanel");
             }
 
@@ -815,14 +820,13 @@ namespace RollABall.Map
 
             // Also try the canvas approach (from remote)
             Canvas canvas = GetComponentInParent<Canvas>();
-            if (canvas && inputPanel == null)
+            if (canvas && addressInputPanel == null)
             {
                 canvas.gameObject.SetActive(false);
                 LogDebug("Hidden entire Canvas");
             }
-            
+
             // Keep game UI visible
-            GameObject gameUIPanel = GameObject.Find("GameUIPanel");
             if (gameUIPanel)
             {
                 gameUIPanel.SetActive(true);
@@ -833,10 +837,9 @@ namespace RollABall.Map
         private void ShowMapUI()
         {
             // Show the input UI
-            GameObject inputPanel = GameObject.Find("AddressInputPanel");
-            if (inputPanel)
+            if (addressInputPanel)
             {
-                inputPanel.SetActive(true);
+                addressInputPanel.SetActive(true);
                 LogDebug("Shown AddressInputPanel");
             }
 

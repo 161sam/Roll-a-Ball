@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System;
+using System.Diagnostics;
 
 namespace RollABall.Generators
 {
@@ -347,6 +348,10 @@ namespace RollABall.Generators
     {
         int size = profile.LevelSize;
 
+        Stopwatch stopwatch = null;
+        if (size >= 50)
+            stopwatch = Stopwatch.StartNew();
+
         // Initialize grid with walls
         for (int x = 1; x < size - 1; x++)
         {
@@ -385,6 +390,13 @@ namespace RollABall.Generators
 
             if (iterations % 100 == 0)
                 yield return null;
+        }
+
+        if (stopwatch != null)
+        {
+            stopwatch.Stop();
+            if (showTerrainDebug)
+                Debug.Log($"[LevelTerrainGenerator] Prim maze generation for size {size} took {stopwatch.ElapsedMilliseconds} ms in {iterations} iterations");
         }
 
         yield return null;

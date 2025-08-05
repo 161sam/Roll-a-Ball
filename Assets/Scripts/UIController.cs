@@ -4,6 +4,8 @@ using TMPro;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 /// <summary>
 /// UI Controller for Roll-a-Ball with progression features
@@ -190,7 +192,13 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
         var canvas = gameUIPanel ? gameUIPanel.GetComponentInParent<Canvas>() : FindFirstObjectByType<Canvas>();
         if (!canvas)
         {
-            GameObject prefab = gameUIPrefab ? gameUIPrefab : Resources.Load<GameObject>("Prefabs/UI/GameUI");
+            GameObject prefab = gameUIPrefab;
+            if (!prefab)
+            {
+                AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>("GameUI");
+                prefab = handle.WaitForCompletion();
+                Addressables.Release(handle);
+            }
             if (prefab)
             {
                 GameObject instance = Instantiate(prefab);

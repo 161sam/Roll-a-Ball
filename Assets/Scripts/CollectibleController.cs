@@ -13,7 +13,6 @@ public class CollectibleData
     public string itemName = "Collectible";
     public string itemType = "standard";
     public int pointValue = 1;
-    public bool isCollected = false;
 
     [Header("Visual Effects")]
     public bool rotateObject = true;
@@ -53,6 +52,7 @@ public class CollectibleController : MonoBehaviour
     private AudioSource audioSource;
     private Vector3 originalScale;
     private bool isCollecting = false;
+    private bool isCollected = false;
     private float pulseTimer = 0f;
 
     // Public Events für GameManager Integration
@@ -60,7 +60,7 @@ public class CollectibleController : MonoBehaviour
 
     // Properties
     public CollectibleData Data => collectibleData;
-    public bool IsCollected => collectibleData.isCollected;
+    public bool IsCollected => isCollected;
     public string ItemName => collectibleData.itemName;
     public int PointValue => collectibleData.pointValue;
 
@@ -77,7 +77,7 @@ public class CollectibleController : MonoBehaviour
 
     void Update()
     {
-        if (!collectibleData.isCollected)
+        if (!isCollected)
         {
             RotateLocally();
             HandlePulseEffect();
@@ -179,7 +179,7 @@ public class CollectibleController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (isCollecting || collectibleData.isCollected) return;
+        if (isCollecting || isCollected) return;
 
         // Check if it's the player
         PlayerController player = other.GetComponent<PlayerController>();
@@ -191,10 +191,10 @@ public class CollectibleController : MonoBehaviour
 
     public void CollectItem()
     {
-        if (isCollecting || collectibleData.isCollected) return;
+        if (isCollecting || isCollected) return;
 
         isCollecting = true;
-        collectibleData.isCollected = true;
+        isCollected = true;
 
         // Play sound effect
         PlayCollectionSound();
@@ -336,7 +336,7 @@ public class CollectibleController : MonoBehaviour
 
     public void ResetCollectible()
     {
-        collectibleData.isCollected = false;
+        isCollected = false;
         isCollecting = false;
         
         if (triggerCollider)
@@ -364,7 +364,7 @@ public class CollectibleController : MonoBehaviour
     {
         if (triggerCollider)
         {
-            Gizmos.color = collectibleData.isCollected ? Color.gray : Color.yellow;
+            Gizmos.color = isCollected ? Color.gray : Color.yellow;
             Gizmos.matrix = transform.localToWorldMatrix;
             
             if (triggerCollider is SphereCollider sphere)
