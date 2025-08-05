@@ -567,12 +567,14 @@ namespace RollABall.Map
                     {
                         // Set proper tag for goal zone detection
                         collectible.gameObject.tag = "Collectible";
-                        
+
                         // Add to LevelManager for event tracking
                         levelManager.AddCollectible(collectible);
                     }
                 }
-                
+                // COLLECTIBLE FIX: ensure counts reflect all spawned collectibles
+                levelManager.UpdateCollectibleCount();
+
                 Debug.Log($"[MapGenerator] Added {collectibles.Length} collectibles to LevelManager");
             }
             else

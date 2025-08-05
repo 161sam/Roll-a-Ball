@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
     public static UIController Instance { get; private set; }
     public static System.Action<string, float> NotificationRequested;
     [Header("Game UI")]
+    [SerializeField] private GameObject gameUIPrefab; // UI FIX
     [SerializeField] private GameObject gameUIPanel;
     [SerializeField] private TextMeshProUGUI collectibleCountText;
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -185,13 +186,25 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
     /// </summary>
     private void EnsureCollectibleCounter()
     {
-        // Find or create canvas
+        // UI FIX: Instantiate from prefab if no canvas exists
         var canvas = gameUIPanel ? gameUIPanel.GetComponentInParent<Canvas>() : FindFirstObjectByType<Canvas>();
         if (!canvas)
         {
-            var canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-            canvas = canvasObject.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            GameObject prefab = gameUIPrefab ? gameUIPrefab : Resources.Load<GameObject>("Prefabs/UI/GameUI");
+            if (prefab)
+            {
+                GameObject instance = Instantiate(prefab);
+                canvas = instance.GetComponent<Canvas>();
+                gameUIPanel = instance.transform.Find("GameUIPanel")?.gameObject;
+                collectibleCountText = gameUIPanel?.transform.Find("CollectibleText")?.GetComponent<TextMeshProUGUI>();
+            }
+
+            if (!canvas)
+            {
+                var canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+                canvas = canvasObject.GetComponent<Canvas>();
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            }
         }
 
         // Ensure GameUIPanel exists
