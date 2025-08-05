@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class LevelConfiguration
 {
+    [Header("Level Info")]
     public string levelName = "Level";
     public int levelIndex = 1;
     public string nextSceneName = "";
@@ -35,8 +36,8 @@ public class LevelManager : MonoBehaviour
 
     [Header("Collectibles")]
     [SerializeField] private List<CollectibleController> levelCollectibles = new List<CollectibleController>();
-    [SerializeField] private bool autoFindCollectibles = true;
     private readonly HashSet<CollectibleController> collectedCollectibles = new HashSet<CollectibleController>();
+    [SerializeField] private bool autoFindCollectibles = true;
 
     [Header("UI References")]
     [SerializeField] private UIController uiController;
@@ -52,20 +53,16 @@ public class LevelManager : MonoBehaviour
     private float levelStartTime;
     private readonly object lockObject = new object();
 
-    // Events
-    public System.Action<int, int> OnCollectibleCountChanged;
-    public System.Action<LevelConfiguration> OnLevelCompleted;
-    public System.Action<LevelConfiguration> OnLevelStarted;
-    public System.Action<float> OnTimeLimitUpdate;
-
     public static LevelManager Instance { get; private set; }
 
     public int CollectiblesRemaining => levelConfig.collectiblesRemaining;
     public int TotalCollectibles => levelConfig.totalCollectibles;
-    public float LevelElapsedTime => Time.time - levelStartTime;
-    public LevelConfiguration Config => levelConfig;
-    public LevelProgressionProfile ProgressionProfile => progressionProfile;
     public bool IsLevelCompleted => levelCompleted;
+
+    public event System.Action<int, int> OnCollectibleCountChanged;
+    public event System.Action<LevelConfiguration> OnLevelCompleted;
+    public event System.Action<LevelConfiguration> OnLevelStarted;
+    public event System.Action<float> OnTimeLimitUpdate;
 
     void Awake()
     {
@@ -79,16 +76,11 @@ public class LevelManager : MonoBehaviour
     }
 
     void Start() => StartLevel();
+
     void Update()
     {
         if (levelConfig.hasTimeLimit && !levelCompleted)
             CheckTimeLimit();
-    }
-    void OnDisable() => SafeUnsubscribeFromAllEvents();
-    void OnDestroy()
-    {
-        SafeUnsubscribeFromAllEvents();
-        if (Instance == this) Instance = null;
     }
 
     private void InitializeLevelManager()
@@ -100,44 +92,36 @@ public class LevelManager : MonoBehaviour
         collectedCollectibles.Clear();
 
         if (!uiController)
-        {
             uiController = FindFirstObjectByType<UIController>();
-            if (!uiController)
-            {
-                var uiPrefab = Resources.Load<GameObject>("Prefabs/UI/GameUI");
-                if (uiPrefab) uiController = Instantiate(uiPrefab).GetComponent<UIController>();
-            }
-        }
 
         levelStartTime = Time.time;
-        eventsRegistered = false;
     }
 
     private void StartLevel()
     {
         if (autoFindCollectibles) FindAllCollectibles();
-
-        // Nur EINMAL am Anfang setzen
-        levelConfig.totalCollectibles = levelCollectibles.Count;
-        levelConfig.collectiblesRemaining = levelConfig.totalCollectibles;
-
+        InitializeCollectibleCounts();
         if (autoFindGoalZone && !goalZone) FindGoalZone();
         SetGoalZoneActive(false);
         SafeSubscribeToAllEvents();
         UpdateUI();
         OnLevelStarted?.Invoke(levelConfig);
-
-        if (debugMode)
-            Debug.Log($"[LevelManager] Started {levelConfig.levelName} with {levelConfig.totalCollectibles} collectibles.");
     }
 
     private void FindAllCollectibles()
     {
         levelCollectibles.Clear();
         collectedCollectibles.Clear();
+
         foreach (var collectible in FindObjectsByType<CollectibleController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
             if (collectible != null && !collectible.IsCollected)
                 levelCollectibles.Add(collectible);
+    }
+
+    private void InitializeCollectibleCounts()
+    {
+        levelConfig.totalCollectibles = levelCollectibles.Count;
+        levelConfig.collectiblesRemaining = levelConfig.totalCollectibles;
     }
 
     private void FindGoalZone()
@@ -168,33 +152,17 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void SafeUnsubscribeFromAllEvents()
-    {
-        lock (lockObject)
-        {
-            if (!eventsRegistered) return;
-            foreach (var collectible in levelCollectibles)
-                collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
-            eventsRegistered = false;
-        }
-    }
-
     public void OnCollectibleCollected(CollectibleController collectible)
     {
         if (levelCompleted || collectible == null) return;
 
         lock (lockObject)
         {
-            if (!collectedCollectibles.Add(collectible))
-                return; // Bereits gezählt → ignorieren
-
-            levelConfig.collectiblesRemaining = Mathf.Max(0, levelConfig.collectiblesRemaining - 1);
+            if (!collectedCollectibles.Add(collectible)) return;
+            levelConfig.collectiblesRemaining = Mathf.Max(0, levelConfig.totalCollectibles - collectedCollectibles.Count);
         }
 
         UpdateUI();
-
-        if (AudioManager.Instance)
-            AudioManager.Instance.PlaySound("Collect");
 
         if (levelConfig.collectiblesRemaining <= 0)
             CompleteLevel();
@@ -204,12 +172,8 @@ public class LevelManager : MonoBehaviour
     {
         if (collectible == null || levelCollectibles.Contains(collectible)) return;
         levelCollectibles.Add(collectible);
-
-        // Neue Collectibles erhöhen nur total, wenn Level noch nicht gestartet oder Rescan
-        levelConfig.totalCollectibles++;
-        levelConfig.collectiblesRemaining++;
-        collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
-        collectible.OnCollectiblePickedUp += OnCollectibleCollected;
+        InitializeCollectibleCounts();
+        SafeSubscribeToAllEvents();
         UpdateUI();
     }
 
@@ -218,35 +182,15 @@ public class LevelManager : MonoBehaviour
         if (collectibles == null) return;
         foreach (var c in collectibles)
             if (c != null && !levelCollectibles.Contains(c))
-            {
                 levelCollectibles.Add(c);
-                levelConfig.totalCollectibles++;
-                levelConfig.collectiblesRemaining++;
-            }
+
+        InitializeCollectibleCounts();
         SafeSubscribeToAllEvents();
         UpdateUI();
     }
 
-    public void RemoveCollectible(CollectibleController collectible)
-    {
-        if (collectible == null) return;
-        if (levelCollectibles.Remove(collectible) && !collectedCollectibles.Contains(collectible))
-            levelConfig.collectiblesRemaining = Mathf.Max(0, levelConfig.collectiblesRemaining - 1);
-        UpdateUI();
-    }
-
-    public void RescanCollectibles()
-    {
-        SafeUnsubscribeFromAllEvents();
-        FindAllCollectibles();
-        levelConfig.totalCollectibles = levelCollectibles.Count;
-        levelConfig.collectiblesRemaining = levelConfig.totalCollectibles;
-        SafeSubscribeToAllEvents();
-        UpdateUI();
-    }
-
-    public void SetNextScene(string sceneName) => levelConfig.nextSceneName = sceneName;
-    public void ForceCompleteLevel() => CompleteLevel();
+    public bool ContainsCollectible(CollectibleController collectible) =>
+        levelCollectibles.Contains(collectible);
 
     private void CompleteLevel()
     {
@@ -259,7 +203,9 @@ public class LevelManager : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        string nextScene = !string.IsNullOrEmpty(levelConfig.nextSceneName) ? levelConfig.nextSceneName : DetermineNextScene(SceneManager.GetActiveScene().name);
+        string nextScene = !string.IsNullOrEmpty(levelConfig.nextSceneName) ? 
+            levelConfig.nextSceneName : DetermineNextScene(SceneManager.GetActiveScene().name);
+
         if (!string.IsNullOrEmpty(nextScene))
             SceneManager.LoadScene(nextScene);
         else
@@ -271,6 +217,7 @@ public class LevelManager : MonoBehaviour
         if (currentScene.StartsWith("Level3")) return "GeneratedLevel";
         if (progressionProfile && progressionProfile.ValidateProgression())
             return progressionProfile.GetNextScene(currentScene);
+
         if (currentScene == "Level1") return "Level2";
         if (currentScene == "Level2") return "Level3";
         if (currentScene.StartsWith("GeneratedLevel")) return "GeneratedLevel";
