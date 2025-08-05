@@ -47,9 +47,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private bool autoFindGoalZone = true;
 
     [Header("Collectibles")]
-    [SerializeField] private HashSet<CollectibleController> levelCollectibles = new HashSet<CollectibleController>(); // COLLECTIBLE FIX: ensure unique references
+    [SerializeField] private HashSet<CollectibleController> levelCollectibles = new HashSet<CollectibleController>(); // COLLECTIBLE COUNTER FIX: ensure unique references
     [SerializeField] private bool autoFindCollectibles = true;
-    [SerializeField] private HashSet<CollectibleController> collectedCollectibles; // COLLECTIBLE FIX: track collected items
+    [SerializeField] private HashSet<CollectibleController> collectedCollectibles; // COLLECTIBLE COUNTER FIX: track collected items
 
     [Header("Level Progression")]
     [SerializeField] private LevelProgressionProfile progressionProfile;
@@ -212,7 +212,7 @@ public class LevelManager : MonoBehaviour
     private void FindAllCollectibles()
     {
         levelCollectibles.Clear();
-        collectedCollectibles.Clear(); // COLLECTIBLE FIX: reset collected tracking
+        collectedCollectibles.Clear(); // COLLECTIBLE COUNTER FIX: reset collected tracking
         collectedCountCache = 0;
         initialCollectibleCount = 0;
         foreach (var collectible in FindObjectsByType<CollectibleController>(FindObjectsSortMode.None))
@@ -273,7 +273,7 @@ public class LevelManager : MonoBehaviour
         foreach (var collectible in levelCollectibles)
         {
             if (!collectible) continue;
-            collectible.OnCollectiblePickedUp -= OnCollectibleCollected; // COLLECTIBLE FIX: avoid duplicate handlers
+            collectible.OnCollectiblePickedUp -= OnCollectibleCollected; // COLLECTIBLE COUNTER FIX: avoid duplicate handlers
             if (subscribe)
                 collectible.OnCollectiblePickedUp += OnCollectibleCollected;
         }
@@ -283,7 +283,7 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCompleted) return;
 
-        if (!collectedCollectibles.Add(collectible)) return; // COLLECTIBLE FIX: process each collectible once
+        if (!collectedCollectibles.Add(collectible)) return; // COLLECTIBLE COUNTER FIX: process each collectible once
 
         collectedCountCache++;
         UpdateCollectibleCount();
@@ -490,23 +490,17 @@ public class LevelManager : MonoBehaviour
             return "Level3";
         else if (currentScene == "Level3" || currentScene == "Level_3")
         {
-            PlayerPrefs.SetInt("AutoGenerateOSMMode", 1);
-            PlayerPrefs.SetInt("OSMLocationIndex", 0);
-            PlayerPrefs.Save();
-            return "Level_OSM";
-        }
-        else if (currentScene == "Level_OSM")
-        {
-            int currentIndex = PlayerPrefs.GetInt("OSMLocationIndex", 0);
-            PlayerPrefs.SetInt("OSMLocationIndex", currentIndex + 1);
-            PlayerPrefs.Save();
-            return "Level_OSM";
+            return "GeneratedLevel"; // LEVEL PROGRESSION FIX
         }
         else if (currentScene == "GeneratedLevel")
         {
-            return "GeneratedLevel";
+            return "GeneratedLevel"; // LEVEL PROGRESSION FIX: loop generated levels
         }
-        
+        else if (currentScene == "Level_OSM")
+        {
+            return "Level_OSM"; // LEVEL PROGRESSION FIX: stay in OSM mode
+        }
+
         return "";
     }
 
@@ -537,8 +531,8 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCollectibles.Add(collectible))
         {
-            collectedCollectibles.Remove(collectible); // COLLECTIBLE FIX: reset collected state for pooled objects
-            collectible.OnCollectiblePickedUp -= OnCollectibleCollected; // COLLECTIBLE FIX: prevent double subscription
+            collectedCollectibles.Remove(collectible); // COLLECTIBLE COUNTER FIX: reset collected state for pooled objects
+            collectible.OnCollectiblePickedUp -= OnCollectibleCollected; // COLLECTIBLE COUNTER FIX: prevent double subscription
             collectible.OnCollectiblePickedUp += OnCollectibleCollected;
             UpdateCollectibleCount();
             UpdateUI();
@@ -549,7 +543,7 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCollectibles.Remove(collectible))
         {
-            collectedCollectibles.Remove(collectible); // COLLECTIBLE FIX: maintain tracking
+            collectedCollectibles.Remove(collectible); // COLLECTIBLE COUNTER FIX: maintain tracking
             collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
             UpdateCollectibleCount();
             UpdateUI();
