@@ -110,3 +110,4 @@
 | TODO-OPT#106 | Assets/Scripts/LevelManager.cs | StartLevel(), Zeile 184 | TotalCollectibles aus Inspector oder Szene zählen | **erledigt** |
 | TODO-OPT#107 | Assets/Scripts/LevelManager.cs | OnCollectibleCollected(), Zeile 326 | Sofortigen Levelwechsel bei kompletter Sammlung auslösen | **erledigt** |
 | TODO-OPT#108 | Assets/Scripts/LevelManager.cs, Assets/Scripts/UIController.cs, Assets/Scripts/AchievementSystem.cs, Assets/Scripts/LevelProgressionFixer.cs | Eventregistrierungen | Event-Registrierungen gegen doppelte Auslösung abgesichert | **erledigt** |
+| TODO-OPT#109 | Assets/Scripts/LevelManager.cs | RegisterCollectibleEvents(), Zeile 307 | Event-Registrierung zentral verwalten | **erledigt** |
