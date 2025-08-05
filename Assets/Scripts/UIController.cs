@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 [AddComponentMenu("UI/UI Controller")]
 public class UIController : MonoBehaviour
