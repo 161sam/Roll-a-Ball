@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public class LevelConfiguration
@@ -38,6 +39,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<CollectibleController> levelCollectibles = new();
     private readonly HashSet<CollectibleController> collectedCollectibles = new();
     [SerializeField] private bool autoFindCollectibles = true;
+    public bool AutoFindCollectibles => autoFindCollectibles;
 
     [Header("UI References")]
     [SerializeField] private UIController uiController;
@@ -59,7 +61,6 @@ public class LevelManager : MonoBehaviour
     public int TotalCollectibles => levelConfig.totalCollectibles;
     public bool IsLevelCompleted => levelCompleted;
 
-    // Kompatibilität für älteren Code
     public LevelConfiguration Config
     {
         get => levelConfig;
@@ -129,6 +130,9 @@ public class LevelManager : MonoBehaviour
 
     private void InitializeCollectibleCounts()
     {
+        // Fix: doppelte Einträge entfernen
+        levelCollectibles = levelCollectibles.Distinct().ToList();
+
         levelConfig.totalCollectibles = levelCollectibles.Count;
         levelConfig.collectiblesRemaining = levelConfig.totalCollectibles;
     }
@@ -172,6 +176,9 @@ public class LevelManager : MonoBehaviour
         }
 
         UpdateUI();
+
+        if (debugMode)
+            Debug.Log($"[LevelManager] Collectible eingesammelt: {collectedCollectibles.Count}/{levelConfig.totalCollectibles}");
 
         if (levelConfig.collectiblesRemaining <= 0)
             CompleteLevel();
@@ -242,7 +249,7 @@ public class LevelManager : MonoBehaviour
             "Level1" => "Level2",
             "Level2" => "Level3",
             _ when currentScene.StartsWith("GeneratedLevel") => "GeneratedLevel",
-            "Level_OSM" => "Level_OSM",
+            _ when currentScene.StartsWith("Level_OSM") => "Level_OSM",
             _ => string.Empty
         };
     }
