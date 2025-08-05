@@ -2,11 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using RollABall.Utility;
 
-/// <summary>
-/// Controller für sammelbare Objekte im Roll-a-Ball Spiel
-/// Handles collection logic, audio feedback, and visual effects
-/// FIXED: Improved event handling and state management
-/// </summary>
 [System.Serializable]
 public class CollectibleData
 {
@@ -49,18 +44,15 @@ public class CollectibleController : MonoBehaviour
     [SerializeField] private UnityEvent OnCollected;
     [SerializeField] private UnityEvent<CollectibleData> OnCollectedWithData;
 
-    // Private fields
     private AudioSource audioSource;
     private Vector3 originalScale;
     private bool isCollecting = false;
     private bool isCollected = false;
     private float pulseTimer = 0f;
-    private readonly object lockObject = new object(); // Thread safety for collection state
+    private readonly object lockObject = new object();
 
-    // Public Events für GameManager/LevelManager Integration
     public System.Action<CollectibleController> OnCollectiblePickedUp;
 
-    // Properties
     public CollectibleData Data => collectibleData;
     public bool IsCollected => isCollected;
     public string ItemName => collectibleData?.itemName ?? gameObject.name;
@@ -75,9 +67,9 @@ public class CollectibleController : MonoBehaviour
     {
         ValidateSetup();
         originalScale = transform.localScale;
-        
-        // Register with LevelManager if available
-        if (LevelManager.Instance != null && !IsCollected)
+
+        // Nur registrieren, wenn LevelManager existiert und Collectible nicht schon dort ist
+        if (LevelManager.Instance != null && !IsCollected && !LevelManager.Instance.ContainsCollectible(this))
         {
             LevelManager.Instance.AddCollectible(this);
         }
@@ -92,18 +84,8 @@ public class CollectibleController : MonoBehaviour
         }
     }
 
-    void OnDestroy()
-    {
-        // Clean unregister from LevelManager
-        if (LevelManager.Instance != null)
-        {
-            LevelManager.Instance.RemoveCollectible(this);
-        }
-    }
-
     private void InitializeComponents()
     {
-        // Auto-find components if not assigned
         if (renderers == null || renderers.Length == 0)
             renderers = GetComponentsInChildren<Renderer>();
 
@@ -113,84 +95,44 @@ public class CollectibleController : MonoBehaviour
         if (!itemLight)
             itemLight = GetComponentInChildren<Light>();
 
-        // Setup AudioSource
-        audioSource = GetComponent<AudioSource>();
-        if (!audioSource)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.playOnAwake = false;
-            audioSource.spatialBlend = 1f; // 3D sound
-            audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
-            audioSource.maxDistance = 20f;
-        }
+        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f;
+        audioSource.rolloffMode = AudioRolloffMode.Logarithmic;
+        audioSource.maxDistance = 20f;
 
-        // Setup Collider
         if (autoSetupCollider && !triggerCollider)
         {
-            triggerCollider = GetComponent<Collider>();
-            if (!triggerCollider)
-            {
-                // Add SphereCollider as default
-                SphereCollider sphere = gameObject.AddComponent<SphereCollider>();
-                sphere.isTrigger = true;
+            triggerCollider = GetComponent<Collider>() ?? gameObject.AddComponent<SphereCollider>();
+            triggerCollider.isTrigger = true;
+            if (triggerCollider is SphereCollider sphere)
                 sphere.radius = 0.5f;
-                triggerCollider = sphere;
-            }
-            else
-            {
-                triggerCollider.isTrigger = true;
-            }
         }
     }
 
     private void ValidateSetup()
     {
         if (collectibleData == null)
-        {
-            collectibleData = new CollectibleData();
-            collectibleData.itemName = gameObject.name;
-        }
+            collectibleData = new CollectibleData { itemName = gameObject.name };
 
         if (triggerCollider && !triggerCollider.isTrigger)
-        {
-            Debug.LogWarning($"CollectibleController on {gameObject.name}: Collider should be a trigger!");
             triggerCollider.isTrigger = true;
-        }
 
-        // Ensure object has Collectible tag
         if (!gameObject.CompareTag("Collectible"))
-        {
-            #if UNITY_EDITOR
-            if (System.Array.Exists(UnityEditorInternal.InternalEditorUtility.tags, t => t == "Collectible"))
-            {
-                gameObject.tag = "Collectible";
-            }
-            else
-            {
-                Debug.LogWarning($"CollectibleController on {gameObject.name}: 'Collectible' tag not found. Please add it in Project Settings > Tags and Layers");
-            }
-            #else
             gameObject.tag = "Collectible";
-            #endif
-        }
     }
 
     private void RotateLocally()
     {
         if (collectibleData?.rotateObject != true) return;
-
-        // Rotate around this object's local Y-axis
-        float angle = collectibleData.rotationSpeed * Time.deltaTime;
-        transform.localRotation *= Quaternion.Euler(0f, angle, 0f);
+        transform.localRotation *= Quaternion.Euler(0f, collectibleData.rotationSpeed * Time.deltaTime, 0f);
     }
 
     private void HandlePulseEffect()
     {
         if (collectibleData?.enablePulseEffect != true) return;
-
         pulseTimer += Time.deltaTime * collectibleData.pulseSpeed;
         float pulseValue = 1f + Mathf.Sin(pulseTimer) * collectibleData.pulseIntensity;
-        
         transform.localScale = originalScale * pulseValue;
     }
 
@@ -198,53 +140,33 @@ public class CollectibleController : MonoBehaviour
     {
         if (isCollecting || isCollected) return;
 
-        // Check if it's the player
-        PlayerController player = other.GetComponent<PlayerController>();
-        if (player != null)
-        {
+        if (other.GetComponent<PlayerController>() != null)
             CollectItem();
-        }
     }
 
-    /// <summary>
-    /// Main collection method - THREAD SAFE
-    /// </summary>
     public void CollectItem()
     {
         lock (lockObject)
         {
-            if (isCollecting || isCollected) 
-            {
-                Debug.LogWarning($"[CollectibleController] {gameObject.name} already collecting/collected, ignoring...");
-                return;
-            }
-
+            if (isCollecting || isCollected) return;
             isCollecting = true;
             isCollected = true;
         }
 
-        // Play sound effect
         PlayCollectionSound();
-
-        // Trigger particle effect
         TriggerCollectionEffect();
-
-        // Invoke Unity events
         OnCollected?.Invoke();
         OnCollectedWithData?.Invoke(collectibleData);
 
-        // Fire main event for LevelManager (SINGLE EVENT FIRE)
         try
         {
             OnCollectiblePickedUp?.Invoke(this);
-            Debug.Log($"[CollectibleController] Event fired for {gameObject.name}");
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"[CollectibleController] Error firing collection event for {gameObject.name}: {e.Message}");
+            Debug.LogError($"[CollectibleController] Error firing event for {gameObject.name}: {e.Message}");
         }
 
-        // Visual feedback and destruction
         StartCoroutine(CollectionSequence());
     }
 
@@ -258,23 +180,14 @@ public class CollectibleController : MonoBehaviour
         }
         else if (AudioManager.Instance)
         {
-            // Fallback to AudioManager
             AudioManager.Instance.PlaySound("Collect");
         }
     }
 
     private void TriggerCollectionEffect()
     {
-        if (collectEffect)
-        {
-            collectEffect.Play();
-        }
-
-        // Light flash effect
-        if (itemLight)
-        {
-            StartCoroutine(FlashLight());
-        }
+        if (collectEffect) collectEffect.Play();
+        if (itemLight) StartCoroutine(FlashLight());
     }
 
     private System.Collections.IEnumerator FlashLight()
@@ -287,12 +200,10 @@ public class CollectibleController : MonoBehaviour
         yield return new WaitForSeconds(flashHoldTime);
 
         float elapsed = 0f;
-        float duration = flashDuration;
-
-        while (elapsed < duration)
+        while (elapsed < flashDuration)
         {
             elapsed += Time.deltaTime;
-            itemLight.intensity = Mathf.Lerp(originalIntensity * flashMultiplier, 0f, elapsed / duration);
+            itemLight.intensity = Mathf.Lerp(originalIntensity * flashMultiplier, 0f, elapsed / flashDuration);
             yield return null;
         }
 
@@ -301,11 +212,8 @@ public class CollectibleController : MonoBehaviour
 
     private System.Collections.IEnumerator CollectionSequence()
     {
-        // Disable collider immediately
-        if (triggerCollider)
-            triggerCollider.enabled = false;
+        if (triggerCollider) triggerCollider.enabled = false;
 
-        // Scale up briefly
         float scaleTime = 0.2f;
         float elapsed = 0f;
         Vector3 targetScale = originalScale * 1.3f;
@@ -313,24 +221,17 @@ public class CollectibleController : MonoBehaviour
         while (elapsed < scaleTime)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / scaleTime;
-            transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsed / scaleTime);
             yield return null;
         }
 
-        // Scale down and fade out
         elapsed = 0f;
         float fadeTime = 0.3f;
-
         while (elapsed < fadeTime)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / fadeTime;
-            
-            // Scale down
             transform.localScale = Vector3.Lerp(targetScale, Vector3.zero, t);
-            
-            // Fade out materials
             foreach (Renderer renderer in renderers)
             {
                 if (renderer && renderer.material)
@@ -340,38 +241,15 @@ public class CollectibleController : MonoBehaviour
                     renderer.material.color = color;
                 }
             }
-            
             yield return null;
         }
 
-        // Wait for sound to finish
         if (audioSource && audioSource.isPlaying)
-        {
             yield return new WaitWhile(() => audioSource.isPlaying);
-        }
 
-        // Return to pool instead of destroying
         PrefabPooler.Release(gameObject);
     }
 
-    // Public utility methods
-    public void SetCollectibleData(CollectibleData data)
-    {
-        collectibleData = data;
-        if (collectibleData != null && !string.IsNullOrEmpty(collectibleData.itemName))
-        {
-            gameObject.name = collectibleData.itemName;
-        }
-    }
-
-    public void ForceCollect()
-    {
-        CollectItem();
-    }
-
-    /// <summary>
-    /// Reset collectible for object pooling - THREAD SAFE
-    /// </summary>
     public void ResetCollectible()
     {
         lock (lockObject)
@@ -379,13 +257,10 @@ public class CollectibleController : MonoBehaviour
             isCollected = false;
             isCollecting = false;
         }
-        
-        if (triggerCollider)
-            triggerCollider.enabled = true;
-        
+
+        if (triggerCollider) triggerCollider.enabled = true;
         transform.localScale = originalScale;
-        
-        // Reset material alpha
+
         foreach (Renderer renderer in renderers)
         {
             if (renderer && renderer.material)
@@ -396,39 +271,9 @@ public class CollectibleController : MonoBehaviour
             }
         }
 
-        // Reregister with LevelManager if available
-        if (LevelManager.Instance != null)
+        if (LevelManager.Instance != null && !LevelManager.Instance.ContainsCollectible(this))
         {
             LevelManager.Instance.AddCollectible(this);
         }
-    }
-
-    // Debug visualization
-    void OnDrawGizmosSelected()
-    {
-        if (triggerCollider)
-        {
-            Gizmos.color = isCollected ? Color.gray : Color.yellow;
-            Gizmos.matrix = transform.localToWorldMatrix;
-            
-            if (triggerCollider is SphereCollider sphere)
-            {
-                Gizmos.DrawWireSphere(sphere.center, sphere.radius);
-            }
-            else if (triggerCollider is BoxCollider box)
-            {
-                Gizmos.DrawWireCube(box.center, box.size);
-            }
-        }
-    }
-
-    // Debug info
-    public string GetDebugInfo()
-    {
-        return $"Collected: {isCollected}\n" +
-               $"Collecting: {isCollecting}\n" +
-               $"Item Name: {ItemName}\n" +
-               $"Point Value: {PointValue}\n" +
-               $"Event Subscribers: {OnCollectiblePickedUp?.GetInvocationList()?.Length ?? 0}";
     }
 }
