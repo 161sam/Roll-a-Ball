@@ -63,8 +63,6 @@ public class LevelManager : MonoBehaviour
     // Private fields
     private bool levelCompleted = false;
     private float levelStartTime;
-    private int initialCollectibleCount;
-    private Coroutine transitionCoroutine;
     private int collectedCountCache;
     private static readonly Stack<HashSet<CollectibleController>> collectibleSetPool = new Stack<HashSet<CollectibleController>>();
 
@@ -191,10 +189,10 @@ public class LevelManager : MonoBehaviour
         // LEVEL PROGRESSION FIX: goal zone should remain inactive until all collectibles are collected
         SetGoalZoneActive(false);
 
-        // Update collectible count
+        // COLLECTIBLE COUNT FIX: initialize totals before subscribing to events
+        UnsubscribeFromCollectibleEvents();
         UpdateCollectibleCount();
-        if (debugMode)
-            Debug.Log($"[LevelManager] Counters reset: {levelConfig.collectiblesRemaining}/{levelConfig.totalCollectibles}"); // COLLECTIBLE COUNTER SYNC
+        Debug.Log($"[Level Start] Total Collectibles = {levelConfig.totalCollectibles}"); // COLLECTIBLE COUNT FIX
 
         // Subscribe to collectible events
         SubscribeToCollectibleEvents();
@@ -219,10 +217,9 @@ public class LevelManager : MonoBehaviour
         levelCollectibles.Clear();
         collectedCollectibles.Clear(); // COLLECTIBLE COUNTER FIX: reset collected tracking
         collectedCountCache = 0;
-        initialCollectibleCount = 0;
-        foreach (var collectible in FindObjectsByType<CollectibleController>(FindObjectsSortMode.None))
+        foreach (var collectible in FindObjectsByType<CollectibleController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
         {
-            levelCollectibles.Add(collectible);
+            levelCollectibles.Add(collectible); // HashSet prevents duplicates
         }
 
         if (debugMode)
@@ -267,12 +264,9 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCollectibles == null) return;
 
-        if (initialCollectibleCount == 0)
+        if (levelConfig.totalCollectibles <= 0)
         {
-            levelConfig.totalCollectibles = levelCollectibles.Count;
-            initialCollectibleCount = levelConfig.totalCollectibles;
-            if (debugMode)
-                Debug.Log($"[LevelManager] Total collectibles set to {levelConfig.totalCollectibles}"); // COLLECTIBLE COUNTER SYNC
+            levelConfig.totalCollectibles = levelCollectibles.Count; // COLLECTIBLE COUNT FIX
         }
 
         levelConfig.collectiblesRemaining = Mathf.Max(0, levelConfig.totalCollectibles - collectedCountCache);
@@ -325,6 +319,7 @@ public class LevelManager : MonoBehaviour
 
         collectedCountCache++;
         UpdateCollectibleCount();
+        Debug.Log($"[Collectible Collected] {collectedCountCache}/{levelConfig.totalCollectibles}"); // COLLECTIBLE COUNT FIX
 
         // Update UI (fires OnCollectibleCountChanged internally)
         UpdateUI();
@@ -336,17 +331,9 @@ public class LevelManager : MonoBehaviour
         }
 
         // Check for level completion
-        if (levelConfig.collectiblesRemaining <= 0)
+        if (levelConfig.collectiblesRemaining <= 0 && !levelCompleted)
         {
-            // Reactivate goal zone and trigger automatic level progression
-            SetGoalZoneActive(true);
             CompleteLevel();
-        }
-
-        if (debugMode)
-        {
-            Debug.Log($"Collectible collected: {collectible.ItemName}");
-            Debug.Log($"Remaining: {levelConfig.collectiblesRemaining}/{levelConfig.totalCollectibles}");
         }
     }
 
@@ -396,8 +383,7 @@ public class LevelManager : MonoBehaviour
 
         levelCompleted = true;
 
-        if (debugMode)
-            Debug.Log($"Level completed: {levelConfig.levelName}");
+        Debug.Log("[Level Complete] All collectibles collected → Loading next level"); // LEVEL COMPLETE FIX
 
         // Fire level completed event
         OnLevelCompleted?.Invoke(levelConfig);
@@ -422,40 +408,7 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        // Start transition to next level
-        if (transitionCoroutine != null)
-            StopCoroutine(transitionCoroutine);
-
-        transitionCoroutine = StartCoroutine(LevelCompleteSequence());
-    }
-
-    private IEnumerator LevelCompleteSequence()
-    {
-        // Show level complete message
-        if (showLevelComplete && uiController)
-        {
-            uiController.ShowNotification("Level Complete!", levelCompleteDisplayTime);
-            yield return new WaitForSeconds(levelCompleteDisplayTime);
-        }
-
-        // Fade out or transition effect
-        yield return StartCoroutine(FadeOutTransition());
-
-        // LEVEL PROGRESSION FIX: automatically load the following level
-        LoadNextLevel();
-    }
-
-    private IEnumerator FadeOutTransition()
-    {
-        // Simple fade effect - could be enhanced with actual UI fade
-        float elapsed = 0f;
-        
-        while (elapsed < transitionDuration)
-        {
-            elapsed += Time.deltaTime;
-            // Here you could add actual fade effect
-            yield return null;
-        }
+        Invoke(nameof(LoadNextLevel), 0.2f); // LEVEL COMPLETE FIX
     }
 
     private void LoadNextLevel()
