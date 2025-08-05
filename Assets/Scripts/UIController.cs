@@ -138,6 +138,7 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
     
     void Start()
     {
+        EnsureCollectibleCounter();
         InitializeUI();
         SetupEventListeners();
         ShowMainMenu();
@@ -177,6 +178,40 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
         }
         
         UpdateUIFromSaveData();
+    }
+
+    /// <summary>
+    /// Ensures the collectible counter text exists and is positioned correctly.
+    /// </summary>
+    private void EnsureCollectibleCounter()
+    {
+        if (!collectibleCountText)
+        {
+            var existing = GameObject.Find("CollectibleText");
+            if (existing)
+                collectibleCountText = existing.GetComponent<TextMeshProUGUI>();
+        }
+
+        if (!collectibleCountText)
+        {
+            var canvas = FindFirstObjectByType<Canvas>();
+            if (!canvas)
+            {
+                var canvasObject = new GameObject("GameUICanvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+                canvas = canvasObject.GetComponent<Canvas>();
+                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            }
+
+            var textObject = new GameObject("CollectibleText", typeof(TextMeshProUGUI));
+            textObject.transform.SetParent(canvas.transform, false);
+            collectibleCountText = textObject.GetComponent<TextMeshProUGUI>();
+            collectibleCountText.text = "Collectibles: 0/0";
+        }
+
+        var rect = collectibleCountText.rectTransform;
+        rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
+        rect.pivot = new Vector2(0f, 1f);
+        rect.anchoredPosition = new Vector2(20f, -20f);
     }
     
     private void SetupEventListeners()
