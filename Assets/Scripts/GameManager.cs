@@ -330,7 +330,7 @@ public class GameManager : MonoBehaviour
 
         if (uiController)
         {
-            uiController.UpdateCollectibleDisplay(0);
+            uiController.UpdateCollectibleDisplay(GetRemainingCollectibles());
         }
 
         ChangeGameState(GameState.Playing);
@@ -341,8 +341,7 @@ public class GameManager : MonoBehaviour
     {
         if (uiController)
         {
-            int collected = GetCollectedCount();
-            uiController.UpdateCollectibleDisplay(collected);
+            uiController.UpdateCollectibleDisplay(GetRemainingCollectibles());
         }
     }
 
@@ -455,9 +454,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnPlayerFlying(bool flying)
-    {
-    }
+    private void OnPlayerFlying(bool flying) { }
 
     private IEnumerator LoadSceneAsync(string sceneName)
     {
