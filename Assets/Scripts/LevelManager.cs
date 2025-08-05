@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 /// <summary>
 /// Manages level progression, collectible tracking, and scene transitions
@@ -49,7 +51,7 @@ public class LevelManager : MonoBehaviour
     [Header("Collectibles")]
     [SerializeField] private HashSet<CollectibleController> levelCollectibles = new HashSet<CollectibleController>(); // COLLECTIBLE FIX: ensure unique references
     [SerializeField] private bool autoFindCollectibles = true;
-    [SerializeField] private HashSet<CollectibleController> collectedCollectibles = new HashSet<CollectibleController>(); // COLLECTIBLE FIX: track collected items
+    [SerializeField] private HashSet<CollectibleController> collectedCollectibles; // COLLECTIBLE FIX: track collected items
 
     [Header("Level Progression")]
     [SerializeField] private LevelProgressionProfile progressionProfile;
@@ -65,6 +67,8 @@ public class LevelManager : MonoBehaviour
     private float levelStartTime;
     private int initialCollectibleCount;
     private Coroutine transitionCoroutine;
+    private int collectedCountCache;
+    private static readonly Stack<HashSet<CollectibleController>> collectibleSetPool = new Stack<HashSet<CollectibleController>>();
 
     // Events
     public System.Action<int, int> OnCollectibleCountChanged; // remaining, total
@@ -121,9 +125,23 @@ public class LevelManager : MonoBehaviour
     {
         // CLAUDE: FIXED - Unsubscribe from collectible events to avoid memory leaks
         UnsubscribeFromCollectibleEvents();
-        
+
+        if (collectedCollectibles != null)
+            ReturnHashSetToPool(collectedCollectibles);
+
         if (Instance == this)
             Instance = null;
+    }
+
+    private static HashSet<CollectibleController> GetHashSetFromPool()
+    {
+        return collectibleSetPool.Count > 0 ? collectibleSetPool.Pop() : new HashSet<CollectibleController>();
+    }
+
+    private static void ReturnHashSetToPool(HashSet<CollectibleController> set)
+    {
+        set.Clear();
+        collectibleSetPool.Push(set);
     }
 
     private void InitializeLevelManager()
@@ -135,13 +153,18 @@ public class LevelManager : MonoBehaviour
             levelConfig.levelName = SceneManager.GetActiveScene().name;
         }
 
+        collectedCollectibles = GetHashSetFromPool();
+        collectedCountCache = 0;
+
         // CLAUDE: FIXED - Prefer inspector assignment over runtime search
         if (!uiController)
         {
             uiController = FindFirstObjectByType<UIController>();
             if (!uiController)
             {
-                var uiPrefab = Resources.Load<GameObject>("Prefabs/UI/GameUI");
+                AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>("GameUI");
+                GameObject uiPrefab = handle.WaitForCompletion();
+                Addressables.Release(handle);
                 if (uiPrefab)
                 {
                     var uiInstance = Instantiate(uiPrefab); // UI FIX: centralize UI via prefab
@@ -194,6 +217,8 @@ public class LevelManager : MonoBehaviour
     {
         levelCollectibles.Clear();
         collectedCollectibles.Clear(); // COLLECTIBLE FIX: reset collected tracking
+        collectedCountCache = 0;
+        initialCollectibleCount = 0;
         foreach (var collectible in FindObjectsByType<CollectibleController>(FindObjectsSortMode.None))
         {
             levelCollectibles.Add(collectible);
@@ -224,16 +249,15 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateCollectibleCount()
     {
-        if (levelCollectibles != null)
+        if (levelCollectibles == null) return;
+
+        if (initialCollectibleCount == 0)
         {
-            levelCollectibles.RemoveWhere(c => c == null);
             levelConfig.totalCollectibles = levelCollectibles.Count;
-            int collected = collectedCollectibles.Count;
-            int remaining = Mathf.Max(0, levelConfig.totalCollectibles - collected); // COLLECTIBLE FIX: reliable remaining count
-            levelConfig.collectiblesRemaining = remaining;
-            if (initialCollectibleCount == 0)
-                initialCollectibleCount = levelConfig.totalCollectibles;
+            initialCollectibleCount = levelConfig.totalCollectibles;
         }
+
+        levelConfig.collectiblesRemaining = Mathf.Max(0, levelConfig.totalCollectibles - collectedCountCache);
     }
 
     private void SubscribeToCollectibleEvents()
@@ -265,7 +289,7 @@ public class LevelManager : MonoBehaviour
 
         if (!collectedCollectibles.Add(collectible)) return; // COLLECTIBLE FIX: process each collectible once
 
-        // LEVEL PROGRESSION FIX: recalc remaining collectibles reliably
+        collectedCountCache++;
         UpdateCollectibleCount();
 
         // Update UI (fires OnCollectibleCountChanged internally)
