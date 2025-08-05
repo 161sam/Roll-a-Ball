@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
 
 [AddComponentMenu("UI/UI Controller")]
 public class UIController : MonoBehaviour
@@ -69,14 +67,23 @@ public class UIController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void OnEnable() => NotificationRequested += OnNotificationRequested;
-    void OnDisable() => NotificationRequested -= OnNotificationRequested;
+    void OnEnable()
+    {
+        NotificationRequested += OnNotificationRequested;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        NotificationRequested -= OnNotificationRequested;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     void Start()
     {
         EnsureCollectibleCounter();
         InitializeUI();
-        SetupEventListeners();
+        ConnectToLevelManager();
         ShowMainMenu();
 
         if (GameManager.Instance && GameManager.Instance.CurrentState == GameState.Playing)
@@ -93,6 +100,16 @@ public class UIController : MonoBehaviour
             versionText.text = $"v{Application.version}";
 
         UpdateUIFromSaveData();
+
+        // Position fixieren (optional)
+        if (collectibleCountText != null)
+        {
+            RectTransform rt = collectibleCountText.GetComponent<RectTransform>();
+            rt.anchorMin = new Vector2(0, 1); // oben links
+            rt.anchorMax = new Vector2(0, 1);
+            rt.pivot = new Vector2(0, 1);
+            rt.anchoredPosition = new Vector2(20, -20); // 20px vom Rand
+        }
     }
 
     private void EnsureCollectibleCounter()
@@ -100,11 +117,11 @@ public class UIController : MonoBehaviour
         if (!collectibleCountText)
             collectibleCountText = FindFirstObjectByType<TextMeshProUGUI>();
 
-        if (collectibleCountText && string.IsNullOrEmpty(collectibleCountText.text))
+        if (collectibleCountText)
             collectibleCountText.text = "Collectibles: 0/0";
     }
 
-    private void SetupEventListeners()
+    private void ConnectToLevelManager()
     {
         if (LevelManager.Instance)
         {
@@ -112,25 +129,24 @@ public class UIController : MonoBehaviour
             LevelManager.Instance.OnCollectibleCountChanged -= OnCollectibleCountChanged;
             LevelManager.Instance.OnLevelCompleted += OnLevelCompleted;
             LevelManager.Instance.OnCollectibleCountChanged += OnCollectibleCountChanged;
+
+            // Direkt beim Start aktuelle Werte anzeigen
+            var cfg = LevelManager.Instance.GetLevelConfiguration();
+            OnCollectibleCountChanged(cfg.collectiblesRemaining, cfg.totalCollectibles);
         }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Bei neuem Level neu verbinden
+        ConnectToLevelManager();
     }
     #endregion
 
     #region UI State Management
-    public void ShowMainMenu()
-    {
-        ChangeUIState(UIState.MainMenu);
-    }
-
-    public void ShowGameUI()
-    {
-        ChangeUIState(UIState.GamePlay);
-    }
-
-    public void ShowPauseMenu()
-    {
-        ChangeUIState(UIState.PauseMenu);
-    }
+    public void ShowMainMenu() => ChangeUIState(UIState.MainMenu);
+    public void ShowGameUI() => ChangeUIState(UIState.GamePlay);
+    public void ShowPauseMenu() => ChangeUIState(UIState.PauseMenu);
 
     public void ShowLevelComplete(LevelConfiguration levelConfig)
     {
@@ -172,8 +188,7 @@ public class UIController : MonoBehaviour
     #endregion
 
     #region Collectible & Score
-    private void OnLevelCompleted(LevelConfiguration levelConfig) =>
-        ShowLevelComplete(levelConfig);
+    private void OnLevelCompleted(LevelConfiguration levelConfig) => ShowLevelComplete(levelConfig);
 
     private void OnCollectibleCountChanged(int remaining, int total) =>
         UpdateCollectibleDisplay(total - remaining, total);
@@ -182,17 +197,6 @@ public class UIController : MonoBehaviour
     {
         if (collectibleCountText)
             collectibleCountText.text = $"Collectibles: {collected}/{total}";
-    }
-
-    public void UpdateCollectibleDisplay(int remaining)
-    {
-        var config = LevelManager.Instance?.Config;
-        if (config != null)
-        {
-            int total = config.totalCollectibles;
-            int collected = total - remaining;
-            UpdateCollectibleDisplay(collected, total);
-        }
     }
 
     public void UpdateScore(int score)
