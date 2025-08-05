@@ -131,9 +131,8 @@ public class UIController : MonoBehaviour
             LevelManager.Instance.OnLevelCompleted += OnLevelCompleted;
             LevelManager.Instance.OnCollectibleCountChanged += OnCollectibleCountChanged;
 
-            // Startwerte setzen
-            var cfg = LevelManager.Instance.GetLevelConfiguration();
-            OnCollectibleCountChanged(cfg.collectiblesRemaining, cfg.totalCollectibles);
+            // ensure the counter reflects the actual objects present in the scene
+            LevelManager.Instance.RescanCollectibles();
         }
     }
 
