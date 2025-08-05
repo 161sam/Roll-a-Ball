@@ -294,11 +294,17 @@ public class AchievementSystem : MonoBehaviour
             GameManager.Instance.OnGameStateChanged += OnGameStateChanged;
             GameManager.Instance.OnStatisticsUpdated += OnStatisticsUpdated;
         }
-        
+
         if (LevelManager.Instance)
         {
-            LevelManager.Instance.OnLevelCompleted += OnLevelCompleted;
-            LevelManager.Instance.OnCollectibleCountChanged += OnCollectibleCountChanged;
+            LevelManager.Instance.OnLevelCompleted -= OnLevelCompleted; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Unregistered OnLevelCompleted"); // EVENT DOUBLE-FIRE FIX
+            LevelManager.Instance.OnCollectibleCountChanged -= OnCollectibleCountChanged; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Unregistered OnCollectibleCountChanged"); // EVENT DOUBLE-FIRE FIX
+            LevelManager.Instance.OnLevelCompleted += OnLevelCompleted; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Registered OnLevelCompleted"); // EVENT DOUBLE-FIRE FIX
+            LevelManager.Instance.OnCollectibleCountChanged += OnCollectibleCountChanged; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Registered OnCollectibleCountChanged"); // EVENT DOUBLE-FIRE FIX
         }
         
         // Subscribe to player events
@@ -321,8 +327,10 @@ public class AchievementSystem : MonoBehaviour
 
         if (LevelManager.Instance)
         {
-            LevelManager.Instance.OnLevelCompleted -= OnLevelCompleted;
-            LevelManager.Instance.OnCollectibleCountChanged -= OnCollectibleCountChanged;
+            LevelManager.Instance.OnLevelCompleted -= OnLevelCompleted; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Unregistered OnLevelCompleted"); // EVENT DOUBLE-FIRE FIX
+            LevelManager.Instance.OnCollectibleCountChanged -= OnCollectibleCountChanged; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Unregistered OnCollectibleCountChanged"); // EVENT DOUBLE-FIRE FIX
         }
 
         if (cachedPlayer)
