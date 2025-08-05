@@ -249,12 +249,10 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCompleted) return;
 
-        levelConfig.collectiblesRemaining--;
+        // Recalculate remaining collectibles to avoid skipped counts
+        UpdateCollectibleCount();
 
-        // Fire count changed event
-        OnCollectibleCountChanged?.Invoke(levelConfig.collectiblesRemaining, levelConfig.totalCollectibles);
-
-        // Update UI
+        // Update UI (fires OnCollectibleCountChanged internally)
         UpdateUI();
 
         // Play collection feedback
