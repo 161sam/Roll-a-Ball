@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private bool autoFindGoalZone = true;
 
     [Header("Collectibles")]
-    [SerializeField] private List<CollectibleController> levelCollectibles;
+    [SerializeField] private HashSet<CollectibleController> levelCollectibles = new HashSet<CollectibleController>(); // COLLECTIBLE FIX: ensure unique references
     [SerializeField] private bool autoFindCollectibles = true;
 
     [Header("Level Progression")]
@@ -138,6 +138,15 @@ public class LevelManager : MonoBehaviour
         if (!uiController)
         {
             uiController = FindFirstObjectByType<UIController>();
+            if (!uiController)
+            {
+                var uiPrefab = Resources.Load<GameObject>("Prefabs/UI/GameUI");
+                if (uiPrefab)
+                {
+                    var uiInstance = Instantiate(uiPrefab); // UI FIX: centralize UI via prefab
+                    uiController = uiInstance.GetComponent<UIController>();
+                }
+            }
             if (uiController && debugMode)
                 Debug.Log("[LevelManager] Auto-found UIController - consider assigning in Inspector");
         }
@@ -182,8 +191,11 @@ public class LevelManager : MonoBehaviour
 
     private void FindAllCollectibles()
     {
-        CollectibleController[] foundCollectibles = FindObjectsByType<CollectibleController>(FindObjectsSortMode.None);
-        levelCollectibles = foundCollectibles.ToList();
+        levelCollectibles.Clear();
+        foreach (var collectible in FindObjectsByType<CollectibleController>(FindObjectsSortMode.None))
+        {
+            levelCollectibles.Add(collectible);
+        }
 
         if (debugMode)
             Debug.Log($"Found {levelCollectibles.Count} collectibles in scene");
@@ -212,10 +224,12 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCollectibles != null)
         {
-            int remaining = levelCollectibles.Count(c => c != null && !c.IsCollected);
+            levelCollectibles.RemoveWhere(c => c == null);
+            int remaining = levelCollectibles.Count(c => !c.IsCollected);
             levelConfig.collectiblesRemaining = remaining;
             levelConfig.totalCollectibles = levelCollectibles.Count;
-            initialCollectibleCount = levelConfig.totalCollectibles;
+            if (initialCollectibleCount == 0)
+                initialCollectibleCount = levelConfig.totalCollectibles;
         }
     }
 
@@ -233,15 +247,12 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCollectibles == null) return;
 
-        foreach (CollectibleController collectible in levelCollectibles)
+        foreach (var collectible in levelCollectibles)
         {
-            if (collectible != null)
-            {
-                if (subscribe)
-                    collectible.OnCollectiblePickedUp += OnCollectibleCollected;
-                else
-                    collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
-            }
+            if (!collectible) continue;
+            collectible.OnCollectiblePickedUp -= OnCollectibleCollected; // COLLECTIBLE FIX: avoid duplicate handlers
+            if (subscribe)
+                collectible.OnCollectiblePickedUp += OnCollectibleCollected;
         }
     }
 
@@ -499,12 +510,9 @@ public class LevelManager : MonoBehaviour
 
     public void AddCollectible(CollectibleController collectible)
     {
-        if (levelCollectibles == null)
-            levelCollectibles = new List<CollectibleController>();
-
-        if (!levelCollectibles.Contains(collectible))
+        if (levelCollectibles.Add(collectible))
         {
-            levelCollectibles.Add(collectible);
+            collectible.OnCollectiblePickedUp -= OnCollectibleCollected; // COLLECTIBLE FIX: prevent double subscription
             collectible.OnCollectiblePickedUp += OnCollectibleCollected;
             UpdateCollectibleCount();
             UpdateUI();
@@ -513,9 +521,8 @@ public class LevelManager : MonoBehaviour
 
     public void RemoveCollectible(CollectibleController collectible)
     {
-        if (levelCollectibles != null && levelCollectibles.Contains(collectible))
+        if (levelCollectibles.Remove(collectible))
         {
-            levelCollectibles.Remove(collectible);
             collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
             UpdateCollectibleCount();
             UpdateUI();
