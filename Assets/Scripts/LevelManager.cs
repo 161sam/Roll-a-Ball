@@ -58,7 +58,14 @@ public class LevelManager : MonoBehaviour
     public int CollectiblesRemaining => levelConfig.collectiblesRemaining;
     public int TotalCollectibles => levelConfig.totalCollectibles;
     public bool IsLevelCompleted => levelCompleted;
-
+    
+    // Kompatibilität für älteren Code:
+    public LevelConfiguration Config
+    {
+        get => levelConfig;
+        set => levelConfig = value;
+    }
+    
     public event System.Action<int, int> OnCollectibleCountChanged;
     public event System.Action<LevelConfiguration> OnLevelCompleted;
     public event System.Action<LevelConfiguration> OnLevelStarted;
