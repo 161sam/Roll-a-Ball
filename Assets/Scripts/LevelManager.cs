@@ -59,6 +59,15 @@ public class LevelManager : MonoBehaviour
     public int TotalCollectibles => levelConfig.totalCollectibles;
     public bool IsLevelCompleted => levelCompleted;
 
+    /// <summary>
+    /// Öffentlicher Zugriff auf die aktuelle Level-Konfiguration (für andere Systeme).
+    /// </summary>
+    public LevelConfiguration Config
+    {
+        get => levelConfig;
+        set => levelConfig = value ?? new LevelConfiguration { levelName = SceneManager.GetActiveScene().name };
+    }
+
     public event System.Action<int, int> OnCollectibleCountChanged;
     public event System.Action<LevelConfiguration> OnLevelCompleted;
     public event System.Action<LevelConfiguration> OnLevelStarted;
@@ -83,9 +92,6 @@ public class LevelManager : MonoBehaviour
             CheckTimeLimit();
     }
 
-    /// <summary>
-    /// Liefert die aktuelle Level-Konfiguration zurück.
-    /// </summary>
     public LevelConfiguration GetLevelConfiguration() => levelConfig;
 
     private void InitializeLevelManager()
