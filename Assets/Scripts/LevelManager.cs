@@ -83,6 +83,11 @@ public class LevelManager : MonoBehaviour
             CheckTimeLimit();
     }
 
+    /// <summary>
+    /// Liefert die aktuelle Level-Konfiguration zurück.
+    /// </summary>
+    public LevelConfiguration GetLevelConfiguration() => levelConfig;
+
     private void InitializeLevelManager()
     {
         if (levelConfig == null)
@@ -203,7 +208,7 @@ public class LevelManager : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        string nextScene = !string.IsNullOrEmpty(levelConfig.nextSceneName) ? 
+        string nextScene = !string.IsNullOrEmpty(levelConfig.nextSceneName) ?
             levelConfig.nextSceneName : DetermineNextScene(SceneManager.GetActiveScene().name);
 
         if (!string.IsNullOrEmpty(nextScene))
