@@ -249,7 +249,7 @@ public class LevelManager : MonoBehaviour
     {
         if (levelCompleted) return;
 
-        // Recalculate remaining collectibles to avoid skipped counts
+        // LEVEL PROGRESSION FIX: recalc remaining collectibles reliably
         UpdateCollectibleCount();
 
         // Update UI (fires OnCollectibleCountChanged internally)
@@ -365,7 +365,7 @@ public class LevelManager : MonoBehaviour
         // Fade out or transition effect
         yield return StartCoroutine(FadeOutTransition());
 
-        // Load next scene
+        // LEVEL PROGRESSION FIX: automatically load the following level
         LoadNextLevel();
     }
 

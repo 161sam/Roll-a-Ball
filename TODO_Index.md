@@ -93,7 +93,9 @@
 | TODO-OPT#89 | Assets/Scripts/Environment/SwitchTrigger.cs | Awake(), Zeile 32 | Warn if gate missing | **erledigt** |
 | TODO-OPT#90 | Assets/Scripts/Environment/SwitchTrigger.cs | ActivateSwitch(), Zeile 83 | Reset/deactivation logic | **erledigt** |
 | TODO-OPT#91 | Assets/Scripts/Environment/SwitchTrigger.cs | OnValidate(), Zeile 93 | Highlight object when gate missing | **erledigt** |
-| TODO-OPT#92 | Assets/Scripts/Map/MapStartupController.cs | ClearExistingLevel(), Zeile 758 | Replace destructive cleanup with pooled map objects |
-| TODO-OPT#93 | Assets/Scripts/Map/MapStartupController.cs | HideMapUI(), Zeile 789 | Ensure UI references are serialized rather than searched |
-| TODO-OPT#94 | Assets/Scripts/Map/AddressResolver.cs | ParseOSMResponse(), Zeile 567 | Make map scale configurable via ScriptableObject |
-| TODO-OPT#95 | Assets/Scripts/Generators/LevelTerrainGenerator.cs | GeneratePrimMaze(), Zeile 358 | Evaluate Prim algorithm performance for large level sizes |
+| TODO-OPT#92 | Assets/Scripts/Map/MapStartupController.cs | ClearExistingLevel(), Zeile 758 | Replace destructive cleanup with pooled map objects | |
+| TODO-OPT#93 | Assets/Scripts/Map/MapStartupController.cs | HideMapUI(), Zeile 789 | Ensure UI references are serialized rather than searched | |
+| TODO-OPT#94 | Assets/Scripts/Map/AddressResolver.cs | ParseOSMResponse(), Zeile 567 | Make map scale configurable via ScriptableObject | |
+| TODO-OPT#95 | Assets/Scripts/Generators/LevelTerrainGenerator.cs | GeneratePrimMaze(), Zeile 358 | Evaluate Prim algorithm performance for large level sizes | |
+| TODO-OPT#96 | Assets/Scripts/UIController.cs | EnsureCollectibleCounter(), Zeile 193 | UI prefab should load via Addressables instead of Resources | |
+| TODO-OPT#97 | Assets/Scripts/CollectibleController.cs | CollectibleData.isCollected, Zeile 16 | Merge duplicate collection flags into single source of truth | |

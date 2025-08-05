@@ -207,11 +207,7 @@ public class CollectibleController : MonoBehaviour
         OnCollectedWithData?.Invoke(collectibleData);
         OnCollectiblePickedUp?.Invoke(this);
 
-        // Notify GameManager
-        if (LevelManager.Instance)
-        {
-            LevelManager.Instance.OnCollectibleCollected(this);
-        }
+        // COLLECTIBLE FIX: rely on event system to notify LevelManager
 
         // Visual feedback and destruction
         StartCoroutine(CollectionSequence());
