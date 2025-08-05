@@ -173,10 +173,15 @@ public class CollectibleController : MonoBehaviour
         OnCollected?.Invoke();
         OnCollectedWithData?.Invoke(collectibleData);
 
+        // Direkt den LevelManager informieren (garantiert Zählen & Levelwechsel)
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.OnCollectibleCollected(this);
+        }
+
         try
         {
             OnCollectiblePickedUp?.Invoke(this);
-            LevelManager.Instance?.OnCollectibleCollected(this);
         }
         catch (System.Exception e)
         {
