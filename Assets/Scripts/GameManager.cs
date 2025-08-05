@@ -31,9 +31,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameSettings gameSettings;
     private bool debugMode = false;
     private float gameTimeScale = 1f;
-    [SerializeField, HideInInspector] private KeyCode pauseKey = KeyCode.Escape; // moved to InputManager
+    [SerializeField, HideInInspector] private KeyCode pauseKey = KeyCode.Escape;
     [SerializeField, HideInInspector] private KeyCode restartKey = KeyCode.R;
-    // TODO: Remove legacy key fields once InputManager fully manages bindings
 
     [Header("Player Reference")]
     [SerializeField] private PlayerController player;
@@ -54,18 +53,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameStats gameStats;
     [SerializeField] private float statisticsUpdateInterval = 0.1f;
 
-    /// <summary>
-    /// Set update interval for statistics tracking at runtime.
-    /// </summary>
-    public void SetStatisticsUpdateInterval(float interval)
-    {
-        statisticsUpdateInterval = Mathf.Max(0.02f, interval);
-        if (currentState == GameState.Playing && statisticsCoroutine != null)
-        {
-            StartStatisticsTracking();
-        }
-    }
-
     [Header("Checkpoints")]
     [SerializeField] private Transform[] checkpoints;
     [SerializeField] private float checkpointRadius = 2f;
@@ -76,7 +63,6 @@ public class GameManager : MonoBehaviour
     private bool enableRespawn = true;
     private float respawnDelay = 2f;
 
-    // Private fields
     private GameState currentState = GameState.Playing;
     private GameState previousState;
     private float gameStartTime;
@@ -85,15 +71,12 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
     private Coroutine statisticsCoroutine;
 
-    // Events
     public System.Action<GameState, GameState> OnGameStateChanged;
     public System.Action<GameStats> OnStatisticsUpdated;
     public System.Action<int> OnCheckpointReached;
 
-    // Singleton pattern
     public static GameManager Instance { get; private set; }
 
-    // Properties
     public GameState CurrentState => currentState;
     public GameStats Stats => gameStats;
     public bool IsPlaying => currentState == GameState.Playing;
@@ -102,7 +85,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        // Singleton setup
         if (Instance == null)
         {
             Instance = this;
@@ -123,7 +105,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         HandleInput();
-        
+
         if (currentState == GameState.Playing)
         {
             CheckPlayerFall();
@@ -139,17 +121,22 @@ public class GameManager : MonoBehaviour
             gameTimeScale = gameSettings.gameTimeScale;
             fallDeathHeight = gameSettings.fallDeathHeight;
             enableRespawn = gameSettings.enableRespawn;
-            float difficultyMult = LevelManager.Instance ? LevelManager.Instance.Config.difficultyMultiplier : 1f;
+
+            float difficultyMult = 1f;
+            if (LevelManager.Instance != null)
+            {
+                var cfg = LevelManager.Instance.GetLevelConfiguration();
+                if (cfg != null)
+                    difficultyMult = cfg.difficultyMultiplier;
+            }
+
             respawnDelay = gameSettings.GetRespawnDelay(LevelDifficulty.Easy) * difficultyMult;
         }
 
         gameStats = new GameStats();
         gameStartTime = Time.time;
-        
-        // Set initial time scale
         Time.timeScale = gameTimeScale;
 
-        // Ensure an InputManager exists and apply configured keys
         if (InputManager.Instance == null)
         {
             var obj = new GameObject("InputManager");
@@ -157,23 +144,19 @@ public class GameManager : MonoBehaviour
         }
         if (InputManager.Instance != null)
         {
-            // apply configured bindings
             InputManager.Instance.SetPauseKey(pauseKey);
             InputManager.Instance.SetRestartKey(restartKey);
         }
-        
-        // CLAUDE: FIXED - Use cached references instead of Find calls
+
         if (autoFindPlayer && !player)
         {
-            // Only search if explicitly enabled and no reference set
             player = FindFirstObjectByType<PlayerController>();
             if (player && debugMode)
                 Debug.Log("[GameManager] Auto-found PlayerController");
         }
-        
+
         if (!uiController)
         {
-            // Prefer inspector assignment over runtime search
             uiController = FindFirstObjectByType<UIController>();
             if (uiController && debugMode)
                 Debug.Log("[GameManager] Auto-found UIController");
@@ -183,13 +166,13 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         ChangeGameState(GameState.Playing);
-        
+
         if (player)
         {
             lastPlayerPosition = player.transform.position;
             SubscribeToPlayerEvents();
         }
-        
+
         if (trackStatistics)
             StartStatisticsTracking();
     }
@@ -214,13 +197,12 @@ public class GameManager : MonoBehaviour
     {
         if (InputManager.Instance && InputManager.Instance.PausePressed)
         {
-            if (isPaused)
-                ResumeGame();
-            else
-                PauseGame();
+            if (isPaused) ResumeGame();
+            else PauseGame();
         }
 
-        if (InputManager.Instance && InputManager.Instance.RestartPressed && (debugMode || currentState == GameState.GameOver))
+        if (InputManager.Instance && InputManager.Instance.RestartPressed &&
+            (debugMode || currentState == GameState.GameOver))
         {
             RestartGame();
         }
@@ -270,8 +252,6 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.PlaySound("Checkpoint");
     }
 
-    // ===== Game State Management =====
-
     public void ChangeGameState(GameState newState)
     {
         if (newState == currentState) return;
@@ -287,17 +267,14 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = gameTimeScale;
                 if (pauseMenu) pauseMenu.SetActive(false);
                 break;
-
             case GameState.Paused:
                 Time.timeScale = 0f;
                 if (pauseMenu) pauseMenu.SetActive(true);
                 break;
-
             case GameState.GameOver:
                 Time.timeScale = 0f;
                 if (gameOverScreen) gameOverScreen.SetActive(true);
                 break;
-
             case GameState.Loading:
                 Time.timeScale = 1f;
                 break;
@@ -307,7 +284,6 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         if (currentState != GameState.Playing) return;
-
         isPaused = true;
         ChangeGameState(GameState.Paused);
     }
@@ -315,7 +291,6 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         if (currentState != GameState.Paused) return;
-
         isPaused = false;
         ChangeGameState(GameState.Playing);
     }
@@ -323,7 +298,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         ChangeGameState(GameState.GameOver);
-        
+
         if (statisticsCoroutine != null)
         {
             StopCoroutine(statisticsCoroutine);
@@ -336,49 +311,32 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         Time.timeScale = 1f;
-        // Use gameScene if specified, otherwise reload current scene
         string sceneToLoad = !string.IsNullOrEmpty(gameScene) ? gameScene : SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(sceneToLoad);
     }
 
-    /// <summary>
-    /// Reset game state without reloading scene (for map regeneration)
-    /// </summary>
     public void ResetGame()
     {
-        // Reset game statistics
         gameStats = new GameStats();
         gameStartTime = Time.time;
-        
-        // Reset checkpoints
         currentCheckpointIndex = 0;
-        
-        // Reset player position if available
+
         if (player)
         {
             lastPlayerPosition = player.transform.position;
-            
-            // Reset player velocity
             Rigidbody playerRb = player.GetComponent<Rigidbody>();
             PhysicsUtils.ResetMotion(playerRb);
         }
-        
-        // Reset UI if available
+
         if (uiController)
         {
             uiController.UpdateCollectibleDisplay(0);
         }
-        
-        // Change to playing state
+
         ChangeGameState(GameState.Playing);
-        
         Debug.Log("[GameManager] Game reset completed");
-        // TODO: Replace Debug.Log with structured logging for production builds
     }
 
-    /// <summary>
-    /// Update collectible count in UI
-    /// </summary>
     public void UpdateCollectibleCount()
     {
         if (uiController)
@@ -396,53 +354,42 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
-
-    // ===== Respawn System =====
 
     private IEnumerator RespawnPlayer()
     {
         if (!player) yield break;
 
         ChangeGameState(GameState.Loading);
-
-        // Disable player temporarily
         player.enabled = false;
 
         yield return new WaitForSeconds(respawnDelay);
 
-        // Respawn at last checkpoint
         Vector3 respawnPosition = checkpoints != null && checkpoints.Length > 0 && currentCheckpointIndex < checkpoints.Length
             ? checkpoints[currentCheckpointIndex].position
             : Vector3.zero;
 
         player.transform.position = respawnPosition + Vector3.up * 2f;
-        
-        // Reset player velocity via helper
         Rigidbody playerRb = player.GetComponent<Rigidbody>();
         PhysicsUtils.ResetMotion(playerRb);
-
-        // Re-enable player
         player.enabled = true;
-        
+
         ChangeGameState(GameState.Playing);
 
         if (uiController)
             uiController.ShowNotification("Respawned!", 1.5f);
     }
 
-    // ===== Statistics System =====
-
     private void StartStatisticsTracking()
     {
         if (statisticsCoroutine != null)
             StopCoroutine(statisticsCoroutine);
-        
+
         statisticsCoroutine = StartCoroutine(TrackStatistics());
     }
 
@@ -459,25 +406,20 @@ public class GameManager : MonoBehaviour
     {
         if (!player || !trackStatistics) return;
 
-        // Update play time
         gameStats.totalPlayTime = Time.time - gameStartTime;
 
-        // Update distance traveled
         Vector3 currentPosition = player.transform.position;
         float distanceThisFrame = Vector3.Distance(currentPosition, lastPlayerPosition);
         gameStats.totalDistanceTraveled += distanceThisFrame;
         lastPlayerPosition = currentPosition;
 
-        // Update max height
         if (currentPosition.y > gameStats.maxHeight)
             gameStats.maxHeight = currentPosition.y;
 
-        // Update max speed
         float currentSpeed = player.Velocity.magnitude;
         if (currentSpeed > gameStats.maxSpeed)
             gameStats.maxSpeed = currentSpeed;
 
-        // Update flight time
         if (player.IsFlying)
             gameStats.totalFlightTime += 0.1f;
 
@@ -488,7 +430,7 @@ public class GameManager : MonoBehaviour
     {
         gameStats.totalPlayTime = Time.time - gameStartTime;
         OnStatisticsUpdated?.Invoke(gameStats);
-        
+
         if (debugMode)
             PrintStatistics();
     }
@@ -505,39 +447,29 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Max Speed: {gameStats.maxSpeed:F2}m/s");
     }
 
-    // ===== Event Handlers =====
-
     private void OnPlayerGrounded(bool grounded)
     {
         if (!grounded && trackStatistics)
         {
-            // Player jumped
             gameStats.totalJumps++;
         }
     }
 
     private void OnPlayerFlying(bool flying)
     {
-        // Flight time is tracked in UpdateStatistics
     }
-
-    // ===== Scene Management =====
 
     private IEnumerator LoadSceneAsync(string sceneName)
     {
         ChangeGameState(GameState.Loading);
-        
         yield return new WaitForSeconds(sceneTransitionDelay);
-        
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        
+
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
     }
-
-    // ===== Collectibles & Level Management (Delegated to LevelManager) =====
 
     public int GetCollectedCount()
     {
@@ -575,8 +507,6 @@ public class GameManager : MonoBehaviour
         return 0;
     }
 
-    // ===== Public Utility Methods =====
-
     public void AddCheckpoint(Transform checkpoint)
     {
         List<Transform> checkpointList = new List<Transform>(checkpoints ?? new Transform[0]);
@@ -595,25 +525,20 @@ public class GameManager : MonoBehaviour
     {
         if (checkpoints == null || checkpoints.Length == 0 || currentCheckpointIndex >= checkpoints.Length)
             return Vector3.zero;
-        
+
         return checkpoints[currentCheckpointIndex].position;
     }
-
-    // ===== Debug =====
 
     void OnDrawGizmosSelected()
     {
         if (checkpoints == null) return;
 
-        // Draw checkpoints
         Gizmos.color = Color.green;
         for (int i = 0; i < checkpoints.Length; i++)
         {
             if (!checkpoints[i]) continue;
-
             Gizmos.DrawWireSphere(checkpoints[i].position, checkpointRadius);
-            
-            // Number labels would require custom editor drawing
+
             if (i == currentCheckpointIndex)
             {
                 Gizmos.color = Color.yellow;
@@ -622,17 +547,16 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Draw fall death line
         Gizmos.color = Color.red;
         Vector3 center = transform.position;
-        Gizmos.DrawLine(center + Vector3.left * 100 + Vector3.up * fallDeathHeight, 
+        Gizmos.DrawLine(center + Vector3.left * 100 + Vector3.up * fallDeathHeight,
                        center + Vector3.right * 100 + Vector3.up * fallDeathHeight);
     }
 
     void OnDestroy()
     {
         UnsubscribeFromPlayerEvents();
-        
+
         if (statisticsCoroutine != null)
             StopCoroutine(statisticsCoroutine);
     }
