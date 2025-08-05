@@ -555,31 +555,30 @@ namespace RollABall.Map
                     yield return null;
             }
             
-            // Add collectibles to LevelManager for proper tracking
             LevelManager levelManager = FindFirstObjectByType<LevelManager>();
             if (levelManager != null)
             {
                 // Get all created collectibles and add them to LevelManager
                 CollectibleController[] collectibles = collectibleContainer.GetComponentsInChildren<CollectibleController>();
+                
+                // Set proper tags first
                 foreach (CollectibleController collectible in collectibles)
                 {
                     if (collectible != null)
                     {
-                        // Set proper tag for goal zone detection
                         collectible.gameObject.tag = "Collectible";
-
-                        // Add to LevelManager for event tracking
-                        levelManager.AddCollectible(collectible);
-                        levelManager.RegisterCollectibleEvents(collectible); // EVENT HANDLING CONSOLIDATION
                     }
                 }
-                Debug.Log($"[MapGenerator] Added {collectibles.Length} collectibles to LevelManager");
+                
+                // Use bulk addition with central event registration
+                levelManager.AddCollectiblesBulk(collectibles);
+                Debug.Log($"[MapGenerator] Added {collectibles.Length} collectibles to LevelManager with central event registration");
             }
             else
             {
                 Debug.LogWarning("[MapGenerator] No LevelManager found in scene. Collectibles won't be tracked properly.");
             }
-            
+                        
             yield return null;
         }
         
