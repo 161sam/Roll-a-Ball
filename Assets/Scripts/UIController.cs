@@ -143,6 +143,12 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
         InitializeUI();
         SetupEventListeners();
         ShowMainMenu();
+
+        // UI ACTIVATION FIX: immediately switch to gameplay UI when starting in a level
+        if (GameManager.Instance && GameManager.Instance.CurrentState == GameState.Playing)
+        {
+            ChangeUIState(UIState.GamePlay);
+        }
     }
     
     private void InitializeUI()
@@ -186,14 +192,14 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
     /// </summary>
     private void EnsureCollectibleCounter()
     {
-        // UI FIX: Instantiate from prefab if no canvas exists
+        // UI PREFAB INTEGRATION: Instantiate from prefab if no canvas exists
         var canvas = gameUIPanel ? gameUIPanel.GetComponentInParent<Canvas>() : FindFirstObjectByType<Canvas>();
         if (!canvas)
         {
             GameObject prefab = gameUIPrefab;
             if (!prefab)
             {
-                prefab = Resources.Load<GameObject>("Prefabs/UI/GameUI");
+                prefab = Resources.Load<GameObject>("Prefabs/UI/GameUI"); // UI PREFAB INTEGRATION
             }
             if (prefab)
             {

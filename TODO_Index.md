@@ -102,3 +102,4 @@
 | TODO-OPT#98 | Assets/Scripts/LevelManager.cs | InitializeLevelManager(), Zeile 143 | Load UI prefab via Addressables instead of Resources | **erledigt** |
 | TODO-OPT#99 | Assets/Scripts/LevelManager.cs | UpdateCollectibleCount(), Zeile 223 | Cache counts to avoid repeated HashSet scans | **erledigt** |
 | TODO-OPT#100 | Assets/Scripts/LevelManager.cs | collectedCollectibles, Zeile 55 | Pool HashSet to minimize allocations when resetting levels | **erledigt** |
+| TODO-OPT#101 | Assets/Scripts/Editor/UIPrefabSceneUpdater.cs | UpdateUIPrefabInAllScenes(), Zeile 12 | Preserve custom UI elements during automatic replacement | offen |
