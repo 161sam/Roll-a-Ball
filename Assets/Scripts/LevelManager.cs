@@ -188,6 +188,9 @@ public class LevelManager : MonoBehaviour
             FindGoalZone();
         }
 
+        // LEVEL PROGRESSION FIX: goal zone should remain inactive until all collectibles are collected
+        SetGoalZoneActive(false);
+
         // Update collectible count
         UpdateCollectibleCount();
 
@@ -241,6 +244,21 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log($"Found goal zone: {goalZone.name}");
         }
+    }
+
+    /// <summary>
+    /// Enables or disables the goal zone trigger.
+    /// </summary>
+    /// <param name="active">Whether the goal zone should be active.</param>
+    private void SetGoalZoneActive(bool active)
+    {
+        if (!goalZone) return;
+
+        goalZone.SetActive(active);
+
+        Collider collider = goalZone.GetComponent<Collider>();
+        if (collider)
+            collider.enabled = active;
     }
 
     public void UpdateCollectibleCount()
@@ -300,6 +318,8 @@ public class LevelManager : MonoBehaviour
         // Check for level completion
         if (levelConfig.collectiblesRemaining <= 0)
         {
+            // Reactivate goal zone and trigger automatic level progression
+            SetGoalZoneActive(true);
             CompleteLevel();
         }
 
@@ -488,11 +508,11 @@ public class LevelManager : MonoBehaviour
             return "Level2";
         else if (currentScene == "Level2" || currentScene == "Level_2")
             return "Level3";
-        else if (currentScene == "Level3" || currentScene == "Level_3")
+        else if (currentScene.StartsWith("Level3"))
         {
             return "GeneratedLevel"; // LEVEL PROGRESSION FIX
         }
-        else if (currentScene == "GeneratedLevel")
+        else if (currentScene.StartsWith("GeneratedLevel"))
         {
             return "GeneratedLevel"; // LEVEL PROGRESSION FIX: loop generated levels
         }
