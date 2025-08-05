@@ -107,3 +107,5 @@
 | TODO-OPT#103 | Assets/Scripts/Generators/LevelGenerator.cs | IntegrateWithGameSystems(), Zeile 860 | Refresh LevelManager after generating collectibles | **erledigt** |
 | TODO-OPT#104 | Assets/Scripts/Map/MapGenerator.cs | AddGeneratedCollectibles(), Zeile 565 | Synchronize LevelManager with spawned collectibles | **erledigt** |
 | TODO-OPT#105 | Assets/Scripts/Map/MapGeneratorBatched.cs | GenerateCollectibleObjects(), Zeile 949 | Rescan LevelManager collectible count for batched maps | **erledigt** |
+| TODO-OPT#106 | Assets/Scripts/LevelManager.cs | StartLevel(), Zeile 184 | TotalCollectibles aus Inspector oder Szene zählen | **erledigt** |
+| TODO-OPT#107 | Assets/Scripts/LevelManager.cs | OnCollectibleCollected(), Zeile 326 | Sofortigen Levelwechsel bei kompletter Sammlung auslösen | **erledigt** |
