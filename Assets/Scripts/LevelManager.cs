@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
+using RollABall.Utility;
 
 [System.Serializable]
 public class LevelConfiguration
@@ -140,7 +141,7 @@ public class LevelManager : MonoBehaviour
         // Eindeutige Liste erzwingen - alle null-Referenzen und doppelt referenzierte
         // GameObjects entfernen
         levelCollectibles = levelCollectibles
-            .Where(c => c != null && !c.IsCollected)
+            .Where(c => c != null && c.gameObject.activeInHierarchy && !c.IsCollected)
             .GroupBy(c => c.gameObject)
             .Select(g => g.First())
             .ToList();
@@ -149,7 +150,13 @@ public class LevelManager : MonoBehaviour
         levelConfig.collectiblesRemaining = levelConfig.totalCollectibles;
 
         if (debugMode)
+        {
+            foreach (var collectible in levelCollectibles)
+            {
+                Debug.Log($"[LevelManager] Collectible gezählt: {collectible.name} | Pfad: {collectible.transform.GetHierarchyPath()} | Aktiv: {collectible.gameObject.activeInHierarchy}");
+            }
             Debug.Log($"[LevelManager] InitializeCollectibleCounts: {levelConfig.totalCollectibles} eindeutige Collectibles");
+        }
     }
 
     private void FindGoalZone()
