@@ -416,6 +416,63 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Public method to update collectible count - for compatibility with tool scripts
+    /// </summary>
+    public void UpdateCollectibleCount()
+    {
+        lock (lockObject)
+        {
+            if (levelCollectibles == null) return;
+
+            if (levelConfig.totalCollectibles <= 0)
+            {
+                levelConfig.totalCollectibles = levelCollectibles.Count;
+            }
+
+            levelConfig.collectiblesRemaining = Mathf.Max(0, levelConfig.totalCollectibles - collectedCollectibles.Count);
+        }
+
+        UpdateUI();
+
+        if (debugMode)
+            Debug.Log($"[LevelManager] Updated collectible count: {levelConfig.collectiblesRemaining}/{levelConfig.totalCollectibles}");
+    }
+
+    /// <summary>
+    /// Register events for a specific collectible - for compatibility with tool scripts
+    /// </summary>
+    public void RegisterCollectibleEvents(CollectibleController collectible)
+    {
+        if (collectible == null) return;
+
+        lock (lockObject)
+        {
+            // Ensure clean state before registering
+            collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
+            collectible.OnCollectiblePickedUp += OnCollectibleCollected;
+        }
+
+        if (debugMode)
+            Debug.Log($"[LevelManager] Registered events for collectible: {collectible.name}");
+    }
+
+    /// <summary>
+    /// Unregister events for a specific collectible - for compatibility with tool scripts
+    /// </summary>
+    public void UnregisterCollectibleEvents(CollectibleController collectible)
+    {
+        if (collectible == null) return;
+
+        lock (lockObject)
+        {
+            collectible.OnCollectiblePickedUp -= OnCollectibleCollected;
+        }
+
+        if (debugMode)
+            Debug.Log($"[LevelManager] Unregistered events for collectible: {collectible.name}");
+    }
+
+    /// <summary>
     /// Remove a collectible and unregister its events
     /// </summary>
     public void RemoveCollectible(CollectibleController collectible)
