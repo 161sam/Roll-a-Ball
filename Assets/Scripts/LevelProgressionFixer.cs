@@ -169,13 +169,17 @@ public class LevelProgressionFixer : MonoBehaviour
     private void SetupProgressionEvents()
     {
         if (!levelManager) return;
-        
+
         Log("Setting up progression events...");
-        
-        // Subscribe to level completion
-        levelManager.OnLevelCompleted += OnLevelCompleted;
-        levelManager.OnCollectibleCountChanged += OnCollectibleCountChanged;
-        
+        levelManager.OnLevelCompleted -= OnLevelCompleted; // EVENT DOUBLE-FIRE FIX
+        Debug.Log("Unregistered OnLevelCompleted"); // EVENT DOUBLE-FIRE FIX
+        levelManager.OnCollectibleCountChanged -= OnCollectibleCountChanged; // EVENT DOUBLE-FIRE FIX
+        Debug.Log("Unregistered OnCollectibleCountChanged"); // EVENT DOUBLE-FIRE FIX
+        levelManager.OnLevelCompleted += OnLevelCompleted; // EVENT DOUBLE-FIRE FIX
+        Debug.Log("Registered OnLevelCompleted"); // EVENT DOUBLE-FIRE FIX
+        levelManager.OnCollectibleCountChanged += OnCollectibleCountChanged; // EVENT DOUBLE-FIRE FIX
+        Debug.Log("Registered OnCollectibleCountChanged"); // EVENT DOUBLE-FIRE FIX
+
         Log("Connected progression events");
     }
 
@@ -512,8 +516,10 @@ public class LevelProgressionFixer : MonoBehaviour
         // Clean up event subscriptions
         if (levelManager)
         {
-            levelManager.OnLevelCompleted -= OnLevelCompleted;
-            levelManager.OnCollectibleCountChanged -= OnCollectibleCountChanged;
+            levelManager.OnLevelCompleted -= OnLevelCompleted; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Unregistered OnLevelCompleted"); // EVENT DOUBLE-FIRE FIX
+            levelManager.OnCollectibleCountChanged -= OnCollectibleCountChanged; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Unregistered OnCollectibleCountChanged"); // EVENT DOUBLE-FIRE FIX
         }
     }
 

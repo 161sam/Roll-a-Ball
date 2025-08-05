@@ -117,6 +117,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void OnDisable()
+    {
+        UnsubscribeFromCollectibleEvents(); // EVENT DOUBLE-FIRE FIX
+    }
+
     void OnDestroy()
     {
         // CLAUDE: FIXED - Unsubscribe from collectible events to avoid memory leaks
@@ -306,8 +311,12 @@ public class LevelManager : MonoBehaviour
         {
             if (!collectible) continue;
             collectible.OnCollectiblePickedUp -= OnCollectibleCollected; // COLLECTIBLE COUNTER FIX: avoid duplicate handlers
+            Debug.Log("Unregistered OnCollectibleCollected"); // EVENT DOUBLE-FIRE FIX
             if (subscribe)
-                collectible.OnCollectiblePickedUp += OnCollectibleCollected;
+            {
+                collectible.OnCollectiblePickedUp += OnCollectibleCollected; // EVENT DOUBLE-FIRE FIX
+                Debug.Log("Registered OnCollectibleCollected"); // EVENT DOUBLE-FIRE FIX
+            }
         }
     }
 

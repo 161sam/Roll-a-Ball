@@ -325,9 +325,13 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
         if (LevelManager.Instance)
         {
             LevelManager.Instance.OnLevelCompleted -= OnLevelCompleted; // UI FIX: prevent double subscription
+            Debug.Log("Unregistered OnLevelCompleted"); // EVENT DOUBLE-FIRE FIX
             LevelManager.Instance.OnCollectibleCountChanged -= OnCollectibleCountChanged; // UI FIX
-            LevelManager.Instance.OnLevelCompleted += OnLevelCompleted;
-            LevelManager.Instance.OnCollectibleCountChanged += OnCollectibleCountChanged;
+            Debug.Log("Unregistered OnCollectibleCountChanged"); // EVENT DOUBLE-FIRE FIX
+            LevelManager.Instance.OnLevelCompleted += OnLevelCompleted; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Registered OnLevelCompleted"); // EVENT DOUBLE-FIRE FIX
+            LevelManager.Instance.OnCollectibleCountChanged += OnCollectibleCountChanged; // EVENT DOUBLE-FIRE FIX
+            Debug.Log("Registered OnCollectibleCountChanged"); // EVENT DOUBLE-FIRE FIX
         }
     }
     
@@ -1137,9 +1141,11 @@ public bool IsGameUIActive => gameUIPanel && gameUIPanel.activeSelf;
         if (LevelManager.Instance)
         {
             LevelManager.Instance.OnLevelCompleted -= OnLevelCompleted;
+            Debug.Log("Unregistered OnLevelCompleted"); // EVENT DOUBLE-FIRE FIX
             LevelManager.Instance.OnCollectibleCountChanged -= OnCollectibleCountChanged;
+            Debug.Log("Unregistered OnCollectibleCountChanged"); // EVENT DOUBLE-FIRE FIX
         }
-        
+
         // Clear UI item collections
         saveSlotItems?.Clear();
         achievementItems?.Clear();
